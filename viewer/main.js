@@ -219,23 +219,46 @@ async function fetchBuffer(name) {
 }
 
 async function load() {
-  const [posBuf, edgeBuf, wBuf, attrBuf, nAttrBuf, metaRes] = await Promise.all([
+  const [posBuf, edgeBuf, wBuf, attrBuf, nAttrBuf, metaRes, namesRes] = await Promise.all([
     fetchBuffer('nodes.bin'),
     fetchBuffer('edges.bin'),
     fetchBuffer('weights.bin'),
     fetchBuffer('edge_lab.bin'),
     fetchBuffer('node_lab.bin'),
     fetch(DATA + 'meta.json'),
+    fetch('./band-names.json'),   // F3 の命名。無い/古い分はキーワード表示に落ちる
   ]);
   if (!metaRes.ok) throw new Error('Cannot load meta.json');
+  const meta = await metaRes.json();
+  applyBandNames(meta, namesRes.ok ? await namesRes.json() : null);
   return {
     pos: new Float32Array(posBuf),
     edges: new Uint32Array(edgeBuf),
     weights: new Float32Array(wBuf),
     edgeLab: new Uint32Array(attrBuf),     // labs のインデックス, NO_LAB = ラボ線ではない
     nodeLab: new Uint32Array(nAttrBuf),
-    meta: await metaRes.json(),
+    meta,
   };
+}
+
+// band-names.json の名前を meta に写す。キーワード先頭3語の sig が一致するものだけ。
+// レイアウト再生成で帯が入れ替わっても、古い名前を黙って出さずキーワード表示に落ちる。
+function applyBandNames(meta, names) {
+  if (!names) { console.warn('band-names.json not loaded; labels fall back to keywords'); return; }
+  const sig = (o) => (o.keywords || []).slice(0, 3).join('|');
+  let stale = 0;
+  const byCommunity = new Map(names.bands.map((e) => [e.community, e]));
+  for (const band of meta.bands || []) {
+    const e = byCommunity.get(band.community);
+    if (e && e.sig === sig(band)) band.name = e.name;
+    else if (band.community != null) stale++;
+  }
+  for (const e of names.subbands || []) {
+    const sub = (meta.subbands || [])[e.index];
+    if (sub && e.sig === sig(sub)) sub.name = e.name;
+    else stale++;
+  }
+  if (stale) console.warn(`band-names.json is stale for ${stale} band(s) — regenerate names after the layout rebuild`);
 }
 
 // 隣接リストを CSR で持つ(クリック時の BFS 用)。
@@ -633,7 +656,7 @@ async function main() {
   }
 
   // --- 帯(コミュニティ)の境界とラベル ---
-  // ラベルは今のところ代表論文のタイトル。LLM による命名(F3)で置き換える予定。
+  // ラベルは band-names.json(F3 の LLM 命名)。名前が無い/古い帯はキーワード表示。
   const bandsEl = document.getElementById('bands');
   function drawBands(scale, offset) {
     if (!meta.bands) return;
@@ -648,7 +671,7 @@ async function main() {
       const mid = (top + bottom) / 2 - 7;
       // 中心が画面外のラベルは出さない。クランプすると画面端に積み重なって読めない。
       if (bottom - top >= 26 && mid >= 4 && mid <= H - 16) {
-        parts.push(`<div class="lbl" style="top:${mid.toFixed(1)}px">${escapeHtml(bandLabel(band))}</div>`);
+        parts.push(`<div class="lbl" style="top:${mid.toFixed(1)}px" title="${escapeHtml(kw(band))}">${escapeHtml(bandLabel(band))}</div>`);
       }
       // 拡大してサブ帯が十分な高さになったら、その中の内訳も出す
       for (const si of band.subbands || []) {
@@ -658,7 +681,7 @@ async function main() {
         parts.push(`<div class="sep sub" style="top:${st.toFixed(1)}px"></div>`);
         const smid = (st + sb) / 2 - 6;
         if (smid < 4 || smid > H - 14) continue;
-        parts.push(`<div class="lbl sub" style="top:${smid.toFixed(1)}px">${escapeHtml(subLabel(sub))}</div>`);
+        parts.push(`<div class="lbl sub" style="top:${smid.toFixed(1)}px" title="${escapeHtml(kw(sub))}">${escapeHtml(subLabel(sub))}</div>`);
       }
     }
     bandsEl.innerHTML = parts.join('');
@@ -667,9 +690,11 @@ async function main() {
   const kw = (o) => (o.keywords || []).join(' · ');
   const bandLabel = (band) => {
     const yrs = band.years ? `${band.years[0]}–${band.years[1]} · ` : '';
-    return `${yrs}${band.papers.toLocaleString()} papers · ${kw(band)}`;
+    const count = `${band.papers.toLocaleString()} papers`;
+    return band.name ? `${band.name} · ${yrs}${count}` : `${yrs}${count} · ${kw(band)}`;
   };
-  const subLabel = (sub) => `${sub.papers} papers · ${kw(sub)}`;
+  const subLabel = (sub) =>
+    sub.name ? `${sub.name} · ${sub.papers}` : `${sub.papers} papers · ${kw(sub)}`;
 
   // --- 系譜(選択した論文の上流・下流)---
   function bfs(startNode, adj, maxDepth) {
@@ -896,9 +921,9 @@ async function main() {
       .map(([sb, cnt]) => {
         const sub = meta.subbands[sb];
         const pct = Math.round((cnt / ids.length) * 100);
-        return `<li class="trend ${kind}" data-sub="${sb}" data-kind="${kind}">` +
+        return `<li class="trend ${kind}" data-sub="${sb}" data-kind="${kind}" title="${escapeHtml(kw(sub))}">` +
                `<span class="n">${cnt}</span><span class="bar" style="width:${pct}%"></span>` +
-               `${escapeHtml(kw(sub) || '(other)')}</li>`;
+               `${escapeHtml(sub.name || kw(sub) || '(other)')}</li>`;
       })
       .join('');
     return `<h3>${title} — click to filter</h3><ol class="trends">${rows}</ol>`;
