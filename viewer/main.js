@@ -142,7 +142,6 @@ async function main() {
   const { pos, edges, weights, meta } = data;
   const n = meta.node_count;
   const yearMin = meta.year_min, yearMax = meta.year_max;
-  const yearSpan = Math.max(1, yearMax - yearMin);
 
   // x(年)を [0,1] に正規化。y は前計算時点で既に [0,1]。
   // 年内 jitter があるので実際の値域から取る(年の境界をわずかに超えるため)。
