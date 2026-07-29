@@ -340,30 +340,39 @@ async function main() {
   (meta.labs || []).forEach((lab, id) => { if (lab.ai >= 0) labByAuthor.set(lab.ai, id); });
 
   function applyPinned() {
-    const labSlot = new Map();
-    pinned.forEach((p, i) => { if (p.labId != null) labSlot.set(p.labId, i); });
-    for (let e = 0; e < edgeCount; e++) {
-      const id = edgeLab[e];
-      const v = id === NO_LAB ? 255 : (labSlot.has(id) ? labSlot.get(id) : 8);
-      edgeA[e * 2] = v; edgeA[e * 2 + 1] = v;
-    }
-    // 点の当て方は 2 通り選べる:
-    //   any  = その人が著者に入っている論文(共著も拾う。線より広く出る)
-    //   last = その人がラストオーサーの論文だけ(= その人のラボの仕事)
-    for (let i = 0; i < n; i++) {
-      const id = nodeLab[i];
-      const lc = id === NO_LAB ? NON_LAB : LAB_RGB[labSlot.has(id) ? labSlot.get(id) : 8];
-      attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
-    }
+    // 当て方は点にも線にも同じ定義を使う:
+    //   any  = その人が著者に入っている(共著も拾う)
+    //   last = その人がラストオーサー(= その人のラボの仕事)
+    // 線はその条件を**エッジの両端**に課したもの。つまり
+    //   any  → その人が両方の論文に入っている引用 = その人自身が繋いだ流れ
+    //   last → 両端のラストオーサーが一致 = ラボの系譜(前計算と一致する)
     const lastOnly = ui.roleMode && ui.roleMode.value === 'last';
+
+    // 固定した人ごとのビット。スロットは最大8なので Uint8 で足りる。
+    const mask = new Uint8Array(n);
     pinned.forEach((p, slot) => {
-      const c = LAB_RGB[slot];
       for (const i of papersByAuthor.get(p.ai) || []) {
         const as = meta.nodes[i].a || [];
         if (lastOnly && as[as.length - 1] !== p.ai) continue;
-        attrColors[i * 3] = c[0]; attrColors[i * 3 + 1] = c[1]; attrColors[i * 3 + 2] = c[2];
+        mask[i] |= 1 << slot;
       }
     });
+
+    for (let e = 0; e < edgeCount; e++) {
+      const m = mask[edges[e * 2]] & mask[edges[e * 2 + 1]];
+      // 複数人が同じエッジに乗ることがあるので、若いスロット(検索で先に固定した人)を優先
+      const v = m ? 31 - Math.clz32(m & -m)
+                  : (edgeLab[e] === NO_LAB ? 255 : 8);   // 固定していないラボ線は「その他」
+      edgeA[e * 2] = v; edgeA[e * 2 + 1] = v;
+    }
+
+    for (let i = 0; i < n; i++) {
+      const m = mask[i];
+      const lc = m ? LAB_RGB[31 - Math.clz32(m & -m)]
+                   : (nodeLab[i] === NO_LAB ? NON_LAB : LAB_RGB[8]);
+      attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
+    }
+
     if (edgeSlotBuf) {
       gl.bindBuffer(gl.ARRAY_BUFFER, edgeSlotBuf);
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, edgeA);
