@@ -929,13 +929,17 @@ async function main() {
     return `<h3>${title} — click to filter</h3><ol class="trends">${rows}</ol>`;
   }
 
+  // 行クリックは選択、右端の ↗ だけ DOI へ(クリックハンドラ側で a.doi を除外している)
+  const doiLink = (nd) =>
+    nd.d ? ` · <a class="doi" href="https://doi.org/${encodeURI(nd.d)}" target="_blank" rel="noopener" title="Open at doi.org">doi ↗</a>` : '';
+
   function listHtml(title, ids, limit) {
     if (!ids.length) return '';
     const rows = ids
       .slice(0, limit)
       .map((v) => {
         const nd = meta.nodes[v];
-        return `<li data-i="${v}"><span class="y">${nd.y}</span>${escapeHtml(nd.t.slice(0, 90))}</li>`;
+        return `<li data-i="${v}"><span class="y">${nd.y}</span>${escapeHtml(nd.t.slice(0, 90))}${doiLink(nd)}</li>`;
       })
       .join('');
     const more = ids.length > limit ? `<li style="color:#5d6478">… ${ids.length - limit} more</li>` : '';
@@ -952,7 +956,7 @@ async function main() {
     // 参照 47 本のうちコーパス内は 3 本、のように必ず出して誤解を防ぐ。
     const inCorpus = countRefsInCorpus(i);
     document.getElementById('selMeta').innerHTML =
-      `${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}<br>` +
+      `${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}${doiLink(nd)}<br>` +
       `<span class="cov"><b>${inCorpus}</b> of ${nd.r} references are inside this corpus` +
       (nd.r && !inCorpus
         ? ' — they point outside the 13 HCI venues, so upstream cannot be traced here'
@@ -988,6 +992,7 @@ async function main() {
   }
 
   document.getElementById('lineageLists').addEventListener('click', (e) => {
+    if (e.target.closest('a.doi')) return;   // ↗ はブラウザに任せ、行選択にしない
     const trend = e.target.closest('li.trend[data-sub]');
     if (trend) { highlightTrend(parseInt(trend.dataset.sub, 10)); return; }
     const li = e.target.closest('li[data-i]');
