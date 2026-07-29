@@ -97,6 +97,87 @@ def attribution(nodes: list[dict], edges: np.ndarray) -> tuple[np.ndarray, np.nd
     return level, out
 
 
+# カテゴリカル配色は 8 スロットまで(dataviz: 9個目は生成せず「その他」に畳む)。
+LAB_SLOTS = 8
+
+
+def lab_lines(
+    nodes: list[dict], edges: np.ndarray, level: np.ndarray
+) -> tuple[np.ndarray, np.ndarray, list[dict]]:
+    """ラボ(= ラストオーサー)ごとの系譜を取り出し、上位に色スロットを割り当てる。
+
+    ラボの定義は level 2、つまり**引用元と引用先のラストオーサーが同じ**エッジ。
+    その本数が多いラストオーサーほど「長い自分の系譜」を持っている。
+
+    色はカテゴリカルなので 8 スロットまで(dataviz の非交渉ルール:
+    9個目に新しい色相を作らず「その他」に畳む)。9位以下のラボの線は
+    「その他のラボ」として単色にまとめる。
+
+    戻り値: (エッジのスロット, ノードのスロット, ラボ一覧)
+            スロットは 0..7、8 = その他のラボ、255 = ラボ線ではない
+    """
+    last_authors = [n.get("last_author") for n in nodes]
+    dst = edges[:, 1].astype(np.int64)
+
+    lab_edges: dict[str, int] = {}
+    for e in np.flatnonzero(level == 2):
+        a = last_authors[dst[e]]
+        if a:
+            lab_edges[a] = lab_edges.get(a, 0) + 1
+
+    ranked = sorted(lab_edges.items(), key=lambda kv: -kv[1])
+    slot_of = {a: i for i, (a, _) in enumerate(ranked[:LAB_SLOTS])}
+
+    edge_lab = np.full(len(edges), 255, dtype=np.uint8)
+    for e in np.flatnonzero(level == 2):
+        a = last_authors[dst[e]]
+        if a:
+            edge_lab[e] = slot_of.get(a, LAB_SLOTS)
+
+    # ノード側は「自分のラストオーサーがそのラボか」。ラボ線に乗っていない論文は 255。
+    on_lab = np.zeros(len(nodes), dtype=bool)
+    for e in np.flatnonzero(level == 2):
+        on_lab[edges[e, 0]] = True
+        on_lab[edges[e, 1]] = True
+    node_lab = np.full(len(nodes), 255, dtype=np.uint8)
+    for i, a in enumerate(last_authors):
+        if a and on_lab[i]:
+            node_lab[i] = slot_of.get(a, LAB_SLOTS)
+
+    names = _author_names()
+    labs = []
+    for a, cnt in ranked[:LAB_SLOTS]:
+        papers = [i for i, la in enumerate(last_authors) if la == a and on_lab[i]]
+        labs.append({
+            "author_id": a,
+            "name": names.get(a, a),
+            "edges": cnt,
+            "papers": len(papers),
+            "years": [min(nodes[i]["year"] for i in papers),
+                      max(nodes[i]["year"] for i in papers)] if papers else None,
+        })
+
+    other = sum(c for _, c in ranked[LAB_SLOTS:])
+    print(f"  ラボ線: {len(ranked):,} ラボ / 上位{LAB_SLOTS}に色を割当(残り {other:,} エッジは「その他のラボ」)")
+    for lab in labs:
+        yr = f"{lab['years'][0]}–{lab['years'][1]}" if lab["years"] else "-"
+        print(f"    {lab['edges']:>4} 本  {yr}  {lab['name']}")
+    return edge_lab, node_lab, labs
+
+
+def _author_names() -> dict[str, str]:
+    """OpenAlex author ID → 表示名。nodes.jsonl は ID しか持たないので works から拾う。"""
+    path = ROOT / "data" / "openalex" / "works.jsonl"
+    names: dict[str, str] = {}
+    if not path.exists():
+        return names
+    for line in path.open():
+        for a in (json.loads(line).get("authors") or []):
+            if a.get("id") and a.get("name"):
+                names.setdefault(a["id"], a["name"])
+    return names
+
+
 def layout_index(nodes: list[dict], years: np.ndarray) -> np.ndarray:
     """ベースライン: 年内は元の順序のまま等間隔に置く。"""
     y = np.zeros(len(nodes), dtype=np.float32)
@@ -544,9 +625,12 @@ def main() -> None:
     wnorm = np.clip((weights - lo) / max(hi - lo, 1e-9), 0.0, 1.0).astype(np.float32)
 
     level, node_attr = attribution(nodes, edges)
+    edge_lab, node_lab, labs = lab_lines(nodes, edges, level)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     level.tofile(OUT_DIR / "edge_attr.bin")
+    edge_lab.tofile(OUT_DIR / "edge_lab.bin")
+    node_lab.tofile(OUT_DIR / "node_lab.bin")
     node_attr.tofile(OUT_DIR / "node_attr.bin")
     pos.tofile(OUT_DIR / "nodes.bin")
     edges.astype(np.uint32).tofile(OUT_DIR / "edges.bin")
@@ -556,6 +640,7 @@ def main() -> None:
         "mode": args.mode,
         "jitter": args.jitter,
         "bands": extra.get("bands"),
+        "labs": labs,
         "subbands": extra.get("subbands"),
         "node_count": len(nodes),
         "edge_count": int(len(edges)),
@@ -568,6 +653,7 @@ def main() -> None:
                 "c": n.get("cited_by_count") or 0,
                 "t": n.get("title") or "",
                 "d": n.get("doi"),
+                "r": n.get("refs_total") or 0,
                 # 帯 / サブ帯の所属。系譜を選んだとき「どのトレンドから来て
                 # どのトレンドへ広がったか」を数えるのに使う。
                 "s": s,

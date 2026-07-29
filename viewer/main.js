@@ -72,43 +72,58 @@ const LINEAGE_COLORS = `
   const vec3 C_MATCH = vec3(1.00, 0.90, 0.35);   // 検索ヒット
 `;
 
-// 帰属(誰がその線を作ったか)の色。位置が「いつ・どのトレンドか」を既に表しているので、
-// 色は位置が表現していない情報に使う。
-const ATTR_COLORS = `
-  const vec3 C_INDEP  = vec3(0.30, 0.52, 0.95);  // 独立(著者の重なりなし)
-  const vec3 C_SHARED = vec3(1.00, 0.72, 0.25);  // 著者は重なるがラストオーサーは別
-  const vec3 C_LAB    = vec3(1.00, 0.28, 0.55);  // 同一ラストオーサー = 1ラボの系譜
-`;
+// ラボ(= ラストオーサー)ごとの色。位置が「いつ・どのトレンドか」を既に表しているので、
+// 色は位置が表現していない情報 = 誰の系譜かに使う。
+//
+// 配色は dataviz リファレンスパレットの dark ステップをその順序のまま。
+// カテゴリカルは 8 スロットが上限で、9個目以降は色相を作らず「その他のラボ」に畳む。
+// 隣接ペア基準では全スロット合格(最悪 CVD ΔE 8.4)。ラボの線は帯ごとに離れて出るので
+// この基準で妥当だが、6–8 の帯域は**二次符号化が必須**なので凡例のクリック絞り込みを付ける。
+const LAB_HEX = ['#3987e5', '#d95926', '#199e70', '#c98500',
+                 '#d55181', '#008300', '#9085e9', '#e66767'];
+const LAB_OTHER = '#59617a';   // 9位以下のラボ(色付き8ラボを埋めないよう暗め)
+const NON_LAB = [0.16, 0.19, 0.26];  // ラボ線ではないエッジ
+
+const hexToRgb = (h) => [
+  parseInt(h.slice(1, 3), 16) / 255,
+  parseInt(h.slice(3, 5), 16) / 255,
+  parseInt(h.slice(5, 7), 16) / 255,
+];
+const LAB_RGB = [...LAB_HEX, LAB_OTHER].map(hexToRgb);
 
 const EDGE_VS = `#version 300 es
   in vec2 aPos;
   in float aWeight;
   in float aState;
-  in float aAttr;             // 0=独立 1=著者重複 2=同一ラストオーサー
+  in float aLab;              // 0..7 = 色付きラボ, 8 = その他のラボ, 255 = ラボ線ではない
   ${VIEW}
   ${LINEAGE_COLORS}
-  ${ATTR_COLORS}
   uniform float uThreshold;
   uniform float uAlpha;
   uniform float uSelActive;   // 0 = 選択なし
   uniform float uOnlyLineage; // 1 = 系譜以外を描かない
-  uniform float uColorMode;   // 0 = 帰属, 1 = venue(ノードのみ / エッジは単色)
-  uniform float uAttrOnly;    // 1 = 同一ラボのエッジだけ描く
+  uniform float uColorMode;   // 0 = ラボ, 1 = venue(エッジは単色)
+  uniform float uAttrOnly;    // 1 = ラボ線だけ描く
+  uniform float uIsolate;     // >=0 のときそのスロットのラボだけ描く
+  uniform vec3  uLabColors[9];
   out vec4 vColor;
   void main() {
     bool inLineage = aState > 0.5;
     if (aWeight < uThreshold && !inLineage) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
     if (uSelActive > 0.5 && uOnlyLineage > 0.5 && !inLineage) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
-    if (uAttrOnly > 0.5 && aAttr < 1.5) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
+    bool isLab = aLab < 254.0;
+    if (uAttrOnly > 0.5 && !isLab) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
+    if (uIsolate >= 0.0 && abs(aLab - uIsolate) > 0.5) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
 
     // 重みが大きいほど濃く。重み0のエッジも薄く残す(全体の地形として意味がある)
     float a = uAlpha * (0.25 + 0.75 * aWeight);
     vec3 c = vec3(0.35, 0.55, 0.95);
     if (uColorMode < 0.5) {
-      c = aAttr < 0.5 ? C_INDEP : (aAttr < 1.5 ? C_SHARED : C_LAB);
-      // 同一ラボは全体の 4.7% しかなく、等 alpha だと独立エッジの海に埋もれて
+      c = isLab ? uLabColors[int(aLab)] : vec3(${NON_LAB[0]}, ${NON_LAB[1]}, ${NON_LAB[2]});
+      // ラボ線は全体の 4.7% しかなく、等 alpha だと他のエッジの海に埋もれて
       // 「太いライン」として見えない。可視性のための増幅で、量の表現ではない。
-      a *= aAttr < 0.5 ? 1.0 : (aAttr < 1.5 ? 2.0 : 3.5);
+      // 「その他のラボ」(2,113 ラボ分)は色付き8ラボを埋めてしまうので抑える。
+      a *= aLab < 7.5 ? 4.0 : (isLab ? 0.9 : 0.6);
     }
     if (uSelActive > 0.5) {
       if (aState < 0.5) { a *= 0.12; }                       // 系譜外は沈める
@@ -202,8 +217,8 @@ async function load() {
     fetchBuffer('nodes.bin'),
     fetchBuffer('edges.bin'),
     fetchBuffer('weights.bin'),
-    fetchBuffer('edge_attr.bin'),
-    fetchBuffer('node_attr.bin'),
+    fetchBuffer('edge_lab.bin'),
+    fetchBuffer('node_lab.bin'),
     fetch(DATA + 'meta.json'),
   ]);
   if (!metaRes.ok) throw new Error('meta.json を読めません');
@@ -211,8 +226,8 @@ async function load() {
     pos: new Float32Array(posBuf),
     edges: new Uint32Array(edgeBuf),
     weights: new Float32Array(wBuf),
-    edgeAttr: new Uint8Array(attrBuf),
-    nodeAttr: new Float32Array(nAttrBuf),   // [same_lab, any_overlap] の交互列
+    edgeLab: new Uint8Array(attrBuf),      // 0..8, 255 = ラボ線ではない
+    nodeLab: new Uint8Array(nAttrBuf),
     meta: await metaRes.json(),
   };
 }
@@ -256,7 +271,7 @@ async function main() {
     statsEl.textContent = e.message;
     return;
   }
-  const { pos, edges, weights, edgeAttr, nodeAttr, meta } = data;
+  const { pos, edges, weights, edgeLab, nodeLab, meta } = data;
   const n = meta.node_count;
   const yearMin = meta.year_min, yearMax = meta.year_max;
 
@@ -285,7 +300,7 @@ async function main() {
     edgePos[e * 4] = np[a * 2];     edgePos[e * 4 + 1] = np[a * 2 + 1];
     edgePos[e * 4 + 2] = np[b * 2]; edgePos[e * 4 + 3] = np[b * 2 + 1];
     edgeW[e * 2] = weights[e];      edgeW[e * 2 + 1] = weights[e];
-    edgeA[e * 2] = edgeAttr[e];     edgeA[e * 2 + 1] = edgeAttr[e];
+    edgeA[e * 2] = edgeLab[e];      edgeA[e * 2 + 1] = edgeLab[e];
   }
 
   // ノードの色と大きさ
@@ -303,12 +318,10 @@ async function main() {
     colors[i * 3] = c[0]; colors[i * 3 + 1] = c[1]; colors[i * 3 + 2] = c[2];
     mags[i] = maxMag > 0 ? mags[i] / maxMag : 0;
 
-    // 帰属モードの点の色: 参照のうち同一ラストオーサーの割合で C_INDEP→C_LAB を補間。
-    // 大半のノードは 0 なので sqrt でコントラストを立てる。
-    const t = Math.sqrt(Math.min(1, nodeAttr[i * 2]));
-    attrColors[i * 3]     = 0.30 + (1.00 - 0.30) * t;
-    attrColors[i * 3 + 1] = 0.52 + (0.28 - 0.52) * t;
-    attrColors[i * 3 + 2] = 0.95 + (0.55 - 0.95) * t;
+    // ラボモードの点の色。ラボ線に乗っていない論文はほぼ沈める。
+    const slot = nodeLab[i];
+    const lc = slot < 255 ? LAB_RGB[slot] : NON_LAB;
+    attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
   }
 
   const outAdj = buildCSR(edges, n, true);   // 引用された -> 引用した(未来方向)
@@ -367,7 +380,7 @@ async function main() {
   attrib(edgeProg, 'aPos', buffer(edgePos), 2);
   attrib(edgeProg, 'aWeight', buffer(edgeW), 1);
   attrib(edgeProg, 'aState', edgeStateBuf, 1);
-  attrib(edgeProg, 'aAttr', buffer(edgeA), 1);
+  attrib(edgeProg, 'aLab', buffer(edgeA), 1);
 
   const nodeVao = gl.createVertexArray();
   gl.bindVertexArray(nodeVao);
@@ -469,6 +482,8 @@ async function main() {
     gl.uniform1f(uni(edgeProg, 'uOnlyLineage'), onlyLineage);
     gl.uniform1f(uni(edgeProg, 'uColorMode'), ui.colorMode.value === 'venue' ? 1 : 0);
     gl.uniform1f(uni(edgeProg, 'uAttrOnly'), ui.attrOnly.checked ? 1 : 0);
+    gl.uniform1f(uni(edgeProg, 'uIsolate'), isolatedLab);
+    gl.uniform3fv(uni(edgeProg, 'uLabColors'), LAB_FLAT);
     gl.bindVertexArray(edgeVao);
     gl.drawArrays(gl.LINES, 0, edgeCount * 2);
 
@@ -720,11 +735,20 @@ async function main() {
     return `<h3>${title}</h3><ol>${rows}${more}</ol>`;
   }
 
+  // その論文の参照のうち、何本がコーパス内に着地しているか(= 1ホップ上流の本数)
+  const countRefsInCorpus = (i) => inAdj.start[i + 1] - inAdj.start[i];
+
   function showLineagePanel(i, up, down) {
     const nd = meta.nodes[i];
     document.getElementById('selTitle').textContent = nd.t;
-    document.getElementById('selMeta').textContent =
-      `${nd.y} · ${(nd.v || '?').toUpperCase()} · 被引用 ${nd.c}`;
+    // 系譜が空になるのはデータ欠損ではなく**コーパス境界**のことが多い。
+    // 参照 47 本のうちコーパス内は 3 本、のように必ず出して誤解を防ぐ。
+    const inCorpus = countRefsInCorpus(i);
+    document.getElementById('selMeta').innerHTML =
+      `${nd.y} · ${(nd.v || '?').toUpperCase()} · 被引用 ${nd.c}<br>` +
+      `<span class="cov">参照 ${nd.r} 本中 <b>${inCorpus} 本</b>がこのコーパス内` +
+      (nd.r && !inCorpus ? ' — HCI 13会議の外を引用しているため遡れません' : '') +
+      `</span>`;
     document.getElementById('upCount').textContent = up.size.toLocaleString();
     document.getElementById('downCount').textContent = down.size.toLocaleString();
 
@@ -881,12 +905,25 @@ async function main() {
     drawLegend();
     schedule();
   });
+
+  // 凡例クリックで1ラボに絞り込む(再クリックで解除)。
+  // 8色は隣接ペア基準では通るが CVD ΔE 6–8 の帯域なので、色だけに頼らせない二次符号化。
+  document.getElementById('legend').addEventListener('click', (e) => {
+    const el = e.target.closest('span.lab');
+    if (!el) return;
+    const slot = parseInt(el.dataset.slot, 10);
+    isolatedLab = isolatedLab === slot ? -1 : slot;
+    drawLegend();
+    schedule();
+  });
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') select(-1); });
 
   const venueCounts = {};
   for (const nd of meta.nodes) venueCounts[nd.v] = (venueCounts[nd.v] || 0) + 1;
-  const attrCounts = [0, 0, 0];
-  for (const lv of edgeAttr) attrCounts[lv]++;
+  let otherLabEdges = 0;
+  for (const lv of edgeLab) if (lv === 8) otherLabEdges++;
+  const LAB_FLAT = new Float32Array(LAB_RGB.flat());
+  let isolatedLab = -1;
 
   function drawLegend() {
     const el = document.getElementById('legend');
@@ -901,11 +938,18 @@ async function main() {
         .join('');
       return;
     }
-    const pct = (k) => ((attrCounts[k] / edgeCount) * 100).toFixed(1);
-    el.innerHTML =
-      `<span><i style="background:rgb(77,133,242)"></i>独立(著者の重なりなし) ${pct(0)}%</span>` +
-      `<span><i style="background:rgb(255,184,64)"></i>著者は重なるが別ラストオーサー ${pct(1)}%</span>` +
-      `<span><i style="background:rgb(255,71,140)"></i>同一ラストオーサー = 1ラボの系譜 ${pct(2)}%</span>`;
+    // ラボ凡例。色だけに頼らせないため、クリックで1ラボに絞り込める(二次符号化)。
+    el.innerHTML = (meta.labs || [])
+      .map((lab, i) => {
+        const on = isolatedLab < 0 || isolatedLab === i;
+        return `<span class="lab${on ? '' : ' off'}" data-slot="${i}" title="${escapeHtml(lab.name)} · ` +
+               `${lab.papers}本 · ${lab.edges}リンク">` +
+               `<i style="background:${LAB_HEX[i]}"></i>${escapeHtml(lab.name)} ` +
+               `<b>${lab.years ? lab.years[0] + '–' + lab.years[1] : ''}</b></span>`;
+      })
+      .join('') +
+      `<span class="lab${isolatedLab < 0 || isolatedLab === 8 ? '' : ' off'}" data-slot="8">` +
+      `<i style="background:${LAB_OTHER}"></i>その他のラボ ${otherLabEdges.toLocaleString()}リンク</span>`;
   }
   drawLegend();
 

@@ -120,6 +120,10 @@ def main() -> None:
                         "venue_key": w.get("venue_key"),
                         "doi": w.get("doi"),
                         "cited_by_count": w.get("cited_by_count"),
+                        # 参照リスト全体の本数(コーパス外を含む)。
+                        # 「系譜が空」がデータ欠損ではなくコーパス境界のせいだと
+                        # UI 側で示すために持つ。
+                        "refs_total": len(w.get("refs") or []),
                         "authors": [a["id"] for a in (w.get("authors") or []) if a.get("id")],
                         "last_author": next(
                             (a["id"] for a in reversed(w.get("authors") or []) if a.get("id")), None

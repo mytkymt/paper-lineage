@@ -37,8 +37,12 @@
   #searchResults .count { color: #6d7488; border: 0; cursor: default; }
   .hint { color: #5d6478; font-size: 11px; margin-top: 6px; }
 
-  #legend { bottom: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 4px 10px; max-width: 420px; }
+  #legend { bottom: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: 620px; }
   #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
+  #legend span.lab { cursor: pointer; }
+  #legend span.lab:hover { color: #fff; }
+  #legend span.lab.off { opacity: .35; }
+  #legend span.lab b { color: #6d7488; font-weight: 400; font-variant-numeric: tabular-nums; }
   #legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
 
   #tooltip { position: fixed; pointer-events: none; max-width: 380px; display: none;
@@ -51,6 +55,8 @@
              overflow-y: auto; }
   #lineage h2 { margin: 0 0 2px; font-size: 12px; color: #eef; font-weight: 600; }
   #lineage .meta { color: #7f879b; margin-bottom: 8px; }
+  #lineage .cov { color: #6d7488; font-size: 11px; }
+  #lineage .cov b { color: #aab2c4; }
   #lineage .counts { display: flex; gap: 10px; margin-bottom: 8px; }
   #lineage .counts b { font-variant-numeric: tabular-nums; }
   #lineage .up b { color: #4fd2c2; }
@@ -129,7 +135,7 @@
   <div class="row">
     <label>色</label>
     <select id="colorMode">
-      <option value="attr">帰属(誰が作った線か)</option>
+      <option value="attr">ラボ(誰の系譜か)</option>
       <option value="venue">会議 (venue)</option>
     </select>
     <span class="val"></span>
