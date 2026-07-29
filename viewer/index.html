@@ -27,6 +27,8 @@
             border: 1px solid #2b3142; border-radius: 5px; padding: 5px 7px; font: inherit;
             margin-bottom: 4px; }
   #search:focus { outline: none; border-color: #4a5473; }
+  #colorMode { flex: 1; min-width: 0; background: #0d0f16; color: #d7dae2; font: inherit;
+               border: 1px solid #2b3142; border-radius: 5px; padding: 3px 5px; }
   #searchResults { max-height: 190px; overflow-y: auto; margin-bottom: 4px; }
   #searchResults div { padding: 3px 0; border-top: 1px solid #1c2029; color: #aab2c4;
                        cursor: pointer; font-size: 11px; }
@@ -123,6 +125,19 @@
     <!-- 既定は 2 ホップ。無制限だと数千本が塗り潰されて「系譜」として読めなくなる。 -->
     <input id="depth" type="range" min="1" max="9" step="1" value="2">
     <span class="val" id="depthVal">2ホップ</span>
+  </div>
+  <div class="row">
+    <label>色</label>
+    <select id="colorMode">
+      <option value="attr">帰属(誰が作った線か)</option>
+      <option value="venue">会議 (venue)</option>
+    </select>
+    <span class="val"></span>
+  </div>
+  <div class="row">
+    <label>ラボ線のみ</label>
+    <input id="attrOnly" type="checkbox">
+    <span class="val"></span>
   </div>
   <div class="row">
     <label>系譜のみ</label>

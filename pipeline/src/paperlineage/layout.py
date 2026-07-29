@@ -49,6 +49,54 @@ def load() -> tuple[list[dict], np.ndarray, np.ndarray]:
     return nodes, edges, weights
 
 
+def attribution(nodes: list[dict], edges: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """「その線を誰が作ったか」をエッジ単位・ノード単位で出す。
+
+    色分けの方針(2026-07-29 決定): 位置(時間軸 + 帯)が「いつ・どのトレンドか」を
+    既に表しているので、色は位置が表現していない情報に使う。→ **帰属**。
+
+    エッジを3段階に分ける。「著者が1人でも重なれば同じラボ」は粗すぎるため:
+      0 = 独立      著者の重なりなし
+      1 = 著者重複  著者が重なるが、ラストオーサーは別
+                    (指導教員が変わった / 共同研究 / 大規模著者リストの偶然の重なり)
+      2 = 同一ラボ  **ラストオーサーが同じ**。HCI は last author = PI の慣行が強いので、
+                    これが「1ラボの系譜」に一番近い信号。
+
+    ノード側は、そのノードが引用している側のエッジについて、
+    段階2の割合(same_lab)と段階1以上の割合(any_overlap)を別々に持つ。
+
+    著者情報が無いノードに接するエッジは判定不能として 0 に倒す(自己引用を過大評価しない)。
+    """
+    author_sets = [set(n.get("authors") or []) for n in nodes]
+    last_authors = [n.get("last_author") for n in nodes]
+    src, dst = edges[:, 0].astype(np.int64), edges[:, 1].astype(np.int64)
+
+    level = np.zeros(len(edges), dtype=np.uint8)
+    for e in range(len(edges)):
+        u, v = src[e], dst[e]
+        au, av = author_sets[u], author_sets[v]
+        if not au or not av or au.isdisjoint(av):
+            continue
+        lu, lv = last_authors[u], last_authors[v]
+        level[e] = 2 if (lu is not None and lu == lv) else 1
+
+    n = len(nodes)
+    total = np.bincount(dst, minlength=n).astype(np.float64)
+    same_lab = np.bincount(dst, weights=(level == 2).astype(np.float64), minlength=n)
+    overlap = np.bincount(dst, weights=(level >= 1).astype(np.float64), minlength=n)
+    out = np.zeros((n, 2), dtype=np.float32)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        out[:, 0] = np.divide(same_lab, total, out=np.zeros(n), where=total > 0)
+        out[:, 1] = np.divide(overlap, total, out=np.zeros(n), where=total > 0)
+
+    counts = np.bincount(level, minlength=3)
+    print(
+        f"  帰属: 独立 {counts[0]:,} / 著者重複 {counts[1]:,} / 同一ラストオーサー {counts[2]:,}"
+        f"(全 {len(edges):,} エッジ)"
+    )
+    return level, out
+
+
 def layout_index(nodes: list[dict], years: np.ndarray) -> np.ndarray:
     """ベースライン: 年内は元の順序のまま等間隔に置く。"""
     y = np.zeros(len(nodes), dtype=np.float32)
@@ -495,7 +543,11 @@ def main() -> None:
     hi = weights.max()
     wnorm = np.clip((weights - lo) / max(hi - lo, 1e-9), 0.0, 1.0).astype(np.float32)
 
+    level, node_attr = attribution(nodes, edges)
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    level.tofile(OUT_DIR / "edge_attr.bin")
+    node_attr.tofile(OUT_DIR / "node_attr.bin")
     pos.tofile(OUT_DIR / "nodes.bin")
     edges.astype(np.uint32).tofile(OUT_DIR / "edges.bin")
     wnorm.tofile(OUT_DIR / "weights.bin")

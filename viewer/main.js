@@ -72,25 +72,44 @@ const LINEAGE_COLORS = `
   const vec3 C_MATCH = vec3(1.00, 0.90, 0.35);   // 検索ヒット
 `;
 
+// 帰属(誰がその線を作ったか)の色。位置が「いつ・どのトレンドか」を既に表しているので、
+// 色は位置が表現していない情報に使う。
+const ATTR_COLORS = `
+  const vec3 C_INDEP  = vec3(0.30, 0.52, 0.95);  // 独立(著者の重なりなし)
+  const vec3 C_SHARED = vec3(1.00, 0.72, 0.25);  // 著者は重なるがラストオーサーは別
+  const vec3 C_LAB    = vec3(1.00, 0.28, 0.55);  // 同一ラストオーサー = 1ラボの系譜
+`;
+
 const EDGE_VS = `#version 300 es
   in vec2 aPos;
   in float aWeight;
   in float aState;
+  in float aAttr;             // 0=独立 1=著者重複 2=同一ラストオーサー
   ${VIEW}
   ${LINEAGE_COLORS}
+  ${ATTR_COLORS}
   uniform float uThreshold;
   uniform float uAlpha;
   uniform float uSelActive;   // 0 = 選択なし
   uniform float uOnlyLineage; // 1 = 系譜以外を描かない
+  uniform float uColorMode;   // 0 = 帰属, 1 = venue(ノードのみ / エッジは単色)
+  uniform float uAttrOnly;    // 1 = 同一ラボのエッジだけ描く
   out vec4 vColor;
   void main() {
     bool inLineage = aState > 0.5;
     if (aWeight < uThreshold && !inLineage) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
     if (uSelActive > 0.5 && uOnlyLineage > 0.5 && !inLineage) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
+    if (uAttrOnly > 0.5 && aAttr < 1.5) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
 
     // 重みが大きいほど濃く。重み0のエッジも薄く残す(全体の地形として意味がある)
     float a = uAlpha * (0.25 + 0.75 * aWeight);
     vec3 c = vec3(0.35, 0.55, 0.95);
+    if (uColorMode < 0.5) {
+      c = aAttr < 0.5 ? C_INDEP : (aAttr < 1.5 ? C_SHARED : C_LAB);
+      // 同一ラボは全体の 4.7% しかなく、等 alpha だと独立エッジの海に埋もれて
+      // 「太いライン」として見えない。可視性のための増幅で、量の表現ではない。
+      a *= aAttr < 0.5 ? 1.0 : (aAttr < 1.5 ? 2.0 : 3.5);
+    }
     if (uSelActive > 0.5) {
       if (aState < 0.5) { a *= 0.12; }                       // 系譜外は沈める
       else {
@@ -179,10 +198,12 @@ async function fetchBuffer(name) {
 }
 
 async function load() {
-  const [posBuf, edgeBuf, wBuf, metaRes] = await Promise.all([
+  const [posBuf, edgeBuf, wBuf, attrBuf, nAttrBuf, metaRes] = await Promise.all([
     fetchBuffer('nodes.bin'),
     fetchBuffer('edges.bin'),
     fetchBuffer('weights.bin'),
+    fetchBuffer('edge_attr.bin'),
+    fetchBuffer('node_attr.bin'),
     fetch(DATA + 'meta.json'),
   ]);
   if (!metaRes.ok) throw new Error('meta.json を読めません');
@@ -190,6 +211,8 @@ async function load() {
     pos: new Float32Array(posBuf),
     edges: new Uint32Array(edgeBuf),
     weights: new Float32Array(wBuf),
+    edgeAttr: new Uint8Array(attrBuf),
+    nodeAttr: new Float32Array(nAttrBuf),   // [same_lab, any_overlap] の交互列
     meta: await metaRes.json(),
   };
 }
@@ -233,7 +256,7 @@ async function main() {
     statsEl.textContent = e.message;
     return;
   }
-  const { pos, edges, weights, meta } = data;
+  const { pos, edges, weights, edgeAttr, nodeAttr, meta } = data;
   const n = meta.node_count;
   const yearMin = meta.year_min, yearMax = meta.year_max;
 
@@ -256,11 +279,13 @@ async function main() {
   const edgeCount = edges.length / 2;
   const edgePos = new Float32Array(edgeCount * 4);
   const edgeW = new Float32Array(edgeCount * 2);
+  const edgeA = new Float32Array(edgeCount * 2);
   for (let e = 0; e < edgeCount; e++) {
     const a = edges[e * 2], b = edges[e * 2 + 1];
     edgePos[e * 4] = np[a * 2];     edgePos[e * 4 + 1] = np[a * 2 + 1];
     edgePos[e * 4 + 2] = np[b * 2]; edgePos[e * 4 + 3] = np[b * 2 + 1];
     edgeW[e * 2] = weights[e];      edgeW[e * 2 + 1] = weights[e];
+    edgeA[e * 2] = edgeAttr[e];     edgeA[e * 2 + 1] = edgeAttr[e];
   }
 
   // ノードの色と大きさ
@@ -272,10 +297,18 @@ async function main() {
     mags[i] = m;
     if (m > maxMag) maxMag = m;
   }
+  const attrColors = new Float32Array(n * 3);
   for (let i = 0; i < n; i++) {
     const c = VENUE_COLORS[meta.nodes[i].v] || DEFAULT_COLOR;
     colors[i * 3] = c[0]; colors[i * 3 + 1] = c[1]; colors[i * 3 + 2] = c[2];
     mags[i] = maxMag > 0 ? mags[i] / maxMag : 0;
+
+    // 帰属モードの点の色: 参照のうち同一ラストオーサーの割合で C_INDEP→C_LAB を補間。
+    // 大半のノードは 0 なので sqrt でコントラストを立てる。
+    const t = Math.sqrt(Math.min(1, nodeAttr[i * 2]));
+    attrColors[i * 3]     = 0.30 + (1.00 - 0.30) * t;
+    attrColors[i * 3 + 1] = 0.52 + (0.28 - 0.52) * t;
+    attrColors[i * 3 + 2] = 0.95 + (0.55 - 0.95) * t;
   }
 
   const outAdj = buildCSR(edges, n, true);   // 引用された -> 引用した(未来方向)
@@ -334,11 +367,14 @@ async function main() {
   attrib(edgeProg, 'aPos', buffer(edgePos), 2);
   attrib(edgeProg, 'aWeight', buffer(edgeW), 1);
   attrib(edgeProg, 'aState', edgeStateBuf, 1);
+  attrib(edgeProg, 'aAttr', buffer(edgeA), 1);
 
   const nodeVao = gl.createVertexArray();
   gl.bindVertexArray(nodeVao);
   attrib(nodeProg, 'aPos', buffer(np), 2);
-  attrib(nodeProg, 'aColor', buffer(colors), 3);
+  const venueColorBuf = buffer(colors);
+  const attrColorBuf = buffer(attrColors);
+  attrib(nodeProg, 'aColor', attrColorBuf, 3);
   attrib(nodeProg, 'aMag', buffer(mags), 1);
   attrib(nodeProg, 'aState', nodeStateBuf, 1);
   gl.bindVertexArray(null);
@@ -396,6 +432,8 @@ async function main() {
     psize: document.getElementById('psize'),
     depth: document.getElementById('depth'),
     only: document.getElementById('only'),
+    colorMode: document.getElementById('colorMode'),
+    attrOnly: document.getElementById('attrOnly'),
   };
 
   let selected = -1;
@@ -429,6 +467,8 @@ async function main() {
     gl.uniform1f(uni(edgeProg, 'uAlpha'), parseFloat(ui.alpha.value));
     gl.uniform1f(uni(edgeProg, 'uSelActive'), selActive);
     gl.uniform1f(uni(edgeProg, 'uOnlyLineage'), onlyLineage);
+    gl.uniform1f(uni(edgeProg, 'uColorMode'), ui.colorMode.value === 'venue' ? 1 : 0);
+    gl.uniform1f(uni(edgeProg, 'uAttrOnly'), ui.attrOnly.checked ? 1 : 0);
     gl.bindVertexArray(edgeVao);
     gl.drawArrays(gl.LINES, 0, edgeCount * 2);
 
@@ -761,7 +801,12 @@ async function main() {
     cell.push(i);
   }
 
+  // 系譜表示中は系譜内のノードだけを拾う。
+  // 沈めて表示しているノードにホバーやクリックが吸われると、系譜を読んでいる最中に
+  // 関係のない論文へ飛んでしまうため。副作用として、系譜外をクリックすると
+  // 「ヒットなし」になり、そのまま選択解除(全体ビューに復帰)になる。
   function pick(clientX, clientY) {
+    const restrict = selected >= 0;
     const { scale } = scaleOffset();
     const [ux, uy] = screenToNorm(clientX, clientY);
     // 画面上 12px を正規化座標に直したものを探索半径にする
@@ -776,6 +821,7 @@ async function main() {
         const cell = grid.get(gy * GRID + gx);
         if (!cell) continue;
         for (const i of cell) {
+          if (restrict && nodeState[i] === S_NONE) continue;
           const dx = (np[i * 2] - ux) / rx, dy = (np[i * 2 + 1] - uy) / ry;
           const d = dx * dx + dy * dy;
           if (d < bestD) { bestD = d; best = i; }
@@ -826,18 +872,42 @@ async function main() {
     if (selected >= 0) select(selected);
   });
   ui.only.addEventListener('change', schedule);
+  ui.attrOnly.addEventListener('change', schedule);
+  ui.colorMode.addEventListener('change', () => {
+    // 点の色は属性バッファを差し替える(毎フレーム分岐させない)
+    gl.bindVertexArray(nodeVao);
+    attrib(nodeProg, 'aColor', ui.colorMode.value === 'venue' ? venueColorBuf : attrColorBuf, 3);
+    gl.bindVertexArray(null);
+    drawLegend();
+    schedule();
+  });
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') select(-1); });
 
   const venueCounts = {};
   for (const nd of meta.nodes) venueCounts[nd.v] = (venueCounts[nd.v] || 0) + 1;
-  document.getElementById('legend').innerHTML = Object.entries(venueCounts)
-    .sort((a, b) => b[1] - a[1])
-    .map(([v, c]) => {
-      const col = VENUE_COLORS[v] || DEFAULT_COLOR;
-      const rgb = col.map((x) => Math.round(x * 255)).join(',');
-      return `<span><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()} ${c}</span>`;
-    })
-    .join('');
+  const attrCounts = [0, 0, 0];
+  for (const lv of edgeAttr) attrCounts[lv]++;
+
+  function drawLegend() {
+    const el = document.getElementById('legend');
+    if (ui.colorMode.value === 'venue') {
+      el.innerHTML = Object.entries(venueCounts)
+        .sort((a, b) => b[1] - a[1])
+        .map(([v, c]) => {
+          const col = VENUE_COLORS[v] || DEFAULT_COLOR;
+          const rgb = col.map((x) => Math.round(x * 255)).join(',');
+          return `<span><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()} ${c}</span>`;
+        })
+        .join('');
+      return;
+    }
+    const pct = (k) => ((attrCounts[k] / edgeCount) * 100).toFixed(1);
+    el.innerHTML =
+      `<span><i style="background:rgb(77,133,242)"></i>独立(著者の重なりなし) ${pct(0)}%</span>` +
+      `<span><i style="background:rgb(255,184,64)"></i>著者は重なるが別ラストオーサー ${pct(1)}%</span>` +
+      `<span><i style="background:rgb(255,71,140)"></i>同一ラストオーサー = 1ラボの系譜 ${pct(2)}%</span>`;
+  }
+  drawLegend();
 
   statsEl.textContent =
     `${n.toLocaleString()} 本 / ${edgeCount.toLocaleString()} 引用 · ${yearMin}–${yearMax} · layout=${meta.mode}`;
