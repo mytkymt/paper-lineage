@@ -1,5 +1,69 @@
 # dev-notes — paper-lineage
 
+## 2026-07-29(同日)密度問題を解決 — 帯が見えるようになった
+
+「後半の密度が高すぎて何も見えない」への対処。**2段階の別問題**だったことが分かった。
+
+### 問題1: 加算合成の飽和(描画レイヤ)
+
+0–1 のフレームバッファに直接足していたので、重なりが 20 本程度で白飛びし、
+1980年代(重なり数本)と2020年代(重なり数百本)を同じ線形スケールで見ていた。
+
+→ **RGBA16F の HDR バッファに蓄積し、対数圧縮でトーンマッピング**する2パス構成に変更。
+`log(1 + exposure*v) / log(1 + exposure)` + ガンマ。**データは一切間引いていない。**
+float テクスチャが使えない環境では従来の直接描画にフォールバックする。
+
+これで白飛びは消えたが、**まだ均一な靄のままだった。** → 問題2。
+
+### 問題2: レイアウトが流れを帯にまとめていない(本質)
+
+幹だけ(SPC 上位25%)を描いて診断したところ、**線が上下にジグザグしていた**。原因は
+barycenter の後に**年ごとに順位で [0,1] へ再正規化**していたこと。まとまった集団でも
+その年の論文数に応じて画面いっぱいに引き伸ばされ、同じ流れが年をまたいで同じ帯に留まらない。
+
+試した順:
+
+1. **スペクトル埋め込み(Fiedler ベクトル)** — 失敗。1本の軸は本質的に1回の分割しか
+   表現できず、数十あるトピック集団を分離できない。全体順位変換も結局集団を引き伸ばす。
+2. **コミュニティ帯(採用)** — Louvain でコミュニティを取り、
+   コミュニティ間引用量のスペクトル順で並べ、**論文数に比例した幅の帯**を割り当てる。
+   帯の中はコミュニティ内スペクトル順。→ **横方向の帯がはっきり出た。**
+
+58 コミュニティ → 400本未満を「その他」に統合して 14 帯。所要 6 秒。
+
+得られた帯(上から):
+
+| 本数 | 代表論文 |
+|---:|---|
+| 4534 | KinectFusion / User-defined gestures / FTIR multi-touch |
+| 1469 | ART nonparametric / 触覚 / VR |
+| 3373 | Tangible bits / Technology affordances |
+| 3023 | user satisfaction 尺度 / ubicomp charting |
+| 2495 | UX / context-aware guide / Alone together |
+| 2751 | VizWiz(アクセシビリティ) |
+| 4304 | Social information filtering / AI Literacy / Distributed cognition |
+| 1271 | GPS mobility / Email overload |
+| 1676 | Heuristic evaluation / Computers are social actors |
+| 974 | Awareness in shared workspaces / MTurk / GitHub |
+| 2178 | StudentLife / activity sensing / personal informatics |
+| 4052 | Research through Design |
+| 2903 | Bowling alone / microblogging |
+| 3685 | (コーパス内に引用リンクなし) |
+
+**HCI のサブ分野として読める。** 隣り合う帯が関係の近い分野になっている点も期待どおり。
+
+### 副次的なバグ
+
+小さいコミュニティ約45個が極細帯として密集し、境界線(`#ffffff10`)が重なって
+**白い横線1本に見えていた**。→ `--min-community`(既定400)未満は「その他」帯に統合。
+
+### 追加した機能
+
+- **タイトル検索**: 全語 AND のサブストリング一致。ヒットを黄色で強調し、他を沈める。
+  38k 件の線形走査で十分速い(120ms デバウンス)。
+  例: "fabrication" 131件 → Tangible bits 帯の2015年以降に集中しているのが一目で分かる。
+- **帯ラベル**: 各帯の右端に「年レンジ・本数・代表論文」。**LLM 命名(F3)で置き換える前提の暫定表示。**
+
 ## 2026-07-29 プロジェクト開始
 
 - Vault(Obsidian)側でのアイデア出しから、リポジトリを分離して開始。`~/Repo/paper-lineage`。

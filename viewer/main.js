@@ -30,7 +30,7 @@ const VENUE_COLORS = {
 const DEFAULT_COLOR = [0.55, 0.58, 0.65];
 
 // 選択状態。シェーダにも同じ数値を渡す。
-const S_NONE = 0, S_UP = 1, S_DOWN = 2, S_SELF = 3;
+const S_NONE = 0, S_UP = 1, S_DOWN = 2, S_SELF = 3, S_MATCH = 4;
 
 // ---------- WebGL ヘルパ ----------
 
@@ -66,9 +66,10 @@ const VIEW = `
 `;
 
 const LINEAGE_COLORS = `
-  const vec3 C_UP   = vec3(0.31, 0.82, 0.76);   // 遡る系譜(過去側)
-  const vec3 C_DOWN = vec3(1.00, 0.60, 0.32);   // その後の系譜(未来側)
-  const vec3 C_SELF = vec3(1.00, 1.00, 1.00);
+  const vec3 C_UP    = vec3(0.31, 0.82, 0.76);   // 遡る系譜(過去側)
+  const vec3 C_DOWN  = vec3(1.00, 0.60, 0.32);   // その後の系譜(未来側)
+  const vec3 C_SELF  = vec3(1.00, 1.00, 1.00);
+  const vec3 C_MATCH = vec3(1.00, 0.90, 0.35);   // 検索ヒット
 `;
 
 const EDGE_VS = `#version 300 es
@@ -107,6 +108,28 @@ const EDGE_FS = `#version 300 es
   out vec4 outColor;
   void main() { outColor = vec4(vColor.rgb, 1.0) * vColor.a; }`;
 
+// トーンマッピング用のフルスクリーンパス。
+// エッジは float バッファに加算で「重なり量」を貯め、ここで対数圧縮して 0..1 に落とす。
+// 0-1 バッファに直接足すと重なり 20 本程度で白飛びし、1980年代(数本)と
+// 2020年代(数百本)を同時に見られない。圧縮はデータを間引かずに桁を揃える手段。
+const TONE_VS = `#version 300 es
+  const vec2 P[3] = vec2[3](vec2(-1.0, -1.0), vec2(3.0, -1.0), vec2(-1.0, 3.0));
+  void main() { gl_Position = vec4(P[gl_VertexID], 0.0, 1.0); }`;
+
+const TONE_FS = `#version 300 es
+  precision highp float;
+  uniform sampler2D uTex;
+  uniform float uExposure;
+  uniform float uGamma;
+  out vec4 outColor;
+  void main() {
+    vec3 v = texelFetch(uTex, ivec2(gl_FragCoord.xy), 0).rgb;
+    // 対数圧縮: 重なり量の桁差を潰しつつ、少数の重なりも見えるようにする
+    vec3 mapped = log(1.0 + uExposure * v) / log(1.0 + uExposure);
+    mapped = pow(clamp(mapped, 0.0, 1.0), vec3(uGamma));
+    outColor = vec4(vec3(0.027, 0.031, 0.047) + mapped, 1.0);
+  }`;
+
 const NODE_VS = `#version 300 es
   in vec2 aPos;
   in vec3 aColor;
@@ -130,7 +153,8 @@ const NODE_VS = `#version 300 es
       if (aState < 0.5) { vAlpha = 0.13; }
       else if (aState < 1.5) { vColor = C_UP; size *= 1.5; }
       else if (aState < 2.5) { vColor = C_DOWN; size *= 1.5; }
-      else { vColor = C_SELF; size *= 4.0; }
+      else if (aState < 3.5) { vColor = C_SELF; size *= 4.0; }
+      else { vColor = C_MATCH; size *= 2.6; }
     }
     gl_PointSize = size;
   }`;
@@ -263,6 +287,29 @@ async function main() {
   const edgeProg = program(gl, EDGE_VS, EDGE_FS);
   const nodeProg = program(gl, NODE_VS, NODE_FS);
 
+  // --- HDR 蓄積バッファ ---
+  // float バッファが使えない環境では従来どおり直接描く(白飛びはするが動く)。
+  const hdrOk = !!(gl.getExtension('EXT_color_buffer_float') ||
+                   gl.getExtension('EXT_color_buffer_half_float'));
+  const toneProg = hdrOk ? program(gl, TONE_VS, TONE_FS) : null;
+  const hdrTex = hdrOk ? gl.createTexture() : null;
+  const hdrFbo = hdrOk ? gl.createFramebuffer() : null;
+  let hdrW = 0, hdrH = 0;
+
+  function resizeHdr(w, h) {
+    if (!hdrOk || (w === hdrW && h === hdrH)) return;
+    hdrW = w; hdrH = h;
+    gl.bindTexture(gl.TEXTURE_2D, hdrTex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, w, h, 0, gl.RGBA, gl.HALF_FLOAT, null);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, hdrFbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, hdrTex, 0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  }
+
   function buffer(src, usage) {
     const b = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, b);
@@ -344,6 +391,8 @@ async function main() {
   const ui = {
     thresh: document.getElementById('thresh'),
     alpha: document.getElementById('alpha'),
+    exposure: document.getElementById('exposure'),
+    gamma: document.getElementById('gamma'),
     psize: document.getElementById('psize'),
     depth: document.getElementById('depth'),
     only: document.getElementById('only'),
@@ -351,20 +400,26 @@ async function main() {
 
   let selected = -1;
   let camBeforeSelect = null;  // 選択解除で元の全体ビューに戻せるように覚えておく
+  let searchActive = false;
+
+  // 検索用に小文字化したタイトルを一度だけ作る(毎キーストロークで作り直さない)
+  const lowerTitles = meta.nodes.map((nd) => (nd.t || '').toLowerCase());
 
   function render() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = Math.floor(canvas.clientWidth * dpr), h = Math.floor(canvas.clientHeight * dpr);
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
-    gl.viewport(0, 0, w, h);
-    gl.clearColor(0.027, 0.031, 0.047, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
+    resizeHdr(w, h);
     const { scale, offset } = scaleOffset();
-    const selActive = selected >= 0 ? 1 : 0;
+    const selActive = selected >= 0 || searchActive ? 1 : 0;
     const onlyLineage = ui.only.checked ? 1 : 0;
 
-    // エッジ: 加算合成。重なりが明るくなる = 太い流れが浮かぶ。
+    // エッジ: 加算合成で「重なり量」を貯める。HDR バッファがあればそちらへ。
+    gl.bindFramebuffer(gl.FRAMEBUFFER, hdrOk ? hdrFbo : null);
+    gl.viewport(0, 0, w, h);
+    gl.clearColor(...(hdrOk ? [0, 0, 0, 0] : [0.027, 0.031, 0.047, 1]));
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
     gl.useProgram(edgeProg);
@@ -376,6 +431,22 @@ async function main() {
     gl.uniform1f(uni(edgeProg, 'uOnlyLineage'), onlyLineage);
     gl.bindVertexArray(edgeVao);
     gl.drawArrays(gl.LINES, 0, edgeCount * 2);
+
+    // 蓄積した重なり量を対数圧縮して画面に出す
+    if (hdrOk) {
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.viewport(0, 0, w, h);
+      gl.disable(gl.BLEND);
+      gl.useProgram(toneProg);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, hdrTex);
+      gl.uniform1i(uni(toneProg, 'uTex'), 0);
+      gl.uniform1f(uni(toneProg, 'uExposure'), parseFloat(ui.exposure.value));
+      gl.uniform1f(uni(toneProg, 'uGamma'), parseFloat(ui.gamma.value));
+      gl.bindVertexArray(null);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      gl.enable(gl.BLEND);
+    }
 
     // ノード: 通常合成で上に重ねる
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -406,6 +477,30 @@ async function main() {
       parts.push(`<div style="left:${px.toFixed(1)}px">${year}</div>`);
     }
     axisEl.innerHTML = parts.join('');
+    drawBands(scale, offset);
+  }
+
+  // --- 帯(コミュニティ)の境界とラベル ---
+  // ラベルは今のところ代表論文のタイトル。LLM による命名(F3)で置き換える予定。
+  const bandsEl = document.getElementById('bands');
+  function drawBands(scale, offset) {
+    if (!meta.bands) return;
+    const H = canvas.clientHeight;
+    const parts = [];
+    for (const band of meta.bands) {
+      const top = (band.y0 * scale[1] + offset[1]) * H;
+      const bottom = (band.y1 * scale[1] + offset[1]) * H;
+      if (bottom < 0 || top > H) continue;
+      parts.push(`<div class="sep" style="top:${top.toFixed(1)}px"></div>`);
+      // 帯が細すぎるとラベルが重なって読めないので出さない
+      if (bottom - top < 26) continue;
+      const hint = (band.label_hint && band.label_hint[0]) || '';
+      const yrs = band.years ? `${band.years[0]}–${band.years[1]} · ` : '';
+      const label = `${yrs}${band.papers}本 · ${hint}`;
+      const mid = Math.max(4, Math.min(H - 16, (top + bottom) / 2 - 7));
+      parts.push(`<div class="lbl" style="top:${mid.toFixed(1)}px">${escapeHtml(label)}</div>`);
+    }
+    bandsEl.innerHTML = parts.join('');
   }
 
   // --- 系譜(選択した論文の上流・下流)---
@@ -426,9 +521,19 @@ async function main() {
     return seen;
   }
 
+  function uploadStates() {
+    gl.bindBuffer(gl.ARRAY_BUFFER, nodeStateBuf);
+    gl.bufferSubData(gl.ARRAY_BUFFER, 0, nodeState);
+    gl.bindBuffer(gl.ARRAY_BUFFER, edgeStateBuf);
+    gl.bufferSubData(gl.ARRAY_BUFFER, 0, edgeState);
+    schedule();
+  }
+
   function select(i, keepCamera) {
     if (i >= 0 && selected < 0) camBeforeSelect = { ...cam };
     selected = i;
+    searchActive = false;
+    document.body.classList.toggle('has-selection', i >= 0);
     nodeState.fill(0);
     edgeState.fill(0);
 
@@ -459,12 +564,70 @@ async function main() {
       if (!keepCamera) fitTo([i, ...up, ...down]);
     }
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, nodeStateBuf);
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, nodeState);
-    gl.bindBuffer(gl.ARRAY_BUFFER, edgeStateBuf);
-    gl.bufferSubData(gl.ARRAY_BUFFER, 0, edgeState);
-    schedule();
+    uploadStates();
   }
+
+  // --- 検索 ---
+  // 全語 AND のサブストリング一致。38k 件の線形走査で十分速い。
+  const MAX_MARK = 4000;   // 描画で強調する上限
+  const MAX_LIST = 40;     // 一覧に出す件数
+
+  function runSearch(query) {
+    const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+    const box = document.getElementById('searchResults');
+
+    if (!terms.length) {
+      if (searchActive) { searchActive = false; nodeState.fill(0); edgeState.fill(0); uploadStates(); }
+      box.innerHTML = '';
+      return;
+    }
+
+    const hits = [];
+    for (let i = 0; i < lowerTitles.length; i++) {
+      const t = lowerTitles[i];
+      let ok = true;
+      for (const term of terms) { if (!t.includes(term)) { ok = false; break; } }
+      if (ok) hits.push(i);
+    }
+    hits.sort((a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0));
+
+    // 選択中なら解除してから検索表示に切り替える
+    selected = -1;
+    lineageEl.style.display = 'none';
+    document.body.classList.remove('has-selection');
+    searchActive = hits.length > 0;
+    nodeState.fill(0);
+    edgeState.fill(0);
+    for (const i of hits.slice(0, MAX_MARK)) nodeState[i] = S_MATCH;
+    uploadStates();
+
+    const rows = hits.slice(0, MAX_LIST).map((i) => {
+      const nd = meta.nodes[i];
+      return `<div data-i="${i}"><span class="y">${nd.y}</span>${escapeHtml(nd.t.slice(0, 80))}</div>`;
+    });
+    const note = hits.length > MAX_LIST
+      ? `<div class="count">${hits.length.toLocaleString()} 件中 ${MAX_LIST} 件を表示` +
+        (hits.length > MAX_MARK ? `(強調は上位 ${MAX_MARK.toLocaleString()} 件)` : '') + '</div>'
+      : `<div class="count">${hits.length} 件</div>`;
+    box.innerHTML = note + rows.join('');
+    box.dataset.first = hits.length ? String(hits[0]) : '';
+  }
+
+  const searchEl = document.getElementById('search');
+  let searchTimer = null;
+  searchEl.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => runSearch(searchEl.value), 120);
+  });
+  searchEl.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    const first = document.getElementById('searchResults').dataset.first;
+    if (first) select(parseInt(first, 10));
+  });
+  document.getElementById('searchResults').addEventListener('click', (e) => {
+    const row = e.target.closest('div[data-i]');
+    if (row) select(parseInt(row.dataset.i, 10));
+  });
 
   function listHtml(title, ids, limit) {
     if (!ids.length) return '';
@@ -603,6 +766,14 @@ async function main() {
   });
   ui.alpha.addEventListener('input', () => {
     document.getElementById('alphaVal').textContent = fmt(ui.alpha.value);
+    schedule();
+  });
+  ui.exposure.addEventListener('input', () => {
+    document.getElementById('exposureVal').textContent = Number(ui.exposure.value).toFixed(0);
+    schedule();
+  });
+  ui.gamma.addEventListener('input', () => {
+    document.getElementById('gammaVal').textContent = Number(ui.gamma.value).toFixed(2);
     schedule();
   });
   ui.psize.addEventListener('input', () => {
