@@ -7,7 +7,10 @@
   :root { color-scheme: dark; }
   html, body { margin: 0; height: 100%; background: #07080c; color: #d7dae2;
                font: 12px/1.5 -apple-system, "Helvetica Neue", "Hiragino Sans", sans-serif; }
-  #canvas { position: fixed; inset: 0; display: block; cursor: grab; }
+  /* canvas は置換要素なので inset:0 だけでは伸びず、width/height 属性(描画バッファ)が
+     CSS サイズとして使われてしまう。毎フレーム dpr 倍に膨らむので必ず CSS で固定する。 */
+  #canvas { position: fixed; inset: 0; width: 100vw; height: 100vh;
+            display: block; cursor: grab; }
   #canvas.dragging { cursor: grabbing; }
 
   .panel { position: fixed; background: rgba(12,14,20,.86); backdrop-filter: blur(8px);
