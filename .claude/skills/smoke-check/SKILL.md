@@ -35,8 +35,27 @@ console must be clean.
   sub-field; clicking a different row switches (must not AND to empty); re-click restores.
 - **Hover during selection** only hits lineage nodes; clicking empty space clears
   selection and restores the camera.
+- **Person focus (legend chip)**: hover/click only hits that person's papers (others are
+  excluded, radius widened to 26px); their points render enlarged.
+- **Axis-split zoom**: Shift+scroll must leave the year axis unchanged; Alt+scroll must
+  leave bands unchanged.
 - **Toggles**: Scope (any/last) changes line spread; Color venue/people swaps legend.
 - Esc clears selection.
+
+## 3.5 Testing pitfalls (each cost real time)
+
+- **Module caching**: the pane caches `main.js` aggressively. `index.html` loads it as
+  `main.js?v=N` — bump N on every edit, or you will debug stale code against fresh disk.
+- **Hidden pane**: while the browser pane is hidden, `clientWidth/Height` can be 0 and
+  rAF never fires. `render()` guards zero-size and `visibilitychange` reschedules, but
+  **pick() tests are meaningless while hidden** (all coordinates degenerate) — take a
+  screenshot first to force a visible frame, then test.
+- **Re-query legend chips after every click** — the legend re-renders, detaching old nodes.
+- `window.PL` exposes `pick`, `meta`, `nodeSlot()`, `isolated()`, `pinned()`,
+  `screenPos(i)` for closure-internal verification.
+- A "colored dot near a person's line" is not necessarily their paper — verify with
+  `PL.meta.nodes[i]` before concluding a pick bug (CoDine looked like an Ishii dot;
+  it is Adrian Cheok's).
 
 ## 4. Invariants
 

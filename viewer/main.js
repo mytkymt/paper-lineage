@@ -173,6 +173,7 @@ const NODE_VS = `#version 300 es
   in vec2 aPos;
   in vec3 aColor;
   in float aMag;      // log(1 + cited_by) を 0..1 に正規化したもの
+  in float aBoost;    // 固定した人の論文を拡大(クリックしやすさ)
   in float aState;
   ${VIEW}
   ${LINEAGE_COLORS}
@@ -185,7 +186,7 @@ const NODE_VS = `#version 300 es
     bool inLineage = aState > 0.5;
     if (uSelActive > 0.5 && uOnlyLineage > 0.5 && !inLineage) { gl_Position = vec4(2.0); return; }
     gl_Position = vec4(toClip(aPos), 0.0, 1.0);
-    float size = uPointSize * (0.7 + 1.8 * aMag);
+    float size = uPointSize * (0.7 + 1.8 * aMag) * aBoost;
     vColor = aColor;
     vAlpha = 0.85;
     if (uSelActive > 0.5) {
@@ -325,7 +326,7 @@ async function main() {
     // ラボモードの点の色は applyChosenLabs() が埋める(選択で変わるため)
   }
 
-  let edgeSlotBuf = null, attrColorBuf = null;
+  let edgeSlotBuf = null, attrColorBuf = null, nodeBoostBuf = null;
   // 選んだラボ → 色スロット。選ばれていないラボ線は「その他のラボ」スロット(8)。
   // 著者 -> その人の論文。人での検索と色付けに使う。
   const papersByAuthor = new Map();
@@ -338,6 +339,11 @@ async function main() {
   }
   const labByAuthor = new Map();
   (meta.labs || []).forEach((lab, id) => { if (lab.ai >= 0) labByAuthor.set(lab.ai, id); });
+
+  // 各ノードの色スロット(0..7 = 固定した人, 8 = その他のラボ, 255 = なし)。
+  // 人を絞り込んだときの pick 制限と、点の拡大に使う。
+  const nodeSlot = new Uint8Array(n).fill(255);
+  const nodeBoost = new Float32Array(n).fill(1);
 
   function applyPinned() {
     // 当て方は点にも線にも同じ定義を使う:
@@ -369,6 +375,9 @@ async function main() {
     for (let i = 0; i < n; i++) {
       const m = mask[i];
       const slot = m ? 31 - Math.clz32(m & -m) : (nodeLab[i] === NO_LAB ? 255 : 8);
+      nodeSlot[i] = slot;
+      // 固定した人の論文は点を大きくして、狙ってクリックできるようにする
+      nodeBoost[i] = slot < 8 ? (isolatedLab >= 0 && slot === isolatedLab ? 2.4 : 1.7) : 1.0;
       let lc = slot === 255 ? NON_LAB : LAB_RGB[slot];
       if (isolatedLab >= 0 && slot !== isolatedLab) lc = NON_LAB;  // isolate dims points too
       attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
@@ -379,6 +388,8 @@ async function main() {
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, edgeA);
       gl.bindBuffer(gl.ARRAY_BUFFER, attrColorBuf);
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, attrColors);
+      gl.bindBuffer(gl.ARRAY_BUFFER, nodeBoostBuf);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, nodeBoost);
     }
     drawLegend();
     schedule();
@@ -462,6 +473,8 @@ async function main() {
   const venueColorBuf = buffer(colors);
   attrColorBuf = buffer(attrColors, gl.DYNAMIC_DRAW);
   attrib(nodeProg, 'aColor', attrColorBuf, 3);
+  nodeBoostBuf = buffer(nodeBoost, gl.DYNAMIC_DRAW);
+  attrib(nodeProg, 'aBoost', nodeBoostBuf, 1);
   attrib(nodeProg, 'aMag', buffer(mags), 1);
   attrib(nodeProg, 'aState', nodeStateBuf, 1);
   gl.bindVertexArray(null);
@@ -469,12 +482,16 @@ async function main() {
   const uni = (p, name) => gl.getUniformLocation(p, name);
 
   // --- カメラ ---
-  const cam = { zoom: 1, cx: 0.5, cy: 0.5 };  // cx,cy = 画面中心にくる正規化座標
+  // 軸ごとに独立したズーム。等方ズームだと「サブ帯を見たい = 時代も拡大」になってしまうため、
+  // Shift+ホイールでトピック軸(縦)だけ、Alt+ホイールで時間軸(横)だけを拡大できる。
+  const cam = { zx: 1, zy: 1, cx: 0.5, cy: 0.5 };  // cx,cy = 画面中心にくる正規化座標
   const PAD = 0.04;
+  const clampZoom = (z) => Math.min(400, Math.max(0.5, z));
 
   function scaleOffset() {
-    const s = cam.zoom * (1 - 2 * PAD);
-    return { scale: [s, s], offset: [0.5 - cam.cx * s, 0.5 - cam.cy * s] };
+    const sx = cam.zx * (1 - 2 * PAD);
+    const sy = cam.zy * (1 - 2 * PAD);
+    return { scale: [sx, sy], offset: [0.5 - cam.cx * sx, 0.5 - cam.cy * sy] };
   }
   // 画面座標(px) -> 正規化座標。逆変換はこの1箇所だけに閉じ込める。
   function screenToNorm(clientX, clientY) {
@@ -503,8 +520,9 @@ async function main() {
     const top = 0.04, bottom = 0.92;
 
     const dx = Math.max(x1 - x0, 1e-3), dy = Math.max(y1 - y0, 1e-3);
-    const s = Math.min((right - left) / dx, (bottom - top) / dy);
-    cam.zoom = Math.min(400, Math.max(0.5, s / (1 - 2 * PAD)));
+    // 軸ごとに独立してフィットさせる(縦横比は保存しない — 時間軸は歪んでよい)
+    cam.zx = clampZoom((right - left) / dx / (1 - 2 * PAD));
+    cam.zy = clampZoom((bottom - top) / dy / (1 - 2 * PAD));
 
     const sc = scaleOffset().scale;
     cam.cx = (x0 + x1) / 2 - ((left + right) / 2 - 0.5) / sc[0];
@@ -532,6 +550,10 @@ async function main() {
   const lowerTitles = meta.nodes.map((nd) => (nd.t || '').toLowerCase());
 
   function render() {
+    // 非表示タブ/ペインでは clientWidth/Height が 0 になり、そのまま描くと
+    // 座標が全て 0 や NaN の DOM(帯ラベル・軸)を吐いて、表示復帰後も残る。
+    // レイアウトが取れるまで描画を延期する(rAF は非表示中は走らないので setTimeout)。
+    if (!canvas.clientWidth || !canvas.clientHeight) { setTimeout(schedule, 200); return; }
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const w = Math.floor(canvas.clientWidth * dpr), h = Math.floor(canvas.clientHeight * dpr);
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
@@ -599,7 +621,7 @@ async function main() {
   // --- 年軸のラベル ---
   function drawAxis() {
     const { scale, offset } = scaleOffset();
-    const step = cam.zoom > 6 ? 1 : cam.zoom > 3 ? 2 : cam.zoom > 1.5 ? 5 : 10;
+    const step = cam.zx > 6 ? 1 : cam.zx > 3 ? 2 : cam.zx > 1.5 ? 5 : 10;
     const parts = [];
     for (let year = Math.ceil(yearMin / step) * step; year <= yearMax; year += step) {
       const px = (((year - xMin) / xSpan) * scale[0] + offset[0]) * canvas.clientWidth;
@@ -623,8 +645,10 @@ async function main() {
       const top = toPx(band.y0), bottom = toPx(band.y1);
       if (bottom < 0 || top > H) continue;
       parts.push(`<div class="sep" style="top:${top.toFixed(1)}px"></div>`);
-      if (bottom - top >= 26) {
-        parts.push(`<div class="lbl" style="top:${(Math.max(4, Math.min(H - 16, (top + bottom) / 2 - 7))).toFixed(1)}px">${escapeHtml(bandLabel(band))}</div>`);
+      const mid = (top + bottom) / 2 - 7;
+      // 中心が画面外のラベルは出さない。クランプすると画面端に積み重なって読めない。
+      if (bottom - top >= 26 && mid >= 4 && mid <= H - 16) {
+        parts.push(`<div class="lbl" style="top:${mid.toFixed(1)}px">${escapeHtml(bandLabel(band))}</div>`);
       }
       // 拡大してサブ帯が十分な高さになったら、その中の内訳も出す
       for (const si of band.subbands || []) {
@@ -632,7 +656,9 @@ async function main() {
         const st = toPx(sub.y0), sb = toPx(sub.y1);
         if (sb < 0 || st > H || sb - st < 22) continue;
         parts.push(`<div class="sep sub" style="top:${st.toFixed(1)}px"></div>`);
-        parts.push(`<div class="lbl sub" style="top:${(Math.max(4, Math.min(H - 14, (st + sb) / 2 - 6))).toFixed(1)}px">${escapeHtml(subLabel(sub))}</div>`);
+        const smid = (st + sb) / 2 - 6;
+        if (smid < 4 || smid > H - 14) continue;
+        parts.push(`<div class="lbl sub" style="top:${smid.toFixed(1)}px">${escapeHtml(subLabel(sub))}</div>`);
       }
     }
     bandsEl.innerHTML = parts.join('');
@@ -986,15 +1012,19 @@ async function main() {
   });
   canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
-    // カーソル下の正規化座標を固定したままズームする
+    // カーソル下の正規化座標を固定したままズームする。
+    // 無修飾 = 両軸 / Shift = トピック軸(縦)のみ / Alt = 時間軸(横)のみ
     const [ux, uy] = screenToNorm(e.clientX, e.clientY);
-    cam.zoom = Math.min(400, Math.max(0.5, cam.zoom * Math.exp(-e.deltaY * 0.002)));
+    const f = Math.exp(-e.deltaY * 0.002);
+    if (!e.altKey) cam.zy = clampZoom(cam.zy * f);
+    if (!e.shiftKey) cam.zx = clampZoom(cam.zx * f);
     const s = scaleOffset().scale;
     cam.cx = ux - (e.clientX / canvas.clientWidth - 0.5) / s[0];
     cam.cy = uy - (e.clientY / canvas.clientHeight - 0.5) / s[1];
     schedule();
   }, { passive: false });
   window.addEventListener('resize', schedule);
+  document.addEventListener('visibilitychange', schedule);
 
   // --- 最近傍探索(均等グリッド) ---
   const GRID = 512;
@@ -1013,12 +1043,17 @@ async function main() {
   // 関係のない論文へ飛んでしまうため。副作用として、系譜外をクリックすると
   // 「ヒットなし」になり、そのまま選択解除(全体ビューに復帰)になる。
   function pick(clientX, clientY) {
-    const restrict = selected >= 0;
+    const restrictLineage = selected >= 0;
+    // 人を絞り込み中は、その人の論文だけをクリック/ホバー対象にする
+    // (系譜選択と同じ発想 — 沈めた点に吸われて別の論文へ飛ばないように)
+    const restrictPerson = !restrictLineage && isolatedLab >= 0 && isolatedLab < 8;
     const { scale } = scaleOffset();
     const [ux, uy] = screenToNorm(clientX, clientY);
-    // 画面上 12px を正規化座標に直したものを探索半径にする
-    const rx = 12 / canvas.clientWidth / scale[0];
-    const ry = 12 / canvas.clientHeight / scale[1];
+    // 画面上 12px を正規化座標に直したものを探索半径にする。
+    // 人フォーカス中は対象が疎(数十点)で競合もいないので、半径を広げて狙いやすくする。
+    const r = restrictPerson ? 26 : 12;
+    const rx = r / canvas.clientWidth / scale[0];
+    const ry = r / canvas.clientHeight / scale[1];
     const g0x = Math.max(0, ((ux - rx) * GRID) | 0), g1x = Math.min(GRID - 1, ((ux + rx) * GRID) | 0);
     const g0y = Math.max(0, ((uy - ry) * GRID) | 0), g1y = Math.min(GRID - 1, ((uy + ry) * GRID) | 0);
 
@@ -1028,7 +1063,8 @@ async function main() {
         const cell = grid.get(gy * GRID + gx);
         if (!cell) continue;
         for (const i of cell) {
-          if (restrict && nodeState[i] === S_NONE) continue;
+          if (restrictLineage && nodeState[i] === S_NONE) continue;
+          if (restrictPerson && nodeSlot[i] !== isolatedLab) continue;
           const dx = (np[i * 2] - ux) / rx, dy = (np[i * 2 + 1] - uy) / ry;
           const d = dx * dx + dy * dy;
           if (d < bestD) { bestD = d; best = i; }
@@ -1152,6 +1188,22 @@ async function main() {
   pinned = (meta.labs || []).slice(0, LAB_HEX.length)
     .map((lab, id) => ({ ai: lab.ai, labId: id }));
   applyPinned();   // 中で drawLegend() まで走る
+
+  // 開発用の覗き窓(スモークチェックが closure 内を検証できるように)
+  window.PL = {
+    pick, meta,
+    nodeSlot: () => nodeSlot,
+    isolated: () => isolatedLab,
+    pinned: () => pinned,
+    // ノード i の画面座標(px)
+    screenPos: (i) => {
+      const { scale, offset } = scaleOffset();
+      return [
+        (np[i * 2] * scale[0] + offset[0]) * canvas.clientWidth,
+        (np[i * 2 + 1] * scale[1] + offset[1]) * canvas.clientHeight,
+      ];
+    },
+  };
 
   statsEl.textContent =
     `${n.toLocaleString()} papers · ${edgeCount.toLocaleString()} citations · ${yearMin}–${yearMax} · layout ${meta.mode}`;
