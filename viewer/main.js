@@ -213,7 +213,7 @@ const NODE_FS = `#version 300 es
 
 async function fetchBuffer(name) {
   const res = await fetch(DATA + name);
-  if (!res.ok) throw new Error(`${name} を読めません (${res.status})。pipeline の layout.py を先に実行してください。`);
+  if (!res.ok) throw new Error(`Cannot load ${name} (${res.status}) — run the pipeline's layout.py first`);
   return res.arrayBuffer();
 }
 
@@ -226,7 +226,7 @@ async function load() {
     fetchBuffer('node_lab.bin'),
     fetch(DATA + 'meta.json'),
   ]);
-  if (!metaRes.ok) throw new Error('meta.json を読めません');
+  if (!metaRes.ok) throw new Error('Cannot load meta.json');
   return {
     pos: new Float32Array(posBuf),
     edges: new Uint32Array(edgeBuf),
@@ -368,8 +368,9 @@ async function main() {
 
     for (let i = 0; i < n; i++) {
       const m = mask[i];
-      const lc = m ? LAB_RGB[31 - Math.clz32(m & -m)]
-                   : (nodeLab[i] === NO_LAB ? NON_LAB : LAB_RGB[8]);
+      const slot = m ? 31 - Math.clz32(m & -m) : (nodeLab[i] === NO_LAB ? 255 : 8);
+      let lc = slot === 255 ? NON_LAB : LAB_RGB[slot];
+      if (isolatedLab >= 0 && slot !== isolatedLab) lc = NON_LAB;  // isolate dims points too
       attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
     }
 
@@ -385,6 +386,7 @@ async function main() {
 
   function togglePinned(ai) {
     const at = pinned.findIndex((p) => p.ai === ai);
+    isolatedLab = -1;   // スロットが入れ替わるので絞り込みは必ず解除
     if (at >= 0) pinned.splice(at, 1);
     else if (pinned.length < LAB_HEX.length) {
       pinned.push({ ai, labId: labByAuthor.has(ai) ? labByAuthor.get(ai) : null });
@@ -399,7 +401,7 @@ async function main() {
   const inAdj = buildCSR(edges, n, false);   // 引用した -> 引用された(過去方向)
 
   const gl = canvas.getContext('webgl2', { antialias: true, alpha: false });
-  if (!gl) { statsEl.textContent = 'WebGL2 が使えません'; return; }
+  if (!gl) { statsEl.textContent = 'WebGL2 is unavailable'; return; }
 
   const edgeProg = program(gl, EDGE_VS, EDGE_FS);
   const nodeProg = program(gl, NODE_VS, NODE_FS);
@@ -639,9 +641,9 @@ async function main() {
   const kw = (o) => (o.keywords || []).join(' · ');
   const bandLabel = (band) => {
     const yrs = band.years ? `${band.years[0]}–${band.years[1]} · ` : '';
-    return `${yrs}${band.papers.toLocaleString()}本 · ${kw(band)}`;
+    return `${yrs}${band.papers.toLocaleString()} papers · ${kw(band)}`;
   };
-  const subLabel = (sub) => `${sub.papers}本 · ${kw(sub)}`;
+  const subLabel = (sub) => `${sub.papers} papers · ${kw(sub)}`;
 
   // --- 系譜(選択した論文の上流・下流)---
   function bfs(startNode, adj, maxDepth) {
@@ -787,7 +789,7 @@ async function main() {
     let chips = '';
     const rel = (meta.related || {})[terms[terms.length - 1]];
     if (rel && rel.length) {
-      chips = '<div class="chips">関連語 ' +
+      chips = '<div class="chips">Related terms ' +
         rel.slice(0, 6).map((w) => `<b data-term="${escapeHtml(w)}">${escapeHtml(w)}</b>`).join('') +
         '</div>';
     }
@@ -797,8 +799,8 @@ async function main() {
       const lab = labByAuthor.has(p.ai) ? meta.labs[labByAuthor.get(p.ai)] : null;
       const dot = slot >= 0 ? `<i style="background:${LAB_HEX[slot]}"></i>` : '<i class="empty"></i>';
       return `<div class="person" data-ai="${p.ai}">${dot}${escapeHtml(meta.authors[p.ai])}` +
-             `<span class="sub">${p.papers}本` +
-             (lab ? ` · 自己引用系譜 ${lab.edges}` : ' · 系譜線なし') + '</span></div>';
+             `<span class="sub">${p.papers} papers` +
+             (lab ? ` · lineage ${lab.edges}` : ' · no lineage') + '</span></div>';
     }).join('');
 
     const paperRows = hits.slice(0, MAX_LIST).map((i) => {
@@ -808,9 +810,10 @@ async function main() {
 
     box.innerHTML =
       chips +
-      (peopleRows ? `<div class="grp">人(クリックで色を固定)</div>${peopleRows}` : '') +
-      `<div class="grp">論文 ${hits.length.toLocaleString()} 件` +
-      (hits.length > MAX_LIST ? ` — 上位 ${MAX_LIST} 件` : '') + '</div>' +
+      (peopleRows ? `<div class="grp">People — click to pin a color${people.length > 6 ? ` (top 6 of ${people.length})` : ''}</div>${peopleRows}` : '') +
+      `<div class="grp">Papers ${hits.length.toLocaleString()}` +
+      (hits.length > MAX_LIST ? ` — listing top ${MAX_LIST}` : '') +
+      (hits.length > MAX_MARK ? ` (highlighting ${MAX_MARK.toLocaleString()})` : '') + '</div>' +
       paperRows;
     box.dataset.first = hits.length ? String(hits[0]) : '';
   }
@@ -839,7 +842,7 @@ async function main() {
     const person = e.target.closest('div.person');
     if (person) {
       if (!togglePinned(parseInt(person.dataset.ai, 10))) {
-        alert('色は 8 人までです。凡例か検索結果で既に固定した人をクリックすると外せます。');
+        alert('Up to 8 people can be pinned. Remove one with the × in the legend first.');
         return;
       }
       runSearch(searchEl.value);
@@ -869,10 +872,10 @@ async function main() {
         const pct = Math.round((cnt / ids.length) * 100);
         return `<li class="trend ${kind}" data-sub="${sb}" data-kind="${kind}">` +
                `<span class="n">${cnt}</span><span class="bar" style="width:${pct}%"></span>` +
-               `${escapeHtml(kw(sub) || '(その他)')}</li>`;
+               `${escapeHtml(kw(sub) || '(other)')}</li>`;
       })
       .join('');
-    return `<h3>${title}(クリックで絞り込み)</h3><ol class="trends">${rows}</ol>`;
+    return `<h3>${title} — click to filter</h3><ol class="trends">${rows}</ol>`;
   }
 
   function listHtml(title, ids, limit) {
@@ -884,7 +887,7 @@ async function main() {
         return `<li data-i="${v}"><span class="y">${nd.y}</span>${escapeHtml(nd.t.slice(0, 90))}</li>`;
       })
       .join('');
-    const more = ids.length > limit ? `<li style="color:#5d6478">… 他 ${ids.length - limit} 本</li>` : '';
+    const more = ids.length > limit ? `<li style="color:#5d6478">… ${ids.length - limit} more</li>` : '';
     return `<h3>${title}</h3><ol>${rows}${more}</ol>`;
   }
 
@@ -898,9 +901,11 @@ async function main() {
     // 参照 47 本のうちコーパス内は 3 本、のように必ず出して誤解を防ぐ。
     const inCorpus = countRefsInCorpus(i);
     document.getElementById('selMeta').innerHTML =
-      `${nd.y} · ${(nd.v || '?').toUpperCase()} · 被引用 ${nd.c}<br>` +
-      `<span class="cov">参照 ${nd.r} 本中 <b>${inCorpus} 本</b>がこのコーパス内` +
-      (nd.r && !inCorpus ? ' — HCI 13会議の外を引用しているため遡れません' : '') +
+      `${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}<br>` +
+      `<span class="cov"><b>${inCorpus}</b> of ${nd.r} references are inside this corpus` +
+      (nd.r && !inCorpus
+        ? ' — they point outside the 13 HCI venues, so upstream cannot be traced here'
+        : '') +
       `</span>`;
 
     // 著者。最後がラストオーサー(= ラボの主宰)なので印を付ける。クリックで色を固定。
@@ -910,10 +915,11 @@ async function main() {
           const slot = pinned.findIndex((q) => q.ai === ai);
           const isLast = k === as.length - 1 && as.length > 1;
           return `<span class="au${isLast ? ' last' : ''}" data-ai="${ai}"` +
+                 (isLast ? ' title="Last author"' : '') +
                  (slot >= 0 ? ` style="color:${LAB_HEX[slot]}"` : '') +
                  `>${escapeHtml(meta.authors[ai] || '?')}${isLast ? ' ◂' : ''}</span>`;
         }).join('')
-      : '<span class="au none">著者情報なし</span>';
+      : '<span class="au none">No author data</span>';
     document.getElementById('upCount').textContent = up.size.toLocaleString();
     document.getElementById('downCount').textContent = down.size.toLocaleString();
 
@@ -922,10 +928,10 @@ async function main() {
     const upIds = [...up].sort(byCited);
     const downIds = [...down].sort(byCited);
     document.getElementById('lineageLists').innerHTML =
-      trendHtml('この系譜が乗っているトレンド', upIds, 'up') +
-      trendHtml('この系譜が広がったトレンド', downIds, 'down') +
-      listHtml('遡る系譜(よく引用されているもの順)', upIds, 12) +
-      listHtml('その後の系譜(よく引用されているもの順)', downIds, 12);
+      trendHtml('Trends this work builds on', upIds, 'up') +
+      trendHtml('Trends it spread into', downIds, 'down') +
+      listHtml('Upstream — most cited first', upIds, 12) +
+      listHtml('Downstream — most cited first', downIds, 12);
     lineageEl.style.display = 'block';
     lineageEl.scrollTop = 0;
   }
@@ -942,7 +948,7 @@ async function main() {
     const au = e.target.closest('.au[data-ai]');
     if (!au) return;
     if (!togglePinned(parseInt(au.dataset.ai, 10))) {
-      alert('色は 8 人までです。凡例か検索結果で既に固定した人をクリックすると外せます。');
+      alert('Up to 8 people can be pinned. Remove one with the × in the legend first.');
       return;
     }
     if (selected >= 0) select(selected, true);
@@ -1038,7 +1044,7 @@ async function main() {
     const nd = meta.nodes[i];
     tooltip.innerHTML =
       `<div class="t">${escapeHtml(nd.t)}</div>` +
-      `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · 被引用 ${nd.c}</div>`;
+      `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}</div>`;
     tooltip.style.display = 'block';
     tooltip.style.left = Math.min(e.clientX + 14, window.innerWidth - 400) + 'px';
     tooltip.style.top = Math.min(e.clientY + 14, window.innerHeight - 80) + 'px';
@@ -1048,7 +1054,7 @@ async function main() {
   const fmt = (v) => Number(v).toFixed(2).replace(/^0/, '');
   ui.thresh.addEventListener('input', () => {
     const v = parseFloat(ui.thresh.value);
-    document.getElementById('threshVal').textContent = v === 0 ? '全部' : `≥${fmt(v)}`;
+    document.getElementById('threshVal').textContent = v === 0 ? 'all' : `≥${fmt(v)}`;
     schedule();
   });
   ui.alpha.addEventListener('input', () => {
@@ -1069,7 +1075,7 @@ async function main() {
   });
   ui.depth.addEventListener('input', () => {
     const v = parseInt(ui.depth.value, 10);
-    document.getElementById('depthVal').textContent = v >= 9 ? '全部' : `${v}ホップ`;
+    document.getElementById('depthVal').textContent = v >= 9 ? 'all' : `${v} hops`;
     if (selected >= 0) select(selected);
   });
   ui.only.addEventListener('change', schedule);
@@ -1087,19 +1093,26 @@ async function main() {
   // 凡例クリックで1ラボに絞り込む(再クリックで解除)。
   // 8色は隣接ペア基準では通るが CVD ΔE 6–8 の帯域なので、色だけに頼らせない二次符号化。
   document.getElementById('legend').addEventListener('click', (e) => {
-    const el = e.target.closest('span.lab');
-    if (!el) return;
-    const slot = parseInt(el.dataset.slot, 10);
+    const un = e.target.closest('[data-unpin]');
+    if (un) {
+      pinned.splice(parseInt(un.dataset.unpin, 10), 1);
+      isolatedLab = -1;
+      applyPinned();
+      if (searchEl.value.trim()) runSearch(searchEl.value);
+      return;
+    }
+    const chip = e.target.closest('span.lab');
+    if (!chip) return;
+    const slot = parseInt(chip.dataset.slot, 10);
     isolatedLab = isolatedLab === slot ? -1 : slot;
-    drawLegend();
-    schedule();
+    applyPinned();   // recolours points for the isolate as well
   });
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') select(-1); });
 
   const venueCounts = {};
   for (const nd of meta.nodes) venueCounts[nd.v] = (venueCounts[nd.v] || 0) + 1;
-  let otherLabEdges = 0;
-  for (const lv of edgeLab) if (lv !== NO_LAB) otherLabEdges++;
+  let totalLabEdges = 0;
+  for (const lv of edgeLab) if (lv !== NO_LAB) totalLabEdges++;
   const LAB_FLAT = new Float32Array(LAB_RGB.flat());
   let isolatedLab = -1;
 
@@ -1117,18 +1130,22 @@ async function main() {
       return;
     }
     // 固定した人の凡例。クリックで1人に絞り込む(色だけに identity を負わせない二次符号化)。
+    const pinnedEdges = pinned.reduce(
+      (t, q) => t + (q.labId != null ? meta.labs[q.labId].edges : 0), 0);
+    const otherEdges = totalLabEdges - pinnedEdges;
     el.innerHTML = pinned
       .map((p, i) => {
         const lab = p.labId != null ? meta.labs[p.labId] : null;
         const on = isolatedLab < 0 || isolatedLab === i;
         return `<span class="lab${on ? '' : ' off'}" data-slot="${i}">` +
                `<i style="background:${LAB_HEX[i]}"></i>${escapeHtml(meta.authors[p.ai])} ` +
-               `<b>${lab ? lab.years[0] + '–' + lab.years[1] : '系譜線なし'}</b></span>`;
+               `<b>${lab ? lab.years[0] + '–' + lab.years[1] : 'no lineage'}</b>` +
+               `<em class="unpin" data-unpin="${i}" title="Unpin">×</em></span>`;
       })
       .join('') +
       `<span class="lab${isolatedLab < 0 || isolatedLab === 8 ? '' : ' off'}" data-slot="8">` +
-      `<i style="background:${LAB_OTHER}"></i>その他のラボ ${otherLabEdges.toLocaleString()}リンク</span>` +
-      (pinned.length ? '' : '<span class="hintline">検索欄で人名を引いて色を固定できます</span>');
+      `<i style="background:${LAB_OTHER}"></i>Other labs · ${otherEdges.toLocaleString()} links</span>` +
+      (pinned.length ? '' : '<span class="hintline">Search for a person to pin their color</span>');
   }
 
   // 既定は自己引用系譜が長い順に上位8人。あとは検索で入れ替えられる。
@@ -1137,7 +1154,7 @@ async function main() {
   applyPinned();   // 中で drawLegend() まで走る
 
   statsEl.textContent =
-    `${n.toLocaleString()} 本 / ${edgeCount.toLocaleString()} 引用 · ${yearMin}–${yearMax} · layout=${meta.mode}`;
+    `${n.toLocaleString()} papers · ${edgeCount.toLocaleString()} citations · ${yearMin}–${yearMax} · layout ${meta.mode}`;
 
   render();
 }

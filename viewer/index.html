@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>paper-lineage</title>
@@ -51,6 +51,8 @@
   #legend span.lab:hover { color: #fff; }
   #legend span.lab.off { opacity: .35; }
   #legend span.lab b { color: #6d7488; font-weight: 400; font-variant-numeric: tabular-nums; }
+  #legend .unpin { margin-left: 2px; color: #5d6478; cursor: pointer; font-style: normal; }
+  #legend .unpin:hover { color: #fff; }
   #legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
 
   #tooltip { position: fixed; pointer-events: none; max-width: 380px; display: none;
@@ -125,79 +127,78 @@
 
 <div id="controls" class="panel">
   <h1>paper-lineage</h1>
-  <input id="search" type="search" placeholder="タイトル検索(Enter で先頭を選択)" autocomplete="off">
+  <input id="search" type="search" placeholder="Search papers or people — Enter selects the top paper" autocomplete="off">
   <div id="searchResults"></div>
   <details id="grpPeople" open>
-    <summary>人 · ラボ</summary>
+    <summary>People &amp; labs</summary>
   <div class="row">
-    <label>人の範囲</label>
+    <label>Scope</label>
     <select id="roleMode">
-      <option value="any">著者に含まれる(共著も)</option>
-      <option value="last">ラストオーサーのみ</option>
+      <option value="any">Any authorship</option>
+      <option value="last">Last author only</option>
     </select>
     <span class="val"></span>
   </div>
   <div class="row">
-    <label>色</label>
+    <label>Color</label>
     <select id="colorMode">
-      <option value="attr">人 · ラボ</option>
-      <option value="venue">会議 (venue)</option>
+      <option value="attr">People &amp; labs</option>
+      <option value="venue">Venue</option>
     </select>
     <span class="val"></span>
   </div>
   <div class="row">
-    <label>ラボ線のみ</label>
+    <label>Lineage lines only</label>
     <input id="attrOnly" type="checkbox">
     <span class="val"></span>
   </div>
   </details>
 
   <details id="grpView">
-    <summary>表示の調整</summary>
+    <summary>Display</summary>
   <div class="row">
-    <label>幹のみ</label>
+    <label>Trunk (SPC)</label>
     <input id="thresh" type="range" min="0" max="1" step="0.005" value="0">
-    <span class="val" id="threshVal">全部</span>
+    <span class="val" id="threshVal">all</span>
   </div>
   <div class="row">
-    <label>線の濃さ</label>
+    <label>Line alpha</label>
     <input id="alpha" type="range" min="0.005" max="0.6" step="0.005" value="0.05">
     <span class="val" id="alphaVal">.05</span>
   </div>
   <div class="row">
-    <label>露出</label>
+    <label>Exposure</label>
     <input id="exposure" type="range" min="1" max="400" step="1" value="60">
     <span class="val" id="exposureVal">60</span>
   </div>
   <div class="row">
-    <label>ガンマ</label>
+    <label>Gamma</label>
     <input id="gamma" type="range" min="0.4" max="2.5" step="0.05" value="1">
     <span class="val" id="gammaVal">1.00</span>
   </div>
   <div class="row">
-    <label>点の大きさ</label>
+    <label>Point size</label>
     <input id="psize" type="range" min="0.5" max="8" step="0.1" value="0.8">
     <span class="val" id="psizeVal">0.8</span>
   </div>
   </details>
 
   <details id="grpLineage" open>
-    <summary>系譜</summary>
+    <summary>Lineage</summary>
   <div class="row">
-    <label>系譜の深さ</label>
-    <!-- 既定は 2 ホップ。無制限だと数千本が塗り潰されて「系譜」として読めなくなる。 -->
-    <input id="depth" type="range" min="1" max="9" step="1" value="2">
-    <span class="val" id="depthVal">2ホップ</span>
+    <label>Depth</label>
+      <input id="depth" type="range" min="1" max="9" step="1" value="2">
+    <span class="val" id="depthVal">2 hops</span>
   </div>
   <div class="row">
-    <label>系譜のみ</label>
+    <label>Lineage only</label>
     <input id="only" type="checkbox">
     <span class="val"></span>
   </div>
   </details>
 
-  <div id="stats">読み込み中…</div>
-  <div class="hint">論文をクリックすると系譜を表示 / ドラッグで移動 / ホイールで拡大</div>
+  <div id="stats">Loading…</div>
+  <div class="hint">Click a paper to trace its lineage · drag to pan · scroll to zoom</div>
 </div>
 
 <div id="legend" class="panel"></div>
@@ -209,8 +210,8 @@
   <div class="meta" id="selMeta"></div>
   <div id="selAuthors"></div>
   <div class="counts">
-    <span class="up">遡る系譜 <b id="upCount">0</b></span>
-    <span class="down">その後 <b id="downCount">0</b></span>
+    <span class="up">Upstream <b id="upCount">0</b></span>
+    <span class="down">Downstream <b id="downCount">0</b></span>
   </div>
   <div id="lineageLists"></div>
 </div>

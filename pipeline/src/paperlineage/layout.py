@@ -480,7 +480,7 @@ def layout_community(
         bands.append({"community": None, "papers": int(len(isolated)),
                       "y0": round(cursor, 5), "y1": round(cursor + width, 5),
                       "subbands": [],
-                      "note": "コーパス内に引用リンクなし"})
+                      "note": "no in-corpus citation links"})
 
     print(f"  サブ帯: {len(subbands)} 本({sub_min_size} 本未満は帯内「その他」に統合)")
     return y, {
@@ -680,7 +680,7 @@ def main() -> None:
         for bi, band in enumerate(extra["bands"]):
             ci = band["community"]
             if ci is None:
-                band["keywords"] = ["(コーパス内に引用リンクなし)"]
+                band["keywords"] = ["(no in-corpus citation links)"]
                 band["top_papers"] = []
                 continue
             describe(band, by_band[ci])
