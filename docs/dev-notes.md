@@ -1,5 +1,33 @@
 # dev-notes — paper-lineage
 
+## 2026-07-29(同日)citation intent の色分け(当初計画の最終項目)
+
+S2 だけが返す citation intent(background / method / result)でエッジを塗るモードを追加。
+「この引用は背景として引いたのか、手法を使ったのか、結果と比較したのか」が色になる。
+
+### 構成
+
+- `fetch_intents.py`(2b): 引用**する側**の論文ごとに S2 `/paper/{id}/references` を1回。
+  コーパス内 DOI への参照だけを intent 付きで `data/graph/intents.jsonl` に保存。
+  **paperId 単位のレジューム**で、いつ止めても続きから流せる。
+- `intents.py`(6b): intents.jsonl → `data/viz/edge_intent.bin`(uint8 ビットマスク、
+  **spc.tsv のエッジ順**)。bit3=取得済みマーカー(「未取得」と「取得したが S2 が
+  分類していない」を区別する)。**spc.tsv が変わったら必ず 6b を再実行**(順序ずれ防止)。
+- ビューア: Color に "Citation intent"。複数 intent は method > result > background の
+  優先で1色に。分類済みは少数なので可視性増幅 ×4(量の表現ではない、ラボ線と同じ扱い)。
+  凡例に**カバレッジを常時表示**。`edge_intent.bin` が無ければ選択肢自体を無効化
+  ("no data" 表示 — 選べるのに何も変わらない、を避ける)。
+
+### 実測(プローブ 30 論文)
+
+- S2 の intent 文字列は `background` / `methodology` / `result`。対応表で method に正規化。
+- **取得済みのコーパス内引用 269 本のうち intent が付いていたのは 27 本(約10%)**
+  (background 24 / method 2 / result 1)。S2 は本文の citation context が読める論文しか
+  分類できず、ACM 論文は大半がその対象外のため。→ フル取得しても色が付くのは
+  1割前後と予想。**「分類なし」を沈めて描く前提の設計にした理由。**
+- レート制限: 無認証 4秒/req で全 38,791 論文 ≈ 43時間、`S2_API_KEY` で ≈ 11時間。
+  少しずつ流して凡例のカバレッジが育つ運用。
+
 ## 2026-07-29(同日)右パネルに DOI リンク
 
 選択論文のメタ行と上流・下流リストの各行に `doi ↗`(doi.org、新規タブ)を追加。

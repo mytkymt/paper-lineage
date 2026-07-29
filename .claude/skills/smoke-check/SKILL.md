@@ -40,6 +40,9 @@ console must be clean.
 - **Axis-split zoom**: Shift+scroll must leave the year axis unchanged; Alt+scroll must
   leave bands unchanged.
 - **Toggles**: Scope (any/last) changes line spread; Color venue/people swaps legend.
+- **Color: Citation intent**: legend shows background/method/result counts **plus a
+  coverage line** ("intents fetched for N of M citations"); with no `edge_intent.bin`
+  the option is disabled and labeled "(no data)", never silently identical.
 - Esc clears selection.
 
 ## 3.5 Testing pitfalls (each cost real time)

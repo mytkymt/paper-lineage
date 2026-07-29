@@ -96,21 +96,30 @@ const hexToRgb = (h) => [
 ];
 const LAB_RGB = [...LAB_HEX, LAB_OTHER].map(hexToRgb);
 
+// citation intent の色(S2 の分類: background / method / result)。
+// スロット: 0=background 1=method 2=result 3=取得済みだが分類なし 4=未取得。
+// 3色ともラボ8色のサブセットだが、モードは排他なので衝突しない。
+const INTENT_HEX = ['#3987e5', '#199e70', '#d55181'];
+const INTENT_LABELS = ['background', 'method', 'result'];
+const INTENT_RGB = [...INTENT_HEX.map(hexToRgb), NON_LAB, [0.10, 0.12, 0.17]];
+
 const EDGE_VS = `#version 300 es
   in vec2 aPos;
   in float aWeight;
   in float aState;
   in float aLab;              // 0..7 = 色付きラボ, 8 = その他のラボ, 255 = ラボ線ではない
+  in float aIntent;           // 0=background 1=method 2=result 3=分類なし 4=未取得
   ${VIEW}
   ${LINEAGE_COLORS}
   uniform float uThreshold;
   uniform float uAlpha;
   uniform float uSelActive;   // 0 = 選択なし
   uniform float uOnlyLineage; // 1 = 系譜以外を描かない
-  uniform float uColorMode;   // 0 = ラボ, 1 = venue(エッジは単色)
+  uniform float uColorMode;   // 0 = ラボ, 1 = venue(エッジは単色), 2 = citation intent
   uniform float uAttrOnly;    // 1 = ラボ線だけ描く
   uniform float uIsolate;     // >=0 のときそのスロットのラボだけ描く
   uniform vec3  uLabColors[9];
+  uniform vec3  uIntentColors[5];
   out vec4 vColor;
   void main() {
     bool inLineage = aState > 0.5;
@@ -129,6 +138,11 @@ const EDGE_VS = `#version 300 es
       // 「太いライン」として見えない。可視性のための増幅で、量の表現ではない。
       // 「その他のラボ」(2,113 ラボ分)は色付き8ラボを埋めてしまうので抑える。
       a *= aLab < 7.5 ? 4.0 : (isLab ? 0.9 : 0.6);
+    } else if (uColorMode > 1.5) {
+      c = uIntentColors[int(aIntent + 0.5)];
+      // 分類済みは取得済み引用の1割前後しかない(S2 は本文が読める論文しか分類できない)。
+      // ラボ線と同じく可視性のための増幅で、量の表現ではない。
+      a *= aIntent < 2.5 ? 4.0 : 0.4;
     }
     if (uSelActive > 0.5) {
       if (aState < 0.5) { a *= 0.12; }                       // 系譜外は沈める
@@ -219,7 +233,7 @@ async function fetchBuffer(name) {
 }
 
 async function load() {
-  const [posBuf, edgeBuf, wBuf, attrBuf, nAttrBuf, metaRes, namesRes] = await Promise.all([
+  const [posBuf, edgeBuf, wBuf, attrBuf, nAttrBuf, metaRes, namesRes, intentRes] = await Promise.all([
     fetchBuffer('nodes.bin'),
     fetchBuffer('edges.bin'),
     fetchBuffer('weights.bin'),
@@ -227,6 +241,7 @@ async function load() {
     fetchBuffer('node_lab.bin'),
     fetch(DATA + 'meta.json'),
     fetch('./band-names.json'),   // F3 の命名。無い/古い分はキーワード表示に落ちる
+    fetch(DATA + 'edge_intent.bin'),  // citation intent(任意 — 無ければモードを無効化)
   ]);
   if (!metaRes.ok) throw new Error('Cannot load meta.json');
   const meta = await metaRes.json();
@@ -238,6 +253,8 @@ async function load() {
     edgeLab: new Uint32Array(attrBuf),     // labs のインデックス, NO_LAB = ラボ線ではない
     nodeLab: new Uint32Array(nAttrBuf),
     meta,
+    // uint8 ビットマスク: 8 = 引用側を取得済み, |1 background |2 method |4 result, 0 = 未取得
+    edgeIntent: intentRes.ok ? new Uint8Array(await intentRes.arrayBuffer()) : null,
   };
 }
 
@@ -329,6 +346,17 @@ async function main() {
     edgePos[e * 4] = np[a * 2];     edgePos[e * 4 + 1] = np[a * 2 + 1];
     edgePos[e * 4 + 2] = np[b * 2]; edgePos[e * 4 + 3] = np[b * 2 + 1];
     edgeW[e * 2] = weights[e];      edgeW[e * 2 + 1] = weights[e];
+  }
+
+  // citation intent をビットマスクからスロットに落とす。複数 intent は
+  // method > result > background(希少で情報量の多い順)で1色に決める。
+  const edgeIntentA = new Float32Array(edgeCount * 2);
+  const intentCounts = [0, 0, 0, 0, 0];   // bg, method, result, 分類なし, 未取得
+  for (let e = 0; e < edgeCount; e++) {
+    const v = data.edgeIntent ? data.edgeIntent[e] : 0;
+    const slot = !v ? 4 : (v & 2) ? 1 : (v & 4) ? 2 : (v & 1) ? 0 : 3;
+    edgeIntentA[e * 2] = slot; edgeIntentA[e * 2 + 1] = slot;
+    intentCounts[slot]++;
   }
 
   // ノードの色と大きさ
@@ -489,6 +517,7 @@ async function main() {
   attrib(edgeProg, 'aState', edgeStateBuf, 1);
   edgeSlotBuf = buffer(edgeA, gl.DYNAMIC_DRAW);
   attrib(edgeProg, 'aLab', edgeSlotBuf, 1);
+  attrib(edgeProg, 'aIntent', buffer(edgeIntentA), 1);
 
   const nodeVao = gl.createVertexArray();
   gl.bindVertexArray(nodeVao);
@@ -600,10 +629,12 @@ async function main() {
     gl.uniform1f(uni(edgeProg, 'uAlpha'), parseFloat(ui.alpha.value));
     gl.uniform1f(uni(edgeProg, 'uSelActive'), selActive);
     gl.uniform1f(uni(edgeProg, 'uOnlyLineage'), onlyLineage);
-    gl.uniform1f(uni(edgeProg, 'uColorMode'), ui.colorMode.value === 'venue' ? 1 : 0);
+    gl.uniform1f(uni(edgeProg, 'uColorMode'),
+      ui.colorMode.value === 'venue' ? 1 : ui.colorMode.value === 'intent' ? 2 : 0);
     gl.uniform1f(uni(edgeProg, 'uAttrOnly'), ui.attrOnly.checked ? 1 : 0);
     gl.uniform1f(uni(edgeProg, 'uIsolate'), isolatedLab);
     gl.uniform3fv(uni(edgeProg, 'uLabColors'), LAB_FLAT);
+    gl.uniform3fv(uni(edgeProg, 'uIntentColors'), INTENT_FLAT);
     gl.bindVertexArray(edgeVao);
     gl.drawArrays(gl.LINES, 0, edgeCount * 2);
 
@@ -1180,10 +1211,31 @@ async function main() {
   let totalLabEdges = 0;
   for (const lv of edgeLab) if (lv !== NO_LAB) totalLabEdges++;
   const LAB_FLAT = new Float32Array(LAB_RGB.flat());
+  const INTENT_FLAT = new Float32Array(INTENT_RGB.flat());
   let isolatedLab = -1;
+
+  // intent データが無ければモードを選ばせない(選べるのに何も変わらない、を避ける)
+  if (!data.edgeIntent) {
+    const opt = ui.colorMode.querySelector('option[value="intent"]');
+    opt.disabled = true;
+    opt.textContent = 'Citation intent (no data — run fetch_intents)';
+  }
 
   function drawLegend() {
     const el = document.getElementById('legend');
+    if (ui.colorMode.value === 'intent') {
+      // カバレッジを必ず出す: 「まだ取っていない」と「S2 が分類していない」は別物。
+      const fetched = edgeCount - intentCounts[4];
+      const pct = ((fetched / edgeCount) * 100).toFixed(fetched === edgeCount ? 0 : 1);
+      el.innerHTML = INTENT_LABELS
+        .map((lbl, i) =>
+          `<span><i style="background:${INTENT_HEX[i]}"></i>${lbl} ${intentCounts[i].toLocaleString()}</span>`)
+        .join('') +
+        `<span class="hintline">intents fetched for ${fetched.toLocaleString()} of ` +
+        `${edgeCount.toLocaleString()} citations (${pct}%) · ` +
+        `${intentCounts[3].toLocaleString()} fetched citations have no S2 classification</span>`;
+      return;
+    }
     if (ui.colorMode.value === 'venue') {
       el.innerHTML = Object.entries(venueCounts)
         .sort((a, b) => b[1] - a[1])
