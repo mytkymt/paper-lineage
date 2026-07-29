@@ -758,6 +758,9 @@ async function main() {
   // 1つ目の結果をさらに絞る(= AND)になって何も残らなかった。
   let lineage = null;   // {i, up:Set, down:Set}
   let highlightedSub = -1;
+  let localClusters = null;      // Re-cluster の結果 [{ids, set, label, name}]
+  let highlightedCluster = -1;
+  let localRest = { papers: 0, clusters: 0 };   // 表示から漏れた分(必ず件数を出す)
 
   function paintLineage(fitCamera) {
     nodeState.fill(0);
@@ -765,8 +768,10 @@ async function main() {
     if (!lineage) { uploadStates(); return; }
 
     const { i, up, down } = lineage;
-    // 絞り込み中は、上流・下流の**どちらも**そのサブ分野だけを残す
-    const keep = (v) => highlightedSub < 0 || meta.nodes[v].s === highlightedSub;
+    // 絞り込み中は、上流・下流の**どちらも**その集合だけを残す
+    // (ローカルクラスタ選択 > サブ帯選択 > 絞り込みなし)
+    const clSet = highlightedCluster >= 0 && localClusters ? localClusters[highlightedCluster].set : null;
+    const keep = (v) => clSet ? clSet.has(v) : (highlightedSub < 0 || meta.nodes[v].s === highlightedSub);
     const shown = [i];
     for (const v of up) if (keep(v)) { nodeState[v] = S_UP; shown.push(v); }
     for (const v of down) if (keep(v)) { nodeState[v] = S_DOWN; shown.push(v); }
@@ -784,7 +789,9 @@ async function main() {
     uploadStates();
     if (fitCamera) fitTo(shown);
     document.querySelectorAll('#lineageLists li.trend').forEach((el) => {
-      el.classList.toggle('picked', parseInt(el.dataset.sub, 10) === highlightedSub);
+      el.classList.toggle('picked', el.classList.contains('local')
+        ? parseInt(el.dataset.cl, 10) === highlightedCluster
+        : parseInt(el.dataset.sub, 10) === highlightedSub);
     });
   }
 
@@ -793,6 +800,8 @@ async function main() {
     selected = i;
     searchActive = false;
     highlightedSub = -1;
+    localClusters = null;
+    highlightedCluster = -1;
     document.body.classList.toggle('has-selection', i >= 0);
 
     if (i < 0) {
@@ -819,7 +828,247 @@ async function main() {
   function highlightTrend(sub) {
     if (!lineage) return;
     highlightedSub = highlightedSub === sub ? -1 : sub;
+    highlightedCluster = -1;
     paintLineage(true);
+  }
+
+  // --- 系譜のローカル再クラスタリング(オンデマンド・API 不要)---
+  // 全体の前計算サブ帯は「分野全体での切り方」なので、1本の系譜の中の流れとは
+  // ずれ得る。ボタン押下時だけ、系譜の部分グラフ(高々数千ノード)を Louvain で
+  // クラスタリングし直す。ラベル伝播は試したが密な共引用グラフで巨大クラスタに
+  // 潰れた(Tangible bits で 5,139→1)ため、パイプラインと同じモジュラリティ系に。
+  // 固定順序 + タイは小 ID 優先 → 決定論。選択論文(ハブ)のエッジは除く —
+  // 全員がハブと繋がっているので、入れると全体がひと塊になる。
+  const STOP = new Set(('the a an of for and in on with to using via from by at is are was were be how '
+    + 'what can do does their our your its as toward towards based new between more when why not').split(' '));
+  const tokenize = (t) => (t || '').toLowerCase().split(/[^a-z0-9-]+/)
+    .filter((w) => w.length >= 3 && !STOP.has(w) && !/^\d+$/.test(w));
+
+  let idf = null;   // 語 -> log(N/df)。初回の再クラスタ時に全タイトルから一度だけ作る
+  function ensureIdf() {
+    if (idf) return;
+    idf = new Map();
+    for (const nd of meta.nodes) {
+      for (const w of new Set(tokenize(nd.t))) idf.set(w, (idf.get(w) || 0) + 1);
+    }
+    for (const [w, df] of idf) idf.set(w, Math.log(meta.nodes.length / df));
+  }
+
+  // クラスタの暫定ラベル: メンバーのタイトルの TF-IDF 上位語(LLM 命名で置換可能)
+  function clusterLabel(g) {
+    const score = new Map();
+    for (const v of g) {
+      for (const w of tokenize(meta.nodes[v].t)) score.set(w, (score.get(w) || 0) + (idf.get(w) || 0));
+    }
+    return [...score.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4).map(([w]) => w).join(' · ');
+  }
+
+  const MAX_LOCAL = 8;   // カテゴリカル上限と同じ8。漏れは件数を必ず表示する
+
+  // 無向重み付きグラフの Louvain。levels ごとに local moving → 集約を繰り返す。
+  // 返り値は元ノード index -> コミュニティ番号。
+  function louvain(nNodes, links) {
+    let mapping = null;
+    let curN = nNodes, curLinks = links;
+    for (let level = 0; level < 10; level++) {
+      const adj = Array.from({ length: curN }, () => []);
+      const ki = new Float64Array(curN);
+      let m2 = 0;
+      for (const [a, b, w] of curLinks) {
+        if (a === b) { ki[a] += 2 * w; m2 += 2 * w; continue; }
+        adj[a].push([b, w]); adj[b].push([a, w]);
+        ki[a] += w; ki[b] += w; m2 += 2 * w;
+      }
+      if (!m2) break;
+      const comm = Int32Array.from({ length: curN }, (_, i) => i);
+      const stot = Float64Array.from(ki);
+      let improvedAny = false;
+      for (let pass = 0; pass < 20; pass++) {
+        let moved = 0;
+        for (let i = 0; i < curN; i++) {
+          const ci = comm[i];
+          const wsum = new Map();
+          for (const [j, w] of adj[i]) wsum.set(comm[j], (wsum.get(comm[j]) || 0) + w);
+          stot[ci] -= ki[i];
+          let best = ci, bestGain = (wsum.get(ci) || 0) - stot[ci] * ki[i] / m2;
+          for (const [c, w] of wsum) {
+            if (c === ci) continue;
+            const gain = w - stot[c] * ki[i] / m2;
+            if (gain > bestGain + 1e-12 || (Math.abs(gain - bestGain) <= 1e-12 && c < best)) { best = c; bestGain = gain; }
+          }
+          stot[best] += ki[i];
+          if (best !== ci) { comm[i] = best; moved++; }
+        }
+        if (!moved) break;
+        improvedAny = true;
+      }
+      const remap = new Map(); let next = 0;
+      for (let i = 0; i < curN; i++) {
+        if (!remap.has(comm[i])) remap.set(comm[i], next++);
+        comm[i] = remap.get(comm[i]);
+      }
+      mapping = mapping ? mapping.map((c) => comm[c]) : Array.from(comm);
+      if (!improvedAny || next === curN) break;
+      const agg = new Map();
+      for (const [a, b, w] of curLinks) {
+        const ca = comm[a], cb = comm[b];
+        const key = ca <= cb ? ca * next + cb : cb * next + ca;
+        agg.set(key, (agg.get(key) || 0) + w);
+      }
+      curLinks = [...agg.entries()].map(([key, w]) => [Math.floor(key / next), key % next, w]);
+      curN = next;
+    }
+    return mapping;
+  }
+
+  function runLocalClustering() {
+    if (!lineage) return;
+    ensureIdf();
+    const hub = lineage.i;
+    const ids = [hub, ...lineage.up, ...lineage.down];
+    const at = new Map(ids.map((v, k) => [v, k]));
+
+    // 系譜内エッジ(ハブのものは除く)。371k エッジの1パス、数十msで済む。
+    const links = [];
+    for (let e = 0; e < edgeCount; e++) {
+      const u = edges[e * 2], v = edges[e * 2 + 1];
+      if (u === hub || v === hub) continue;
+      const a = at.get(u), b = at.get(v);
+      if (a != null && b != null) links.push([a, b, 1]);
+    }
+
+    const mapping = louvain(ids.length, links) || ids.map((_, k) => k);
+    const groups = new Map();
+    ids.forEach((v, k) => {
+      const c = mapping[k];
+      if (!groups.has(c)) groups.set(c, []);
+      groups.get(c).push(v);
+    });
+    const sorted = [...groups.values()].sort((a, b) => b.length - a.length);
+    const kept = sorted.filter((g) => g.length >= 3).slice(0, MAX_LOCAL);
+    localRest = {
+      papers: ids.length - kept.reduce((t, g) => t + g.length, 0),
+      clusters: sorted.length - kept.length,
+    };
+    localClusters = kept.map((g) => ({ ids: g, set: new Set(g), label: clusterLabel(g), name: null }));
+    highlightedCluster = -1;
+    renderLocalClusters();
+    paintLineage(false);
+  }
+
+  function renderLocalClusters() {
+    const box = document.getElementById('localResults');
+    if (!box || !localClusters) return;
+    const total = 1 + lineage.up.size + lineage.down.size;
+    const rows = localClusters.map((c, k) => {
+      const pct = Math.round((c.ids.length / total) * 100);
+      return `<li class="trend local" data-cl="${k}" title="${escapeHtml(c.label)}">` +
+             `<span class="n">${c.ids.length}</span><span class="bar" style="width:${pct}%"></span>` +
+             `${escapeHtml(c.name || c.label)}</li>`;
+    }).join('');
+    const named = localClusters.some((c) => c.name);
+    box.innerHTML =
+      `<h3>Local clusters — click to filter</h3><ol class="trends">${rows}</ol>` +
+      (localRest.papers > 0
+        ? `<span class="hintline">+ ${localRest.papers.toLocaleString()} papers in ${localRest.clusters} smaller clusters (not shown)</span>`
+        : '') +
+      `<button id="nameBtn" class="mini"${named ? ' disabled' : ''}>` +
+      `${named ? 'Named with AI' : 'Name clusters with AI'}</button>` +
+      `<span class="hintline" id="nameStatus"></span>`;
+  }
+
+  function toggleLocalCluster(k) {
+    highlightedCluster = highlightedCluster === k ? -1 : k;
+    highlightedSub = -1;
+    paintLineage(true);
+  }
+
+  // --- ローカルクラスタの LLM 命名(任意・ボタン押下時のみ)---
+  // ビューアで実行時に Anthropic API を呼ぶ唯一の箇所。キーはユーザーが入力し、
+  // この端末の localStorage にだけ保存する。結果はクラスタ内容(メンバー ID)の
+  // ハッシュでキャッシュし、同じ系譜・同じクラスタなら再呼び出ししない —
+  // 「静的・決定論」の原則に対する例外を、明示的なボタンとキャッシュで最小化する。
+  const NAME_MODEL = 'claude-opus-5';
+  const KEY_STORE = 'plAnthropicKey';
+  const hashClusters = (cs) => {
+    let h = 5381;
+    for (const c of cs) for (const v of c.ids) h = ((h * 33) ^ v) >>> 0;
+    return h.toString(36);
+  };
+
+  async function nameLocalClusters() {
+    if (!localClusters || !localClusters.length) return;
+    const status = document.getElementById('nameStatus');
+
+    const cacheKey = `plClusterNames:${NAME_MODEL}:${hashClusters(localClusters)}`;
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) { applyClusterNames(JSON.parse(cached)); return; }
+
+    let key = localStorage.getItem(KEY_STORE);
+    if (!key) {
+      key = (prompt("Anthropic API key (stored only in this browser's localStorage):") || '').trim();
+      if (!key) return;
+      localStorage.setItem(KEY_STORE, key);
+    }
+    status.textContent = 'naming…';
+
+    const byCited = (a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0);
+    const desc = localClusters.map((c, k) => {
+      const titles = [...c.ids].sort(byCited).slice(0, 8).map((v) => meta.nodes[v].t);
+      return `Cluster ${k} (${c.ids.length} papers)\nkeywords: ${c.label}\ntitles:\n- ${titles.join('\n- ')}`;
+    }).join('\n\n');
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-api-key': key,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true',
+        },
+        body: JSON.stringify({
+          model: NAME_MODEL,
+          max_tokens: 2048,
+          output_config: { format: { type: 'json_schema', schema: {
+            type: 'object',
+            properties: { names: { type: 'array', items: { type: 'string' } } },
+            required: ['names'],
+            additionalProperties: false,
+          } } },
+          messages: [{
+            role: 'user',
+            content:
+              "These are clusters of related HCI papers found within one paper's citation lineage. " +
+              'Give each cluster a short English name (2-4 words, Title Case) describing its research thread. ' +
+              `Return {"names": [...]} with exactly ${localClusters.length} names, in cluster order.\n\n` + desc,
+          }],
+        }),
+      });
+      if (!res.ok) {
+        if (res.status === 401) localStorage.removeItem(KEY_STORE);   // 次回入力し直し
+        const err = await res.json().catch(() => ({}));
+        status.textContent = `error ${res.status}: ${(err.error && err.error.message) || 'request failed'}`;
+        return;
+      }
+      const msg = await res.json();
+      if (msg.stop_reason === 'refusal') { status.textContent = 'model declined the request'; return; }
+      const text = ((msg.content || []).find((b) => b.type === 'text') || {}).text || '';
+      const names = JSON.parse(text).names;
+      if (!Array.isArray(names) || names.length !== localClusters.length) {
+        status.textContent = 'unexpected response shape';
+        return;
+      }
+      localStorage.setItem(cacheKey, JSON.stringify(names));
+      applyClusterNames(names);
+    } catch (e) {
+      status.textContent = `error: ${e.message}`;
+    }
+  }
+
+  function applyClusterNames(names) {
+    localClusters.forEach((c, k) => { c.name = names[k]; });
+    renderLocalClusters();
   }
 
   // --- 検索 ---
@@ -1016,6 +1265,9 @@ async function main() {
     document.getElementById('lineageLists').innerHTML =
       trendHtml('Trends this work builds on', upIds, 'up') +
       trendHtml('Trends it spread into', downIds, 'down') +
+      `<div id="localBox"><button id="reclusterBtn" class="mini" ` +
+      `title="Cluster this lineage's papers by their own citation links, instead of the global sub-fields">` +
+      `Re-cluster this lineage</button><div id="localResults"></div></div>` +
       listHtml('Upstream — most cited first', upIds, 12) +
       listHtml('Downstream — most cited first', downIds, 12);
     lineageEl.style.display = 'block';
@@ -1024,6 +1276,10 @@ async function main() {
 
   document.getElementById('lineageLists').addEventListener('click', (e) => {
     if (e.target.closest('a.doi')) return;   // ↗ はブラウザに任せ、行選択にしない
+    if (e.target.id === 'reclusterBtn') { runLocalClustering(); return; }
+    if (e.target.id === 'nameBtn') { nameLocalClusters(); return; }
+    const local = e.target.closest('li.trend.local');
+    if (local) { toggleLocalCluster(parseInt(local.dataset.cl, 10)); return; }
     const trend = e.target.closest('li.trend[data-sub]');
     if (trend) { highlightTrend(parseInt(trend.dataset.sub, 10)); return; }
     const li = e.target.closest('li[data-i]');

@@ -1,6 +1,38 @@
 # dev-notes — paper-lineage
 
-## 2026-07-29(同日)citation intent の色分け(当初計画の最終項目)
+## 2026-07-30 系譜のローカル再クラスタリング + LLM 命名ボタン
+
+「クリックした論文を基準に、通る論文たちで系譜を計算し直して命名したい」(要望)を
+2段階で実装。毎回ではなく**系譜パネルのボタン押下時のみ**動く。
+
+### Step 1: ローカルクラスタリング(API 不要・決定論)
+
+- 選択論文の系譜(up ∪ down、高々数千ノード)の部分グラフを **Louvain** で
+  クラスタリング。**ラベル伝播は失敗した**: 全メンバーが選択論文(ハブ)と繋がる
+  密グラフでは1クラスタに潰れる(Tangible bits で 5,139→1)。
+  - 対処1: **ハブのエッジを除外**(全員がハブ経由で繋がるため)
+  - 対処2: LPA → **Louvain(モジュラリティ)**。パイプラインの帯レイアウトと同系。
+- 決定論: 固定順序で local moving、利得タイは小 ID 優先。同一入力で同一出力を確認。
+- 実測: Tangible bits(5,139ノード)66ms で 8 クラスタ
+  (shape-change / tangible learning / sensing・textile / AR prototyping …)。
+  VizWiz は crowdsourcing / accessibility / gig work に分離。妥当。
+- 暫定ラベルはタイトルの TF-IDF 上位4語(idf は全38k タイトルから初回のみ構築)。
+- 表示は上位8(カテゴリカル上限と同じ)+ 3本未満は捨て、**漏れた件数を必ず表示**。
+- クラスタ行クリックで系譜をその集合に絞り込み(既存のサブ帯 drill-down と同じ
+  paintLineage 経路。優先順: ローカルクラスタ > サブ帯)。
+
+### Step 2: "Name clusters with AI" ボタン(任意)
+
+- ビューアが実行時に LLM を呼ぶ**唯一の箇所**。claude-opus-5 に各クラスタの
+  TF-IDF 語 + 被引用上位8タイトルを渡し、structured output(json_schema)で
+  名前配列を受け取る。ブラウザ直叩き(`anthropic-dangerous-direct-browser-access`)。
+- **「静的・決定論」の原則との折り合い**: 明示的なボタン押下時のみ + 結果を
+  クラスタ内容(メンバー ID)のハッシュで localStorage にキャッシュ。
+  同じ系譜なら2回目以降はネットワークを呼ばない。
+- API キーはユーザー入力で localStorage 保存のみ(コードにもリポジトリにも置かない)。
+  401 でキーを破棄して再入力へ。refusal / 形状不一致はステータス行に表示。
+
+## 2026-07-29 citation intent の色分け(当初計画の最終項目)
 
 S2 だけが返す citation intent(background / method / result)でエッジを塗るモードを追加。
 「この引用は背景として引いたのか、手法を使ったのか、結果と比較したのか」が色になる。

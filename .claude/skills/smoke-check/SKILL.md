@@ -43,6 +43,13 @@ console must be clean.
 - **Color: Citation intent**: legend shows background/method/result counts **plus a
   coverage line** ("intents fetched for N of M citations"); with no `edge_intent.bin`
   the option is disabled and labeled "(no data)", never silently identical.
+- **Re-cluster this lineage**: button in the lineage panel produces ≤8 local cluster
+  rows with counts + TF-IDF labels, plus a "+N papers in M smaller clusters" line when
+  anything is dropped; clicking a row filters BOTH directions (and clears any sub-band
+  filter); re-click restores. Same lineage must give identical clusters every time.
+- **Name clusters with AI**: prompts for an API key once (localStorage); names replace
+  the TF-IDF labels; re-running on the same lineage must hit the localStorage cache
+  (no network call — check the Network tab).
 - Esc clears selection.
 
 ## 3.5 Testing pitfalls (each cost real time)

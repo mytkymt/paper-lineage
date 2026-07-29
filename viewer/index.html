@@ -68,6 +68,12 @@
   #lineage .cov { color: #6d7488; font-size: 11px; }
   #lineage a.doi { color: #6d90c9; text-decoration: none; }
   #lineage a.doi:hover { color: #9db8e8; text-decoration: underline; }
+  #lineage button.mini { margin: 8px 6px 2px 0; background: #141824; color: #aab2c4;
+    border: 1px solid #2a3040; border-radius: 4px; padding: 3px 8px; font: inherit;
+    font-size: 11px; cursor: pointer; }
+  #lineage button.mini:hover:not(:disabled) { color: #fff; border-color: #3d4560; }
+  #lineage button.mini:disabled { color: #5d6478; cursor: default; }
+  #lineage .hintline { display: block; color: #5d6478; font-size: 11px; margin-top: 3px; }
   #lineage .cov b { color: #aab2c4; }
   #selAuthors { margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 2px 8px; font-size: 11px; }
   #selAuthors .au { color: #8b91a3; cursor: pointer; }
@@ -222,6 +228,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="./main.js?v=9"></script>
+<script type="module" src="./main.js?v=10"></script>
 </body>
 </html>
