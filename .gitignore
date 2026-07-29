@@ -7,4 +7,10 @@ dist/
 .DS_Store
 *.log
 .cache/
-data/cache/
+.venv/
+__pycache__/
+*.egg-info/
+
+# 取得データは再現可能なのでコミットしない(数百MB規模になる)
+data/
+
