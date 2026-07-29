@@ -99,70 +99,148 @@ def attribution(nodes: list[dict], edges: np.ndarray) -> tuple[np.ndarray, np.nd
 
 # カテゴリカル配色は 8 スロットまで(dataviz: 9個目は生成せず「その他」に畳む)。
 LAB_SLOTS = 8
+NO_LAB = 0xFFFFFFFF   # ラボ線ではないエッジ / ノード
 
 
 def lab_lines(
     nodes: list[dict], edges: np.ndarray, level: np.ndarray
 ) -> tuple[np.ndarray, np.ndarray, list[dict]]:
-    """ラボ(= ラストオーサー)ごとの系譜を取り出し、上位に色スロットを割り当てる。
+    """ラボ(= ラストオーサー)ごとの系譜を取り出す。
 
     ラボの定義は level 2、つまり**引用元と引用先のラストオーサーが同じ**エッジ。
     その本数が多いラストオーサーほど「長い自分の系譜」を持っている。
 
-    色はカテゴリカルなので 8 スロットまで(dataviz の非交渉ルール:
-    9個目に新しい色相を作らず「その他」に畳む)。9位以下のラボの線は
-    「その他のラボ」として単色にまとめる。
+    色スロットの割当はここではやらない(**どのラボに色を付けるかはビューア側で
+    選べるようにした**ため)。ここで出すのは「どのラボのエッジか」という ID だけ。
 
-    戻り値: (エッジのスロット, ノードのスロット, ラボ一覧)
-            スロットは 0..7、8 = その他のラボ、255 = ラボ線ではない
+    戻り値: (エッジのラボ ID, ノードのラボ ID, ラボ一覧)
+            ID は labs のインデックス、NO_LAB = ラボ線ではない
     """
     last_authors = [n.get("last_author") for n in nodes]
-    dst = edges[:, 1].astype(np.int64)
+    src, dst = edges[:, 0].astype(np.int64), edges[:, 1].astype(np.int64)
+    lab_mask = np.flatnonzero(level == 2)
 
     lab_edges: dict[str, int] = {}
-    for e in np.flatnonzero(level == 2):
+    for e in lab_mask:
         a = last_authors[dst[e]]
         if a:
             lab_edges[a] = lab_edges.get(a, 0) + 1
+    ranked = sorted(lab_edges.items(), key=lambda kv: (-kv[1], kv[0]))
+    id_of = {a: i for i, (a, _) in enumerate(ranked)}
 
-    ranked = sorted(lab_edges.items(), key=lambda kv: -kv[1])
-    slot_of = {a: i for i, (a, _) in enumerate(ranked[:LAB_SLOTS])}
-
-    edge_lab = np.full(len(edges), 255, dtype=np.uint8)
-    for e in np.flatnonzero(level == 2):
+    edge_lab = np.full(len(edges), NO_LAB, dtype=np.uint32)
+    on_lab = np.zeros(len(nodes), dtype=bool)
+    for e in lab_mask:
         a = last_authors[dst[e]]
         if a:
-            edge_lab[e] = slot_of.get(a, LAB_SLOTS)
+            edge_lab[e] = id_of[a]
+        on_lab[src[e]] = True
+        on_lab[dst[e]] = True
 
-    # ノード側は「自分のラストオーサーがそのラボか」。ラボ線に乗っていない論文は 255。
-    on_lab = np.zeros(len(nodes), dtype=bool)
-    for e in np.flatnonzero(level == 2):
-        on_lab[edges[e, 0]] = True
-        on_lab[edges[e, 1]] = True
-    node_lab = np.full(len(nodes), 255, dtype=np.uint8)
+    node_lab = np.full(len(nodes), NO_LAB, dtype=np.uint32)
     for i, a in enumerate(last_authors):
-        if a and on_lab[i]:
-            node_lab[i] = slot_of.get(a, LAB_SLOTS)
+        if a and on_lab[i] and a in id_of:
+            node_lab[i] = id_of[a]
 
     names = _author_names()
+    papers_of: dict[str, list[int]] = defaultdict(list)
+    for i, a in enumerate(last_authors):
+        if a and on_lab[i]:
+            papers_of[a].append(i)
+
     labs = []
-    for a, cnt in ranked[:LAB_SLOTS]:
-        papers = [i for i, la in enumerate(last_authors) if la == a and on_lab[i]]
+    lab_author_ids = []
+    for a, cnt in ranked:
+        lab_author_ids.append(a)
+        ps = papers_of.get(a) or []
         labs.append({
-            "author_id": a,
             "name": names.get(a, a),
             "edges": cnt,
-            "papers": len(papers),
-            "years": [min(nodes[i]["year"] for i in papers),
-                      max(nodes[i]["year"] for i in papers)] if papers else None,
+            "papers": len(ps),
+            "years": [min(nodes[i]["year"] for i in ps), max(nodes[i]["year"] for i in ps)]
+            if ps else None,
         })
 
-    other = sum(c for _, c in ranked[LAB_SLOTS:])
-    print(f"  ラボ線: {len(ranked):,} ラボ / 上位{LAB_SLOTS}に色を割当(残り {other:,} エッジは「その他のラボ」)")
-    for lab in labs:
-        yr = f"{lab['years'][0]}–{lab['years'][1]}" if lab["years"] else "-"
+    print(f"  ラボ線: {len(ranked):,} ラボ(色を付けるラボはビューア側で選択)")
+    for lab in labs[:8]:
+        yr = f"{lab['years'][0]}-{lab['years'][1]}" if lab["years"] else "-"
         print(f"    {lab['edges']:>4} 本  {yr}  {lab['name']}")
-    return edge_lab, node_lab, labs
+    return edge_lab, node_lab, labs, lab_author_ids
+
+
+def author_table(nodes: list[dict]) -> tuple[list[str], list[list[int]]]:
+    """著者名テーブルと、ノードごとの著者インデックス列。
+
+    名前を各ノードに直接持つと meta.json が数 MB 膨らむので、共有テーブルへの
+    インデックスにする。順序は元のまま(最後の要素がラストオーサー)。
+    """
+    names = _author_names()
+    table: list[str] = []
+    index: dict[str, int] = {}
+    author_table.index = index  # ラボ側から著者インデックスを引くため
+    per_node: list[list[int]] = []
+    for n in nodes:
+        row = []
+        for aid in n.get("authors") or []:
+            if aid not in index:
+                index[aid] = len(table)
+                table.append(names.get(aid, aid))
+            row.append(index[aid])
+        per_node.append(row)
+    print(f"  著者: {len(table):,} 人")
+    return table, per_node
+
+
+def related_terms(nodes: list[dict], vocab_size: int = 2000, k: int = 8) -> dict[str, list[str]]:
+    """タイトルの共起から関連語を出す。
+
+    「haptic で引いたら vibrotactile も拾いたい」への、API を使わない版。
+    埋め込みではなく共起 PMI なので**意味的な類似ではなく「同じ文脈で使われる語」**。
+    検索欄の候補として出し、クリックで語を足す用途。
+    """
+    import re
+    from collections import Counter
+
+    docs: list[list[int]] = []
+    df: Counter[str] = Counter()
+    tokenized = []
+    for n in nodes:
+        ws = {
+            w for w in re.findall(r"[a-z][a-z0-9\-]{2,}", (n.get("title") or "").lower())
+            if w not in _STOP
+        }
+        tokenized.append(ws)
+        df.update(ws)
+
+    vocab = [w for w, c in df.most_common(vocab_size) if c >= 8]
+    vid = {w: i for i, w in enumerate(vocab)}
+    V, N = len(vocab), len(nodes)
+    for ws in tokenized:
+        docs.append(sorted(vid[w] for w in ws if w in vid))
+
+    co = np.zeros((V, V), dtype=np.int32)
+    for ids in docs:
+        for a in range(len(ids)):
+            ia = ids[a]
+            for b in range(a + 1, len(ids)):
+                co[ia, ids[b]] += 1
+    co += co.T
+
+    counts = np.array([df[w] for w in vocab], dtype=np.float64)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        pmi = np.log((co * N) / np.outer(counts, counts))
+    pmi[~np.isfinite(pmi)] = -1e9
+    np.fill_diagonal(pmi, -1e9)
+    pmi[co < 5] = -1e9   # 共起が少なすぎるペアはノイズなので捨てる
+
+    out: dict[str, list[str]] = {}
+    for i, w in enumerate(vocab):
+        top = np.argsort(pmi[i])[::-1][:k]
+        rel = [vocab[j] for j in top if pmi[i, j] > -1e8]
+        if rel:
+            out[w] = rel
+    print(f"  関連語: {len(out):,} 語(語彙 {V:,}、共起 PMI)")
+    return out
 
 
 def _author_names() -> dict[str, str]:
@@ -625,7 +703,13 @@ def main() -> None:
     wnorm = np.clip((weights - lo) / max(hi - lo, 1e-9), 0.0, 1.0).astype(np.float32)
 
     level, node_attr = attribution(nodes, edges)
-    edge_lab, node_lab, labs = lab_lines(nodes, edges, level)
+    edge_lab, node_lab, labs, lab_author_ids = lab_lines(nodes, edges, level)
+    author_names, node_authors = author_table(nodes)
+    # ラボ ↔ 著者テーブルを結ぶ。ビューアは著者を検索して色を付けるので、
+    # 名前ではなく著者インデックスで一致させる。
+    for lab, aid in zip(labs, lab_author_ids):
+        lab["ai"] = author_table.index.get(aid, -1)
+    related = related_terms(nodes)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     level.tofile(OUT_DIR / "edge_attr.bin")
@@ -641,6 +725,8 @@ def main() -> None:
         "jitter": args.jitter,
         "bands": extra.get("bands"),
         "labs": labs,
+        "authors": author_names,
+        "related": related,
         "subbands": extra.get("subbands"),
         "node_count": len(nodes),
         "edge_count": int(len(edges)),
@@ -654,11 +740,16 @@ def main() -> None:
                 "t": n.get("title") or "",
                 "d": n.get("doi"),
                 "r": n.get("refs_total") or 0,
+                "a": au,
                 # 帯 / サブ帯の所属。系譜を選んだとき「どのトレンドから来て
                 # どのトレンドへ広がったか」を数えるのに使う。
                 "s": s,
             }
-            for n, s in zip(nodes, extra.get("subcommunity_of") or [-1] * len(nodes))
+            for n, s, au in zip(
+                nodes,
+                extra.get("subcommunity_of") or [-1] * len(nodes),
+                node_authors,
+            )
         ],
     }
     (OUT_DIR / "meta.json").write_text(json.dumps(meta, ensure_ascii=False))

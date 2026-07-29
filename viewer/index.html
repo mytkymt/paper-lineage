@@ -17,6 +17,14 @@
            border: 1px solid #232734; border-radius: 8px; padding: 10px 12px; }
   #controls { top: 12px; left: 12px; width: 252px; }
   #controls h1 { margin: 0 0 8px; font-size: 13px; letter-spacing: .04em; }
+  #controls details { border-top: 1px solid #1c2029; margin-top: 6px; }
+  #controls summary { cursor: pointer; color: #8b91a3; font-size: 11px; padding: 5px 0;
+                      list-style: none; user-select: none; }
+  #controls summary::-webkit-details-marker { display: none; }
+  #controls summary::before { content: '▸ '; color: #5d6478; }
+  #controls details[open] > summary::before { content: '▾ '; }
+  #roleMode, #colorMode { flex: 1; min-width: 0; background: #0d0f16; color: #d7dae2; font: inherit;
+                          border: 1px solid #2b3142; border-radius: 5px; padding: 3px 5px; }
   .row { display: flex; align-items: center; gap: 8px; margin: 7px 0; }
   .row label { flex: 0 0 74px; color: #8b91a3; }
   .row input[type=range] { flex: 1; min-width: 0; }
@@ -57,6 +65,24 @@
   #lineage .meta { color: #7f879b; margin-bottom: 8px; }
   #lineage .cov { color: #6d7488; font-size: 11px; }
   #lineage .cov b { color: #aab2c4; }
+  #selAuthors { margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 2px 8px; font-size: 11px; }
+  #selAuthors .au { color: #8b91a3; cursor: pointer; }
+  #selAuthors .au:hover { color: #fff; }
+  #selAuthors .au.last { color: #c3c8d6; }
+  #selAuthors .au.none { cursor: default; }
+  #searchResults .grp { color: #6d7488; border: 0; cursor: default; margin-top: 4px; }
+  #searchResults .person { display: flex; align-items: center; gap: 5px; }
+  #searchResults .person i { width: 8px; height: 8px; border-radius: 2px; flex: 0 0 8px; }
+  #searchResults .person i.empty { border: 1px solid #3a4152; background: transparent; }
+  #searchResults .person .sub { color: #5d6478; margin-left: auto; flex: 0 0 auto; }
+  #searchResults .chips { padding: 3px 0; color: #6d7488; }
+  #searchResults .chips b { color: #8fa6d8; font-weight: 400; cursor: pointer;
+                            border: 1px solid #2b3142; border-radius: 3px;
+                            padding: 0 4px; margin-left: 4px; display: inline-block; }
+  #searchResults .chips b:hover { color: #fff; border-color: #4a5473; }
+  #lineage li.trend { cursor: pointer; }
+  #lineage li.trend.picked { color: #fff; background: #ffffff08; }
+  #legend .hintline { color: #5d6478; }
   #lineage .counts { display: flex; gap: 10px; margin-bottom: 8px; }
   #lineage .counts b { font-variant-numeric: tabular-nums; }
   #lineage .up b { color: #4fd2c2; }
@@ -101,6 +127,33 @@
   <h1>paper-lineage</h1>
   <input id="search" type="search" placeholder="タイトル検索(Enter で先頭を選択)" autocomplete="off">
   <div id="searchResults"></div>
+  <details id="grpPeople" open>
+    <summary>人 · ラボ</summary>
+  <div class="row">
+    <label>当て方</label>
+    <select id="roleMode">
+      <option value="any">著者に含まれる論文</option>
+      <option value="last">ラストオーサーの論文のみ</option>
+    </select>
+    <span class="val"></span>
+  </div>
+  <div class="row">
+    <label>色</label>
+    <select id="colorMode">
+      <option value="attr">人 · ラボ</option>
+      <option value="venue">会議 (venue)</option>
+    </select>
+    <span class="val"></span>
+  </div>
+  <div class="row">
+    <label>ラボ線のみ</label>
+    <input id="attrOnly" type="checkbox">
+    <span class="val"></span>
+  </div>
+  </details>
+
+  <details id="grpView">
+    <summary>表示の調整</summary>
   <div class="row">
     <label>幹のみ</label>
     <input id="thresh" type="range" min="0" max="1" step="0.005" value="0">
@@ -126,6 +179,10 @@
     <input id="psize" type="range" min="0.5" max="8" step="0.1" value="0.8">
     <span class="val" id="psizeVal">0.8</span>
   </div>
+  </details>
+
+  <details id="grpLineage" open>
+    <summary>系譜</summary>
   <div class="row">
     <label>系譜の深さ</label>
     <!-- 既定は 2 ホップ。無制限だと数千本が塗り潰されて「系譜」として読めなくなる。 -->
@@ -133,23 +190,12 @@
     <span class="val" id="depthVal">2ホップ</span>
   </div>
   <div class="row">
-    <label>色</label>
-    <select id="colorMode">
-      <option value="attr">ラボ(誰の系譜か)</option>
-      <option value="venue">会議 (venue)</option>
-    </select>
-    <span class="val"></span>
-  </div>
-  <div class="row">
-    <label>ラボ線のみ</label>
-    <input id="attrOnly" type="checkbox">
-    <span class="val"></span>
-  </div>
-  <div class="row">
     <label>系譜のみ</label>
     <input id="only" type="checkbox">
     <span class="val"></span>
   </div>
+  </details>
+
   <div id="stats">読み込み中…</div>
   <div class="hint">論文をクリックすると系譜を表示 / ドラッグで移動 / ホイールで拡大</div>
 </div>
@@ -161,6 +207,7 @@
   <span class="close" id="lineageClose">×</span>
   <h2 id="selTitle"></h2>
   <div class="meta" id="selMeta"></div>
+  <div id="selAuthors"></div>
   <div class="counts">
     <span class="up">遡る系譜 <b id="upCount">0</b></span>
     <span class="down">その後 <b id="downCount">0</b></span>

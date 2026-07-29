@@ -83,6 +83,11 @@ const LAB_HEX = ['#3987e5', '#d95926', '#199e70', '#c98500',
                  '#d55181', '#008300', '#9085e9', '#e66767'];
 const LAB_OTHER = '#59617a';   // 9位以下のラボ(色付き8ラボを埋めないよう暗め)
 const NON_LAB = [0.16, 0.19, 0.26];  // ラボ線ではないエッジ
+const NO_LAB = 0xFFFFFFFF;
+
+// 色を付ける人はユーザーが検索して選ぶ。既定は自己引用系譜が長い順に上位8人。
+// 「その人の論文」(点)と「その人のラボ系譜」(線)は別物なので、両方まとめて色を付ける。
+let pinned = [];            // [{ai: 著者index, labId: labs index|null}] 最大 8
 
 const hexToRgb = (h) => [
   parseInt(h.slice(1, 3), 16) / 255,
@@ -226,8 +231,8 @@ async function load() {
     pos: new Float32Array(posBuf),
     edges: new Uint32Array(edgeBuf),
     weights: new Float32Array(wBuf),
-    edgeLab: new Uint8Array(attrBuf),      // 0..8, 255 = ラボ線ではない
-    nodeLab: new Uint8Array(nAttrBuf),
+    edgeLab: new Uint32Array(attrBuf),     // labs のインデックス, NO_LAB = ラボ線ではない
+    nodeLab: new Uint32Array(nAttrBuf),
     meta: await metaRes.json(),
   };
 }
@@ -294,13 +299,12 @@ async function main() {
   const edgeCount = edges.length / 2;
   const edgePos = new Float32Array(edgeCount * 4);
   const edgeW = new Float32Array(edgeCount * 2);
-  const edgeA = new Float32Array(edgeCount * 2);
+  const edgeA = new Float32Array(edgeCount * 2);   // 頂点ごとの色スロット
   for (let e = 0; e < edgeCount; e++) {
     const a = edges[e * 2], b = edges[e * 2 + 1];
     edgePos[e * 4] = np[a * 2];     edgePos[e * 4 + 1] = np[a * 2 + 1];
     edgePos[e * 4 + 2] = np[b * 2]; edgePos[e * 4 + 3] = np[b * 2 + 1];
     edgeW[e * 2] = weights[e];      edgeW[e * 2 + 1] = weights[e];
-    edgeA[e * 2] = edgeLab[e];      edgeA[e * 2 + 1] = edgeLab[e];
   }
 
   // ノードの色と大きさ
@@ -318,10 +322,68 @@ async function main() {
     colors[i * 3] = c[0]; colors[i * 3 + 1] = c[1]; colors[i * 3 + 2] = c[2];
     mags[i] = maxMag > 0 ? mags[i] / maxMag : 0;
 
-    // ラボモードの点の色。ラボ線に乗っていない論文はほぼ沈める。
-    const slot = nodeLab[i];
-    const lc = slot < 255 ? LAB_RGB[slot] : NON_LAB;
-    attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
+    // ラボモードの点の色は applyChosenLabs() が埋める(選択で変わるため)
+  }
+
+  let edgeSlotBuf = null, attrColorBuf = null;
+  // 選んだラボ → 色スロット。選ばれていないラボ線は「その他のラボ」スロット(8)。
+  // 著者 -> その人の論文。人での検索と色付けに使う。
+  const papersByAuthor = new Map();
+  for (let i = 0; i < n; i++) {
+    for (const ai of meta.nodes[i].a || []) {
+      let arr = papersByAuthor.get(ai);
+      if (!arr) papersByAuthor.set(ai, (arr = []));
+      arr.push(i);
+    }
+  }
+  const labByAuthor = new Map();
+  (meta.labs || []).forEach((lab, id) => { if (lab.ai >= 0) labByAuthor.set(lab.ai, id); });
+
+  function applyPinned() {
+    const labSlot = new Map();
+    pinned.forEach((p, i) => { if (p.labId != null) labSlot.set(p.labId, i); });
+    for (let e = 0; e < edgeCount; e++) {
+      const id = edgeLab[e];
+      const v = id === NO_LAB ? 255 : (labSlot.has(id) ? labSlot.get(id) : 8);
+      edgeA[e * 2] = v; edgeA[e * 2 + 1] = v;
+    }
+    // 点の当て方は 2 通り選べる:
+    //   any  = その人が著者に入っている論文(共著も拾う。線より広く出る)
+    //   last = その人がラストオーサーの論文だけ(= その人のラボの仕事)
+    for (let i = 0; i < n; i++) {
+      const id = nodeLab[i];
+      const lc = id === NO_LAB ? NON_LAB : LAB_RGB[labSlot.has(id) ? labSlot.get(id) : 8];
+      attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
+    }
+    const lastOnly = ui.roleMode && ui.roleMode.value === 'last';
+    pinned.forEach((p, slot) => {
+      const c = LAB_RGB[slot];
+      for (const i of papersByAuthor.get(p.ai) || []) {
+        const as = meta.nodes[i].a || [];
+        if (lastOnly && as[as.length - 1] !== p.ai) continue;
+        attrColors[i * 3] = c[0]; attrColors[i * 3 + 1] = c[1]; attrColors[i * 3 + 2] = c[2];
+      }
+    });
+    if (edgeSlotBuf) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, edgeSlotBuf);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, edgeA);
+      gl.bindBuffer(gl.ARRAY_BUFFER, attrColorBuf);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, attrColors);
+    }
+    drawLegend();
+    schedule();
+  }
+
+  function togglePinned(ai) {
+    const at = pinned.findIndex((p) => p.ai === ai);
+    if (at >= 0) pinned.splice(at, 1);
+    else if (pinned.length < LAB_HEX.length) {
+      pinned.push({ ai, labId: labByAuthor.has(ai) ? labByAuthor.get(ai) : null });
+    } else {
+      return false;   // 8スロット使い切り
+    }
+    applyPinned();
+    return true;
   }
 
   const outAdj = buildCSR(edges, n, true);   // 引用された -> 引用した(未来方向)
@@ -380,13 +442,14 @@ async function main() {
   attrib(edgeProg, 'aPos', buffer(edgePos), 2);
   attrib(edgeProg, 'aWeight', buffer(edgeW), 1);
   attrib(edgeProg, 'aState', edgeStateBuf, 1);
-  attrib(edgeProg, 'aLab', buffer(edgeA), 1);
+  edgeSlotBuf = buffer(edgeA, gl.DYNAMIC_DRAW);
+  attrib(edgeProg, 'aLab', edgeSlotBuf, 1);
 
   const nodeVao = gl.createVertexArray();
   gl.bindVertexArray(nodeVao);
   attrib(nodeProg, 'aPos', buffer(np), 2);
   const venueColorBuf = buffer(colors);
-  const attrColorBuf = buffer(attrColors);
+  attrColorBuf = buffer(attrColors, gl.DYNAMIC_DRAW);
   attrib(nodeProg, 'aColor', attrColorBuf, 3);
   attrib(nodeProg, 'aMag', buffer(mags), 1);
   attrib(nodeProg, 'aState', nodeStateBuf, 1);
@@ -447,6 +510,7 @@ async function main() {
     only: document.getElementById('only'),
     colorMode: document.getElementById('colorMode'),
     attrOnly: document.getElementById('attrOnly'),
+    roleMode: document.getElementById('roleMode'),
   };
 
   let selected = -1;
@@ -627,6 +691,7 @@ async function main() {
         else if (inDown(a) && inDown(b)) st = S_DOWN;
         if (st) { edgeState[e * 2] = st; edgeState[e * 2 + 1] = st; }
       }
+      highlightedSub = -1;
       showLineagePanel(i, up, down);
       if (!keepCamera) fitTo([i, ...up, ...down]);
     }
@@ -639,6 +704,8 @@ async function main() {
   const MAX_MARK = 4000;   // 描画で強調する上限
   const MAX_LIST = 40;     // 一覧に出す件数
 
+  const lowerAuthors = (meta.authors || []).map((a) => a.toLowerCase());
+
   function runSearch(query) {
     const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
     const box = document.getElementById('searchResults');
@@ -649,6 +716,16 @@ async function main() {
       return;
     }
 
+    // --- 人 ---
+    const joined = terms.join(' ');
+    const people = [];
+    for (let ai = 0; ai < lowerAuthors.length; ai++) {
+      if (!lowerAuthors[ai].includes(joined)) continue;
+      people.push({ ai, papers: (papersByAuthor.get(ai) || []).length });
+    }
+    people.sort((a, b) => b.papers - a.papers);
+
+    // --- 論文(全語 AND) ---
     const hits = [];
     for (let i = 0; i < lowerTitles.length; i++) {
       const t = lowerTitles[i];
@@ -658,7 +735,6 @@ async function main() {
     }
     hits.sort((a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0));
 
-    // 選択中なら解除してから検索表示に切り替える
     selected = -1;
     lineageEl.style.display = 'none';
     document.body.classList.remove('has-selection');
@@ -668,15 +744,35 @@ async function main() {
     for (const i of hits.slice(0, MAX_MARK)) nodeState[i] = S_MATCH;
     uploadStates();
 
-    const rows = hits.slice(0, MAX_LIST).map((i) => {
+    // --- 関連語(共起 PMI)。クリックで語を足す。 ---
+    let chips = '';
+    const rel = (meta.related || {})[terms[terms.length - 1]];
+    if (rel && rel.length) {
+      chips = '<div class="chips">関連語 ' +
+        rel.slice(0, 6).map((w) => `<b data-term="${escapeHtml(w)}">${escapeHtml(w)}</b>`).join('') +
+        '</div>';
+    }
+
+    const peopleRows = people.slice(0, 6).map((p) => {
+      const slot = pinned.findIndex((q) => q.ai === p.ai);
+      const lab = labByAuthor.has(p.ai) ? meta.labs[labByAuthor.get(p.ai)] : null;
+      const dot = slot >= 0 ? `<i style="background:${LAB_HEX[slot]}"></i>` : '<i class="empty"></i>';
+      return `<div class="person" data-ai="${p.ai}">${dot}${escapeHtml(meta.authors[p.ai])}` +
+             `<span class="sub">${p.papers}本` +
+             (lab ? ` · 自己引用系譜 ${lab.edges}` : ' · 系譜線なし') + '</span></div>';
+    }).join('');
+
+    const paperRows = hits.slice(0, MAX_LIST).map((i) => {
       const nd = meta.nodes[i];
-      return `<div data-i="${i}"><span class="y">${nd.y}</span>${escapeHtml(nd.t.slice(0, 80))}</div>`;
-    });
-    const note = hits.length > MAX_LIST
-      ? `<div class="count">${hits.length.toLocaleString()} 件中 ${MAX_LIST} 件を表示` +
-        (hits.length > MAX_MARK ? `(強調は上位 ${MAX_MARK.toLocaleString()} 件)` : '') + '</div>'
-      : `<div class="count">${hits.length} 件</div>`;
-    box.innerHTML = note + rows.join('');
+      return `<div data-i="${i}"><span class="y">${nd.y}</span>${escapeHtml(nd.t.slice(0, 78))}</div>`;
+    }).join('');
+
+    box.innerHTML =
+      chips +
+      (peopleRows ? `<div class="grp">人(クリックで色を固定)</div>${peopleRows}` : '') +
+      `<div class="grp">論文 ${hits.length.toLocaleString()} 件` +
+      (hits.length > MAX_LIST ? ` — 上位 ${MAX_LIST} 件` : '') + '</div>' +
+      paperRows;
     box.dataset.first = hits.length ? String(hits[0]) : '';
   }
 
@@ -691,35 +787,53 @@ async function main() {
     const first = document.getElementById('searchResults').dataset.first;
     if (first) select(parseInt(first, 10));
   });
+
   document.getElementById('searchResults').addEventListener('click', (e) => {
+    // 関連語チップ: クリックで検索語に足す
+    const term = e.target.closest('b[data-term]');
+    if (term) {
+      searchEl.value = (searchEl.value.trim() + ' ' + term.dataset.term).trim();
+      runSearch(searchEl.value);
+      return;
+    }
+    // 人: クリックで色を固定 / 解除
+    const person = e.target.closest('div.person');
+    if (person) {
+      if (!togglePinned(parseInt(person.dataset.ai, 10))) {
+        alert('色は 8 人までです。凡例か検索結果で既に固定した人をクリックすると外せます。');
+        return;
+      }
+      runSearch(searchEl.value);
+      return;
+    }
     const row = e.target.closest('div[data-i]');
     if (row) select(parseInt(row.dataset.i, 10));
   });
 
   // 系譜をサブ帯(サブ分野)ごとに数え、上位を出す。
-  // 「この論文はどのトレンドの上に乗り、その後どのトレンドへ広がったか」の第一版。
+  // 「この論文はどのトレンドの上に乗り、その後どのトレンドへ広がったか」。
   // クラスタは前計算済みのものを再利用しているので、クリックしても計算は走らない。
   function trendHtml(title, ids, kind) {
     if (!meta.subbands || !ids.length) return '';
     const counts = new Map();
     for (const i of ids) {
-      const s = meta.nodes[i].s;
-      if (s == null || s < 0) continue;
-      counts.set(s, (counts.get(s) || 0) + 1);
+      const sb = meta.nodes[i].s;
+      if (sb == null || sb < 0) continue;
+      counts.set(sb, (counts.get(sb) || 0) + 1);
     }
     if (!counts.size) return '';
     const rows = [...counts.entries()]
       .sort((a, b) => b[1] - a[1])
       .slice(0, 6)
-      .map(([s, n]) => {
-        const sub = meta.subbands[s];
-        const pct = Math.round((n / ids.length) * 100);
-        return `<li class="trend ${kind}"><span class="n">${n}</span>` +
-               `<span class="bar" style="width:${pct}%"></span>` +
+      .map(([sb, cnt]) => {
+        const sub = meta.subbands[sb];
+        const pct = Math.round((cnt / ids.length) * 100);
+        return `<li class="trend ${kind}" data-sub="${sb}" data-kind="${kind}">` +
+               `<span class="n">${cnt}</span><span class="bar" style="width:${pct}%"></span>` +
                `${escapeHtml(kw(sub) || '(その他)')}</li>`;
       })
       .join('');
-    return `<h3>${title}</h3><ol class="trends">${rows}</ol>`;
+    return `<h3>${title}(クリックで絞り込み)</h3><ol class="trends">${rows}</ol>`;
   }
 
   function listHtml(title, ids, limit) {
@@ -749,6 +863,18 @@ async function main() {
       `<span class="cov">参照 ${nd.r} 本中 <b>${inCorpus} 本</b>がこのコーパス内` +
       (nd.r && !inCorpus ? ' — HCI 13会議の外を引用しているため遡れません' : '') +
       `</span>`;
+
+    // 著者。最後がラストオーサー(= ラボの主宰)なので印を付ける。クリックで色を固定。
+    const as = nd.a || [];
+    document.getElementById('selAuthors').innerHTML = as.length
+      ? as.map((ai, k) => {
+          const slot = pinned.findIndex((q) => q.ai === ai);
+          const isLast = k === as.length - 1 && as.length > 1;
+          return `<span class="au${isLast ? ' last' : ''}" data-ai="${ai}"` +
+                 (slot >= 0 ? ` style="color:${LAB_HEX[slot]}"` : '') +
+                 `>${escapeHtml(meta.authors[ai] || '?')}${isLast ? ' ◂' : ''}</span>`;
+        }).join('')
+      : '<span class="au none">著者情報なし</span>';
     document.getElementById('upCount').textContent = up.size.toLocaleString();
     document.getElementById('downCount').textContent = down.size.toLocaleString();
 
@@ -766,10 +892,50 @@ async function main() {
   }
 
   document.getElementById('lineageLists').addEventListener('click', (e) => {
+    const trend = e.target.closest('li.trend[data-sub]');
+    if (trend) { highlightTrend(parseInt(trend.dataset.sub, 10), trend.dataset.kind); return; }
     const li = e.target.closest('li[data-i]');
     if (li) select(parseInt(li.dataset.i, 10));
   });
+
+  // 系譜の中の1トレンドだけを残す。再クリックで系譜全体に戻る。
+  let highlightedSub = -1;
+  function highlightTrend(sub, kind) {
+    if (selected < 0) return;
+    highlightedSub = highlightedSub === sub ? -1 : sub;
+    const want = kind === 'up' ? S_UP : S_DOWN;
+    for (let i = 0; i < n; i++) {
+      const st = nodeState[i];
+      if (st === S_NONE || st === S_SELF) continue;
+      // 元の系譜区分は保持したまま、対象トレンド以外を一時的に落とす
+      if (highlightedSub >= 0 && !(st === want && meta.nodes[i].s === highlightedSub)) {
+        nodeState[i] = S_NONE;
+      }
+    }
+    if (highlightedSub < 0) { select(selected, true); return; }
+    edgeState.fill(0);
+    for (let e = 0; e < edgeCount; e++) {
+      const a = edges[e * 2], b = edges[e * 2 + 1];
+      if (nodeState[a] > 0 && nodeState[b] > 0) {
+        const st = nodeState[a] === S_SELF ? nodeState[b] : nodeState[a];
+        edgeState[e * 2] = st; edgeState[e * 2 + 1] = st;
+      }
+    }
+    uploadStates();
+    document.querySelectorAll('#lineageLists li.trend').forEach((el) => {
+      el.classList.toggle('picked', parseInt(el.dataset.sub, 10) === highlightedSub);
+    });
+  }
   document.getElementById('lineageClose').addEventListener('click', () => select(-1));
+  document.getElementById('selAuthors').addEventListener('click', (e) => {
+    const au = e.target.closest('.au[data-ai]');
+    if (!au) return;
+    if (!togglePinned(parseInt(au.dataset.ai, 10))) {
+      alert('色は 8 人までです。凡例か検索結果で既に固定した人をクリックすると外せます。');
+      return;
+    }
+    if (selected >= 0) select(selected, true);
+  });
 
   // --- 操作 ---
   let dragging = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
@@ -897,6 +1063,7 @@ async function main() {
   });
   ui.only.addEventListener('change', schedule);
   ui.attrOnly.addEventListener('change', schedule);
+  ui.roleMode.addEventListener('change', applyPinned);
   ui.colorMode.addEventListener('change', () => {
     // 点の色は属性バッファを差し替える(毎フレーム分岐させない)
     gl.bindVertexArray(nodeVao);
@@ -921,7 +1088,7 @@ async function main() {
   const venueCounts = {};
   for (const nd of meta.nodes) venueCounts[nd.v] = (venueCounts[nd.v] || 0) + 1;
   let otherLabEdges = 0;
-  for (const lv of edgeLab) if (lv === 8) otherLabEdges++;
+  for (const lv of edgeLab) if (lv !== NO_LAB) otherLabEdges++;
   const LAB_FLAT = new Float32Array(LAB_RGB.flat());
   let isolatedLab = -1;
 
@@ -938,20 +1105,25 @@ async function main() {
         .join('');
       return;
     }
-    // ラボ凡例。色だけに頼らせないため、クリックで1ラボに絞り込める(二次符号化)。
-    el.innerHTML = (meta.labs || [])
-      .map((lab, i) => {
+    // 固定した人の凡例。クリックで1人に絞り込む(色だけに identity を負わせない二次符号化)。
+    el.innerHTML = pinned
+      .map((p, i) => {
+        const lab = p.labId != null ? meta.labs[p.labId] : null;
         const on = isolatedLab < 0 || isolatedLab === i;
-        return `<span class="lab${on ? '' : ' off'}" data-slot="${i}" title="${escapeHtml(lab.name)} · ` +
-               `${lab.papers}本 · ${lab.edges}リンク">` +
-               `<i style="background:${LAB_HEX[i]}"></i>${escapeHtml(lab.name)} ` +
-               `<b>${lab.years ? lab.years[0] + '–' + lab.years[1] : ''}</b></span>`;
+        return `<span class="lab${on ? '' : ' off'}" data-slot="${i}">` +
+               `<i style="background:${LAB_HEX[i]}"></i>${escapeHtml(meta.authors[p.ai])} ` +
+               `<b>${lab ? lab.years[0] + '–' + lab.years[1] : '系譜線なし'}</b></span>`;
       })
       .join('') +
       `<span class="lab${isolatedLab < 0 || isolatedLab === 8 ? '' : ' off'}" data-slot="8">` +
-      `<i style="background:${LAB_OTHER}"></i>その他のラボ ${otherLabEdges.toLocaleString()}リンク</span>`;
+      `<i style="background:${LAB_OTHER}"></i>その他のラボ ${otherLabEdges.toLocaleString()}リンク</span>` +
+      (pinned.length ? '' : '<span class="hintline">検索欄で人名を引いて色を固定できます</span>');
   }
-  drawLegend();
+
+  // 既定は自己引用系譜が長い順に上位8人。あとは検索で入れ替えられる。
+  pinned = (meta.labs || []).slice(0, LAB_HEX.length)
+    .map((lab, id) => ({ ai: lab.ai, labId: id }));
+  applyPinned();   // 中で drawLegend() まで走る
 
   statsEl.textContent =
     `${n.toLocaleString()} 本 / ${edgeCount.toLocaleString()} 引用 · ${yearMin}–${yearMax} · layout=${meta.mode}`;
