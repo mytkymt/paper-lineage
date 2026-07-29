@@ -136,7 +136,8 @@ def _spectral_1d(n: int, src: np.ndarray, dst: np.ndarray, iters: int, seed: int
 
 
 def layout_community(
-    nodes: list[dict], edges: np.ndarray, iters: int, resolution: float, min_size: int
+    nodes: list[dict], edges: np.ndarray, iters: int, resolution: float,
+    min_size: int, sub_min_size: int,
 ) -> tuple[np.ndarray, dict]:
     """コミュニティを検出し、論文数に比例した「帯」に割り当てる。
 
@@ -208,26 +209,62 @@ def layout_community(
     else:
         comm_order = np.arange(k)
 
-    # --- 論文数に比例した帯を割り当てる ---
+    # --- 論文数に比例した帯を割り当てる(帯の中はさらにサブ帯に割る)---
     y = np.zeros(n, dtype=np.float32)
+    sub_of = np.full(n, -1, dtype=np.int64)
     total = sum(len(c) for c in comms) + len(isolated)
     cursor = 0.0
-    bands = []
+    bands: list[dict] = []
+    subbands: list[dict] = []
+
     for ci in comm_order:
         members = np.array(comms[ci], dtype=np.int64)
         width = len(members) / total
-        # 帯の中はコミュニティ内スペクトル順(内部構造を残す)
+        # コミュニティ内の部分グラフ
         mask = np.isin(src, members) & np.isin(dst, members)
         local = {g: i for i, g in enumerate(members)}
         ls = np.array([local[v] for v in src[mask]], dtype=np.int64)
         ld = np.array([local[v] for v in dst[mask]], dtype=np.int64)
-        sub = _spectral_1d(len(members), ls, ld, iters, seed=20260729 + ci)
-        order = np.argsort(sub, kind="stable")
-        pos = np.empty(len(members), dtype=np.float32)
-        pos[order] = np.linspace(0.0, 1.0, len(members), dtype=np.float32)
-        y[members] = cursor + pos * width
+
+        # 帯の中をさらに Louvain で割ってサブ分野にする。
+        # 大きなトレンドの内訳(例: インタラクション技術 → タッチ / ジェスチャ / センシング)
+        # を、時間軸を保ったまま見られるようにするため。
+        subs = _split_subcommunities(len(members), ls, ld, sub_min_size, resolution)
+        band_sub_ids: list[int] = []
+        inner = 0.0
+        for si, sub_members_local in enumerate(subs):
+            sm = np.array(sub_members_local, dtype=np.int64)
+            sub_width = len(sm) / len(members)
+            # サブ帯の中はスペクトル順(内部構造を残す)
+            smask = np.isin(ls, sm) & np.isin(ld, sm)
+            slocal = {g: i for i, g in enumerate(sm)}
+            spec = _spectral_1d(
+                len(sm),
+                np.array([slocal[v] for v in ls[smask]], dtype=np.int64),
+                np.array([slocal[v] for v in ld[smask]], dtype=np.int64),
+                iters,
+                seed=20260729 + ci * 1000 + si,
+            )
+            order = np.argsort(spec, kind="stable")
+            pos = np.empty(len(sm), dtype=np.float32)
+            pos[order] = np.linspace(0.0, 1.0, len(sm), dtype=np.float32)
+
+            gm = members[sm]  # グローバル index に戻す
+            y0 = cursor + inner * width
+            y[gm] = y0 + pos * (sub_width * width)
+            sub_of[gm] = len(subbands)
+            band_sub_ids.append(len(subbands))
+            subbands.append({
+                "band": len(bands),
+                "papers": int(len(sm)),
+                "y0": round(y0, 6),
+                "y1": round(y0 + sub_width * width, 6),
+            })
+            inner += sub_width
+
         bands.append({"community": int(ci), "papers": len(members),
-                      "y0": round(cursor, 5), "y1": round(cursor + width, 5)})
+                      "y0": round(cursor, 5), "y1": round(cursor + width, 5),
+                      "subbands": band_sub_ids})
         cursor += width
 
     if len(isolated):
@@ -235,9 +272,95 @@ def layout_community(
         y[isolated] = cursor + np.linspace(0.0, 1.0, len(isolated), dtype=np.float32) * width
         bands.append({"community": None, "papers": int(len(isolated)),
                       "y0": round(cursor, 5), "y1": round(cursor + width, 5),
+                      "subbands": [],
                       "note": "コーパス内に引用リンクなし"})
 
-    return y, {"bands": bands, "community_of": comm_of.tolist()}
+    print(f"  サブ帯: {len(subbands)} 本({sub_min_size} 本未満は帯内「その他」に統合)")
+    return y, {
+        "bands": bands,
+        "subbands": subbands,
+        "community_of": comm_of.tolist(),
+        "subcommunity_of": sub_of.tolist(),
+    }
+
+
+_STOP = {
+    "the", "a", "an", "of", "for", "and", "in", "on", "to", "with", "by", "from",
+    "is", "are", "as", "at", "that", "this", "it", "its", "their", "into", "via",
+    "using", "use", "used", "toward", "towards", "through", "between", "over",
+    "study", "studies", "design", "designing", "system", "systems", "user", "users",
+    "interaction", "interactive", "interface", "interfaces", "understanding",
+    "exploring", "supporting", "how", "what", "why", "when", "we", "our", "you",
+    "case", "based", "new", "novel", "towards", "human", "computing", "computer",
+    "proceedings", "conference", "chi", "acm", "sigchi", "extended", "abstracts",
+}
+
+
+def _keywords(titles: list[str], global_df: dict[str, int], n_docs: int, k: int = 5) -> list[str]:
+    """タイトル群を代表するキーワードを TF-IDF 風のスコアで選ぶ。
+
+    帯のラベルに代表論文タイトル1本を出すと「Tangible bits」のような固有名詞になり、
+    帯全体が何なのか分からない。語レベルに落として、その帯に偏っている語を出す。
+    LLM 命名(F3)までのつなぎ。
+    """
+    import math
+    import re
+
+    tf: dict[str, int] = {}
+    for t in titles:
+        seen = set()
+        for w in re.findall(r"[a-z][a-z0-9\-]{2,}", (t or "").lower()):
+            if w in _STOP or w in seen:
+                continue
+            seen.add(w)
+            tf[w] = tf.get(w, 0) + 1
+
+    scored = [
+        (c * math.log(n_docs / (1 + global_df.get(w, 0))), w)
+        for w, c in tf.items()
+        if c >= max(2, len(titles) // 100)
+    ]
+    scored.sort(reverse=True)
+    return [w for _, w in scored[:k]]
+
+
+def _global_df(nodes: list[dict]) -> tuple[dict[str, int], int]:
+    """語ごとの文書頻度(何本のタイトルに出るか)。"""
+    import re
+
+    df: dict[str, int] = {}
+    for nd in nodes:
+        for w in set(re.findall(r"[a-z][a-z0-9\-]{2,}", (nd.get("title") or "").lower())):
+            df[w] = df.get(w, 0) + 1
+    return df, len(nodes)
+
+
+def _split_subcommunities(
+    n: int, src: np.ndarray, dst: np.ndarray, min_size: int, resolution: float
+) -> list[list[int]]:
+    """コミュニティ内部をさらに分割する。小さすぎるものは「その他」に統合。
+
+    分割できない(小さい / エッジが無い)場合は 1 個のサブ帯として返す。
+    """
+    import networkx as nx
+
+    if n < min_size * 2 or len(src) == 0:
+        return [list(range(n))]
+
+    g = nx.Graph()
+    g.add_nodes_from(range(n))
+    g.add_edges_from(zip(src.tolist(), dst.tolist()))
+    parts = [sorted(c) for c in nx.community.louvain_communities(
+        g, resolution=resolution, seed=20260729)]
+    parts.sort(key=len, reverse=True)
+
+    big = [p for p in parts if len(p) >= min_size]
+    small = [v for p in parts if len(p) < min_size for v in p]
+    if not big:
+        return [list(range(n))]
+    if small:
+        big.append(sorted(small))
+    return big
 
 
 def layout_barycenter(
@@ -294,6 +417,10 @@ def main() -> None:
         help="この本数未満のコミュニティは「その他」帯に統合する",
     )
     ap.add_argument(
+        "--min-subcommunity", type=int, default=120,
+        help="この本数未満のサブコミュニティは帯内の「その他」サブ帯に統合する",
+    )
+    ap.add_argument(
         "--jitter",
         type=float,
         default=0.35,
@@ -317,21 +444,41 @@ def main() -> None:
         print(f"  spectral iters: {args.iters}")
         print(f"  孤立ノード(コーパス内リンクなし、中央に配置): {isolated:,}")
     else:
-        y, extra = layout_community(nodes, edges, args.iters, args.resolution, args.min_community)
-        # 帯が意味のある集団になっているか、代表論文で目視確認できるようにする
-        comm_of = extra["community_of"]
-        for band in extra["bands"]:
-            ci = band["community"]
-            if ci is None:
-                band["label_hint"] = ["(コーパス内に引用リンクなし)"]
-                continue
-            members = [i for i, c in enumerate(comm_of) if c == ci]
-            top = sorted(members, key=lambda i: -(nodes[i].get("cited_by_count") or 0))[:6]
-            band["years"] = [
+        y, extra = layout_community(
+            nodes, edges, args.iters, args.resolution,
+            args.min_community, args.min_subcommunity,
+        )
+        # 帯 / サブ帯が意味のある集団になっているか、キーワードと代表論文で確認できるようにする
+        df, n_docs = _global_df(nodes)
+
+        def describe(target: dict, members: list[int]) -> None:
+            if not members:
+                return
+            target["years"] = [
                 min(nodes[i]["year"] for i in members),
                 max(nodes[i]["year"] for i in members),
             ]
-            band["label_hint"] = [nodes[i]["title"] for i in top]
+            target["keywords"] = _keywords([nodes[i].get("title") or "" for i in members], df, n_docs)
+            top = sorted(members, key=lambda i: -(nodes[i].get("cited_by_count") or 0))[:6]
+            target["top_papers"] = [nodes[i]["title"] for i in top]
+
+        by_band: dict[int, list[int]] = defaultdict(list)
+        by_sub: dict[int, list[int]] = defaultdict(list)
+        for i, (c, s) in enumerate(zip(extra["community_of"], extra["subcommunity_of"])):
+            if c >= 0:
+                by_band[c].append(i)
+            if s >= 0:
+                by_sub[s].append(i)
+
+        for bi, band in enumerate(extra["bands"]):
+            ci = band["community"]
+            if ci is None:
+                band["keywords"] = ["(コーパス内に引用リンクなし)"]
+                band["top_papers"] = []
+                continue
+            describe(band, by_band[ci])
+        for si, sub in enumerate(extra["subbands"]):
+            describe(sub, by_sub[si])
 
     # x は年そのもの。ビューア側で正規化する。
     # 年内は決定的な擬似乱数で ±jitter/2 だけ散らす(縦線への潰れ防止)。
@@ -357,6 +504,7 @@ def main() -> None:
         "mode": args.mode,
         "jitter": args.jitter,
         "bands": extra.get("bands"),
+        "subbands": extra.get("subbands"),
         "node_count": len(nodes),
         "edge_count": int(len(edges)),
         "year_min": int(years.min()),
@@ -368,8 +516,11 @@ def main() -> None:
                 "c": n.get("cited_by_count") or 0,
                 "t": n.get("title") or "",
                 "d": n.get("doi"),
+                # 帯 / サブ帯の所属。系譜を選んだとき「どのトレンドから来て
+                # どのトレンドへ広がったか」を数えるのに使う。
+                "s": s,
             }
-            for n in nodes
+            for n, s in zip(nodes, extra.get("subcommunity_of") or [-1] * len(nodes))
         ],
     }
     (OUT_DIR / "meta.json").write_text(json.dumps(meta, ensure_ascii=False))
@@ -380,11 +531,16 @@ def main() -> None:
             if band["papers"] < 200:
                 continue
             yrs = band.get("years")
-            head = "  ".join((band.get("label_hint") or [])[:3])
+            kw = " / ".join(band.get("keywords") or [])
             print(
                 f"  y={band['y0']:.3f}-{band['y1']:.3f} {band['papers']:>5}本 "
-                f"{yrs[0] if yrs else '-'}-{yrs[1] if yrs else '-'}  {head[:150]}"
+                f"{yrs[0] if yrs else '-'}-{yrs[1] if yrs else '-'}  {kw}"
             )
+            for si in band.get("subbands") or []:
+                sub = extra["subbands"][si]
+                if sub["papers"] < 150:
+                    continue
+                print(f"        └ {sub['papers']:>4}本  {' / '.join(sub.get('keywords') or [])}")
 
     sizes = {p.name: p.stat().st_size for p in sorted(OUT_DIR.iterdir())}
     print("\nwrote " + str(OUT_DIR))

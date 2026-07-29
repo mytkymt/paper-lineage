@@ -486,22 +486,34 @@ async function main() {
   function drawBands(scale, offset) {
     if (!meta.bands) return;
     const H = canvas.clientHeight;
+    const toPx = (y) => (y * scale[1] + offset[1]) * H;
     const parts = [];
+
     for (const band of meta.bands) {
-      const top = (band.y0 * scale[1] + offset[1]) * H;
-      const bottom = (band.y1 * scale[1] + offset[1]) * H;
+      const top = toPx(band.y0), bottom = toPx(band.y1);
       if (bottom < 0 || top > H) continue;
       parts.push(`<div class="sep" style="top:${top.toFixed(1)}px"></div>`);
-      // 帯が細すぎるとラベルが重なって読めないので出さない
-      if (bottom - top < 26) continue;
-      const hint = (band.label_hint && band.label_hint[0]) || '';
-      const yrs = band.years ? `${band.years[0]}–${band.years[1]} · ` : '';
-      const label = `${yrs}${band.papers}本 · ${hint}`;
-      const mid = Math.max(4, Math.min(H - 16, (top + bottom) / 2 - 7));
-      parts.push(`<div class="lbl" style="top:${mid.toFixed(1)}px">${escapeHtml(label)}</div>`);
+      if (bottom - top >= 26) {
+        parts.push(`<div class="lbl" style="top:${(Math.max(4, Math.min(H - 16, (top + bottom) / 2 - 7))).toFixed(1)}px">${escapeHtml(bandLabel(band))}</div>`);
+      }
+      // 拡大してサブ帯が十分な高さになったら、その中の内訳も出す
+      for (const si of band.subbands || []) {
+        const sub = meta.subbands[si];
+        const st = toPx(sub.y0), sb = toPx(sub.y1);
+        if (sb < 0 || st > H || sb - st < 22) continue;
+        parts.push(`<div class="sep sub" style="top:${st.toFixed(1)}px"></div>`);
+        parts.push(`<div class="lbl sub" style="top:${(Math.max(4, Math.min(H - 14, (st + sb) / 2 - 6))).toFixed(1)}px">${escapeHtml(subLabel(sub))}</div>`);
+      }
     }
     bandsEl.innerHTML = parts.join('');
   }
+
+  const kw = (o) => (o.keywords || []).join(' · ');
+  const bandLabel = (band) => {
+    const yrs = band.years ? `${band.years[0]}–${band.years[1]} · ` : '';
+    return `${yrs}${band.papers.toLocaleString()}本 · ${kw(band)}`;
+  };
+  const subLabel = (sub) => `${sub.papers}本 · ${kw(sub)}`;
 
   // --- 系譜(選択した論文の上流・下流)---
   function bfs(startNode, adj, maxDepth) {
@@ -629,6 +641,32 @@ async function main() {
     if (row) select(parseInt(row.dataset.i, 10));
   });
 
+  // 系譜をサブ帯(サブ分野)ごとに数え、上位を出す。
+  // 「この論文はどのトレンドの上に乗り、その後どのトレンドへ広がったか」の第一版。
+  // クラスタは前計算済みのものを再利用しているので、クリックしても計算は走らない。
+  function trendHtml(title, ids, kind) {
+    if (!meta.subbands || !ids.length) return '';
+    const counts = new Map();
+    for (const i of ids) {
+      const s = meta.nodes[i].s;
+      if (s == null || s < 0) continue;
+      counts.set(s, (counts.get(s) || 0) + 1);
+    }
+    if (!counts.size) return '';
+    const rows = [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6)
+      .map(([s, n]) => {
+        const sub = meta.subbands[s];
+        const pct = Math.round((n / ids.length) * 100);
+        return `<li class="trend ${kind}"><span class="n">${n}</span>` +
+               `<span class="bar" style="width:${pct}%"></span>` +
+               `${escapeHtml(kw(sub) || '(その他)')}</li>`;
+      })
+      .join('');
+    return `<h3>${title}</h3><ol class="trends">${rows}</ol>`;
+  }
+
   function listHtml(title, ids, limit) {
     if (!ids.length) return '';
     const rows = ids
@@ -655,8 +693,10 @@ async function main() {
     const upIds = [...up].sort(byCited);
     const downIds = [...down].sort(byCited);
     document.getElementById('lineageLists').innerHTML =
-      listHtml('遡る系譜(よく引用されているもの順)', upIds, 15) +
-      listHtml('その後の系譜(よく引用されているもの順)', downIds, 15);
+      trendHtml('この系譜が乗っているトレンド', upIds, 'up') +
+      trendHtml('この系譜が広がったトレンド', downIds, 'down') +
+      listHtml('遡る系譜(よく引用されているもの順)', upIds, 12) +
+      listHtml('その後の系譜(よく引用されているもの順)', downIds, 12);
     lineageEl.style.display = 'block';
     lineageEl.scrollTop = 0;
   }

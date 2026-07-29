@@ -71,6 +71,18 @@
   #bands .lbl { position: absolute; right: 8px; max-width: 46vw; color: #7b8398; font-size: 11px;
                 text-align: right; text-shadow: 0 0 6px #000, 0 0 3px #000;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* サブ帯(帯の中のサブ分野)は薄く。拡大したときだけ出る。 */
+  #bands .sep.sub { background: #ffffff08; }
+  #bands .lbl.sub { color: #5d6478; font-size: 10px; right: 14px; }
+
+  #lineage ol.trends { margin: 4px 0 0; }
+  #lineage li.trend { position: relative; border-top: 1px solid #1c2029; cursor: default;
+                      padding: 4px 0 4px 34px; font-size: 11px; overflow: hidden; }
+  #lineage li.trend .n { position: absolute; left: 0; color: #8b91a3;
+                         font-variant-numeric: tabular-nums; }
+  #lineage li.trend .bar { position: absolute; left: 34px; bottom: 0; height: 2px; border-radius: 1px; }
+  #lineage li.trend.up .bar { background: #4fd2c2; }
+  #lineage li.trend.down .bar { background: #ff9a52; }
   body.has-selection #bands { display: none; }
 </style>
 </head>
