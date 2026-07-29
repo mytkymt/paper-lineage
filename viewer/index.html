@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>paper-lineage</title>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #07080c; color: #d7dae2;
+               font: 12px/1.5 -apple-system, "Helvetica Neue", "Hiragino Sans", sans-serif; }
+  #canvas { position: fixed; inset: 0; display: block; cursor: grab; }
+  #canvas.dragging { cursor: grabbing; }
+
+  .panel { position: fixed; background: rgba(12,14,20,.86); backdrop-filter: blur(8px);
+           border: 1px solid #232734; border-radius: 8px; padding: 10px 12px; }
+  #controls { top: 12px; left: 12px; width: 250px; }
+  #controls h1 { margin: 0 0 8px; font-size: 13px; letter-spacing: .04em; }
+  #controls .row { display: flex; align-items: center; gap: 8px; margin: 7px 0; }
+  #controls label { flex: 0 0 74px; color: #8b91a3; }
+  #controls input[type=range] { flex: 1; min-width: 0; }
+  #controls .val { flex: 0 0 44px; text-align: right; font-variant-numeric: tabular-nums; color: #aab; }
+  #stats { color: #6d7488; margin-top: 8px; font-size: 11px; }
+
+  #legend { bottom: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 4px 10px; max-width: 420px; }
+  #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
+  #legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
+  #tooltip { position: fixed; pointer-events: none; max-width: 380px; display: none;
+             border-color: #31384a; }
+  #tooltip .t { color: #eef; margin-bottom: 4px; }
+  #tooltip .m { color: #7f879b; }
+
+  #axis { position: fixed; bottom: 0; left: 0; right: 0; height: 22px; pointer-events: none;
+          font-variant-numeric: tabular-nums; color: #5d6478; }
+  #axis div { position: absolute; transform: translateX(-50%); }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<div id="controls" class="panel">
+  <h1>paper-lineage</h1>
+  <div class="row">
+    <label>幹のみ</label>
+    <input id="thresh" type="range" min="0" max="1" step="0.005" value="0">
+    <span class="val" id="threshVal">全部</span>
+  </div>
+  <div class="row">
+    <label>線の濃さ</label>
+    <input id="alpha" type="range" min="0.005" max="0.6" step="0.005" value="0.06">
+    <span class="val" id="alphaVal">.06</span>
+  </div>
+  <div class="row">
+    <label>点の大きさ</label>
+    <input id="psize" type="range" min="0.5" max="8" step="0.1" value="1.6">
+    <span class="val" id="psizeVal">1.6</span>
+  </div>
+  <div id="stats">読み込み中…</div>
+</div>
+
+<div id="legend" class="panel"></div>
+<div id="tooltip" class="panel"></div>
+<div id="axis"></div>
+
+<script type="module" src="./main.js"></script>
+</body>
+</html>
