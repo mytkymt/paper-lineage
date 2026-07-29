@@ -669,43 +669,73 @@ async function main() {
     schedule();
   }
 
+  // 選択中の系譜。トレンド絞り込みのたびにここから描き直す。
+  // 以前は nodeState を破壊的に絞っていたので、2つ目のトレンドを押すと
+  // 1つ目の結果をさらに絞る(= AND)になって何も残らなかった。
+  let lineage = null;   // {i, up:Set, down:Set}
+  let highlightedSub = -1;
+
+  function paintLineage(fitCamera) {
+    nodeState.fill(0);
+    edgeState.fill(0);
+    if (!lineage) { uploadStates(); return; }
+
+    const { i, up, down } = lineage;
+    // 絞り込み中は、上流・下流の**どちらも**そのサブ分野だけを残す
+    const keep = (v) => highlightedSub < 0 || meta.nodes[v].s === highlightedSub;
+    const shown = [i];
+    for (const v of up) if (keep(v)) { nodeState[v] = S_UP; shown.push(v); }
+    for (const v of down) if (keep(v)) { nodeState[v] = S_DOWN; shown.push(v); }
+    nodeState[i] = S_SELF;
+
+    // エッジは「両端が残っている系譜ノード」のものだけ
+    for (let e = 0; e < edgeCount; e++) {
+      const a = edges[e * 2], b = edges[e * 2 + 1];
+      const sa = nodeState[a], sb = nodeState[b];
+      if (!sa || !sb) continue;
+      const st = sa === S_SELF ? sb : (sb === S_SELF ? sa : (sa === sb ? sa : 0));
+      if (st) { edgeState[e * 2] = st; edgeState[e * 2 + 1] = st; }
+    }
+
+    uploadStates();
+    if (fitCamera) fitTo(shown);
+    document.querySelectorAll('#lineageLists li.trend').forEach((el) => {
+      el.classList.toggle('picked', parseInt(el.dataset.sub, 10) === highlightedSub);
+    });
+  }
+
   function select(i, keepCamera) {
     if (i >= 0 && selected < 0) camBeforeSelect = { ...cam };
     selected = i;
     searchActive = false;
+    highlightedSub = -1;
     document.body.classList.toggle('has-selection', i >= 0);
-    nodeState.fill(0);
-    edgeState.fill(0);
 
     if (i < 0) {
+      lineage = null;
       lineageEl.style.display = 'none';
       if (camBeforeSelect) { Object.assign(cam, camBeforeSelect); camBeforeSelect = null; }
-    } else {
-      const depthRaw = parseInt(ui.depth.value, 10);
-      const maxDepth = depthRaw >= 9 ? 1e9 : depthRaw;
-      const up = bfs(i, inAdj, maxDepth);     // 過去方向 = この論文が(間接的に)引用しているもの
-      const down = bfs(i, outAdj, maxDepth);  // 未来方向 = この論文を(間接的に)引用したもの
-
-      for (const v of up) nodeState[v] = S_UP;
-      for (const v of down) nodeState[v] = S_DOWN;
-      nodeState[i] = S_SELF;
-
-      // エッジは「両端がその系譜に属する」ものだけを系譜エッジとする
-      const inUp = (v) => v === i || up.has(v);
-      const inDown = (v) => v === i || down.has(v);
-      for (let e = 0; e < edgeCount; e++) {
-        const a = edges[e * 2], b = edges[e * 2 + 1];
-        let st = 0;
-        if (inUp(a) && inUp(b)) st = S_UP;
-        else if (inDown(a) && inDown(b)) st = S_DOWN;
-        if (st) { edgeState[e * 2] = st; edgeState[e * 2 + 1] = st; }
-      }
-      highlightedSub = -1;
-      showLineagePanel(i, up, down);
-      if (!keepCamera) fitTo([i, ...up, ...down]);
+      paintLineage(false);
+      return;
     }
 
-    uploadStates();
+    const depthRaw = parseInt(ui.depth.value, 10);
+    const maxDepth = depthRaw >= 9 ? 1e9 : depthRaw;
+    lineage = {
+      i,
+      up: bfs(i, inAdj, maxDepth),      // 過去方向 = この論文が(間接的に)引用しているもの
+      down: bfs(i, outAdj, maxDepth),   // 未来方向 = この論文を(間接的に)引用したもの
+    };
+    showLineagePanel(i, lineage.up, lineage.down);
+    paintLineage(!keepCamera);
+  }
+
+  // 系譜の中の1トレンドに絞る。再クリックで系譜全体に戻る。
+  // 上流・下流のどちらのリストから押しても、前後の両方をそのサブ分野で絞る。
+  function highlightTrend(sub) {
+    if (!lineage) return;
+    highlightedSub = highlightedSub === sub ? -1 : sub;
+    paintLineage(true);
   }
 
   // --- 検索 ---
@@ -902,39 +932,11 @@ async function main() {
 
   document.getElementById('lineageLists').addEventListener('click', (e) => {
     const trend = e.target.closest('li.trend[data-sub]');
-    if (trend) { highlightTrend(parseInt(trend.dataset.sub, 10), trend.dataset.kind); return; }
+    if (trend) { highlightTrend(parseInt(trend.dataset.sub, 10)); return; }
     const li = e.target.closest('li[data-i]');
     if (li) select(parseInt(li.dataset.i, 10));
   });
 
-  // 系譜の中の1トレンドだけを残す。再クリックで系譜全体に戻る。
-  let highlightedSub = -1;
-  function highlightTrend(sub, kind) {
-    if (selected < 0) return;
-    highlightedSub = highlightedSub === sub ? -1 : sub;
-    const want = kind === 'up' ? S_UP : S_DOWN;
-    for (let i = 0; i < n; i++) {
-      const st = nodeState[i];
-      if (st === S_NONE || st === S_SELF) continue;
-      // 元の系譜区分は保持したまま、対象トレンド以外を一時的に落とす
-      if (highlightedSub >= 0 && !(st === want && meta.nodes[i].s === highlightedSub)) {
-        nodeState[i] = S_NONE;
-      }
-    }
-    if (highlightedSub < 0) { select(selected, true); return; }
-    edgeState.fill(0);
-    for (let e = 0; e < edgeCount; e++) {
-      const a = edges[e * 2], b = edges[e * 2 + 1];
-      if (nodeState[a] > 0 && nodeState[b] > 0) {
-        const st = nodeState[a] === S_SELF ? nodeState[b] : nodeState[a];
-        edgeState[e * 2] = st; edgeState[e * 2 + 1] = st;
-      }
-    }
-    uploadStates();
-    document.querySelectorAll('#lineageLists li.trend').forEach((el) => {
-      el.classList.toggle('picked', parseInt(el.dataset.sub, 10) === highlightedSub);
-    });
-  }
   document.getElementById('lineageClose').addEventListener('click', () => select(-1));
   document.getElementById('selAuthors').addEventListener('click', (e) => {
     const au = e.target.closest('.au[data-ai]');
