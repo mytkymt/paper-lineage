@@ -21,6 +21,9 @@ class Venue:
     s2_name: str  # Semantic Scholar の正規化 venue 名(実測値)
     label: str  # 表示用
     approx_total: int  # 2026-07-29 時点の bulk search 件数(参考)
+    # その venue の代表論文の DOI。probe_venues.py が s2_name の実測に使う。
+    # 実測済みなら None でよい(HCI 13 venue は実測済みのため削除済み)。
+    probe_doi: str | None = None
 
     @property
     def search_venue(self) -> str:

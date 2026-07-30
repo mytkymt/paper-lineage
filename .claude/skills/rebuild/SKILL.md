@@ -16,16 +16,8 @@ earliest stage whose inputs changed — later stages are cheap, earlier ones hit
 | 4 | `spc` | graph changed | seconds |
 | 5 | `bundles` | spc changed (optional analysis) | seconds |
 | 6 | `layout --mode community` | graph/spc changed, or any label/meta change in layout.py | ~9 s |
-| 2b (optional) | `fetch_intents` | want more citation-intent coverage | resumable; 4 s/req without `S2_API_KEY` (~43 h full), 1 s/req with (~11 h) |
-| 6b (optional) | `intents` | intents.jsonl grew, or graph changed | seconds |
 
 Most edits (labels, keywords, bands, lab/author tables) only need stage 6.
-
-`fetch_intents` can be stopped and resumed at any time (per-paper resume via
-`data/graph/intents.jsonl`); the viewer works with partial coverage and shows it in the
-legend. After graph changes, `intents.jsonl` stays valid (keyed by DOI) — just rerun
-stage 6b to re-align `edge_intent.bin` with the new spc.tsv edge order. **6b must be
-rerun whenever spc.tsv changes**, or every edge's intent points at the wrong edge.
 
 ## Invariants — check the printed output
 

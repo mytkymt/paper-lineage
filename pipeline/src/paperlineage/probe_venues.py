@@ -21,6 +21,17 @@ def main() -> None:
     results = []
     for v in VENUES:
         row: dict[str, object] = {"key": v.key, "label": v.label, "guessed": v.s2_name}
+        if not v.probe_doi:
+            # 実測済み(probe_doi なし)は件数の確認だけ行う
+            try:
+                page = s2.search_bulk(v.search_venue, fields="paperId")
+                row["total"] = page.get("total")
+                print(f"{v.label:10s} ---  total={row.get('total')!s:>7s}  (no probe_doi; count only)")
+            except Exception as e:
+                row["total_error"] = f"{type(e).__name__}: {e}"
+                print(f"{v.label:10s} ERROR {row['total_error']}")
+            results.append(row)
+            continue
         try:
             paper = s2.get(f"/paper/DOI:{v.probe_doi}", fields="title,year,venue,publicationVenue")
             actual = paper.get("venue") or ""

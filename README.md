@@ -16,10 +16,11 @@ Research areas appear as named horizontal bands; citations flow left to right.
   it (downstream) lights up, without losing your place on the map.
 - The side panel breaks the lineage down by research trend, with upstream:downstream
   ratio bars — click a trend to filter the view to it.
-- **Re-cluster** splits the lineage by its own citation structure — e.g. UltraHaptics'
+- **Local clusters** split the lineage by its own citation structure — e.g. UltraHaptics'
   708 descendants resolve into seven branches (VR haptics, mid-air ultrasound, EMS,
   levitation, …). Optional LLM naming for the branches, using your own API key.
 - Authors, corpus coverage, and DOI links included.
+- How all of this is computed: [docs/lineage.md](docs/lineage.md).
 
 ## 2. Follow a person
 
@@ -83,8 +84,13 @@ uv run python -m paperlineage.layout --mode community
 
 Every stage is deterministic (fixed seeds) and reports everything it drops.
 
+**Want this map for your own field?** The venue list is the only HCI-specific
+part — see [docs/build-your-own.md](docs/build-your-own.md).
+
 ## Documentation
 
+[How lineage is computed](docs/lineage.md) and
+[build a map for your own field](docs/build-your-own.md) are in English.
 Design notes and the decision log are in Japanese under `docs/` —
 [scope](docs/scope.md), [algorithms](docs/algorithms.md), [prior art](docs/prior-art.md),
 [data sources](docs/data-sources.md), [dev notes](docs/dev-notes.md) (newest first).
