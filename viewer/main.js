@@ -10,7 +10,7 @@
 //   シェーダ側で y を反転して合わせているので、マウス座標(clientY は下向きが正)を
 //   そのまま使ってよい。これを揃えないとパン・ズーム・ホバーが全部縦に反転する。
 
-const DATA = '../data/viz/';
+const DATA = '/data/viz/';
 
 const VENUE_COLORS = {
   chi:       [0.42, 0.68, 1.00],
