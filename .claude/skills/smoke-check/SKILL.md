@@ -41,6 +41,10 @@ console must be clean.
   deferred and fires on visibilitychange.
 - **Person focus (legend chip)**: hover/click only hits that person's papers (others are
   excluded, radius widened to 26px); their points render enlarged.
+- **Search hover**: while search highlights are active, hover/click only hits matched
+  papers; clearing the search restores normal picking.
+- **External links open in background tabs** (synthetic Cmd/Ctrl-click): doi ↗ in the
+  panel and Open DOI in the context menu must not steal focus from the map.
 - **Axis-split zoom**: Shift+scroll must leave the year axis unchanged; Alt+scroll must
   leave bands unchanged.
 - **Toggles**: Scope (any/last) changes line spread; Color venue/people swaps legend.
