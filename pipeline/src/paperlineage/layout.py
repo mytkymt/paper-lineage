@@ -699,11 +699,20 @@ def main() -> None:
             describe(sub, by_sub[si])
 
     # x は年そのもの。ビューア側で正規化する。
-    # 年内は決定的な擬似乱数で ±jitter/2 だけ散らす(縦線への潰れ防止)。
+    # 年内は乱数ではなく venue 順に並べる(縦線への潰れ防止 + 学会ごとに束になる)。
+    # venue の順序は venues.py の定義順で全年共通 — CHI は常に年の左端、のように
+    # 年をまたいで一貫し、完全に決定的。
     x = years.astype(np.float32)
     if args.jitter > 0:
-        rng = np.random.default_rng(20260729)  # 決定的であること(docs/scope.md の要求)
-        x = x + (rng.random(len(nodes)).astype(np.float32) - 0.5) * args.jitter
+        from .venues import EXTRA_VENUES, VENUES
+        vrank = {v.key: i for i, v in enumerate([*VENUES, *EXTRA_VENUES])}
+        vk = np.array([vrank.get(n.get("venue_key"), len(vrank)) for n in nodes], dtype=np.int64)
+        for yr in np.unique(years):
+            m = np.flatnonzero(years == yr)
+            if len(m) < 2:
+                continue
+            order = m[np.lexsort((m, vk[m]))]   # venue 順 → 元順で安定
+            x[order] += (np.linspace(0.0, 1.0, len(order), dtype=np.float32) - 0.5) * args.jitter
     pos = np.empty((len(nodes), 2), dtype=np.float32)
     pos[:, 0] = x
     pos[:, 1] = y
