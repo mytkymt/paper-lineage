@@ -71,8 +71,14 @@
   ul.hints li { padding: 1px 0; }
   ul.hints b { color: #8b91a3; font-weight: 500; }
   #stats .ext { display: block; color: #8fa6d8; }
+  /* 1行に4つ収める: gap を詰めて各項目は折り返さない(wrap は保険として残す) */
   .links { margin-top: 8px; padding-top: 7px; border-top: 1px solid #1c2029;
-           display: flex; gap: 14px; font-size: 11px; flex-wrap: wrap; }
+           display: flex; gap: 6px 10px; font-size: 11px; flex-wrap: wrap; }
+  .links a { white-space: nowrap; }
+  /* アプリ内の操作(Tutorial / Share)はアイコン付き。外部リンクは従来どおり ↗ */
+  #tutorialLink, #shareLink { display: inline-flex; align-items: center; gap: 4px; }
+  .ic { width: 11px; height: 11px; flex: 0 0 auto; fill: none; stroke: currentColor;
+        stroke-width: 1.3; stroke-linecap: round; }
   .links .owner { flex-basis: 100%; color: #7b8398; }
   .links .owner a { color: #8b93a8; text-decoration: none; }
   .links .owner a:hover { color: #fff; }
@@ -182,18 +188,37 @@
   /* 折りたたみ内の長いリスト(分野の著者30人・著者の論文)は内部スクロール */
   #lineage details.fold .scroll { max-height: 300px; overflow-y: auto; }
 
-  /* チュートリアル動画のオーバーレイ(初回訪問時 + パネルの Tutorial リンク) */
-  #tut { position: fixed; inset: 0; z-index: 10; background: rgba(4,5,8,.72);
-         display: none; align-items: flex-start; justify-content: center;
-         padding-top: 4vh; }
-  #tut .box { background: #0d0f16; border: 1px solid #2b3142; border-radius: 10px;
-              width: min(1240px, 94vw); padding: 10px 12px 12px;
+  /* オーバーレイ: チュートリアル動画(初回訪問時 + Tutorial リンク)と共有シート */
+  /* 上下中央。背が高いときに上が切れないよう、overflow + margin:auto を併用する */
+  #tut, #share { position: fixed; inset: 0; z-index: 10; background: rgba(4,5,8,.72);
+         display: none; align-items: center; justify-content: center;
+         padding: 16px; overflow: auto; }
+  #tut .box, #share .box { background: #0d0f16; border: 1px solid #2b3142;
+              border-radius: 10px; padding: 12px 16px 16px; margin: auto;
               box-shadow: 0 12px 48px #000c; }
-  #tut .bar { display: flex; justify-content: space-between; align-items: center;
-              margin-bottom: 8px; color: #eef; }
-  #tut .bar .x { cursor: pointer; color: #6d7488; font-size: 16px; line-height: 1;
-                 padding: 0 4px; }
-  #tut .bar .x:hover { color: #fff; }
+  #tut .box { width: min(1240px, 94vw); }
+  #share .box { width: min(580px, 94vw); }
+  #tut .bar, #share .bar { display: flex; justify-content: space-between; align-items: center;
+              margin-bottom: 10px; color: #eef; font-size: 13px; }
+  #tut .bar .x, #share .bar .x { cursor: pointer; color: #6d7488; font-size: 16px;
+                 line-height: 1; padding: 0 4px; }
+  #tut .bar .x:hover, #share .bar .x:hover { color: #fff; }
+
+  /* 共有シート。外部スクリプトは読まない(各サービスの intent URL を開くだけ)。 */
+  #share .what { margin: 0 0 10px; color: #aab2c4; font-size: 12px; }
+  #share .urlrow { display: flex; gap: 8px; }
+  #share input { flex: 1; min-width: 0; background: #07080c; color: #8b91a3;
+                 border: 1px solid #2b3142; border-radius: 6px; padding: 7px 9px;
+                 font: inherit; font-size: 12px; }
+  #share button, #share .targets a { background: #141824; color: #aab2c4;
+                 border: 1px solid #2a3040; border-radius: 6px; padding: 7px 14px;
+                 font: inherit; font-size: 12px; cursor: pointer; text-decoration: none;
+                 white-space: nowrap; }
+  #share button:hover, #share .targets a:hover { color: #fff; border-color: #3d4560; }
+  #share .targets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  #share .deep { display: flex; align-items: flex-start; gap: 7px; margin-top: 14px;
+                 color: #8b91a3; font-size: 11px; cursor: pointer; }
+  #share .deep input { flex: 0 0 auto; margin: 2px 0 0; }
   #tut video { width: 100%; max-height: 80vh; border-radius: 6px; display: block; background: #000; }
   #tut .ft { margin-top: 8px; display: flex; justify-content: flex-end; }
   #tut .ft button { background: #141824; color: #aab2c4; border: 1px solid #2a3040;
@@ -376,10 +401,11 @@
     <li><b>Legend chip</b> — focus one person</li>
   </ul>
   <div class="links">
-    <span class="owner">Maintained by <a href="https://www.miyatakeyama.to/" target="_blank" rel="noopener">Yamato Miyatake</a> · Saitama University</span>
+    <span class="owner">Maintained by <a href="https://www.miyatakeyama.to/" target="_blank" rel="noopener" title="Homepage">Yamato Miyatake ↗</a> · Saitama University</span>
     <a href="https://github.com/mytkymt/paper-lineage" target="_blank" rel="noopener">GitHub ↗</a>
     <a href="https://github.com/mytkymt/paper-lineage/issues" target="_blank" rel="noopener">Feedback ↗</a>
-    <a href="/docs/media/tutorial.mp4" id="tutorialLink">Tutorial ▶</a>
+    <a href="/docs/media/tutorial.mp4" id="tutorialLink"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 1.5 L10 6 L2.5 10.5 Z" fill="currentColor" stroke="none"/></svg>Tutorial</a>
+    <a href="#" id="shareLink" title="Share a link that reopens this exact view"><svg class="ic" viewBox="0 0 12 12" aria-hidden="true"><circle cx="9.2" cy="2.2" r="1.7"/><circle cx="2.8" cy="6" r="1.7"/><circle cx="9.2" cy="9.8" r="1.7"/><path d="M4.3 5.1 L7.7 3.1 M4.3 6.9 L7.7 8.9"/></svg>Share</a>
   </div>
 </div>
 
@@ -388,6 +414,25 @@
     <div class="bar"><span>Quick tour — how to read this map</span><span class="x" id="tutClose" title="Close">×</span></div>
     <video id="tutVideo" controls playsinline></video>
     <div class="ft"><button id="tutNever">Don't show this again</button></div>
+  </div>
+</div>
+
+<div id="share">
+  <div class="box">
+    <div class="bar"><span>Share this view</span><span class="x" id="shareClose" title="Close">×</span></div>
+    <p class="what" id="shareWhat"></p>
+    <div class="urlrow">
+      <input id="shareUrl" type="text" readonly aria-label="Link to this view">
+      <button id="shareCopy">Copy</button>
+    </div>
+    <div class="targets">
+      <a id="shareX" target="_blank" rel="noopener">X</a>
+      <a id="shareBsky" target="_blank" rel="noopener">Bluesky</a>
+      <a id="shareIn" target="_blank" rel="noopener">LinkedIn</a>
+      <a id="shareMail">Email</a>
+      <button id="shareNative" hidden>More…</button>
+    </div>
+    <label class="deep"><input id="shareDeep" type="checkbox">Link to this view — the selection, the people you pinned and the camera</label>
   </div>
 </div>
 
@@ -412,6 +457,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=58"></script>
+<script type="module" src="/viewer/main.js?v=65"></script>
 </body>
 </html>

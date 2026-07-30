@@ -82,9 +82,32 @@ console must be clean.
   (must not blank the map) while still dimming/restricting points.
 - **Tutorial overlay**: first load auto-opens the video muted; × closes for the
   session, "Don't show this again" sets localStorage `plTutorialNever` (no auto-open
-  after reload); the "Tutorial ▶" panel link reopens it with sound; the 13MB video
+  after reload); the "Tutorial" panel link reopens it with sound; the 13MB video
   gets its `src` only when the overlay opens (check Network on a flagged reload);
-  Esc closes the overlay without touching the selection.
+  Esc closes the overlay without touching the selection. It must NOT auto-open when
+  the URL carries view state — a shared link would be hidden behind the video.
+- **Share sheet** (the "Share" panel link): opens an overlay with the link, a Copy
+  button and X / Bluesky / LinkedIn / Email targets built from `intent` URLs — no
+  third-party scripts may ever be loaded here. The headline sentence describes the
+  current state (paper title + year + venue, or the person, field or query).
+  **The link is the clean site URL by default**; the "Link to this view" checkbox
+  (unchecked on every open) switches it to the deep link. The address bar is never
+  rewritten as you browse. Esc and a backdrop click close the sheet without
+  touching the selection. `navigator.share` only: the "More…" button appears.
+- **Deep links**: `?paper=<doi>` (`i<index>` only when a paper has no DOI),
+  `?author=<name>`, `?band=`/`?sub=<field name>`, `?venue=<key>`, `?q=<query>`,
+  `?pins=<names;…>` (written only when the pins differ from the default five) and
+  `?v=cx,cy,zx,zy`. Identifiers are DOIs and names, never indices, because indices
+  change on every rebuild — a shared link must not silently point at a different
+  paper. Loading one restores the panel and applies the camera *after* the
+  selection, so the shared framing wins over the auto-pan. An unknown DOI must say
+  so in the stats line rather than open the wrong paper.
+- **Panel footer** stays on one line: GitHub ↗ / Feedback ↗ / ▶ Tutorial / ⤴ Share.
+  External links carry the ↗ text arrow; the two in-app actions carry inline SVG
+  icons (`.ic`, 11px, `currentColor` so hover still lights them). Clicking the icon
+  itself must open the overlay, not follow the anchor. Above the row, the maintainer
+  line links the name itself (English homepage) — `Yamato Miyatake ↗ · Saitama
+  University`.
 - **Venue selection**: in venue colour mode, clicking a legend venue chip highlights
   that venue's papers (points only, no edges), lists its most-cited papers in the
   panel, and restricts hover/click to them; re-click or Esc clears; the chip shows an

@@ -1954,6 +1954,7 @@ async function main() {
     if (e.key !== 'Escape') return;
     // メニューが開いていれば Esc はまずそれだけを閉じる(選択は保持)
     if (ctxEl.style.display !== 'none' && ctxEl.style.display !== '') { hideCtx(); return; }
+    if (shareOpen()) { closeShare(); return; }   // 共有シートが開いていれば選択には触れない
     if (selected < 0 && authorSel >= 0) { closeAuthorPanel(); return; }
     if (selected < 0 && fieldSel) { clearField(); return; }
     select(-1);
@@ -2003,6 +2004,192 @@ async function main() {
   pinned = (meta.labs || []).slice(0, 5)
     .map((lab, id) => ({ ai: lab.ai, labId: id }));
   applyPinned();   // 中で drawLegend() まで走る
+  const defaultPins = pinned.map((p) => meta.authors[p.ai]).join(';');
+
+  // --- 共有リンク(URL に「今見ている状態」を持たせる)---
+  // 識別子は**再ビルドで変わらないもの**を使う: 論文は DOI、人と分野は名前。
+  // node/author の index はレイアウトを組み直すたびに変わるので、共有された
+  // リンクが黙って別の論文を指してしまう。DOI が無い論文だけ i<index> に落とし、
+  // 位置指定であることが URL から分かるようにする(将来の再ビルドで壊れうる)。
+  let doiIndex = null;
+  const paperByDoi = (d) => {
+    if (!doiIndex) {
+      doiIndex = new Map();
+      for (let i = 0; i < n; i++) {
+        const dd = meta.nodes[i].d;
+        if (dd) doiIndex.set(dd.toLowerCase(), i);
+      }
+    }
+    return doiIndex.has(d.toLowerCase()) ? doiIndex.get(d.toLowerCase()) : -1;
+  };
+  const fieldName = (o) => o && (o.name || (o.keywords || []).slice(0, 3).join(' · '));
+
+  function viewParams() {
+    const q = new URLSearchParams();
+    if (EXT_MODE) q.set('venues', 'related');
+    if (selected >= 0) {
+      const nd = meta.nodes[selected];
+      q.set('paper', nd.d || 'i' + selected);
+    } else if (authorSel >= 0) {
+      q.set('author', meta.authors[authorSel] || '');
+    } else if (fieldSel) {
+      if (fieldSel.kind === 'venue') q.set('venue', fieldSel.idx);
+      else {
+        const nm = fieldName(fieldObj());
+        if (nm) q.set(fieldSel.kind === 'band' ? 'band' : 'sub', nm);
+      }
+    } else if (searchEl.value.trim()) {
+      q.set('q', searchEl.value.trim());
+    }
+    // ピンは既定と違うときだけ載せる(既定は毎回同じなので URL を汚さない)
+    const names = pinned.map((p) => meta.authors[p.ai]).join(';');
+    if (names !== defaultPins) q.set('pins', names);
+    const r = (x) => Math.round(x * 1e4) / 1e4;
+    q.set('v', [r(cam.cx), r(cam.cy), r(cam.zx), r(cam.zy)].join(','));
+    return q;
+  }
+
+  // 共有する URL を組み立てる。**アドレスバーは書き換えない** — 既定は素のリンクで、
+  // 状態を載せるかどうかは共有シートのチェックボックスで選ぶ(既定はオフ)。
+  // 受け取った側の URL はそのまま残す(ブックマークすれば同じビューに戻れる)。
+  const cleanUrl = () =>
+    location.origin + location.pathname + (EXT_MODE ? '?venues=related' : '');
+  const shareUrl = (deep) => deep ? location.origin + location.pathname + '?' + viewParams().toString()
+                                  : cleanUrl();
+
+  function applyUrlState() {
+    const q = new URLSearchParams(location.search);
+
+    const pins = q.get('pins');
+    if (pins != null) {
+      const want = pins.split(';').map((s) => s.trim()).filter(Boolean);
+      const next = [];
+      for (const nm of want) {
+        const ai = lowerAuthors.indexOf(nm.toLowerCase());
+        if (ai >= 0 && next.length < LAB_HEX.length) {
+          next.push({ ai, labId: labByAuthor.has(ai) ? labByAuthor.get(ai) : null });
+        }
+      }
+      if (want.length && !next.length) console.warn('share link: none of the pinned names matched');
+      pinned = next;
+      applyPinned();
+    }
+
+    const paper = q.get('paper');
+    const author = q.get('author');
+    const band = q.get('band'), sub = q.get('sub'), venue = q.get('venue');
+    if (paper) {
+      const i = /^i\d+$/.test(paper) ? Math.min(n - 1, parseInt(paper.slice(1), 10)) : paperByDoi(paper);
+      if (i >= 0) select(i);
+      else statsEl.insertAdjacentHTML('beforeend',
+        '<span class="ext">Shared link: that paper is not in this corpus</span>');
+    } else if (author) {
+      const ai = lowerAuthors.indexOf(author.toLowerCase());
+      if (ai >= 0) showAuthorPanel(ai);
+    } else if (venue) {
+      selectField('venue', venue);
+    } else if (band || sub) {
+      const list = band ? (meta.bands || []) : (meta.subbands || []);
+      const idx = list.findIndex((o) => fieldName(o) === (band || sub));
+      if (idx >= 0) selectField(band ? 'band' : 'sub', idx);
+    } else if (q.get('q')) {
+      searchEl.value = q.get('q');
+      runSearch(searchEl.value);
+    }
+
+    // カメラは最後に。選択が走らせた自動パンより共有された画角を優先する。
+    const v = (q.get('v') || '').split(',').map(Number);
+    if (v.length === 4 && v.every((x) => Number.isFinite(x))) {
+      cancelCamAnim();
+      pendingPan = -1;
+      cam.cx = v[0]; cam.cy = v[1];
+      cam.zx = clampZoom(v[2]); cam.zy = clampZoom(v[3]);
+    }
+    schedule();
+  }
+
+  // --- 共有シート ---
+  // 各サービスの intent URL を開くだけで、SNS のスクリプトは一切読み込まない
+  // (読み込むと閲覧者がそのサービスに追跡される。静的サイトのままにしておく)。
+  const shareEl = document.getElementById('shareLink');
+  const shareEls = {
+    ovl: document.getElementById('share'),
+    what: document.getElementById('shareWhat'),
+    url: document.getElementById('shareUrl'),
+    copy: document.getElementById('shareCopy'),
+    x: document.getElementById('shareX'),
+    bsky: document.getElementById('shareBsky'),
+    li: document.getElementById('shareIn'),
+    mail: document.getElementById('shareMail'),
+    native: document.getElementById('shareNative'),
+    deep: document.getElementById('shareDeep'),
+  };
+  const shareOpen = () => shareEls.ovl.style.display === 'flex';
+
+  // 何を共有しているかを1行で言う。宛先アプリの入力欄にもこれが入る。
+  function shareText() {
+    const site = 'HCI Research Trails';
+    if (selected >= 0) {
+      const nd = meta.nodes[selected];
+      return `“${nd.t}” (${nd.y}, ${(nd.v || '?').toUpperCase()}) — its citation lineage on ${site}`;
+    }
+    if (authorSel >= 0) return `${meta.authors[authorSel]} on ${site}`;
+    if (fieldSel) {
+      const nm = fieldSel.kind === 'venue'
+        ? String(fieldSel.idx).toUpperCase() : fieldName(fieldObj());
+      if (nm) return `${nm} on ${site}`;
+    }
+    if (searchEl.value.trim()) return `“${searchEl.value.trim()}” on ${site}`;
+    return `${site} — a citation map of 39,000 HCI papers`;
+  }
+
+  // チェックボックスの状態だけで URL 欄と各 intent を組み直す。
+  function fillShare() {
+    const url = shareUrl(shareEls.deep.checked), text = shareText();
+    const eu = encodeURIComponent(url), et = encodeURIComponent(text);
+    shareEls.what.textContent = text;
+    shareEls.url.value = url;
+    shareEls.x.href = `https://x.com/intent/post?text=${et}&url=${eu}`;
+    shareEls.bsky.href = `https://bsky.app/intent/compose?text=${encodeURIComponent(text + '\n' + url)}`;
+    shareEls.li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${eu}`;
+    shareEls.mail.href = `mailto:?subject=${et}&body=${encodeURIComponent(text + '\n\n' + url)}`;
+  }
+
+  function openShare() {
+    shareEls.deep.checked = false;   // 既定は素のリンク。毎回ここから始める
+    fillShare();
+    shareEls.native.hidden = !navigator.share;
+    shareEls.ovl.style.display = 'flex';
+    shareEls.url.focus();
+    shareEls.url.select();
+    shareEls.url.scrollLeft = 0;   // 全選択すると末尾が見えるので、頭出しに戻す
+  }
+  function closeShare() { shareEls.ovl.style.display = 'none'; }
+
+  shareEl.addEventListener('click', (e) => { e.preventDefault(); openShare(); });
+  document.getElementById('shareClose').addEventListener('click', closeShare);
+  shareEls.ovl.addEventListener('click', (e) => { if (e.target === shareEls.ovl) closeShare(); });
+  shareEls.deep.addEventListener('change', () => {
+    fillShare();
+    shareEls.url.focus();
+    shareEls.url.select();
+    shareEls.url.scrollLeft = 0;
+  });
+  shareEls.copy.addEventListener('click', async () => {
+    const btn = shareEls.copy;
+    try {
+      await navigator.clipboard.writeText(shareEls.url.value);
+      btn.textContent = 'Copied';
+    } catch {
+      shareEls.url.select();       // clipboard 権限が無い環境は手動コピーに落とす
+      btn.textContent = '⌘/Ctrl+C';
+    }
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
+  });
+  shareEls.native.addEventListener('click', () => {
+    navigator.share({ title: 'HCI Research Trails', text: shareText(), url: shareEls.url.value })
+      .catch(() => {});            // ユーザーがシートを閉じただけのときも reject する
+  });
 
   // 開発用の覗き窓(スモークチェックが closure 内を検証できるように)
   window.PL = {
@@ -2026,6 +2213,7 @@ async function main() {
       ? '<span class="ext">+ related venues (papers linked to the core corpus)</span>'
       : '');
 
+  applyUrlState();
   render();
 }
 
@@ -2059,6 +2247,9 @@ window.addEventListener('keydown', (e) => {
     e.stopImmediatePropagation();
   }
 });
-if (!localStorage.getItem(TUT_NEVER)) openTutorial(true);
+// 共有リンクで来た人には自動再生しない — 見に来た当のビューを動画で隠すことになる。
+const _sharedView = ['paper', 'author', 'band', 'sub', 'venue', 'q']
+  .some((k) => new URLSearchParams(location.search).has(k));
+if (!localStorage.getItem(TUT_NEVER) && !_sharedView) openTutorial(true);
 
 main();
