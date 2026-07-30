@@ -203,10 +203,6 @@
   <div class="hd1"><h1>HCI Research Trails</h1><span id="panelToggle" title="Collapse panel">–</span></div>
   <input id="search" type="search" placeholder="Search papers, people or fields — Enter selects the top paper" autocomplete="off">
   <div id="searchResults"></div>
-  <details id="grpFields">
-    <summary>Fields</summary>
-    <div id="fieldTree"></div>
-  </details>
   <div class="row">
     <label>Color by</label>
     <div class="seg" id="colorSeg">
@@ -219,7 +215,11 @@
     <input id="venueSet" type="checkbox" title="Add peripheral venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
     <span class="val"></span>
   </div>
-  <details id="grpPeople" open>
+  <details id="grpFields">
+    <summary>Fields</summary>
+    <div id="fieldTree"></div>
+  </details>
+  <details id="grpPeople">
     <summary>People &amp; labs</summary>
   <div class="row">
     <label>Scope</label>
@@ -300,6 +300,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=49"></script>
+<script type="module" src="/viewer/main.js?v=50"></script>
 </body>
 </html>
