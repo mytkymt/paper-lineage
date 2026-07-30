@@ -52,6 +52,9 @@ console must be clean.
 - **Name clusters with AI**: prompts for an API key once (localStorage); names replace
   the TF-IDF labels; re-running on the same lineage must hit the localStorage cache
   (no network call — check the Network tab).
+- **Right-click a paper** opens its DOI in a new tab WITHOUT touching the selection;
+  right-click on empty space shows the normal context menu; papers without a DOI do
+  nothing. Tooltip advertises it only when a DOI exists.
 - Esc clears selection.
 
 ## 3.5 Testing pitfalls (each cost real time)

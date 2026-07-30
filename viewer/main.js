@@ -1391,6 +1391,16 @@ async function main() {
       hover(e);
     }
   });
+  // 右クリック = ホバー中の論文の DOI を新規タブで開く。選択状態は一切変えないので、
+  // 系譜を保ったまま論文本体を確認できる。
+  canvas.addEventListener('contextmenu', (e) => {
+    const i = pick(e.clientX, e.clientY);
+    if (i < 0) return;              // 何もない場所は通常のコンテキストメニュー
+    e.preventDefault();
+    const nd = meta.nodes[i];
+    if (nd.d) window.open('https://doi.org/' + encodeURI(nd.d), '_blank', 'noopener');
+  });
+
   canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
     cancelCamAnim();
@@ -1468,7 +1478,8 @@ async function main() {
     const nd = meta.nodes[i];
     tooltip.innerHTML =
       `<div class="t">${escapeHtml(nd.t)}</div>` +
-      `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}</div>`;
+      `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}` +
+      (nd.d ? ' · right-click to open DOI' : '') + `</div>`;
     tooltip.style.display = 'block';
     tooltip.style.left = Math.min(e.clientX + 14, window.innerWidth - 400) + 'px';
     tooltip.style.top = Math.min(e.clientY + 14, window.innerHeight - 80) + 'px';
