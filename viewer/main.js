@@ -772,6 +772,39 @@ async function main() {
     });
   }
 
+  // 選択した論文を見える領域の中心へパンする。ズームは一切変えない
+  // (クリックで縮尺が変わらないのは既定の約束)。ドラッグ/ホイールで中断可。
+  let camAnim = null;
+  function cancelCamAnim() {
+    if (camAnim) { cancelAnimationFrame(camAnim); camAnim = null; }
+  }
+  let pendingPan = -1;   // 非表示中(canvas 0×0)に選択された場合、表示時にパンをやり直す
+  function panToNode(i) {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) { pendingPan = i; return; }
+    pendingPan = -1;
+    const { scale } = scaleOffset();
+    // 右の系譜パネルが地図に被るので、パネルを除いた領域の中心に置く。
+    // 画面が狭くてパネルが支配的なときは素直に画面中心。
+    const panelW = lineageEl.offsetWidth ? lineageEl.offsetWidth + 24 : 344;
+    const px = w > panelW * 2 ? (w - panelW) / 2 : w / 2;
+    const tx = np[i * 2] - (px / w - 0.5) / scale[0];
+    const ty = np[i * 2 + 1];
+    cancelCamAnim();
+    // 非表示タブでは rAF が発火せずアニメが永久に進まないので、即座に着地させる
+    if (document.hidden) { cam.cx = tx; cam.cy = ty; schedule(); return; }
+    const sx = cam.cx, sy = cam.cy, t0 = performance.now(), DUR = 450;
+    const tick = (t) => {
+      const k = Math.min(1, (t - t0) / DUR);
+      const e = 1 - Math.pow(1 - k, 3);
+      cam.cx = sx + (tx - sx) * e;
+      cam.cy = sy + (ty - sy) * e;
+      schedule();
+      camAnim = k < 1 ? requestAnimationFrame(tick) : null;
+    };
+    camAnim = requestAnimationFrame(tick);
+  }
+
   function select(i) {
     selected = i;
     searchActive = false;
@@ -797,6 +830,7 @@ async function main() {
     showLineagePanel(i, lineage.up, lineage.down);
     runLocalClustering();   // local clusters は常時表示(選択のたびに自動計算、数十ms)
     paintLineage();
+    panToNode(i);           // パネル表示後に呼ぶ(パネル幅を差し引いて中心を出すため)
   }
 
   // 系譜の中の1トレンドに絞る。再クリックで系譜全体に戻る。
@@ -1335,6 +1369,7 @@ async function main() {
   });
   canvas.addEventListener('pointermove', (e) => {
     if (dragging) {
+      cancelCamAnim();
       const { scale } = scaleOffset();
       // 画面と正規化座標の向きが揃っているので、ドラッグ量をそのまま引けばよい
       cam.cx -= (e.clientX - lastX) / canvas.clientWidth / scale[0];
@@ -1348,6 +1383,7 @@ async function main() {
   });
   canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
+    cancelCamAnim();
     // カーソル下の正規化座標を固定したままズームする。
     // 無修飾 = 両軸 / Shift = トピック軸(縦)のみ / Alt = 時間軸(横)のみ
     const [ux, uy] = screenToNorm(e.clientX, e.clientY);
@@ -1363,7 +1399,10 @@ async function main() {
     schedule();
   }, { passive: false });
   window.addEventListener('resize', schedule);
-  document.addEventListener('visibilitychange', schedule);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && pendingPan >= 0 && pendingPan === selected) panToNode(pendingPan);
+    schedule();
+  });
 
   // --- 最近傍探索(均等グリッド) ---
   const GRID = 512;
@@ -1530,7 +1569,7 @@ async function main() {
 
   // 開発用の覗き窓(スモークチェックが closure 内を検証できるように)
   window.PL = {
-    pick, meta,
+    pick, meta, cam,
     nodeSlot: () => nodeSlot,
     isolated: () => isolatedLab,
     pinned: () => pinned,

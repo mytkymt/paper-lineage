@@ -35,6 +35,10 @@ console must be clean.
   sub-field; clicking a different row switches (must not AND to empty); re-click restores.
 - **Hover during selection** only hits lineage nodes; clicking empty space clears
   selection and restores the camera.
+- **Selection centering**: selecting a paper pans it to the center of the area left
+  of the lineage panel — zoom must NOT change (`PL.cam.zx/zy` unchanged); drag or
+  wheel mid-animation interrupts the pan. While the pane is hidden the pan is
+  deferred and fires on visibilitychange.
 - **Person focus (legend chip)**: hover/click only hits that person's papers (others are
   excluded, radius widened to 26px); their points render enlarged.
 - **Axis-split zoom**: Shift+scroll must leave the year axis unchanged; Alt+scroll must
