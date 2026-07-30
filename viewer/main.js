@@ -720,14 +720,19 @@ async function main() {
     authorSel = ai;
     const byCited = (a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0);
     const papers = (papersByAuthor.get(ai) || []).slice().sort(byCited);
-    let y0 = Infinity, y1 = -Infinity, lastN = 0;
+    // 著者順の数え方は論文パネルの ◂ 印と同じ定義に揃える: 単著は著者順に意味が無いので
+    // first にも last にも数えない(片方だけ単著を含めると2つの数が比べられなくなる)。
+    let y0 = Infinity, y1 = -Infinity, firstN = 0, lastN = 0;
     const bySub = new Map();
     for (const i of papers) {
       const nd = meta.nodes[i];
       if (nd.y < y0) y0 = nd.y;
       if (nd.y > y1) y1 = nd.y;
       const as = nd.a || [];
-      if (as.length > 1 && as[as.length - 1] === ai) lastN++;
+      if (as.length > 1) {
+        if (as[0] === ai) firstN++;
+        if (as[as.length - 1] === ai) lastN++;
+      }
       if (nd.s != null && nd.s >= 0) bySub.set(nd.s, (bySub.get(nd.s) || 0) + 1);
     }
     const lab = labByAuthor.has(ai) ? meta.labs[labByAuthor.get(ai)] : null;
@@ -735,7 +740,7 @@ async function main() {
     document.getElementById('selMeta').innerHTML =
       `${papers.length.toLocaleString()} papers` +
       (papers.length ? ` · ${y0}–${y1}` : '') +
-      (lastN ? ` · last author on ${lastN}` : '') +
+      (firstN || lastN ? ` · first author on ${firstN} · last author on ${lastN}` : '') +
       (lab ? ` · lab lineage ${lab.edges.toLocaleString()} links` : '') +
       `<br><span class="cov">Counting only papers inside this corpus’ venues</span>`;
     const fields = [...bySub.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0]);
@@ -2018,7 +2023,7 @@ async function main() {
   statsEl.innerHTML =
     `${n.toLocaleString()} papers · ${edgeCount.toLocaleString()} citations · ${yearMin}\u2013${yearMax}` +
     (EXT_MODE
-      ? '<span class="ext">+ peripheral venues (papers linked to the core corpus)</span>'
+      ? '<span class="ext">+ related venues (papers linked to the core corpus)</span>'
       : '');
 
   render();

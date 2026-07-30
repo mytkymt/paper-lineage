@@ -61,7 +61,7 @@ A longer walkthrough: [docs/media/tutorial.mp4](docs/media/tutorial.mp4)
 ## Data notes
 
 Corpus: CHI, PACM HCI, UIST, DIS, ASSETS, IUI, CSCW, TEI, IMWUT, UbiComp, CHI PLAY,
-MobileHCI, TOCHI. A **Peripheral venues** toggle adds HRI, IEEE VR, ISMAR, SIGGRAPH,
+MobileHCI, TOCHI. A **Related venues** toggle adds HRI, IEEE VR, ISMAR, SIGGRAPH,
 TOG, IJHCS and IEEE ToH — partially: only papers with at least one citation link to
 the core corpus are included, and the UI marks them as such. About 75% of references point outside these venues and are excluded —
 the UI states this wherever it limits what you see (an empty upstream list means the
