@@ -16,18 +16,26 @@
 
 出力: data/graph/nodes.jsonl, data/graph/edges.tsv, data/graph/stats.json
 
-  uv run python -m paperlineage.build_graph
+  uv run python -m paperlineage.build_graph              # コア13会場のみ
+  uv run python -m paperlineage.build_graph --extended   # + 拡張venue(引用結合フィルタ)
+                                                         #   -> data/graph-ext/
+
+拡張モード: EXTRA_VENUES の論文は「コアと引用リンク≥1本」のものだけ残す
+(引用結合フィルタ)。この地図は繋がっているものを描く道具なので、収録基準も
+同じ論理に揃える。落とした本数は venue ごとに必ず報告する。
 """
 
 from __future__ import annotations
 
 import json
+import sys
 from collections import Counter
 from pathlib import Path
 
+from .venues import CORE_KEYS, EXTRA_KEYS, VENUES_BY_KEY
+
 ROOT = Path(__file__).resolve().parents[3]
 WORKS_PATH = ROOT / "data" / "openalex" / "works.jsonl"
-OUT_DIR = ROOT / "data" / "graph"
 
 # 出版年がこの範囲外のものは捨てる(明らかなデータ誤り除け)
 MIN_YEAR = 1960
@@ -54,9 +62,15 @@ def load_works() -> dict[str, dict]:
 
 
 def main() -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"reading {WORKS_PATH}")
+    extended = "--extended" in sys.argv
+    out_dir = ROOT / "data" / ("graph-ext" if extended else "graph")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    print(f"reading {WORKS_PATH}  (mode: {'extended' if extended else 'core'})")
     works = load_works()
+    # コアビルドは拡張 venue の論文を最初から除外する。works.jsonl に拡張分が
+    # 追記されていても、コアの出力は拡張導入前とバイト単位で一致し続ける。
+    allowed = CORE_KEYS | EXTRA_KEYS if extended else CORE_KEYS
+    works = {wid: w for wid, w in works.items() if w.get("venue_key") in allowed}
     print(f"  corpus nodes: {len(works)}")
 
     # (year, id) の全順序。この順序に沿う向きのエッジだけを残せば必ず DAG。
@@ -92,6 +106,31 @@ def main() -> None:
     edges = sorted(set(edges))
     n_dup = before - len(edges)
 
+    coupling_report: dict[str, dict[str, int]] = {}
+    if extended:
+        # 引用結合フィルタ: 拡張 venue の論文は、コアと直接引用リンクを持つものだけ
+        # 収録する(この地図の描画対象 = 繋がっているもの、と同じ基準)。
+        linked: set[str] = set()
+        for a, b in edges:
+            ka, kb = works[a].get("venue_key"), works[b].get("venue_key")
+            if ka in EXTRA_KEYS and kb in CORE_KEYS:
+                linked.add(a)
+            elif kb in EXTRA_KEYS and ka in CORE_KEYS:
+                linked.add(b)
+        keep = {wid for wid, w in works.items()
+                if w.get("venue_key") in CORE_KEYS or wid in linked}
+        for key in sorted(EXTRA_KEYS):
+            total = sum(1 for w in works.values() if w.get("venue_key") == key)
+            kept = sum(1 for wid in keep if works[wid].get("venue_key") == key)
+            coupling_report[key] = {"fetched": total, "kept": kept}
+            label = VENUES_BY_KEY[key].label
+            print(f"  coupling filter {label:9s}: kept {kept:5d} / {total:5d}")
+        dropped_edges = sum(1 for a, b in edges if a not in keep or b not in keep)
+        works = {wid: works[wid] for wid in keep}
+        edges = [(a, b) for a, b in edges if a in keep and b in keep]
+        order = {wid: order[wid] for wid in keep}
+        print(f"  edges dropped by coupling filter: {dropped_edges}")
+
     year_hist = Counter(w["year"] for w in works.values())
     venue_hist = Counter(w.get("venue_key") for w in works.values())
 
@@ -106,10 +145,11 @@ def main() -> None:
         "edges_in_dag": len(edges),
         "year_range": [min(year_hist), max(year_hist)],
         "by_venue": dict(venue_hist.most_common()),
+        "coupling_filter": coupling_report or None,
         "by_year": dict(sorted(year_hist.items())),
     }
 
-    with (OUT_DIR / "nodes.jsonl").open("w") as f:
+    with (out_dir / "nodes.jsonl").open("w") as f:
         for wid, w in sorted(works.items(), key=lambda kv: order[kv[0]]):
             f.write(
                 json.dumps(
@@ -134,11 +174,11 @@ def main() -> None:
                 + "\n"
             )
 
-    with (OUT_DIR / "edges.tsv").open("w") as f:
+    with (out_dir / "edges.tsv").open("w") as f:
         for cited, citing in edges:
             f.write(f"{cited}\t{citing}\n")
 
-    (OUT_DIR / "stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=2))
+    (out_dir / "stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=2))
 
     print("\n--- graph stats ---")
     print(f"  nodes                 : {stats['nodes']:,}")
@@ -149,7 +189,7 @@ def main() -> None:
     print(f"    -> same-year dropped : {n_same_year_dropped:,}")
     print(f"    -> self / duplicate  : {n_self:,} / {n_dup:,}")
     print(f"  year range            : {stats['year_range']}")
-    print(f"\nwrote {OUT_DIR}")
+    print(f"\nwrote {out_dir}")
 
 
 if __name__ == "__main__":

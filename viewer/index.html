@@ -172,6 +172,14 @@
 <div id="controls" class="panel">
   <div class="hd1"><h1>HCI Research Trails</h1><span id="panelToggle" title="Collapse panel">–</span></div>
   <input id="search" type="search" placeholder="Search papers or people — Enter selects the top paper" autocomplete="off">
+  <div class="row">
+    <label>Corpus</label>
+    <select id="venueSet" title="Linked venues are partially included: only papers with at least one citation link to the core corpus">
+      <option value="core">13 core venues</option>
+      <option value="linked">+ linked venues</option>
+    </select>
+    <span class="val"></span>
+  </div>
   <div id="searchResults"></div>
   <details id="grpPeople" open>
     <summary>People &amp; labs</summary>
@@ -253,6 +261,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=34"></script>
+<script type="module" src="/viewer/main.js?v=35"></script>
 </body>
 </html>

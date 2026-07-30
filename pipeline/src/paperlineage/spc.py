@@ -26,8 +26,11 @@ import json
 import math
 from pathlib import Path
 
+import os
+
 ROOT = Path(__file__).resolve().parents[3]
-GRAPH_DIR = ROOT / "data" / "graph"
+# PL_DATASET=ext で拡張グラフ(data/graph-ext)を対象にする
+GRAPH_DIR = ROOT / "data" / ("graph-ext" if os.environ.get("PL_DATASET") == "ext" else "graph")
 
 NEG_INF = float("-inf")
 

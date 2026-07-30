@@ -10,7 +10,10 @@
 //   シェーダ側で y を反転して合わせているので、マウス座標(clientY は下向きが正)を
 //   そのまま使ってよい。これを揃えないとパン・ズーム・ホバーが全部縦に反転する。
 
-const DATA = '/data/viz/';
+// データセット切り替え: 既定はコア13会場。?venues=linked で拡張版
+// (引用結合フィルタで部分収録した隣接venue入り)を読む。
+const EXT_MODE = new URLSearchParams(location.search).get('venues') === 'linked';
+const DATA = EXT_MODE ? '/data/viz-ext/' : '/data/viz/';
 
 const VENUE_COLORS = {
   chi:       [0.42, 0.68, 1.00],
@@ -26,7 +29,17 @@ const VENUE_COLORS = {
   chiplay:   [0.95, 0.80, 0.45],
   mobilehci: [0.70, 0.60, 0.85],
   tochi:     [0.75, 0.75, 0.80],
+  // 拡張 venue(引用結合フィルタで部分収録 — 凡例に linked と明示する)
+  hri:       [0.85, 0.45, 0.40],
+  ieeevr:    [0.30, 0.45, 0.95],
+  ismar:     [0.35, 0.90, 0.45],
+  siggraph:  [0.95, 0.35, 0.75],
+  tog:       [0.75, 0.40, 0.95],
+  ijhcs:     [0.55, 0.72, 0.72],
+  toh:       [0.95, 0.75, 0.70],
 };
+// 部分収録の venue(拡張データセットのみ)。凡例で「(linked)」を付ける。
+const LINKED_VENUES = new Set(['hri', 'ieeevr', 'ismar', 'siggraph', 'tog', 'ijhcs', 'toh']);
 const DEFAULT_COLOR = [0.55, 0.58, 0.65];
 
 // 選択状態。シェーダにも同じ数値を渡す。
@@ -242,24 +255,26 @@ async function load() {
   };
 }
 
-// band-names.json の名前を meta に写す。キーワード先頭3語の sig が一致するものだけ。
-// レイアウト再生成で帯が入れ替わっても、古い名前を黙って出さずキーワード表示に落ちる。
+// band-names.json の名前を meta に写す。キーワード署名(sig)で照合するので、
+// コア/拡張どちらのデータセットにも同じファイルが効く(community 番号や index は
+// データセットごとに変わるため使わない)。署名が衝突する帯は 5 語の sig5 で
+// 区別する。一致しない帯は黙って古い名前を出さず、キーワード表示に落ちる。
 function applyBandNames(meta, names) {
   if (!names) { console.warn('band-names.json not loaded; labels fall back to keywords'); return; }
-  const sig = (o) => (o.keywords || []).slice(0, 3).join('|');
-  let stale = 0;
-  const byCommunity = new Map(names.bands.map((e) => [e.community, e]));
-  for (const band of meta.bands || []) {
-    const e = byCommunity.get(band.community);
-    if (e && e.sig === sig(band)) band.name = e.name;
-    else if (band.community != null) stale++;
+  const sig3 = (o) => (o.keywords || []).slice(0, 3).join('|');
+  const sig5 = (o) => (o.keywords || []).slice(0, 5).join('|');
+  const by5 = new Map(), by3 = new Map();
+  for (const e of [...(names.bands || []), ...(names.subbands || [])]) {
+    if (e.sig5) by5.set(e.sig5, e.name);
+    else if (e.sig) by3.set(e.sig, e.name);
   }
-  for (const e of names.subbands || []) {
-    const sub = (meta.subbands || [])[e.index];
-    if (sub && e.sig === sig(sub)) sub.name = e.name;
-    else stale++;
+  let unnamed = 0;
+  for (const o of [...(meta.bands || []), ...(meta.subbands || [])]) {
+    const name = by5.get(sig5(o)) ?? by3.get(sig3(o));
+    if (name) o.name = name;
+    else unnamed++;
   }
-  if (stale) console.warn(`band-names.json is stale for ${stale} band(s) — regenerate names after the layout rebuild`);
+  if (unnamed) console.warn(`band-names.json has no entry for ${unnamed} band(s) — labels fall back to keywords`);
 }
 
 // 隣接リストを CSR で持つ(クリック時の BFS 用)。
@@ -1305,11 +1320,11 @@ async function main() {
       `${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}${doiLink(nd)}<br>` +
       `<span class="cov"><b>${inCorpus}</b> of ${nd.r} references are inside this corpus` +
       (nd.r && !inCorpus
-        ? ' — they point outside the 13 HCI venues, so upstream cannot be traced here'
+        ? ' — they point outside this map\u2019s venues, so upstream cannot be traced here'
         : '') +
       `<br><b>${citersIn}</b> of ${citedTotal} citing papers are inside this corpus` +
       (citedTotal && !citersIn
-        ? ' — the citations come from outside the 13 HCI venues'
+        ? ' — the citations come from outside this map\u2019s venues'
         : '') +
       `</span>`;
 
@@ -1464,6 +1479,16 @@ async function main() {
     cam.cy = uy - (e.clientY / canvas.clientHeight - 0.5) / s[1];
     schedule();
   }, { passive: false });
+  // データセット切り替え(コア13会場 ⇔ +linked venues)。URL パラメータでリロード。
+  const venueSet = document.getElementById('venueSet');
+  venueSet.value = EXT_MODE ? 'linked' : 'core';
+  venueSet.addEventListener('change', () => {
+    const q = new URLSearchParams(location.search);
+    if (venueSet.value === 'linked') q.set('venues', 'linked');
+    else q.delete('venues');
+    location.search = q.toString();
+  });
+
   // 左パネルの折りたたみ。既定は展開。
   const panelToggle = document.getElementById('panelToggle');
   panelToggle.addEventListener('click', () => {
@@ -1619,7 +1644,8 @@ async function main() {
         .map(([v, c]) => {
           const col = VENUE_COLORS[v] || DEFAULT_COLOR;
           const rgb = col.map((x) => Math.round(x * 255)).join(',');
-          return `<span><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()} ${c}</span>`;
+          const linked = LINKED_VENUES.has(v) ? ' <b>linked</b>' : '';
+          return `<span><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()}${linked} ${c}</span>`;
         })
         .join('');
       return;
@@ -1665,7 +1691,8 @@ async function main() {
   };
 
   statsEl.textContent =
-    `${n.toLocaleString()} papers · ${edgeCount.toLocaleString()} citations · ${yearMin}–${yearMax} · layout ${meta.mode}`;
+    `${n.toLocaleString()} papers · ${edgeCount.toLocaleString()} citations · ${yearMin}–${yearMax} · layout ${meta.mode}` +
+    (EXT_MODE ? ' · linked venues: papers with a citation link to the core corpus' : '');
 
   render();
 }

@@ -23,6 +23,7 @@ y は**年ごとに [0,1] に正規化**する。1985年は数十本・2024年�
 from __future__ import annotations
 
 import argparse
+import os
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -30,8 +31,10 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[3]
-GRAPH_DIR = ROOT / "data" / "graph"
-OUT_DIR = ROOT / "data" / "viz"
+# PL_DATASET=ext で拡張グラフを読み、data/viz-ext に出力する
+_EXT = os.environ.get("PL_DATASET") == "ext"
+GRAPH_DIR = ROOT / "data" / ("graph-ext" if _EXT else "graph")
+OUT_DIR = ROOT / "data" / ("viz-ext" if _EXT else "viz")
 
 
 def load() -> tuple[list[dict], np.ndarray, np.ndarray]:

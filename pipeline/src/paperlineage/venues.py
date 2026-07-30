@@ -49,6 +49,25 @@ VENUES: list[Venue] = [
 
 VENUES_BY_KEY = {v.key: v for v in VENUES}
 
+# --- 拡張 venue(引用結合フィルタで部分収録) ---
+# コアの13会場と違い全論文は入れない: コアと引用リンクが1本以上ある論文だけを
+# 拡張ビルド(build_graph --extended → data/viz-ext)に収録する。
+# 名前と件数は 2026-07-30 に bulk search で実測。
+# SIGGRAPH は 2003 年以降 TOG 掲載になるため、会議録と TOG の両方が要る。
+EXTRA_VENUES: list[Venue] = [
+    Venue("hri", "Human-Robot Interaction", "HRI", 4500),
+    Venue("ieeevr", "IEEE Virtual Reality Conference", "IEEE VR", 2623),
+    Venue("ismar", "International Symposium on Mixed and Augmented Reality", "ISMAR", 1213),
+    Venue("siggraph", "International Conference on Computer Graphics and Interactive Techniques", "SIGGRAPH", 9307),
+    Venue("tog", "ACM Transactions on Graphics", "TOG", 5020),
+    Venue("ijhcs", "Int. J. Hum. Comput. Stud.", "IJHCS", 2803),
+    Venue("toh", "IEEE Transactions on Haptics", "ToH", 1162),
+]
+
+EXTRA_KEYS = {v.key for v in EXTRA_VENUES}
+VENUES_BY_KEY.update({v.key: v for v in EXTRA_VENUES})
+CORE_KEYS = {v.key for v in VENUES}
+
 # 注記:
 # - CSCW は 2017 以降 PACM HCI に移行しているため、`cscw` と `pacmhci` の両方が必要。
 #   PACM HCI には EICS / ISS / CHI PLAY も含まれるので、CSCW だけを厳密に取り出したい場合は

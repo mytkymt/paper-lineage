@@ -27,8 +27,13 @@ SELECT = "id,doi,title,publication_year,referenced_works,cited_by_count,authorsh
 
 def load_corpus_dois() -> dict[str, dict]:
     """DOI -> {venue_key, s2_paper_id, year} の辞書。DOI がない論文は落とす。"""
+    from .venues import EXTRA_KEYS
+
     out: dict[str, dict] = {}
-    for path in sorted(CORPUS_DIR.glob("*.jsonl")):
+    # コア venue を先に読む: 同じ DOI がコアと拡張の両方にある場合(例: UIST 論文が
+    # TOG にも載る)、venue_key はコア側でなければコアビルドから論文が消えてしまう。
+    paths = sorted(CORPUS_DIR.glob("*.jsonl"), key=lambda p: (p.stem in EXTRA_KEYS, p.name))
+    for path in paths:
         for line in path.open():
             p = json.loads(line)
             doi = oa.normalize_doi((p.get("externalIds") or {}).get("DOI"))
