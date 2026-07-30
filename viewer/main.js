@@ -576,7 +576,7 @@ async function main() {
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
     resizeHdr(w, h);
     const { scale, offset } = scaleOffset();
-    const selActive = selected >= 0 || searchActive ? 1 : 0;
+    const selActive = selected >= 0 || searchActive || fieldSel ? 1 : 0;
     const onlyLineage = 0;   // 「Lineage only」UI は廃止(常に全体を薄く残す)
 
     // エッジ: 加算合成で「重なり量」を貯める。HDR バッファがあればそちらへ。
@@ -656,6 +656,110 @@ async function main() {
 
   // --- 帯(コミュニティ)の境界とラベル ---
   // ラベルは band-names.json(F3 の LLM 命名)。名前が無い/古い帯はキーワード表示。
+  // --- Fields(帯 = 分野)ブラウザ ---
+  // 帯・サブ帯は y 区間なので、所属はノードの y 座標だけで決まる。
+  let fieldSel = null;   // {kind: 'band'|'sub', idx}
+  const fieldObj = () =>
+    fieldSel && (fieldSel.kind === 'band' ? meta.bands[fieldSel.idx] : meta.subbands[fieldSel.idx]);
+  const fieldMembers = (o) => {
+    const ids = [];
+    for (let i = 0; i < n; i++) {
+      const y = np[i * 2 + 1];
+      if (y >= o.y0 && y < o.y1) ids.push(i);
+    }
+    return ids;
+  };
+
+  function clearField() {
+    if (!fieldSel) return;
+    fieldSel = null;
+    nodeState.fill(0); edgeState.fill(0); uploadStates();
+    lineageEl.style.display = 'none';
+    lineageEl.classList.remove('field-mode');
+    renderFieldTree();
+    schedule();
+  }
+
+  function selectField(kind, idx) {
+    if (fieldSel && fieldSel.kind === kind && fieldSel.idx === idx) { clearField(); return; }
+    select(-1);                       // 論文選択・検索ハイライトを畳む
+    fieldSel = { kind, idx };
+    const o = fieldObj();
+    const members = fieldMembers(o);
+    nodeState.fill(0); edgeState.fill(0);
+    for (const i of members) nodeState[i] = S_MATCH;
+    // 分野内部の引用も一緒に光らせる(分野の骨格が見える)
+    for (let e = 0; e < edgeCount; e++) {
+      const a = edges[e * 2], b = edges[e * 2 + 1];
+      if (nodeState[a] === S_MATCH && nodeState[b] === S_MATCH) {
+        edgeState[e * 2] = S_MATCH; edgeState[e * 2 + 1] = S_MATCH;
+      }
+    }
+    uploadStates();
+
+    // 右パネルを分野ビューにする
+    const label = o.name || (o.keywords || []).slice(0, 4).join(' · ');
+    const parent = kind === 'sub' ? meta.bands.find((b) => (b.subbands || []).includes(idx)) : null;
+    document.getElementById('selTitle').textContent = label;
+    document.getElementById('selMeta').innerHTML =
+      `${o.papers.toLocaleString()} papers · ${o.years ? o.years[0] + '\u2013' + o.years[1] : ''}` +
+      (parent ? ` · in ${escapeHtml(parent.name || 'band')}` : '') +
+      `<br><span class="cov">${escapeHtml((o.keywords || []).join(' \u00b7 '))}</span>`;
+    const byCited = (a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0);
+    const top = members.sort(byCited);
+    document.getElementById('lineageLists').innerHTML =
+      listHtml('Most cited in this field \u2014 click to trace', top, 30);
+    lineageEl.classList.add('field-mode');
+    lineageEl.style.display = 'block';
+    lineageEl.scrollTop = 0;
+    renderFieldTree();
+    schedule();
+  }
+
+  // 左パネルのツリー。バンド行クリック = 選択 + サブ展開、再クリックで解除。
+  const expandedBands = new Set();
+  function renderFieldTree() {
+    const box = document.getElementById('fieldTree');
+    if (!box || !meta.bands) return;
+    const parts = [];
+    const bands = [...meta.bands.keys()].sort((a, b) => meta.bands[a].y0 - meta.bands[b].y0);
+    for (const bi of bands) {
+      const b = meta.bands[bi];
+      if (b.community == null) continue;   // 孤立ノードの疑似バンドは選べない
+      const bPicked = fieldSel && fieldSel.kind === 'band' && fieldSel.idx === bi;
+      parts.push(`<div class="fb${bPicked ? ' picked' : ''}" data-b="${bi}">` +
+                 `${expandedBands.has(bi) ? '\u25be' : '\u25b8'} ` +
+                 `${escapeHtml(b.name || (b.keywords || []).slice(0, 3).join(' \u00b7 '))}` +
+                 `<b>${b.papers.toLocaleString()}</b></div>`);
+      if (!expandedBands.has(bi)) continue;
+      const subs = [...(b.subbands || [])].sort((x, y2) => meta.subbands[x].y0 - meta.subbands[y2].y0);
+      for (const si of subs) {
+        const sb = meta.subbands[si];
+        const sPicked = fieldSel && fieldSel.kind === 'sub' && fieldSel.idx === si;
+        parts.push(`<div class="fs${sPicked ? ' picked' : ''}" data-s="${si}">` +
+                   `${escapeHtml(sb.name || (sb.keywords || []).slice(0, 3).join(' \u00b7 '))}` +
+                   `<b>${(sb.papers || 0).toLocaleString()}</b></div>`);
+      }
+    }
+    box.innerHTML = parts.join('');
+  }
+  document.getElementById('fieldTree').addEventListener('click', (e) => {
+    const fb = e.target.closest('.fb');
+    if (fb) {
+      const bi = parseInt(fb.dataset.b, 10);
+      if (fieldSel && fieldSel.kind === 'band' && fieldSel.idx === bi) {
+        expandedBands.delete(bi);   // 選択中の再クリック = 解除して畳む
+      } else {
+        expandedBands.add(bi);
+      }
+      selectField('band', bi);
+      return;
+    }
+    const fs = e.target.closest('.fs');
+    if (fs) selectField('sub', parseInt(fs.dataset.s, 10));
+  });
+  renderFieldTree();   // 起動時に一覧を出す
+
   const bandsEl = document.getElementById('bands');
   function drawBands(scale, offset) {
     if (!meta.bands) return;
@@ -670,7 +774,7 @@ async function main() {
       const mid = (top + bottom) / 2 - 7;
       // 中心が画面外のラベルは出さない。クランプすると画面端に積み重なって読めない。
       if (bottom - top >= 26 && mid >= 4 && mid <= H - 16) {
-        parts.push(`<div class="lbl" style="top:${mid.toFixed(1)}px" title="${escapeHtml(kw(band))}">${escapeHtml(bandLabel(band))}</div>`);
+        parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px" title="${escapeHtml(kw(band))}">${escapeHtml(bandLabel(band))}</div>`);
       }
       // 拡大してサブ帯が十分な高さになったら、その中の内訳も出す
       for (const si of band.subbands || []) {
@@ -680,11 +784,21 @@ async function main() {
         parts.push(`<div class="sep sub" style="top:${st.toFixed(1)}px"></div>`);
         const smid = (st + sb) / 2 - 6;
         if (smid < 4 || smid > H - 14) continue;
-        parts.push(`<div class="lbl sub" style="top:${smid.toFixed(1)}px" title="${escapeHtml(kw(sub))}">${escapeHtml(subLabel(sub))}</div>`);
+        parts.push(`<div class="lbl sub" data-sub="${si}" style="top:${smid.toFixed(1)}px" title="${escapeHtml(kw(sub))}">${escapeHtml(subLabel(sub))}</div>`);
       }
     }
     bandsEl.innerHTML = parts.join('');
   }
+
+  bandsEl.addEventListener('click', (e) => {
+    const lbl = e.target.closest('.lbl');
+    if (!lbl) return;
+    if (lbl.dataset.sub != null) selectField('sub', parseInt(lbl.dataset.sub, 10));
+    else if (lbl.dataset.band != null) {
+      const bi = parseInt(lbl.dataset.band, 10);
+      if (meta.bands[bi].community != null) { expandedBands.add(bi); selectField('band', bi); }
+    }
+  });
 
   const kw = (o) => (o.keywords || []).join(' · ');
   const bandLabel = (band) => {
@@ -825,6 +939,8 @@ async function main() {
   function select(i) {
     selected = i;
     searchActive = false;
+    fieldSel = null;
+    renderFieldTree();
     highlightedSub = -1;
     localClusters = null;
     highlightedCluster = -1;
@@ -1169,7 +1285,10 @@ async function main() {
     hits.sort((a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0));
 
     selected = -1;
+    fieldSel = null;
+    renderFieldTree();
     lineageEl.style.display = 'none';
+    lineageEl.classList.remove('field-mode');
     document.body.classList.remove('has-selection');
     searchActive = hits.length > 0;
     nodeState.fill(0);
@@ -1352,6 +1471,7 @@ async function main() {
       `<div id="localBox"><div id="localResults"></div></div>` +
       listHtml('Upstream — most cited first', upIds, 12) +
       listHtml('Downstream — most cited first', downIds, 12);
+    lineageEl.classList.remove('field-mode');
     lineageEl.style.display = 'block';
     lineageEl.scrollTop = 0;
   }
@@ -1522,7 +1642,7 @@ async function main() {
   function pick(clientX, clientY) {
     // 系譜選択中は系譜内、検索ハイライト中は検索ヒットだけを対象にする
     // (どちらも nodeState が非ゼロの点 = 明るく描かれている点に一致する)
-    const restrictLineage = selected >= 0 || searchActive;
+    const restrictLineage = selected >= 0 || searchActive || !!fieldSel;
     // 人を絞り込み中は、その人の論文だけをクリック/ホバー対象にする
     // (系譜選択と同じ発想 — 沈めた点に吸われて別の論文へ飛ばないように)
     const restrictPerson = !restrictLineage && isolatedLab >= 0 && isolatedLab < 8;
@@ -1626,6 +1746,7 @@ async function main() {
     if (e.key !== 'Escape') return;
     // メニューが開いていれば Esc はまずそれだけを閉じる(選択は保持)
     if (ctxEl.style.display !== 'none' && ctxEl.style.display !== '') { hideCtx(); return; }
+    if (selected < 0 && fieldSel) { clearField(); return; }
     select(-1);
   });
 

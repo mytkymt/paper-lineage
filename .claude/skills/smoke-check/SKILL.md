@@ -45,6 +45,11 @@ console must be clean.
   earliest-pinned one (slot assignment must prefer the isolated person's bit).
 - **Search hover**: while search highlights are active, hover/click only hits matched
   papers; clearing the search restores normal picking.
+- **Fields tree**: 14 band rows (pseudo "no-links" band excluded); band click expands
+  subs AND selects (highlight + right-panel top-cited list); sub click narrows; re-click
+  clears; map band/sub labels are clickable to the same action; while a field is
+  selected hover/click hits only member papers; drilling into a paper switches to the
+  normal lineage view; Esc order is menu → paper selection → field.
 - **External links open in background tabs** (synthetic Cmd/Ctrl-click): doi ↗ in the
   panel and Open DOI in the context menu must not steal focus from the map.
 - **Axis-split zoom**: Shift+scroll must leave the year axis unchanged; Alt+scroll must

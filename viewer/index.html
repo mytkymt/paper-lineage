@@ -137,6 +137,17 @@
 
   /* 帯(コミュニティ)の境界とラベル */
   #bands { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  #bands .lbl { pointer-events: auto; cursor: pointer; }
+  #bands .lbl:hover { color: #fff; }
+  #fieldTree { max-height: 44vh; overflow-y: auto; margin-top: 4px; }
+  #fieldTree .fb, #fieldTree .fs { padding: 3px 2px; cursor: pointer; color: #aab2c4;
+    display: flex; gap: 6px; align-items: baseline; }
+  #fieldTree .fb:hover, #fieldTree .fs:hover { color: #fff; }
+  #fieldTree .fs { padding-left: 16px; color: #8b91a3; font-size: 11px; }
+  #fieldTree .fb b, #fieldTree .fs b { margin-left: auto; color: #5d6478; font-weight: 400;
+    font-variant-numeric: tabular-nums; }
+  #fieldTree .picked { color: #fff; background: #ffffff0d; border-radius: 3px; }
+  #lineage.field-mode .counts, #lineage.field-mode #selAuthors { display: none; }
   #bands .sep { position: absolute; left: 0; right: 0; height: 1px; background: #ffffff10; }
   #bands .lbl { position: absolute; right: 8px; max-width: 46vw; color: #7b8398; font-size: 11px;
                 text-align: right; text-shadow: 0 0 6px #000, 0 0 3px #000;
@@ -172,6 +183,10 @@
 <div id="controls" class="panel">
   <div class="hd1"><h1>HCI Research Trails</h1><span id="panelToggle" title="Collapse panel">–</span></div>
   <input id="search" type="search" placeholder="Search papers or people — Enter selects the top paper" autocomplete="off">
+  <details id="grpFields" open>
+    <summary>Fields</summary>
+    <div id="fieldTree"></div>
+  </details>
   <div class="row">
     <label>Corpus</label>
     <select id="venueSet" title="Linked venues are partially included: only papers with at least one citation link to the core corpus">
@@ -261,6 +276,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=35"></script>
+<script type="module" src="/viewer/main.js?v=36"></script>
 </body>
 </html>
