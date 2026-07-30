@@ -389,17 +389,22 @@ async function main() {
       }
     });
 
+    // 共著論文はビットが複数立つ。通常時は若いスロット(先に固定した人)の色に
+    // するが、絞り込み中はその人のビットが立っていれば**その人のスロット**として
+    // 扱う — さもないと共著論文が「他人の論文」扱いになり、pick からも外れて
+    // クリックできなくなる(実際に起きたバグ)。
+    const isoBit = isolatedLab >= 0 && isolatedLab < 8 ? 1 << isolatedLab : 0;
+    const slotOf = (m, fallback) =>
+      m ? (m & isoBit ? isolatedLab : 31 - Math.clz32(m & -m)) : fallback;
+
     for (let e = 0; e < edgeCount; e++) {
       const m = mask[edges[e * 2]] & mask[edges[e * 2 + 1]];
-      // 複数人が同じエッジに乗ることがあるので、若いスロット(検索で先に固定した人)を優先
-      const v = m ? 31 - Math.clz32(m & -m)
-                  : (edgeLab[e] === NO_LAB ? 255 : 8);   // 固定していないラボ線は「その他」
+      const v = slotOf(m, edgeLab[e] === NO_LAB ? 255 : 8);   // 固定していないラボ線は「その他」
       edgeA[e * 2] = v; edgeA[e * 2 + 1] = v;
     }
 
     for (let i = 0; i < n; i++) {
-      const m = mask[i];
-      const slot = m ? 31 - Math.clz32(m & -m) : (nodeLab[i] === NO_LAB ? 255 : 8);
+      const slot = slotOf(mask[i], nodeLab[i] === NO_LAB ? 255 : 8);
       nodeSlot[i] = slot;
       // 固定した人の論文は点を大きくして、狙ってクリックできるようにする
       nodeBoost[i] = slot < 8 ? (isolatedLab >= 0 && slot === isolatedLab ? 2.4 : 1.7) : 1.0;

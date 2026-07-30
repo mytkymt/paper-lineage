@@ -40,7 +40,9 @@ console must be clean.
   wheel mid-animation interrupts the pan. While the pane is hidden the pan is
   deferred and fires on visibilitychange.
 - **Person focus (legend chip)**: hover/click only hits that person's papers (others are
-  excluded, radius widened to 26px); their points render enlarged.
+  excluded, radius widened to 26px); their points render enlarged. **Co-authored papers
+  must stay clickable and coloured under EVERY co-author's isolate**, not just the
+  earliest-pinned one (slot assignment must prefer the isolated person's bit).
 - **Search hover**: while search highlights are active, hover/click only hits matched
   papers; clearing the search restores normal picking.
 - **External links open in background tabs** (synthetic Cmd/Ctrl-click): doi ↗ in the
