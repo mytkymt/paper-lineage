@@ -531,15 +531,12 @@ async function main() {
   }
 
   const ui = {
-    thresh: document.getElementById('thresh'),
     alpha: document.getElementById('alpha'),
     exposure: document.getElementById('exposure'),
     gamma: document.getElementById('gamma'),
     psize: document.getElementById('psize'),
     depth: document.getElementById('depth'),
-    only: document.getElementById('only'),
     colorMode: document.getElementById('colorMode'),
-    attrOnly: document.getElementById('attrOnly'),
     roleMode: document.getElementById('roleMode'),
   };
 
@@ -560,7 +557,7 @@ async function main() {
     resizeHdr(w, h);
     const { scale, offset } = scaleOffset();
     const selActive = selected >= 0 || searchActive ? 1 : 0;
-    const onlyLineage = ui.only.checked ? 1 : 0;
+    const onlyLineage = 0;   // 「Lineage only」UI は廃止(常に全体を薄く残す)
 
     // エッジ: 加算合成で「重なり量」を貯める。HDR バッファがあればそちらへ。
     gl.bindFramebuffer(gl.FRAMEBUFFER, hdrOk ? hdrFbo : null);
@@ -573,13 +570,13 @@ async function main() {
     gl.useProgram(edgeProg);
     gl.uniform2fv(uni(edgeProg, 'uScale'), scale);
     gl.uniform2fv(uni(edgeProg, 'uOffset'), offset);
-    gl.uniform1f(uni(edgeProg, 'uThreshold'), parseFloat(ui.thresh.value));
+    gl.uniform1f(uni(edgeProg, 'uThreshold'), 0);   // Trunk スライダ廃止(常に all)
     gl.uniform1f(uni(edgeProg, 'uAlpha'), parseFloat(ui.alpha.value));
     gl.uniform1f(uni(edgeProg, 'uSelActive'), selActive);
     gl.uniform1f(uni(edgeProg, 'uOnlyLineage'), onlyLineage);
     gl.uniform1f(uni(edgeProg, 'uColorMode'),
       ui.colorMode.value === 'venue' ? 1 : 0);
-    gl.uniform1f(uni(edgeProg, 'uAttrOnly'), ui.attrOnly.checked ? 1 : 0);
+    gl.uniform1f(uni(edgeProg, 'uAttrOnly'), 0);    // Lineage lines only UI は廃止
     gl.uniform1f(uni(edgeProg, 'uIsolate'), isolatedLab);
     gl.uniform3fv(uni(edgeProg, 'uLabColors'), LAB_FLAT);
     gl.bindVertexArray(edgeVao);
@@ -1474,6 +1471,14 @@ async function main() {
     cam.cy = uy - (e.clientY / canvas.clientHeight - 0.5) / s[1];
     schedule();
   }, { passive: false });
+  // 左パネルの折りたたみ。既定は展開。
+  const panelToggle = document.getElementById('panelToggle');
+  panelToggle.addEventListener('click', () => {
+    const c = document.getElementById('controls').classList.toggle('collapsed');
+    panelToggle.textContent = c ? '+' : '\u2013';
+    panelToggle.title = c ? 'Expand panel' : 'Collapse panel';
+  });
+
   window.addEventListener('resize', schedule);
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && pendingPan >= 0 && pendingPan === selected) panToNode(pendingPan);
@@ -1546,11 +1551,6 @@ async function main() {
 
   // --- UI ---
   const fmt = (v) => Number(v).toFixed(2).replace(/^0/, '');
-  ui.thresh.addEventListener('input', () => {
-    const v = parseFloat(ui.thresh.value);
-    document.getElementById('threshVal').textContent = v === 0 ? 'all' : `≥${fmt(v)}`;
-    schedule();
-  });
   ui.alpha.addEventListener('input', () => {
     document.getElementById('alphaVal').textContent = fmt(ui.alpha.value);
     schedule();
@@ -1572,8 +1572,6 @@ async function main() {
     document.getElementById('depthVal').textContent = v >= 9 ? 'all' : v === 1 ? '1 hop' : `${v} hops`;
     if (selected >= 0) select(selected);
   });
-  ui.only.addEventListener('change', schedule);
-  ui.attrOnly.addEventListener('change', schedule);
   ui.roleMode.addEventListener('change', applyPinned);
   ui.colorMode.addEventListener('change', () => {
     // 点の色は属性バッファを差し替える(毎フレーム分岐させない)
