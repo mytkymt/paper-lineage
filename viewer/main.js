@@ -1391,19 +1391,57 @@ async function main() {
       hover(e);
     }
   });
-  // 右クリック = ホバー中の論文の DOI を新規タブで開く。選択状態は一切変えないので、
-  // 系譜を保ったまま論文本体を確認できる。
+  // 右クリック = 論文のコンテキストメニュー。選択状態は一切変えないので、
+  // 系譜を保ったまま論文本体の確認やコピーができる。
+  const ctxEl = document.getElementById('ctx');
+  let ctxNode = -1;
+  function hideCtx() { ctxEl.style.display = 'none'; ctxNode = -1; }
   canvas.addEventListener('contextmenu', (e) => {
     const i = pick(e.clientX, e.clientY);
-    if (i < 0) return;              // 何もない場所は通常のコンテキストメニュー
+    if (i < 0) { hideCtx(); return; }   // 何もない場所は通常のコンテキストメニュー
     e.preventDefault();
     const nd = meta.nodes[i];
-    if (nd.d) window.open('https://doi.org/' + encodeURI(nd.d), '_blank', 'noopener');
+    ctxNode = i;
+    ctxEl.innerHTML =
+      `<div class="hd">${escapeHtml(nd.t.slice(0, 90))}` +
+      `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}</div></div>` +
+      (nd.d
+        ? `<div class="it" data-act="doi">Open paper (DOI) ↗</div>` +
+          `<div class="it" data-act="copydoi">Copy DOI</div>`
+        : `<div class="it off">No DOI on record</div>`) +
+      `<div class="it" data-act="copytitle">Copy title</div>` +
+      (i !== selected ? `<div class="it" data-act="trace">Trace lineage</div>` : '');
+    ctxEl.style.display = 'block';
+    // 画面外にはみ出さないように置く(サイズ確定後に測る)
+    const r = ctxEl.getBoundingClientRect();
+    ctxEl.style.left = Math.min(e.clientX, window.innerWidth - r.width - 8) + 'px';
+    ctxEl.style.top = Math.min(e.clientY, window.innerHeight - r.height - 8) + 'px';
+    tooltip.style.display = 'none';
   });
+  ctxEl.addEventListener('click', (e) => {
+    const it = e.target.closest('.it[data-act]');
+    if (!it || ctxNode < 0) return;
+    const nd = meta.nodes[ctxNode];
+    if (it.dataset.act === 'doi' && nd.d) {
+      window.open('https://doi.org/' + encodeURI(nd.d), '_blank', 'noopener');
+    } else if (it.dataset.act === 'copydoi' && nd.d) {
+      navigator.clipboard?.writeText('https://doi.org/' + nd.d);
+    } else if (it.dataset.act === 'copytitle') {
+      navigator.clipboard?.writeText(nd.t);
+    } else if (it.dataset.act === 'trace') {
+      select(ctxNode);
+    }
+    hideCtx();
+  });
+  // メニュー外の操作(クリック・ホイール・Esc)で閉じる
+  window.addEventListener('pointerdown', (e) => {
+    if (ctxEl.style.display !== 'none' && !ctxEl.contains(e.target)) hideCtx();
+  }, true);
 
   canvas.addEventListener('wheel', (e) => {
     e.preventDefault();
     cancelCamAnim();
+    hideCtx();
     // カーソル下の正規化座標を固定したままズームする。
     // 無修飾 = 両軸 / Shift = トピック軸(縦)のみ / Alt = 時間軸(横)のみ
     const [ux, uy] = screenToNorm(e.clientX, e.clientY);
@@ -1473,13 +1511,14 @@ async function main() {
   }
 
   function hover(e) {
+    if (ctxEl.style.display === 'block') { tooltip.style.display = 'none'; return; }
     const i = pick(e.clientX, e.clientY);
     if (i < 0) { tooltip.style.display = 'none'; return; }
     const nd = meta.nodes[i];
     tooltip.innerHTML =
       `<div class="t">${escapeHtml(nd.t)}</div>` +
       `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}` +
-      (nd.d ? ' · right-click to open DOI' : '') + `</div>`;
+      ' · right-click for options</div>';
     tooltip.style.display = 'block';
     tooltip.style.left = Math.min(e.clientX + 14, window.innerWidth - 400) + 'px';
     tooltip.style.top = Math.min(e.clientY + 14, window.innerHeight - 80) + 'px';
@@ -1542,7 +1581,12 @@ async function main() {
     isolatedLab = isolatedLab === slot ? -1 : slot;
     applyPinned();   // recolours points for the isolate as well
   });
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') select(-1); });
+  window.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    // メニューが開いていれば Esc はまずそれだけを閉じる(選択は保持)
+    if (ctxEl.style.display !== 'none' && ctxEl.style.display !== '') { hideCtx(); return; }
+    select(-1);
+  });
 
   const venueCounts = {};
   for (const nd of meta.nodes) venueCounts[nd.v] = (venueCounts[nd.v] || 0) + 1;

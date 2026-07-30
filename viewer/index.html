@@ -64,6 +64,16 @@
   #tooltip .t { color: #eef; margin-bottom: 4px; }
   #tooltip .m { color: #7f879b; }
 
+  /* 論文の右クリックメニュー */
+  #ctx { position: fixed; display: none; z-index: 6; min-width: 220px; max-width: 340px;
+         border-color: #31384a; padding: 0; overflow: hidden; }
+  #ctx .hd { padding: 8px 12px 7px; border-bottom: 1px solid #1c2029; color: #eef; }
+  #ctx .hd .m { color: #7f879b; margin-top: 2px; }
+  #ctx .it { padding: 7px 12px; color: #aab2c4; cursor: pointer; }
+  #ctx .it:hover { background: #ffffff10; color: #fff; }
+  #ctx .it.off { color: #5d6478; cursor: default; }
+  #ctx .it.off:hover { background: none; color: #5d6478; }
+
   /* 選択した論文の系譜パネル */
   #lineage { top: 12px; right: 12px; width: 320px; display: none; max-height: calc(100vh - 24px);
              overflow-y: auto; }
@@ -220,7 +230,7 @@
   </details>
 
   <div id="stats">Loading…</div>
-  <div class="hint">Click a paper to trace its lineage · right-click a paper: open its DOI · drag to pan · scroll to zoom<br>Shift+scroll: topics only · Alt+scroll: time only · legend chip: focus one person</div>
+  <div class="hint">Click a paper to trace its lineage · right-click a paper: options · drag to pan · scroll to zoom<br>Shift+scroll: topics only · Alt+scroll: time only · legend chip: focus one person</div>
   <div class="links">
     <a href="https://github.com/mytkymt/paper-lineage" target="_blank" rel="noopener">GitHub ↗</a>
     <a href="https://github.com/mytkymt/paper-lineage/issues" target="_blank" rel="noopener">Feedback ↗</a>
@@ -229,6 +239,7 @@
 
 <div id="legend" class="panel"></div>
 <div id="tooltip" class="panel"></div>
+<div id="ctx" class="panel"></div>
 
 <div id="lineage" class="panel">
   <span class="close" id="lineageClose">×</span>
@@ -245,6 +256,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=28"></script>
+<script type="module" src="/viewer/main.js?v=29"></script>
 </body>
 </html>
