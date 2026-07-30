@@ -1267,21 +1267,6 @@ async function main() {
   const doiLink = (nd) =>
     nd.d ? ` · <a class="doi" href="https://doi.org/${encodeURI(nd.d)}" target="_blank" rel="noopener" title="Open at doi.org">doi ↗</a>` : '';
 
-  // 外部リンクをバックグラウンドタブで開く(地図から目を離さずに読む論文を積める)。
-  // Cmd/Ctrl+クリック相当の合成クリックを使う。ブラウザが修飾キーを無視した場合は
-  // 通常の新規タブ(フォアグラウンド)に落ちるだけで、リンクが死ぬことはない。
-  function openBackground(url) {
-    const a = document.createElement('a');
-    a.href = url; a.target = '_blank'; a.rel = 'noopener';
-    a.dispatchEvent(new MouseEvent('click', { ctrlKey: true, metaKey: true }));
-  }
-  // パネル内の doi ↗ もバックグラウンドで開く
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a.doi');
-    if (!a) return;
-    e.preventDefault();
-    openBackground(a.href);
-  });
 
   function listHtml(title, ids, limit) {
     if (!ids.length) return '';
@@ -1421,11 +1406,13 @@ async function main() {
       `<div class="hd">${escapeHtml(nd.t.slice(0, 90))}` +
       `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}</div></div>` +
       (nd.d
-        ? `<div class="it" data-act="doi">Open paper (DOI) ↗</div>` +
+        ? `<a class="it" data-act="doi" href="https://doi.org/${encodeURI(nd.d)}" ` +
+          `target="_blank" rel="noopener">Open paper (DOI) ↗</a>` +
           `<div class="it" data-act="copydoi">Copy DOI</div>`
         : `<div class="it off">No DOI on record</div>`) +
       `<div class="it" data-act="copytitle">Copy title</div>` +
-      (i !== selected ? `<div class="it" data-act="trace">Trace lineage</div>` : '');
+      (i !== selected ? `<div class="it" data-act="trace">Trace lineage</div>` : '') +
+      (nd.d ? `<div class="ft">\u2318/Ctrl+click opens links in the background</div>` : '');
     ctxEl.style.display = 'block';
     // 画面外にはみ出さないように置く(サイズ確定後に測る)
     const r = ctxEl.getBoundingClientRect();
@@ -1437,8 +1424,9 @@ async function main() {
     const it = e.target.closest('.it[data-act]');
     if (!it || ctxNode < 0) return;
     const nd = meta.nodes[ctxNode];
-    if (it.dataset.act === 'doi' && nd.d) {
-      openBackground('https://doi.org/' + encodeURI(nd.d));
+    if (it.dataset.act === 'doi') {
+      // 本物のアンカーなのでブラウザに任せる(修飾キーもそのまま効く)
+      hideCtx(); return;
     } else if (it.dataset.act === 'copydoi' && nd.d) {
       navigator.clipboard?.writeText('https://doi.org/' + nd.d);
     } else if (it.dataset.act === 'copytitle') {
@@ -1540,8 +1528,13 @@ async function main() {
     const i = pick(e.clientX, e.clientY);
     if (i < 0) { tooltip.style.display = 'none'; return; }
     const nd = meta.nodes[i];
+    const as = (nd.a || []).map((ai) => meta.authors[ai] || '?');
+    const authors = as.length
+      ? `<div class="m">${escapeHtml(as.slice(0, 6).join(', '))}` +
+        (as.length > 6 ? ` +${as.length - 6} more` : '') + '</div>'
+      : '';
     tooltip.innerHTML =
-      `<div class="t">${escapeHtml(nd.t)}</div>` +
+      `<div class="t">${escapeHtml(nd.t)}</div>` + authors +
       `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}` +
       ' · right-click for options</div>';
     tooltip.style.display = 'block';

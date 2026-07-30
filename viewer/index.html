@@ -81,6 +81,10 @@
   #ctx .it:hover { background: #ffffff10; color: #fff; }
   #ctx .it.off { color: #5d6478; cursor: default; }
   #ctx .it.off:hover { background: none; color: #5d6478; }
+  #ctx a.it { display: block; color: #aab2c4; text-decoration: none; }
+  #ctx a.it:hover { color: #fff; }
+  #ctx .ft { padding: 5px 12px 7px; color: #5d6478; font-size: 10px;
+             border-top: 1px solid #1c2029; }
 
   /* 選択した論文の系譜パネル */
   #lineage { top: 12px; right: 12px; width: 320px; display: none; max-height: calc(100vh - 24px);
@@ -217,8 +221,8 @@
     <summary>Lineage</summary>
   <div class="row">
     <label>Depth</label>
-      <input id="depth" type="range" min="1" max="9" step="1" value="1">
-    <span class="val" id="depthVal">1 hop</span>
+      <input id="depth" type="range" min="1" max="9" step="1" value="2">
+    <span class="val" id="depthVal">2 hops</span>
   </div>
   </details>
 
@@ -249,6 +253,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=32"></script>
+<script type="module" src="/viewer/main.js?v=33"></script>
 </body>
 </html>
