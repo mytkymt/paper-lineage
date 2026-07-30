@@ -99,12 +99,6 @@ part — see [docs/build-your-own.md](docs/build-your-own.md).
 pipeline to another research area.
 The repository / development name is `paper-lineage`.
 
-## Contact
-
-Built and maintained by [Yamato Miyatake](https://www.miyatakeyama.to/)
-(Saitama University). Feedback and bug reports →
-[issues](https://github.com/mytkymt/paper-lineage/issues).
-
 ## License
 
 MIT
