@@ -33,8 +33,7 @@ Pick venues that cite each other — the map is built from **within-corpus**
 citations, so a corpus of venues that don't interact produces a sparse map.
 10–15 venues / 20k–50k papers is the scale this layout is tuned for.
 
-Two gotchas the probe output helps with (details in
-[data-sources.md](data-sources.md), Japanese):
+Two gotchas the probe output helps with:
 
 - Venue names containing commas break the S2 bulk-search parameter (it's a
   comma-separated list); the pipeline strips commas automatically, but verify

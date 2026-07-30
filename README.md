@@ -89,11 +89,9 @@ part — see [docs/build-your-own.md](docs/build-your-own.md).
 
 ## Documentation
 
-[How lineage is computed](docs/lineage.md) and
-[build a map for your own field](docs/build-your-own.md) are in English.
-Design notes and the decision log are in Japanese under `docs/` —
-[scope](docs/scope.md), [algorithms](docs/algorithms.md), [prior art](docs/prior-art.md),
-[data sources](docs/data-sources.md), [dev notes](docs/dev-notes.md) (newest first).
+[How lineage is computed](docs/lineage.md) explains the algorithms;
+[build a map for your own field](docs/build-your-own.md) covers adapting the
+pipeline to another research area.
 The repository / development name is `paper-lineage`.
 
 ## License

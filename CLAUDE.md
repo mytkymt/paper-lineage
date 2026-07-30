@@ -1,8 +1,10 @@
 # CLAUDE.md — paper-lineage
 
 Field-scale, time-monotone citation map for HCI (13 venues, ~39k papers). See README.md
-for the idea; **docs/dev-notes.md (newest entries on top) for every decision and its
+for the idea; **docs-dev/dev-notes.md (newest entries on top) for every decision and its
 reason** — read it before changing layout, colours, or lineage semantics.
+`docs-dev/` is local-only (git-ignored): the public repo is English-only, the Japanese
+decision log stays here.
 
 ## Working here
 
@@ -22,6 +24,7 @@ reason** — read it before changing layout, colours, or lineage semantics.
 - **Coordinates**: normalized top-left origin end-to-end; `screenToNorm()` is the only
   screen→data inverse. Canvas needs explicit CSS `width/height` (replaced element).
 - **Language & tone**: UI copy in English, neutral phrasing — "lab lineage", never
-  "self-citation". Docs and dev-notes stay Japanese.
+  "self-citation". Everything committed (docs/, README) is English; Japanese notes go
+  to the untracked docs-dev/.
 - When patching `viewer/main.js` by string replacement, keep spans minimal and re-run the
   parse check — over-wide spans have deleted neighbouring listeners twice.
