@@ -93,14 +93,16 @@ const LINEAGE_COLORS = `
 // 隣接ペア基準では全スロット合格(最悪 CVD ΔE 8.4)。ラボの線は帯ごとに離れて出るので
 // この基準で妥当だが、6–8 の帯域は**二次符号化が必須**なので凡例のクリック絞り込みを付ける。
 const LAB_HEX = ['#3987e5', '#d95926', '#199e70', '#c98500',
-                 '#d55181', '#008300', '#9085e9', '#e66767'];
-const LAB_OTHER = '#59617a';   // 9位以下のラボ(色付き8ラボを埋めないよう暗め)
+                 '#d55181', '#008300', '#9085e9', '#e66767',
+                 '#00b2c9', '#94b000', '#ff9d3c', '#c883e8',
+                 '#5ad0a0', '#e0d060', '#b76e79'];
+const LAB_OTHER = '#59617a';   // 16位以下のラボ(色付きスロットを埋めないよう暗め)
 const NON_LAB = [0.16, 0.19, 0.26];  // ラボ線ではないエッジ
 const NO_LAB = 0xFFFFFFFF;
 
-// 色を付ける人はユーザーが検索して選ぶ。既定は自己引用系譜が長い順に上位8人。
+// 色を付ける人はユーザーが検索して選ぶ。既定はラボ系譜が長い順に上位5人。
 // 「その人の論文」(点)と「その人のラボ系譜」(線)は別物なので、両方まとめて色を付ける。
-let pinned = [];            // [{ai: 著者index, labId: labs index|null}] 最大 8
+let pinned = [];            // [{ai: 著者index, labId: labs index|null}] 最大 15
 
 const hexToRgb = (h) => [
   parseInt(h.slice(1, 3), 16) / 255,
@@ -113,7 +115,7 @@ const EDGE_VS = `#version 300 es
   in vec2 aPos;
   in float aWeight;
   in float aState;
-  in float aLab;              // 0..7 = 色付きラボ, 8 = その他のラボ, 255 = ラボ線ではない
+  in float aLab;              // 0..14 = 色付きラボ, 15 = その他のラボ, 255 = ラボ線ではない
   ${VIEW}
   ${LINEAGE_COLORS}
   uniform float uThreshold;
@@ -123,7 +125,7 @@ const EDGE_VS = `#version 300 es
   uniform float uColorMode;   // 0 = ラボ, 1 = venue(エッジは単色)
   uniform float uAttrOnly;    // 1 = ラボ線だけ描く
   uniform float uIsolate;     // >=0 のときそのスロットのラボだけ描く
-  uniform vec3  uLabColors[9];
+  uniform vec3  uLabColors[16];
   out vec4 vColor;
   void main() {
     bool inLineage = aState > 0.5;
@@ -141,7 +143,7 @@ const EDGE_VS = `#version 300 es
       // ラボ線は全体の 4.7% しかなく、等 alpha だと他のエッジの海に埋もれて
       // 「太いライン」として見えない。可視性のための増幅で、量の表現ではない。
       // 「その他のラボ」(2,113 ラボ分)は色付き8ラボを埋めてしまうので抑える。
-      a *= aLab < 7.5 ? 4.0 : (isLab ? 0.9 : 0.6);
+      a *= aLab < 14.5 ? 4.0 : (isLab ? 0.9 : 0.6);
     }
     if (uSelActive > 0.5) {
       if (aState < 0.5) { a *= 0.12; }                       // 系譜外は沈める
@@ -395,7 +397,7 @@ async function main() {
     const lastOnly = ui.roleMode && ui.roleMode.value === 'last';
 
     // 固定した人ごとのビット。スロットは最大8なので Uint8 で足りる。
-    const mask = new Uint8Array(n);
+    const mask = new Uint16Array(n);
     pinned.forEach((p, slot) => {
       for (const i of papersByAuthor.get(p.ai) || []) {
         const as = meta.nodes[i].a || [];
@@ -408,21 +410,21 @@ async function main() {
     // するが、絞り込み中はその人のビットが立っていれば**その人のスロット**として
     // 扱う — さもないと共著論文が「他人の論文」扱いになり、pick からも外れて
     // クリックできなくなる(実際に起きたバグ)。
-    const isoBit = isolatedLab >= 0 && isolatedLab < 8 ? 1 << isolatedLab : 0;
+    const isoBit = isolatedLab >= 0 && isolatedLab < 15 ? 1 << isolatedLab : 0;
     const slotOf = (m, fallback) =>
       m ? (m & isoBit ? isolatedLab : 31 - Math.clz32(m & -m)) : fallback;
 
     for (let e = 0; e < edgeCount; e++) {
       const m = mask[edges[e * 2]] & mask[edges[e * 2 + 1]];
-      const v = slotOf(m, edgeLab[e] === NO_LAB ? 255 : 8);   // 固定していないラボ線は「その他」
+      const v = slotOf(m, edgeLab[e] === NO_LAB ? 255 : 15);   // 固定していないラボ線は「その他」
       edgeA[e * 2] = v; edgeA[e * 2 + 1] = v;
     }
 
     for (let i = 0; i < n; i++) {
-      const slot = slotOf(mask[i], nodeLab[i] === NO_LAB ? 255 : 8);
+      const slot = slotOf(mask[i], nodeLab[i] === NO_LAB ? 255 : 15);
       nodeSlot[i] = slot;
       // 固定した人の論文は点を大きくして、狙ってクリックできるようにする
-      nodeBoost[i] = slot < 8 ? (isolatedLab >= 0 && slot === isolatedLab ? 2.4 : 1.7) : 1.0;
+      nodeBoost[i] = slot < 15 ? (isolatedLab >= 0 && slot === isolatedLab ? 2.4 : 1.7) : 1.0;
       let lc = slot === 255 ? NON_LAB : LAB_RGB[slot];
       if (isolatedLab >= 0 && slot !== isolatedLab) lc = NON_LAB;  // isolate dims points too
       attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
@@ -849,7 +851,7 @@ async function main() {
       else if (st === S_DOWN) buckets[1].push(i);
       else if (st === S_MATCH) buckets[2].push(i);
       else if (st === S_SELF) buckets[3].push(i);
-      else if (nodeSlot[i] < 8) buckets[0].push(i);
+      else if (nodeSlot[i] < 15) buckets[0].push(i);
     }
     const idx = new Uint32Array(buckets.reduce((t, b) => t + b.length, 0));
     let off = 0;
@@ -1354,7 +1356,7 @@ async function main() {
     const person = e.target.closest('div.person');
     if (person) {
       if (!togglePinned(parseInt(person.dataset.ai, 10))) {
-        alert('Up to 8 people can be pinned. Remove one with the × in the legend first.');
+        alert('Up to 15 people can be pinned. Remove one with the × in the legend first.');
         return;
       }
       runSearch(searchEl.value);
@@ -1492,7 +1494,7 @@ async function main() {
     const au = e.target.closest('.au[data-ai]');
     if (!au) return;
     if (!togglePinned(parseInt(au.dataset.ai, 10))) {
-      alert('Up to 8 people can be pinned. Remove one with the × in the legend first.');
+      alert('Up to 15 people can be pinned. Remove one with the × in the legend first.');
       return;
     }
     if (selected >= 0) select(selected);
@@ -1601,10 +1603,10 @@ async function main() {
   }, { passive: false });
   // データセット切り替え(コア13会場 ⇔ +linked venues)。URL パラメータでリロード。
   const venueSet = document.getElementById('venueSet');
-  venueSet.value = EXT_MODE ? 'linked' : 'core';
+  venueSet.checked = EXT_MODE;
   venueSet.addEventListener('change', () => {
     const q = new URLSearchParams(location.search);
-    if (venueSet.value === 'linked') q.set('venues', 'linked');
+    if (venueSet.checked) q.set('venues', 'linked');
     else q.delete('venues');
     location.search = q.toString();
   });
@@ -1645,7 +1647,7 @@ async function main() {
     const restrictLineage = selected >= 0 || searchActive || !!fieldSel;
     // 人を絞り込み中は、その人の論文だけをクリック/ホバー対象にする
     // (系譜選択と同じ発想 — 沈めた点に吸われて別の論文へ飛ばないように)
-    const restrictPerson = !restrictLineage && isolatedLab >= 0 && isolatedLab < 8;
+    const restrictPerson = !restrictLineage && isolatedLab >= 0 && isolatedLab < 15;
     const { scale } = scaleOffset();
     const [ux, uy] = screenToNorm(clientX, clientY);
     // 画面上 12px を正規化座標に直したものを探索半径にする。
@@ -1785,13 +1787,13 @@ async function main() {
                `<em class="unpin" data-unpin="${i}" title="Unpin">×</em></span>`;
       })
       .join('') +
-      `<span class="lab${isolatedLab < 0 || isolatedLab === 8 ? '' : ' off'}" data-slot="8">` +
+      `<span class="lab${isolatedLab < 0 || isolatedLab === 15 ? '' : ' off'}" data-slot="15">` +
       `<i style="background:${LAB_OTHER}"></i>Other labs · ${otherEdges.toLocaleString()} links</span>` +
       (pinned.length ? '' : '<span class="hintline">Search for a person to pin their color</span>');
   }
 
   // 既定は自己引用系譜が長い順に上位8人。あとは検索で入れ替えられる。
-  pinned = (meta.labs || []).slice(0, LAB_HEX.length)
+  pinned = (meta.labs || []).slice(0, 5)
     .map((lab, id) => ({ ai: lab.ai, labId: id }));
   applyPinned();   // 中で drawLegend() まで走る
 

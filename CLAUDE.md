@@ -20,7 +20,9 @@ decision log stays here.
   the count in output or UI.
 - **Empty lineage = corpus boundary, not missing data** — the UI must say so explicitly.
 - **Colour**: position already encodes time+topic, so colour encodes *who* (pinned people /
-  lab lineage). Categorical max 8 + "Other"; keep a secondary encoding (isolate, labels).
+  lab lineage). Pinned-people palette allows up to 15 + "Other" (a deliberate product
+  decision); at that width the secondary encoding (isolate, legend labels) is mandatory,
+  not optional. Other categorical uses stay at max 8.
 - **Coordinates**: normalized top-left origin end-to-end; `screenToNorm()` is the only
   screen→data inverse. Canvas needs explicit CSS `width/height` (replaced element).
 - **Language & tone**: UI copy in English, neutral phrasing — "lab lineage", never
