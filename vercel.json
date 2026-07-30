@@ -2,6 +2,11 @@
   "rewrites": [
     { "source": "/", "destination": "/viewer/index.html" }
   ],
+  "redirects": [
+    { "source": "/viewer", "destination": "/", "permanent": true },
+    { "source": "/viewer/", "destination": "/", "permanent": true },
+    { "source": "/viewer/index.html", "destination": "/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/data/viz/(.*)",

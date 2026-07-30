@@ -128,3 +128,12 @@ console must be clean.
 - Categorical colors: pinned people up to 15 + "Other" (product decision); isolate/labels
   are the required secondary encoding. Other categorical uses stay at max 8.
 - UI copy is English and neutral: say "lab lineage", not "self-citation".
+- Production serves the map at `/` only: `vercel.json` redirects `/viewer`,
+  `/viewer/` and `/viewer/index.html` there, and `<link rel="canonical">` points at
+  `/`. Those redirects match exact paths, so `/viewer/main.js` and
+  `/viewer/band-names.json` still resolve — keep it that way. Local dev is
+  unaffected (the static server ignores `vercel.json`); serve and open
+  `/viewer/index.html` as before.
+- The paper count in the `<title>`/description is deliberately rounded ("39,000"),
+  so re-running the pipeline cannot silently make the static HTML wrong. Re-shooting
+  `docs/media/` means rebuilding `docs/media/og-card.jpg` (1200×630) too.

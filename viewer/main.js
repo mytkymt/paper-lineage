@@ -10,10 +10,11 @@
 //   シェーダ側で y を反転して合わせているので、マウス座標(clientY は下向きが正)を
 //   そのまま使ってよい。これを揃えないとパン・ズーム・ホバーが全部縦に反転する。
 
-// データセット切り替え: 既定はコア13会場。?venues=linked で拡張版
+// データセット切り替え: 既定はコア13会場。?venues=related で拡張版
 // (引用結合フィルタで部分収録した隣接venue入り)を読む。
+// 'peripheral' / 'linked' は旧 URL 互換で残す(共有済みリンクを壊さない)。
 const _venuesParam = new URLSearchParams(location.search).get('venues');
-const EXT_MODE = _venuesParam === 'peripheral' || _venuesParam === 'linked';
+const EXT_MODE = _venuesParam === 'related' || _venuesParam === 'peripheral' || _venuesParam === 'linked';
 const DATA = EXT_MODE ? '/data/viz-ext/' : '/data/viz/';
 
 const VENUE_COLORS = {
@@ -809,7 +810,7 @@ async function main() {
         if (yr < ymin) ymin = yr;
         if (yr > ymax) ymax = yr;
       }
-      o = { name: (idx || '?').toUpperCase() + (LINKED_VENUES.has(idx) ? ' — peripheral (linked subset)' : ''),
+      o = { name: (idx || '?').toUpperCase() + (LINKED_VENUES.has(idx) ? ' — related (linked subset)' : ''),
             papers: members.length, years: members.length ? [ymin, ymax] : null, keywords: [] };
     } else {
       o = fieldObj();
@@ -1788,7 +1789,7 @@ async function main() {
   venueSet.checked = EXT_MODE;
   venueSet.addEventListener('change', () => {
     const q = new URLSearchParams(location.search);
-    if (venueSet.checked) q.set('venues', 'peripheral');
+    if (venueSet.checked) q.set('venues', 'related');
     else q.delete('venues');
     location.search = q.toString();
   });
@@ -1968,7 +1969,7 @@ async function main() {
         .map(([v, c]) => {
           const col = VENUE_COLORS[v] || DEFAULT_COLOR;
           const rgb = col.map((x) => Math.round(x * 255)).join(',');
-          const linked = LINKED_VENUES.has(v) ? ' <b>peripheral</b>' : '';
+          const linked = LINKED_VENUES.has(v) ? ' <b>related</b>' : '';
           const on = fieldSel && fieldSel.kind === 'venue' && fieldSel.idx === v ? ' class="on"' : '';
           return `<span data-venue="${v}"${on}><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()}${linked} ${c}</span>`;
         })

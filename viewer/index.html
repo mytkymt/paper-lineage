@@ -2,7 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>HCI Research Trails</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HCI Research Trails — a citation map of 39,000 HCI papers</title>
+<meta name="description" content="Interactive citation map of nearly 39,000 HCI papers from 13 venues — CHI, UIST, CSCW, DIS, UbiComp and more, 1981–2026. Click a paper to trace its lineage.">
+<link rel="canonical" href="https://hci-research-trails.vercel.app/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#07080c">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HCI Research Trails">
+<meta property="og:url" content="https://hci-research-trails.vercel.app/">
+<meta property="og:title" content="HCI Research Trails — a citation map of 39,000 HCI papers">
+<meta property="og:description" content="Nearly 39,000 papers from 13 HCI venues, 1981–2026, laid out so citations only ever flow left to right. Click any paper to trace its lineage upstream and downstream.">
+<meta property="og:image" content="https://hci-research-trails.vercel.app/docs/media/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A wide dark map of HCI papers: coloured citation trails running left to right across bands of research topics, from 1981 to 2026.">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root { color-scheme: dark; }
   html, body { margin: 0; height: 100%; overflow: hidden; background: #07080c; color: #d7dae2;
@@ -231,9 +246,56 @@
   #lineage li.trend .bar2 .d { background: #ff9a52; height: 100%; }
   body.has-selection #bands { display: none; }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://hci-research-trails.vercel.app/#app",
+      "name": "HCI Research Trails",
+      "url": "https://hci-research-trails.vercel.app/",
+      "applicationCategory": "BrowserApplication",
+      "browserRequirements": "Requires WebGL2",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "description": "An interactive citation map of nearly 39,000 HCI papers from 13 venues, 1981-2026. Papers are laid out so that citations only ever flow left to right, so any paper's lineage can be traced upstream and downstream.",
+      "screenshot": "https://hci-research-trails.vercel.app/docs/media/og-card.jpg",
+      "license": "https://github.com/mytkymt/paper-lineage/blob/main/LICENSE",
+      "codeRepository": "https://github.com/mytkymt/paper-lineage",
+      "author": {
+        "@type": "Person",
+        "name": "Yamato Miyatake",
+        "url": "https://www.miyatakeyama.to/",
+        "affiliation": { "@type": "CollegeOrUniversity", "name": "Saitama University" }
+      }
+    },
+    {
+      "@type": "Dataset",
+      "@id": "https://hci-research-trails.vercel.app/#dataset",
+      "name": "HCI citation lineage corpus",
+      "description": "A citation graph of nearly 39,000 papers from 13 HCI venues (CHI, PACM HCI, UIST, DIS, ASSETS, IUI, CSCW, TEI, IMWUT, UbiComp, CHI PLAY, MobileHCI and TOCHI) published between 1981 and 2026, with a time-monotone layout, citation communities and per-paper lineage. About 75% of references point outside these venues and are excluded.",
+      "url": "https://hci-research-trails.vercel.app/",
+      "temporalCoverage": "1981/2026",
+      "keywords": ["human-computer interaction", "citation network", "bibliometrics", "science mapping", "research lineage", "CHI", "UIST", "CSCW"],
+      "isBasedOn": ["https://www.semanticscholar.org/", "https://openalex.org/"],
+      "creator": { "@id": "https://hci-research-trails.vercel.app/#app" },
+      "mainEntityOfPage": "https://hci-research-trails.vercel.app/"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <canvas id="canvas"></canvas>
+<noscript>
+  <p style="padding:16px;max-width:640px">
+    <b>HCI Research Trails</b> draws a citation map of nearly 39,000 HCI papers from 13
+    venues (CHI, UIST, CSCW, DIS, UbiComp and more), 1981–2026, using JavaScript and
+    WebGL2. Enable both to explore the map, or read how it is built on
+    <a href="https://github.com/mytkymt/paper-lineage">GitHub</a>.
+  </p>
+</noscript>
 
 <div id="controls" class="panel">
   <div class="hd1"><h1>HCI Research Trails</h1><span id="panelToggle" title="Collapse panel">–</span></div>
@@ -247,8 +309,8 @@
     <span class="val"></span>
   </div>
   <div class="row">
-    <label>Peripheral venues</label>
-    <input id="venueSet" type="checkbox" title="Add peripheral venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
+    <label>Related venues</label>
+    <input id="venueSet" type="checkbox" title="Add related venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
     <span class="val"></span>
   </div>
   <details id="grpFields">

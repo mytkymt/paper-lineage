@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# The map's data is served as one 8.6 MB JSON plus binary buffers. Crawling it
+# indexes nothing readable, so keep crawlers on the page itself.
+Disallow: /data/
+Disallow: /pipeline/
+
+Sitemap: https://hci-research-trails.vercel.app/sitemap.xml
