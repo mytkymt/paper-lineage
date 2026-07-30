@@ -692,13 +692,8 @@ async function main() {
     const members = fieldMembers(o);
     nodeState.fill(0); edgeState.fill(0);
     for (const i of members) nodeState[i] = S_MATCH;
-    // 分野内部の引用も一緒に光らせる(分野の骨格が見える)
-    for (let e = 0; e < edgeCount; e++) {
-      const a = edges[e * 2], b = edges[e * 2 + 1];
-      if (nodeState[a] === S_MATCH && nodeState[b] === S_MATCH) {
-        edgeState[e * 2] = S_MATCH; edgeState[e * 2 + 1] = S_MATCH;
-      }
-    }
+    // 線は光らせない: 大きな分野では数万本が同時に光って眩しいだけになる。
+    // 分野の骨格は点の分布で十分読める(線が見たければ論文を選択する)。
     uploadStates();
 
     // 右パネルを分野ビューにする
