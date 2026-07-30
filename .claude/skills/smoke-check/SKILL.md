@@ -50,8 +50,10 @@ console must be clean.
   clears; map band/sub labels are clickable to the same action; while a field is
   selected hover/click hits only member papers; drilling into a paper switches to the
   normal lineage view; Esc order is menu → paper selection → field.
-- **External links open in background tabs** (synthetic Cmd/Ctrl-click): doi ↗ in the
-  panel and Open DOI in the context menu must not steal focus from the map.
+- **External links are plain anchors** (doi ↗ in the panel, Open DOI in the context
+  menu): plain click opens a foreground tab; the browser-native Cmd/Ctrl+click is the
+  supported way to open in background (JS cannot force it — a synthetic-click hack was
+  tried and reverted).
 - **Axis-split zoom**: Shift+scroll must leave the year axis unchanged; Alt+scroll must
   leave bands unchanged.
 - **Toggles**: Scope (any/last) changes line spread; the "Color by" segmented control
@@ -96,5 +98,6 @@ console must be clean.
   only inverse). Vertical pan/zoom/hover inverting means this broke.
 - Edges accumulate in the HDR buffer + log tone map — never thin the data to fix density.
 - Any display cap (top-N lists, highlight cap) must be labeled in the UI, never silent.
-- Categorical colors: max 8 + "Other"; isolate/labels are the required secondary encoding.
+- Categorical colors: pinned people up to 15 + "Other" (product decision); isolate/labels
+  are the required secondary encoding. Other categorical uses stay at max 8.
 - UI copy is English and neutral: say "lab lineage", not "self-citation".
