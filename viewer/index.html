@@ -57,7 +57,10 @@
   ul.hints b { color: #8b91a3; font-weight: 500; }
   #stats .ext { display: block; color: #8fa6d8; }
   .links { margin-top: 8px; padding-top: 7px; border-top: 1px solid #1c2029;
-           display: flex; gap: 14px; font-size: 11px; }
+           display: flex; gap: 14px; font-size: 11px; flex-wrap: wrap; }
+  .links .owner { flex-basis: 100%; color: #7b8398; }
+  .links .owner a { color: #8b93a8; text-decoration: none; }
+  .links .owner a:hover { color: #fff; }
   .links a { color: #8fa6d8; text-decoration: none; }
   .links a:hover { color: #fff; }
 
@@ -259,6 +262,7 @@
     <li><b>Legend chip</b> — focus one person</li>
   </ul>
   <div class="links">
+    <span class="owner"><a href="https://www.miyatakeyama.to/" target="_blank" rel="noopener">Yamato Miyatake</a> · Saitama University</span>
     <a href="https://github.com/mytkymt/paper-lineage" target="_blank" rel="noopener">GitHub ↗</a>
     <a href="https://github.com/mytkymt/paper-lineage/issues" target="_blank" rel="noopener">Feedback ↗</a>
   </div>
@@ -283,6 +287,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=44"></script>
+<script type="module" src="/viewer/main.js?v=46"></script>
 </body>
 </html>
