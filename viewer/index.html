@@ -188,8 +188,8 @@
     <div id="fieldTree"></div>
   </details>
   <div class="row">
-    <label>Linked venues</label>
-    <input id="venueSet" type="checkbox" title="Add linked venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
+    <label>Peripheral venues</label>
+    <input id="venueSet" type="checkbox" title="Add peripheral venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
     <span class="val"></span>
   </div>
   <div id="searchResults"></div>
@@ -203,6 +203,10 @@
     </select>
     <span class="val"></span>
   </div>
+  </details>
+
+  <details id="grpView">
+    <summary>Display</summary>
   <div class="row">
     <label>Color</label>
     <select id="colorMode">
@@ -211,10 +215,6 @@
     </select>
     <span class="val"></span>
   </div>
-  </details>
-
-  <details id="grpView">
-    <summary>Display</summary>
   <div class="row">
     <label>Line alpha</label>
     <input id="alpha" type="range" min="0.005" max="0.6" step="0.005" value="0.36">
@@ -273,6 +273,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=37"></script>
+<script type="module" src="/viewer/main.js?v=38"></script>
 </body>
 </html>

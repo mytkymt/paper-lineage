@@ -19,7 +19,7 @@ from pathlib import Path
 from . import s2
 from .venues import VENUES, VENUES_BY_KEY, Venue
 
-FIELDS = "paperId,externalIds,title,year,venue,citationCount,referenceCount"
+FIELDS = "paperId,externalIds,title,year,venue,citationCount,referenceCount,authors"
 OUT_DIR = Path(__file__).resolve().parents[3] / "data" / "corpus"
 
 

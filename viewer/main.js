@@ -12,7 +12,8 @@
 
 // データセット切り替え: 既定はコア13会場。?venues=linked で拡張版
 // (引用結合フィルタで部分収録した隣接venue入り)を読む。
-const EXT_MODE = new URLSearchParams(location.search).get('venues') === 'linked';
+const _venuesParam = new URLSearchParams(location.search).get('venues');
+const EXT_MODE = _venuesParam === 'peripheral' || _venuesParam === 'linked';
 const DATA = EXT_MODE ? '/data/viz-ext/' : '/data/viz/';
 
 const VENUE_COLORS = {
@@ -1606,7 +1607,7 @@ async function main() {
   venueSet.checked = EXT_MODE;
   venueSet.addEventListener('change', () => {
     const q = new URLSearchParams(location.search);
-    if (venueSet.checked) q.set('venues', 'linked');
+    if (venueSet.checked) q.set('venues', 'peripheral');
     else q.delete('venues');
     location.search = q.toString();
   });
@@ -1767,7 +1768,7 @@ async function main() {
         .map(([v, c]) => {
           const col = VENUE_COLORS[v] || DEFAULT_COLOR;
           const rgb = col.map((x) => Math.round(x * 255)).join(',');
-          const linked = LINKED_VENUES.has(v) ? ' <b>linked</b>' : '';
+          const linked = LINKED_VENUES.has(v) ? ' <b>peripheral</b>' : '';
           return `<span><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()}${linked} ${c}</span>`;
         })
         .join('');
@@ -1815,7 +1816,7 @@ async function main() {
 
   statsEl.textContent =
     `${n.toLocaleString()} papers · ${edgeCount.toLocaleString()} citations · ${yearMin}–${yearMax} · layout ${meta.mode}` +
-    (EXT_MODE ? ' · linked venues: papers with a citation link to the core corpus' : '');
+    (EXT_MODE ? ' · peripheral venues: papers with a citation link to the core corpus' : '');
 
   render();
 }
