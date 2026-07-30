@@ -19,14 +19,15 @@ Research areas appear as named horizontal bands; citations flow left to right.
 - **Local clusters** split the lineage by its own citation structure — e.g. UltraHaptics'
   708 descendants resolve into seven branches (VR haptics, mid-air ultrasound, EMS,
   levitation, …). Optional LLM naming for the branches, using your own API key.
-- Authors, corpus coverage, and DOI links included.
+- Authors, corpus coverage, and DOI links included. Right-click a paper for DOI and
+  copy actions without touching the selection.
 - How all of this is computed: [docs/lineage.md](docs/lineage.md).
 
 ## 2. Follow a person
 
 ![A person's lab thread](docs/media/trail-person.png)
 
-- Search a name and pin it to a colour (up to 8 people).
+- Search a name and pin it to a colour (up to 15 people).
 - Their papers surface across the map, and same-lab citations (same last author at both
   ends) draw the lab's thread through the decades.
 - Click a legend chip to focus one person: only their papers stay bright and clickable.
@@ -37,6 +38,8 @@ Research areas appear as named horizontal bands; citations flow left to right.
 ![Sub-fields opening under zoom](docs/media/trail-field.png)
 
 - 14 bands and 117 sub-fields, all named; labels appear as you zoom.
+- Browse them all from the **Fields tree** (or search them by name): selecting a field
+  highlights its papers and lists the most cited ones.
 - **Shift+scroll zooms topics without stretching time**; Alt+scroll zooms time only.
 - Search any topic ("haptic", "fabrication") to see where and when it lives on the map,
   with related-term suggestions.
@@ -58,7 +61,9 @@ A longer walkthrough: [docs/media/tutorial.mp4](docs/media/tutorial.mp4)
 ## Data notes
 
 Corpus: CHI, PACM HCI, UIST, DIS, ASSETS, IUI, CSCW, TEI, IMWUT, UbiComp, CHI PLAY,
-MobileHCI, TOCHI. About 75% of references point outside these venues and are excluded —
+MobileHCI, TOCHI. A **Peripheral venues** toggle adds HRI, IEEE VR, ISMAR, SIGGRAPH,
+TOG, IJHCS and IEEE ToH — partially: only papers with at least one citation link to
+the core corpus are included, and the UI marks them as such. About 75% of references point outside these venues and are excluded —
 the UI states this wherever it limits what you see (an empty upstream list means the
 paper cites work outside the corpus, not missing data). Band names are LLM-generated
 once and committed; everything else is computed deterministically from citation data.
