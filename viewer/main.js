@@ -1270,6 +1270,22 @@ async function main() {
   const doiLink = (nd) =>
     nd.d ? ` · <a class="doi" href="https://doi.org/${encodeURI(nd.d)}" target="_blank" rel="noopener" title="Open at doi.org">doi ↗</a>` : '';
 
+  // 外部リンクをバックグラウンドタブで開く(地図から目を離さずに読む論文を積める)。
+  // Cmd/Ctrl+クリック相当の合成クリックを使う。ブラウザが修飾キーを無視した場合は
+  // 通常の新規タブ(フォアグラウンド)に落ちるだけで、リンクが死ぬことはない。
+  function openBackground(url) {
+    const a = document.createElement('a');
+    a.href = url; a.target = '_blank'; a.rel = 'noopener';
+    a.dispatchEvent(new MouseEvent('click', { ctrlKey: true, metaKey: true }));
+  }
+  // パネル内の doi ↗ もバックグラウンドで開く
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a.doi');
+    if (!a) return;
+    e.preventDefault();
+    openBackground(a.href);
+  });
+
   function listHtml(title, ids, limit) {
     if (!ids.length) return '';
     const rows = ids
@@ -1425,7 +1441,7 @@ async function main() {
     if (!it || ctxNode < 0) return;
     const nd = meta.nodes[ctxNode];
     if (it.dataset.act === 'doi' && nd.d) {
-      window.open('https://doi.org/' + encodeURI(nd.d), '_blank', 'noopener');
+      openBackground('https://doi.org/' + encodeURI(nd.d));
     } else if (it.dataset.act === 'copydoi' && nd.d) {
       navigator.clipboard?.writeText('https://doi.org/' + nd.d);
     } else if (it.dataset.act === 'copytitle') {
@@ -1481,7 +1497,9 @@ async function main() {
   // 関係のない論文へ飛んでしまうため。副作用として、系譜外をクリックすると
   // 「ヒットなし」になり、そのまま選択解除(全体ビューに復帰)になる。
   function pick(clientX, clientY) {
-    const restrictLineage = selected >= 0;
+    // 系譜選択中は系譜内、検索ハイライト中は検索ヒットだけを対象にする
+    // (どちらも nodeState が非ゼロの点 = 明るく描かれている点に一致する)
+    const restrictLineage = selected >= 0 || searchActive;
     // 人を絞り込み中は、その人の論文だけをクリック/ホバー対象にする
     // (系譜選択と同じ発想 — 沈めた点に吸われて別の論文へ飛ばないように)
     const restrictPerson = !restrictLineage && isolatedLab >= 0 && isolatedLab < 8;
