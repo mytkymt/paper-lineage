@@ -1156,27 +1156,39 @@ async function main() {
   // 系譜をサブ帯(サブ分野)ごとに数え、上位を出す。
   // 「この論文はどのトレンドの上に乗り、その後どのトレンドへ広がったか」。
   // クラスタは前計算済みのものを再利用しているので、クリックしても計算は走らない。
-  function trendHtml(title, ids, kind) {
-    if (!meta.subbands || !ids.length) return '';
-    const counts = new Map();
-    for (const i of ids) {
-      const sb = meta.nodes[i].s;
-      if (sb == null || sb < 0) continue;
-      counts.set(sb, (counts.get(sb) || 0) + 1);
-    }
-    if (!counts.size) return '';
-    const rows = [...counts.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 6)
-      .map(([sb, cnt]) => {
-        const sub = meta.subbands[sb];
-        const pct = Math.round((cnt / ids.length) * 100);
-        return `<li class="trend ${kind}" data-sub="${sb}" data-kind="${kind}" title="${escapeHtml(kw(sub))}">` +
-               `<span class="n">${cnt}</span><span class="bar" style="width:${pct}%"></span>` +
-               `${escapeHtml(sub.name || kw(sub) || '(other)')}</li>`;
-      })
-      .join('');
-    return `<h3>${title} — click to filter</h3><ol class="trends">${rows}</ol>`;
+  // 上流(このサブ分野の上に乗っている)と下流(このサブ分野へ広がった)を
+  // 1本の棒に統合する。棒の長さ = 合計(最大行比)、棒の中の色分け = 上流:下流の比率。
+  // 数字も両方出す(棒だけだと正確な比が読めないため)。
+  function trendHtml(upIds, downIds) {
+    if (!meta.subbands || (!upIds.length && !downIds.length)) return '';
+    const up = new Map(), down = new Map();
+    const tally = (ids, m) => {
+      for (const i of ids) {
+        const sb = meta.nodes[i].s;
+        if (sb != null && sb >= 0) m.set(sb, (m.get(sb) || 0) + 1);
+      }
+    };
+    tally(upIds, up);
+    tally(downIds, down);
+    const subs = [...new Set([...up.keys(), ...down.keys()])]
+      .map((sb) => ({ sb, u: up.get(sb) || 0, d: down.get(sb) || 0 }))
+      .sort((a, b) => (b.u + b.d) - (a.u + a.d))
+      .slice(0, 8);
+    if (!subs.length) return '';
+    const max = subs[0].u + subs[0].d;
+
+    const rows = subs.map(({ sb, u, d }) => {
+      const sub = meta.subbands[sb];
+      const wu = (u / max) * 100, wd = (d / max) * 100;
+      return `<li class="trend" data-sub="${sb}" title="${escapeHtml(kw(sub))} — ${u} upstream · ${d} downstream">` +
+             `<span class="cnt"><em class="u">${u}↑</em><em class="d">${d}↓</em></span>` +
+             `<span class="bar2"><i class="u" style="width:${wu.toFixed(1)}%"></i>` +
+             `<i class="d" style="width:${wd.toFixed(1)}%"></i></span>` +
+             `${escapeHtml(sub.name || kw(sub) || '(other)')}</li>`;
+    }).join('');
+    return `<h3>Trends around this work — <span class="u">upstream</span> · ` +
+           `<span class="d">downstream</span> — click to filter</h3>` +
+           `<ol class="trends">${rows}</ol>`;
   }
 
   // 行クリックは選択、右端の ↗ だけ DOI へ(クリックハンドラ側で a.doi を除外している)
@@ -1233,8 +1245,7 @@ async function main() {
     const upIds = [...up].sort(byCited);
     const downIds = [...down].sort(byCited);
     document.getElementById('lineageLists').innerHTML =
-      trendHtml('Trends this work builds on', upIds, 'up') +
-      trendHtml('Trends it spread into', downIds, 'down') +
+      trendHtml(upIds, downIds) +
       `<div id="localBox"><button id="reclusterBtn" class="mini" ` +
       `title="Cluster this lineage's papers by their own citation links, instead of the global sub-fields">` +
       `Re-cluster this lineage</button><div id="localResults"></div></div>` +
@@ -1302,7 +1313,10 @@ async function main() {
     // カーソル下の正規化座標を固定したままズームする。
     // 無修飾 = 両軸 / Shift = トピック軸(縦)のみ / Alt = 時間軸(横)のみ
     const [ux, uy] = screenToNorm(e.clientX, e.clientY);
-    const f = Math.exp(-e.deltaY * 0.002);
+    // macOS/Chrome は Shift+ホイールのスクロール量を deltaX に付け替えるため、
+    // deltaY だけ見ると Shift ズームが無反応になる。大きい方の軸を採用する。
+    const d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    const f = Math.exp(-d * 0.002);
     if (!e.altKey) cam.zy = clampZoom(cam.zy * f);
     if (!e.shiftKey) cam.zx = clampZoom(cam.zx * f);
     const s = scaleOffset().scale;

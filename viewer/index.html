@@ -121,12 +121,22 @@
 
   #lineage ol.trends { margin: 4px 0 0; }
   #lineage li.trend { position: relative; border-top: 1px solid #1c2029; cursor: default;
-                      padding: 4px 0 4px 34px; font-size: 11px; overflow: hidden; }
+                      padding: 4px 0 7px 44px; font-size: 11px; overflow: hidden; }
   #lineage li.trend .n { position: absolute; left: 0; color: #8b91a3;
                          font-variant-numeric: tabular-nums; }
   #lineage li.trend .bar { position: absolute; left: 34px; bottom: 0; height: 2px; border-radius: 1px; }
   #lineage li.trend.up .bar { background: #4fd2c2; }
   #lineage li.trend.down .bar { background: #ff9a52; }
+  /* 統合トレンド行: 左に上下の件数、下に上下2色の積み上げバー */
+  #lineage li.trend .cnt { position: absolute; left: 0; top: 4px; font-size: 10px;
+                           font-variant-numeric: tabular-nums; line-height: 1.15; }
+  #lineage li.trend .cnt em { display: block; font-style: normal; }
+  #lineage li.trend .cnt .u, #lineage h3 .u { color: #4fd2c2; }
+  #lineage li.trend .cnt .d, #lineage h3 .d { color: #ff9a52; }
+  #lineage li.trend .bar2 { position: absolute; left: 44px; right: 0; bottom: 2px;
+                            height: 3px; display: flex; }
+  #lineage li.trend .bar2 .u { background: #4fd2c2; height: 100%; }
+  #lineage li.trend .bar2 .d { background: #ff9a52; height: 100%; }
   body.has-selection #bands { display: none; }
 </style>
 </head>
@@ -228,6 +238,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="./main.js?v=11"></script>
+<script type="module" src="./main.js?v=13"></script>
 </body>
 </html>
