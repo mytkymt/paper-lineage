@@ -1363,11 +1363,13 @@ async function main() {
   // --- 操作 ---
   let dragging = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
   canvas.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;   // 右・中クリックはドラッグにも選択にもしない
     dragging = true;
     lastX = downX = e.clientX; lastY = downY = e.clientY;
     canvas.classList.add('dragging'); canvas.setPointerCapture(e.pointerId);
   });
   canvas.addEventListener('pointerup', (e) => {
+    if (e.button !== 0 || !dragging) return;
     dragging = false;
     canvas.classList.remove('dragging');
     canvas.releasePointerCapture(e.pointerId);
