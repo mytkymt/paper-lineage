@@ -1285,18 +1285,28 @@ async function main() {
 
   // その論文の参照のうち、何本がコーパス内に着地しているか(= 1ホップ上流の本数)
   const countRefsInCorpus = (i) => inAdj.start[i + 1] - inAdj.start[i];
+  // この論文をコーパス内から引用している本数(= 1ホップ下流の本数)
+  const countCitersInCorpus = (i) => outAdj.start[i + 1] - outAdj.start[i];
 
   function showLineagePanel(i, up, down) {
     const nd = meta.nodes[i];
     document.getElementById('selTitle').textContent = nd.t;
     // 系譜が空になるのはデータ欠損ではなく**コーパス境界**のことが多い。
-    // 参照 47 本のうちコーパス内は 3 本、のように必ず出して誤解を防ぐ。
+    // 参照 47 本のうちコーパス内は 3 本、のように上下流とも必ず出して誤解を防ぐ。
     const inCorpus = countRefsInCorpus(i);
+    const citersIn = countCitersInCorpus(i);
+    // 被引用数は S2 の全世界カウントで、エッジは OpenAlex 由来。ソース差で
+    // まれに内数が総数を超えるので、分母は大きい方に揃えて矛盾表示を避ける。
+    const citedTotal = Math.max(nd.c || 0, citersIn);
     document.getElementById('selMeta').innerHTML =
       `${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}${doiLink(nd)}<br>` +
       `<span class="cov"><b>${inCorpus}</b> of ${nd.r} references are inside this corpus` +
       (nd.r && !inCorpus
         ? ' — they point outside the 13 HCI venues, so upstream cannot be traced here'
+        : '') +
+      `<br><b>${citersIn}</b> of ${citedTotal} citing papers are inside this corpus` +
+      (citedTotal && !citersIn
+        ? ' — the citations come from outside the 13 HCI venues'
         : '') +
       `</span>`;
 
