@@ -686,7 +686,11 @@ async function main() {
   }
 
   function selectField(kind, idx) {
-    if (fieldSel && fieldSel.kind === kind && fieldSel.idx === idx) { clearField(); return; }
+    if (fieldSel && fieldSel.kind === kind && fieldSel.idx === idx) {
+      if (kind === 'band') expandedBands.delete(idx);
+      clearField();
+      return;
+    }
     select(-1);                       // 論文選択・検索ハイライトを畳む
     fieldSel = { kind, idx };
     let o, members;
@@ -730,10 +734,15 @@ async function main() {
     lineageEl.scrollTop = 0;
     // 右パネルと地図右端の帯ラベルが重なるので、論文選択時と同様にラベルを隠す
     document.body.classList.add('has-selection');
-    // 地図ラベル経由でもツリー上で現在地が分かるように、Fields を開いて該当行を見せる
-    if (kind === 'sub') {
-      const bi = meta.bands.findIndex((b) => (b.subbands || []).includes(idx));
-      if (bi >= 0) expandedBands.add(bi);
+    // 地図ラベル経由でもツリー上で現在地が分かるように、Fields を開いて該当行を見せる。
+    // 展開はアコーディオン: 選択中の分野の帯だけ開き、他は畳む(開きっぱなし防止)。
+    if (kind !== 'venue') {
+      expandedBands.clear();
+      if (kind === 'band') expandedBands.add(idx);
+      else {
+        const bi = meta.bands.findIndex((b) => (b.subbands || []).includes(idx));
+        if (bi >= 0) expandedBands.add(bi);
+      }
     }
     renderFieldTree();
     if (kind !== 'venue') {
@@ -774,16 +783,7 @@ async function main() {
   }
   document.getElementById('fieldTree').addEventListener('click', (e) => {
     const fb = e.target.closest('.fb');
-    if (fb) {
-      const bi = parseInt(fb.dataset.b, 10);
-      if (fieldSel && fieldSel.kind === 'band' && fieldSel.idx === bi) {
-        expandedBands.delete(bi);   // 選択中の再クリック = 解除して畳む
-      } else {
-        expandedBands.add(bi);
-      }
-      selectField('band', bi);
-      return;
-    }
+    if (fb) { selectField('band', parseInt(fb.dataset.b, 10)); return; }
     const fs = e.target.closest('.fs');
     if (fs) selectField('sub', parseInt(fs.dataset.s, 10));
   });
@@ -825,7 +825,7 @@ async function main() {
     if (lbl.dataset.sub != null) selectField('sub', parseInt(lbl.dataset.sub, 10));
     else if (lbl.dataset.band != null) {
       const bi = parseInt(lbl.dataset.band, 10);
-      if (meta.bands[bi].community != null) { expandedBands.add(bi); selectField('band', bi); }
+      if (meta.bands[bi].community != null) selectField('band', bi);
     }
   });
 
@@ -1399,9 +1399,7 @@ async function main() {
     // フィールド: クリックで選択
     const fh = e.target.closest('div.fieldhit');
     if (fh) {
-      const kind = fh.dataset.fk, idx = parseInt(fh.dataset.fi, 10);
-      if (kind === 'band') expandedBands.add(idx);
-      selectField(kind, idx);
+      selectField(fh.dataset.fk, parseInt(fh.dataset.fi, 10));
       return;
     }
     // 人: クリックで色を固定 / 解除
