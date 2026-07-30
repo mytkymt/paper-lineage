@@ -378,7 +378,7 @@ async function main() {
   }
 
   let edgeSlotBuf = null, attrColorBuf = null, nodeBoostBuf = null;
-  let pinnedIdxBuf = null, pinnedIdxCount = 0;   // 色付きノードを最前面に描く2パス目用
+  let topIdxBuf = null, topIdxCount = 0;   // 色付きノードを最前面に描く2パス目用
   // 選んだラボ → 色スロット。選ばれていないラボ線は「その他のラボ」スロット(8)。
   // 著者 -> その人の論文。人での検索と色付けに使う。
   const papersByAuthor = new Map();
@@ -442,15 +442,7 @@ async function main() {
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, attrColors);
       gl.bindBuffer(gl.ARRAY_BUFFER, nodeBoostBuf);
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, nodeBoost);
-      // 固定した人の論文は他の点の上にレンダリングする(描画順 = 配列順なので、
-      // 1パス目に埋もれた色付きの点をインデックス指定でもう一度描く)
-      const idx = [];
-      for (let i = 0; i < n; i++) if (nodeSlot[i] < 8) idx.push(i);
-      pinnedIdxCount = idx.length;
-      gl.bindVertexArray(nodeVao);
-      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, pinnedIdxBuf);
-      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(idx), gl.DYNAMIC_DRAW);
-      gl.bindVertexArray(null);
+      rebuildTopIdx();
     }
     drawLegend();
     schedule();
@@ -537,8 +529,8 @@ async function main() {
   attrib(nodeProg, 'aColor', attrColorBuf, 3);
   nodeBoostBuf = buffer(nodeBoost, gl.DYNAMIC_DRAW);
   attrib(nodeProg, 'aBoost', nodeBoostBuf, 1);
-  pinnedIdxBuf = gl.createBuffer();
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, pinnedIdxBuf);   // nodeVao に記録される
+  topIdxBuf = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, topIdxBuf);   // nodeVao に記録される
   attrib(nodeProg, 'aMag', buffer(mags), 1);
   attrib(nodeProg, 'aState', nodeStateBuf, 1);
   gl.bindVertexArray(null);
@@ -648,9 +640,9 @@ async function main() {
     gl.uniform1f(uni(nodeProg, 'uOnlyLineage'), onlyLineage);
     gl.bindVertexArray(nodeVao);
     gl.drawArrays(gl.POINTS, 0, n);
-    // 2パス目: 色付き(固定した人)の点を最前面に重ね描き
-    if (pinnedIdxCount && ui.colorMode.value !== 'venue') {
-      gl.drawElements(gl.POINTS, pinnedIdxCount, gl.UNSIGNED_INT, 0);
+    // 2パス目: 色の付いた点(固定した人・系譜・検索ヒット・選択)を優先順に重ね描き
+    if (topIdxCount) {
+      gl.drawElements(gl.POINTS, topIdxCount, gl.UNSIGNED_INT, 0);
     }
     gl.bindVertexArray(null);
 
@@ -738,7 +730,33 @@ async function main() {
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, nodeState);
     gl.bindBuffer(gl.ARRAY_BUFFER, edgeStateBuf);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, edgeState);
+    rebuildTopIdx();   // 選択・検索で色が変わったノードも最前面パスに反映する
     schedule();
+  }
+
+  // 最前面に重ね描きするノードのインデックスを、意味のある重なり順で作り直す:
+  //   固定した人 < 系譜(上流/下流) < 検索ヒット < 選択した論文(白)
+  // 色つき同士が重なったときに、より「注目している」ものが上に来るようにする。
+  // 呼ばれるのはピン変更時と選択/検索の変更時のみ(毎フレームではない)。
+  function rebuildTopIdx() {
+    if (!topIdxBuf) return;
+    const buckets = [[], [], [], [], []];
+    for (let i = 0; i < n; i++) {
+      const st = nodeState[i];
+      if (st === S_UP) buckets[1].push(i);
+      else if (st === S_DOWN) buckets[1].push(i);
+      else if (st === S_MATCH) buckets[2].push(i);
+      else if (st === S_SELF) buckets[3].push(i);
+      else if (nodeSlot[i] < 8) buckets[0].push(i);
+    }
+    const idx = new Uint32Array(buckets.reduce((t, b) => t + b.length, 0));
+    let off = 0;
+    for (const b of buckets) { idx.set(b, off); off += b.length; }
+    topIdxCount = idx.length;
+    gl.bindVertexArray(nodeVao);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, topIdxBuf);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, idx, gl.DYNAMIC_DRAW);
+    gl.bindVertexArray(null);
   }
 
   // 選択中の系譜。トレンド絞り込みのたびにここから描き直す。
