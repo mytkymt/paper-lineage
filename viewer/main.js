@@ -1841,9 +1841,11 @@ async function main() {
     },
   };
 
-  statsEl.textContent =
-    `${n.toLocaleString()} papers · ${edgeCount.toLocaleString()} citations · ${yearMin}–${yearMax} · layout ${meta.mode}` +
-    (EXT_MODE ? ' · peripheral venues: papers with a citation link to the core corpus' : '');
+  statsEl.innerHTML =
+    `${n.toLocaleString()} papers · ${edgeCount.toLocaleString()} citations · ${yearMin}\u2013${yearMax}` +
+    (EXT_MODE
+      ? '<span class="ext">+ peripheral venues (papers linked to the core corpus)</span>'
+      : '');
 
   render();
 }

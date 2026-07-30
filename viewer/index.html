@@ -52,6 +52,10 @@
   #searchResults .y { color: #6d7488; font-variant-numeric: tabular-nums; margin-right: 5px; }
   #searchResults .count { color: #6d7488; border: 0; cursor: default; }
   .hint { color: #5d6478; font-size: 11px; margin-top: 6px; }
+  ul.hints { list-style: none; margin: 6px 0 0; padding: 0; }
+  ul.hints li { padding: 1px 0; }
+  ul.hints b { color: #8b91a3; font-weight: 500; }
+  #stats .ext { display: block; color: #8fa6d8; }
   .links { margin-top: 8px; padding-top: 7px; border-top: 1px solid #1c2029;
            display: flex; gap: 14px; font-size: 11px; }
   .links a { color: #8fa6d8; text-decoration: none; }
@@ -247,7 +251,13 @@
   </details>
 
   <div id="stats">Loading…</div>
-  <div class="hint">Click a paper to trace its lineage · right-click a paper: options · drag to pan · scroll to zoom<br>Shift+scroll: topics only · Alt+scroll: time only · legend chip: focus one person</div>
+  <ul class="hint hints">
+    <li><b>Click</b> a paper — trace its lineage</li>
+    <li><b>Right-click</b> a paper — options (DOI, copy)</li>
+    <li><b>Drag</b> pan · <b>scroll</b> zoom</li>
+    <li><b>Shift+scroll</b> topics only · <b>Alt+scroll</b> time only</li>
+    <li><b>Legend chip</b> — focus one person</li>
+  </ul>
   <div class="links">
     <a href="https://github.com/mytkymt/paper-lineage" target="_blank" rel="noopener">GitHub ↗</a>
     <a href="https://github.com/mytkymt/paper-lineage/issues" target="_blank" rel="noopener">Feedback ↗</a>
@@ -273,6 +283,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=42"></script>
+<script type="module" src="/viewer/main.js?v=43"></script>
 </body>
 </html>
