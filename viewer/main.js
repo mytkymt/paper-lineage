@@ -1811,8 +1811,7 @@ async function main() {
         const lab = p.labId != null ? meta.labs[p.labId] : null;
         const on = isolatedLab < 0 || isolatedLab === i;
         return `<span class="lab${on ? '' : ' off'}" data-slot="${i}">` +
-               `<i style="background:${LAB_HEX[i]}"></i>${escapeHtml(meta.authors[p.ai])} ` +
-               `<b>${lab ? lab.years[0] + '–' + lab.years[1] : 'no lineage'}</b>` +
+               `<i style="background:${LAB_HEX[i]}"></i>${escapeHtml(meta.authors[p.ai])}` +
                `<em class="unpin" data-unpin="${i}" title="Unpin">×</em></span>`;
       })
       .join('') +

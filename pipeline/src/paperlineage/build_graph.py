@@ -61,6 +61,33 @@ def load_works() -> dict[str, dict]:
     return works
 
 
+def load_s2_authors() -> tuple[dict[str, list[str]], dict[str, str]]:
+    """DOI -> S2 著者 ID 列(著者順)と、著者 ID の統合マップ(authors.py の出力)。
+
+    著者 ID は OpenAlex ではなく corpus(S2)由来を正とする — CS 分野では
+    S2 の名寄せのほうが安定しているため。マージマップがあれば適用する。
+    """
+    from .openalex import normalize_doi
+
+    merge: dict[str, str] = {}
+    merge_path = ROOT / "data" / "graph" / "author_merge.json"
+    if merge_path.exists():
+        merge = json.loads(merge_path.read_text())
+
+    by_doi: dict[str, list[str]] = {}
+    for path in sorted((ROOT / "data" / "corpus").glob("*.jsonl")):
+        for line in path.open():
+            rec = json.loads(line)
+            doi = normalize_doi((rec.get("externalIds") or {}).get("DOI"))
+            if not doi:
+                continue
+            ids = [merge.get(a["authorId"], a["authorId"])
+                   for a in rec.get("authors") or [] if a.get("authorId")]
+            if ids:
+                by_doi.setdefault(doi, ids)
+    return by_doi, merge
+
+
 def main() -> None:
     extended = "--extended" in sys.argv
     out_dir = ROOT / "data" / ("graph-ext" if extended else "graph")
@@ -149,8 +176,15 @@ def main() -> None:
         "by_year": dict(sorted(year_hist.items())),
     }
 
+    s2_authors, author_merge = load_s2_authors()
+    n_s2 = n_oa = 0
     with (out_dir / "nodes.jsonl").open("w") as f:
         for wid, w in sorted(works.items(), key=lambda kv: order[kv[0]]):
+            s2a = s2_authors.get(w.get("doi") or "")
+            if s2a:
+                n_s2 += 1
+            else:
+                n_oa += 1
             f.write(
                 json.dumps(
                     {
@@ -164,10 +198,12 @@ def main() -> None:
                         # 「系譜が空」がデータ欠損ではなくコーパス境界のせいだと
                         # UI 側で示すために持つ。
                         "refs_total": len(w.get("refs") or []),
-                        "authors": [a["id"] for a in (w.get("authors") or []) if a.get("id")],
-                        "last_author": next(
+                        "authors": s2a
+                        if s2a
+                        else [a["id"] for a in (w.get("authors") or []) if a.get("id")],
+                        "last_author": (s2a[-1] if s2a else next(
                             (a["id"] for a in reversed(w.get("authors") or []) if a.get("id")), None
-                        ),
+                        )),
                     },
                     ensure_ascii=False,
                 )
@@ -180,6 +216,8 @@ def main() -> None:
 
     (out_dir / "stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=2))
 
+    print(f"  authors: S2 for {n_s2:,} nodes, OpenAlex fallback for {n_oa:,} "
+          f"(merge map: {len(author_merge):,} IDs folded)")
     print("\n--- graph stats ---")
     print(f"  nodes                 : {stats['nodes']:,}")
     print(f"  edges (in-corpus DAG) : {stats['edges_in_dag']:,}")

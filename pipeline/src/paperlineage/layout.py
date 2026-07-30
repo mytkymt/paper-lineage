@@ -247,15 +247,23 @@ def related_terms(nodes: list[dict], vocab_size: int = 2000, k: int = 8) -> dict
 
 
 def _author_names() -> dict[str, str]:
-    """OpenAlex author ID → 表示名。nodes.jsonl は ID しか持たないので works から拾う。"""
-    path = ROOT / "data" / "openalex" / "works.jsonl"
+    """著者 ID → 表示名。S2(corpus)と OpenAlex(works)の両方から拾う。
+
+    nodes.jsonl の著者 ID は S2 優先・OpenAlex フォールバックなので、
+    名前テーブルも両方を持つ(ID の名前空間は数値 vs 'A…' で衝突しない)。
+    """
     names: dict[str, str] = {}
-    if not path.exists():
-        return names
-    for line in path.open():
-        for a in (json.loads(line).get("authors") or []):
-            if a.get("id") and a.get("name"):
-                names.setdefault(a["id"], a["name"])
+    for path in sorted((ROOT / "data" / "corpus").glob("*.jsonl")):
+        for line in path.open():
+            for a in (json.loads(line).get("authors") or []):
+                if a.get("authorId") and a.get("name"):
+                    names.setdefault(a["authorId"], a["name"])
+    works = ROOT / "data" / "openalex" / "works.jsonl"
+    if works.exists():
+        for line in works.open():
+            for a in (json.loads(line).get("authors") or []):
+                if a.get("id") and a.get("name"):
+                    names.setdefault(a["id"], a["name"])
     return names
 
 
