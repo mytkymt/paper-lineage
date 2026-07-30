@@ -679,6 +679,7 @@ async function main() {
     nodeState.fill(0); edgeState.fill(0); uploadStates();
     lineageEl.style.display = 'none';
     lineageEl.classList.remove('field-mode');
+    document.body.classList.remove('has-selection');
     renderFieldTree();
     schedule();
   }
@@ -715,6 +716,8 @@ async function main() {
     lineageEl.classList.add('field-mode');
     lineageEl.style.display = 'block';
     lineageEl.scrollTop = 0;
+    // 右パネルと地図右端の帯ラベルが重なるので、論文選択時と同様にラベルを隠す
+    document.body.classList.add('has-selection');
     renderFieldTree();
     schedule();
   }
