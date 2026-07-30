@@ -2,70 +2,67 @@
 
 **Live: https://hci-research-trails.vercel.app**
 
-A research field is a story told across decades — but we usually read it one paper at a
-time. HCI Research Trails draws the whole story at once: **45 years of human–computer
-interaction research (38,791 papers, 371,893 citations, 13 major venues)** on a single
-map, laid out along time. Research areas appear as horizontal bands, and the trails
-running through them are ideas being passed from paper to paper, year after year.
+An interactive map of 45 years of HCI research — **38,791 papers and 371,893 citations
+from 13 major venues (1981–2026)**, laid out along time on a single WebGL canvas.
+Research areas appear as named horizontal bands; citations flow left to right.
 
-There are three kinds of trails to follow.
+![Overview](docs/media/overview.png)
 
-## 1. A paper's trail — where an idea came from, and what it became
+## 1. Trace a paper's lineage
 
-Click any paper. Everything it built on lights up to the left; everything that later
-built on it fans out to the right, with a breakdown of which research trends each side
-belongs to.
+![A paper's lineage](docs/media/trail-paper.png)
 
-Try *Tangible Bits* (1997): it draws on 14 papers in the corpus and has **5,124
-descendants** — you can watch one CHI paper turn into tangible interaction, then
-shape-changing interfaces, e-textiles, and digital fabrication over 25 years. Or take
-*UltraHaptics* (2013) and hit **Re-cluster**: its 708 descendants split into seven
-distinct branches — VR haptic feedback, mid-air ultrasound, electrical muscle
-stimulation, acoustic levitation, swarm-robot haptics — a map of every direction one
-idea scattered into.
+- Click any paper: everything it builds on (upstream) and everything that later built on
+  it (downstream) lights up, without losing your place on the map.
+- The side panel breaks the lineage down by research trend, with upstream:downstream
+  ratio bars — click a trend to filter the view to it.
+- **Re-cluster** splits the lineage by its own citation structure — e.g. UltraHaptics'
+  708 descendants resolve into seven branches (VR haptics, mid-air ultrasound, EMS,
+  levitation, …). Optional LLM naming for the branches, using your own API key.
+- Authors, corpus coverage, and DOI links included.
 
-## 2. A person's trail — a lab's thread through the decades
+## 2. Follow a person
 
-Search a name, pin it to a colour. That person's papers surface across the map, and the
-citations that stay within their group (same last author at both ends) are drawn as a
-continuous thread — a lab's own storyline inside the field.
+![A person's lab thread](docs/media/trail-person.png)
 
-Pin Hiroshi Ishii and a single orange thread runs through the tangible-interaction band
-from 1997 to 2022. Pin up to eight people — advisors, collaborators, or a field's key
-figures — and compare how their trails run parallel, cross, or diverge. A toggle switches
-between "everything they co-authored" and "their lab's own line".
+- Search a name and pin it to a colour (up to 8 people).
+- Their papers surface across the map, and same-lab citations (same last author at both
+  ends) draw the lab's thread through the decades.
+- Click a legend chip to focus one person: only their papers stay bright and clickable.
+- A toggle switches between "any authorship" and "last-author only".
 
-## 3. The field's trail — watching research areas be born
+## 3. Explore the field
 
-Zoom out and the bands tell the macro story: when games research became its own
-community, when accessibility grew from a corner into a major area, when the AI band
-suddenly thickens. Zoom in (Shift+scroll expands topics without stretching time) and each
-band opens into named sub-fields — the sensing band alone splits into activity
-recognition, gaze, text entry, on-body sensing, and more.
+![Sub-fields opening under zoom](docs/media/trail-field.png)
 
-Band and sub-field names are generated once by an LLM from the underlying clusters and
-committed to the repo; everything else on the map is computed deterministically from
-citation data alone.
+- 14 bands and 117 sub-fields, all named; labels appear as you zoom.
+- **Shift+scroll zooms topics without stretching time**; Alt+scroll zooms time only.
+- Search any topic ("haptic", "fabrication") to see where and when it lives on the map,
+  with related-term suggestions.
+- Colour by people & labs, or by venue.
+
+## Tutorial
+
+![Tour](docs/media/tour.gif)
+
+A longer walkthrough: [docs/media/tutorial.mp4](docs/media/tutorial.mp4)
 
 ## Reading the map
 
 - **x-axis = publication year.** Citations only ever flow left to right.
-- **Bands = citation communities** (Louvain), sized by paper count, named.
-- **Bright routes = main paths** — edges weighted by how much of the field's knowledge
-  flow passes through them (search path count).
+- **Bands = citation communities**, sized by paper count.
+- **Bright routes = main paths** (edges weighted by search path count).
 - **Dot size = citations.** Colours belong to the people you pin.
 
-## Honest edges
+## Data notes
 
-The corpus is 13 HCI venues: CHI, PACM HCI, UIST, DIS, ASSETS, IUI, CSCW, TEI, IMWUT,
-UbiComp, CHI PLAY, MobileHCI, TOCHI. About 75% of all references point *outside* these
-venues (psychology, ML, systems, books) and are excluded — the UI says so explicitly
-whenever it limits what you see. An empty upstream list means "this paper cites work
-outside HCI's venues", never "no data". Display caps are always labeled.
+Corpus: CHI, PACM HCI, UIST, DIS, ASSETS, IUI, CSCW, TEI, IMWUT, UbiComp, CHI PLAY,
+MobileHCI, TOCHI. About 75% of references point outside these venues and are excluded —
+the UI states this wherever it limits what you see (an empty upstream list means the
+paper cites work outside the corpus, not missing data). Band names are LLM-generated
+once and committed; everything else is computed deterministically from citation data.
 
 ## Running locally
-
-The viewer is a static WebGL2 page; the pipeline is offline Python.
 
 ```bash
 # Serve the repo root, then open /viewer/index.html
@@ -79,8 +76,8 @@ The committed `data/viz/` is all the viewer needs. To rebuild from the public AP
 cd pipeline
 uv run python -m paperlineage.fetch_corpus    # ~10 min, resumable
 uv run python -m paperlineage.fetch_refs      # ~40 min, resumable
-uv run python -m paperlineage.build_graph     # cycle-free citation DAG
-uv run python -m paperlineage.spc             # main-path edge weights
+uv run python -m paperlineage.build_graph
+uv run python -m paperlineage.spc
 uv run python -m paperlineage.layout --mode community
 ```
 
@@ -88,7 +85,7 @@ Every stage is deterministic (fixed seeds) and reports everything it drops.
 
 ## Documentation
 
-Design notes and the decision log live in Japanese under `docs/` —
+Design notes and the decision log are in Japanese under `docs/` —
 [scope](docs/scope.md), [algorithms](docs/algorithms.md), [prior art](docs/prior-art.md),
 [data sources](docs/data-sources.md), [dev notes](docs/dev-notes.md) (newest first).
 The repository / development name is `paper-lineage`.
