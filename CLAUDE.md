@@ -28,5 +28,9 @@ decision log stays here.
 - **Language & tone**: UI copy in English, neutral phrasing — "lab lineage", never
   "self-citation". Everything committed (docs/, README) is English; Japanese notes go
   to the untracked docs-dev/.
+- **No self-ageing figures in static copy**: never write a span like "45 years of HCI"
+  — it needs editing every January. Give the year range instead, and round counts in
+  the page title/meta ("39,000") so a rebuild cannot silently make them wrong. Exact
+  counts belong where they are computed (the stats line, README's corpus paragraph).
 - When patching `viewer/main.js` by string replacement, keep spans minimal and re-run the
   parse check — over-wide spans have deleted neighbouring listeners twice.

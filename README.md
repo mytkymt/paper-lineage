@@ -2,7 +2,7 @@
 
 **Live: https://hci-research-trails.vercel.app**
 
-An interactive map of 45 years of HCI research — **38,791 papers and 371,893 citations
+An interactive map of HCI research — **38,791 papers and 371,893 citations
 from 13 major venues (1981–2026)**, laid out along time on a single WebGL canvas.
 Research areas appear as named horizontal bands; citations flow left to right.
 
@@ -17,7 +17,7 @@ Research areas appear as named horizontal bands; citations flow left to right.
 - The side panel breaks the lineage down by research trend, with upstream:downstream
   ratio bars — click a trend to filter the view to it.
 - **Local clusters** split the lineage by its own citation structure — e.g. UltraHaptics'
-  708 descendants resolve into seven branches (VR haptics, mid-air ultrasound, EMS,
+  708 descendants resolve into eight branches (VR haptics, mid-air ultrasound, EMS,
   levitation, …). Optional LLM naming for the branches, using your own API key.
 - Authors, corpus coverage, and DOI links included. Right-click a paper for DOI and
   copy actions without touching the selection.
@@ -30,7 +30,9 @@ Research areas appear as named horizontal bands; citations flow left to right.
 - Search a name and pin it to a colour (up to 15 people).
 - Their papers surface across the map, and same-lab citations (same last author at both
   ends) draw the lab's thread through the decades.
-- Click a legend chip to focus one person: only their papers stay bright and clickable.
+- Click a legend chip to focus one person: only their papers stay bright and clickable,
+  and the panel switches to them — their sub-fields, their papers, and how often they
+  are first or last author.
 - A toggle switches between "any authorship" and "last-author only".
 
 ## 3. Explore the field
@@ -39,17 +41,25 @@ Research areas appear as named horizontal bands; citations flow left to right.
 
 - 14 bands and 117 sub-fields, all named; labels appear as you zoom.
 - Browse them all from the **Fields tree** (or search them by name): selecting a field
-  highlights its papers and lists the most cited ones.
+  highlights its papers and lists both its most cited work and everyone publishing in it.
 - **Shift+scroll zooms topics without stretching time**; Alt+scroll zooms time only.
 - Search any topic ("haptic", "fabrication") to see where and when it lives on the map,
   with related-term suggestions.
 - Colour by people & labs, or by venue.
 
+## Share what you are looking at
+
+**Share** offers the plain link by default. Tick "Link to this view" and it also carries
+the selected paper, the people you pinned and the camera, so a particular lineage can be
+sent to a co-author or cited in a talk. Papers are identified by DOI and people and fields
+by name, so a shared link keeps pointing at the same thing after the map is rebuilt.
+
 ## Tutorial
 
 ![Tour](docs/media/tour.gif)
 
-A longer walkthrough: [docs/media/tutorial.mp4](docs/media/tutorial.mp4)
+A quick tour plays the first time you open the map, and the **Tutorial** link replays it:
+[docs/media/tutorial.mp4](docs/media/tutorial.mp4)
 
 ## Reading the map
 
@@ -57,6 +67,7 @@ A longer walkthrough: [docs/media/tutorial.mp4](docs/media/tutorial.mp4)
 - **Bands = citation communities**, sized by paper count.
 - **Bright routes = main paths** (edges weighted by search path count).
 - **Dot size = citations.** Colours belong to the people you pin.
+- **Lineage lines** can be switched off when you only want to read the points.
 
 ## Data notes
 

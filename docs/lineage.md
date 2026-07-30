@@ -27,7 +27,7 @@ Selecting a paper runs two breadth-first searches from it:
 - **Downstream** — follow outgoing edges forwards: everything that later built
   on it.
 
-Both are bounded by the **Depth** slider (default 1 hop; "all" = unbounded —
+Both are bounded by the **Depth** slider (default 2 hops; "all" = unbounded —
 safe because the graph is acyclic). The union of the two sets plus the paper
 itself is the lineage; everything else dims.
 
@@ -59,9 +59,11 @@ for one lineage only. Computed automatically on every selection:
 ## Lab threads
 
 A citation is a **lab edge** when the same person is last author on both ends.
-When you pin people (≤ 8), each edge is tested against the pinned set with a
+When you pin people (up to 15), each edge is tested against the pinned set with a
 per-person bitmask; the Scope toggle switches between "any authorship" and
-"last-author only" for both points and lines.
+"last-author only" for both points and lines. **Lineage lines** turns the selected
+paper's lineage and the pinned people's lab threads off together, leaving the
+points as the only encoding.
 
 ## Edge brightness
 

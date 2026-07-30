@@ -76,8 +76,12 @@ python3 -m http.server 8137
 # open http://localhost:8137/viewer/index.html
 ```
 
-Update the title/counts in `viewer/index.html` and the corpus description in
-`README.md` to match your field.
+Update the corpus description in `README.md`, and in `viewer/index.html` the
+`<h1>`, the `<title>`, the description and Open Graph tags, and the JSON-LD
+block — they all name HCI and quote paper counts. If you deploy it somewhere,
+the absolute URLs in those tags, in `<link rel="canonical">` and in
+`sitemap.xml` / `robots.txt` point at this deployment and need replacing.
+Keep counts rounded there: exact figures go stale the next time you rebuild.
 
 ## 4. Name the bands (optional)
 
