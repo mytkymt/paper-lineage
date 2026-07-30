@@ -36,7 +36,8 @@ itself is the lineage; everything else dims.
 Every paper belongs to one of 117 **sub-fields**, precomputed by two-level
 Louvain community detection on the full citation graph (14 top-level bands,
 nested sub-bands; fixed seed). The panel counts how many lineage papers fall in
-each sub-field, split into upstream ↑ / downstream ↓, and draws the ratio bars
+each sub-field, split into upstream ← / downstream → (the arrows match the map,
+where time runs left to right), and draws the ratio bars
 from those counts. Clicking a row filters the lineage to that sub-field — in
 both directions at once.
 

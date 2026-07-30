@@ -1250,7 +1250,8 @@ async function main() {
       return;
     }
     // グローバルのトレンド行と同じ表記に揃える:
-    // 上流/下流の件数(u↑/d↓)+ 2色の積み上げバー(長さ=合計・色=比率)
+    // 上流/下流の件数(←u/→d)+ 2色の積み上げバー(長さ=合計・色=比率)。
+    // 矢印は地図と同じ向き: 時間軸が左→右なので上流は左、下流は右。
     const max = Math.max(...localClusters.map((c) => c.ids.length), 1);
     const rows = localClusters.map((c, k) => {
       let u = 0, d = 0;
@@ -1260,7 +1261,7 @@ async function main() {
       }
       const wu = (u / max) * 100, wd = (d / max) * 100;
       return `<li class="trend local" data-cl="${k}" title="${escapeHtml(c.label)} — ${u} upstream · ${d} downstream">` +
-             `<span class="cnt"><em class="u">${u}↑</em><em class="d">${d}↓</em></span>` +
+             `<span class="cnt"><em class="u">←${u}</em><em class="d">→${d}</em></span>` +
              `<span class="bar2"><i class="u" style="width:${wu.toFixed(1)}%"></i>` +
              `<i class="d" style="width:${wd.toFixed(1)}%"></i></span>` +
              `${escapeHtml(c.name || c.label)}</li>`;
@@ -1565,13 +1566,13 @@ async function main() {
       const sub = meta.subbands[sb];
       const wu = (u / max) * 100, wd = (d / max) * 100;
       return `<li class="trend" data-sub="${sb}" title="${escapeHtml(kw(sub))} — ${u} upstream · ${d} downstream">` +
-             `<span class="cnt"><em class="u">${u}↑</em><em class="d">${d}↓</em></span>` +
+             `<span class="cnt"><em class="u">←${u}</em><em class="d">→${d}</em></span>` +
              `<span class="bar2"><i class="u" style="width:${wu.toFixed(1)}%"></i>` +
              `<i class="d" style="width:${wd.toFixed(1)}%"></i></span>` +
              `${escapeHtml(sub.name || kw(sub) || '(other)')}</li>`;
     }).join('');
-    return `<h3>Trends around this work — <span class="u">upstream</span> · ` +
-           `<span class="d">downstream</span> — click to filter</h3>` +
+    return `<h3>Trends around this work — <span class="u">← upstream</span> · ` +
+           `<span class="d">downstream →</span> — click to filter</h3>` +
            `<ol class="trends">${rows}</ol>`;
   }
 
