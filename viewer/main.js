@@ -1058,23 +1058,41 @@ async function main() {
       return;
     }
 
-    // --- 人 ---
-    const joined = terms.join(' ');
-    const people = [];
-    for (let ai = 0; ai < lowerAuthors.length; ai++) {
-      if (!lowerAuthors[ai].includes(joined)) continue;
-      people.push({ ai, papers: (papersByAuthor.get(ai) || []).length });
-    }
+    // --- 語ごとの著者マッチ(2文字以上の語のみ。1文字は全員に当たるため) ---
+    const termAuthors = terms.map((t) => {
+      if (t.length < 2) return null;
+      const set = new Set();
+      for (let ai = 0; ai < lowerAuthors.length; ai++) {
+        if (lowerAuthors[ai].includes(t)) set.add(ai);
+      }
+      return set;
+    });
+
+    // --- 人(いずれかの語が名前に一致。クリックで色を固定) ---
+    const peopleSet = new Set();
+    for (const set of termAuthors) if (set) for (const ai of set) peopleSet.add(ai);
+    const people = [...peopleSet].map((ai) => ({ ai, papers: (papersByAuthor.get(ai) || []).length }));
     people.sort((a, b) => b.papers - a.papers);
 
-    // --- 論文(全語 AND) ---
-    const hits = [];
+    // --- 論文: 各語が「タイトルに含まれる」か「その論文の著者名に一致」なら OK。
+    //     "wobbrock" → 本人の全論文、"ishii tangible" → Ishii の tangible 論文、が両立する。
+    const hitSet = new Set();
+    let byAuthor = 0;
     for (let i = 0; i < lowerTitles.length; i++) {
       const t = lowerTitles[i];
-      let ok = true;
-      for (const term of terms) { if (!t.includes(term)) { ok = false; break; } }
-      if (ok) hits.push(i);
+      let ok = true, usedAuthor = false;
+      for (let k = 0; k < terms.length; k++) {
+        if (t.includes(terms[k])) continue;
+        const set = termAuthors[k];
+        const as = meta.nodes[i].a;
+        let am = false;
+        if (set && as) { for (const ai of as) { if (set.has(ai)) { am = true; break; } } }
+        if (!am) { ok = false; break; }
+        usedAuthor = true;
+      }
+      if (ok) { hitSet.add(i); if (usedAuthor) byAuthor++; }
     }
+    const hits = [...hitSet];
     hits.sort((a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0));
 
     selected = -1;
@@ -1113,6 +1131,7 @@ async function main() {
       chips +
       (peopleRows ? `<div class="grp">People — click to pin a color${people.length > 6 ? ` (top 6 of ${people.length})` : ''}</div>${peopleRows}` : '') +
       `<div class="grp">Papers ${hits.length.toLocaleString()}` +
+      (byAuthor ? ` (${byAuthor.toLocaleString()} via author match)` : '') +
       (hits.length > MAX_LIST ? ` — listing top ${MAX_LIST}` : '') +
       (hits.length > MAX_MARK ? ` (highlighting ${MAX_MARK.toLocaleString()})` : '') + '</div>' +
       paperRows;
