@@ -554,33 +554,6 @@ async function main() {
     ];
   }
 
-  // 指定ノード群が画面に収まるようにカメラを合わせる。
-  // 左右のパネルに隠れないよう、使える範囲を実際のパネル幅から決める。
-  function fitTo(indices) {
-    if (!indices.length) return;
-    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
-    for (const i of indices) {
-      const x = np[i * 2], y = np[i * 2 + 1];
-      if (x < x0) x0 = x;
-      if (x > x1) x1 = x;
-      if (y < y0) y0 = y;
-      if (y > y1) y1 = y;
-    }
-    const W = canvas.clientWidth, H = canvas.clientHeight;
-    const left = (document.getElementById('controls').offsetWidth + 32) / W;
-    const right = 1 - (lineageEl.offsetWidth + 32) / W;
-    const top = 0.04, bottom = 0.92;
-
-    const dx = Math.max(x1 - x0, 1e-3), dy = Math.max(y1 - y0, 1e-3);
-    // 軸ごとに独立してフィットさせる(縦横比は保存しない — 時間軸は歪んでよい)
-    cam.zx = clampZoom((right - left) / dx / (1 - 2 * PAD));
-    cam.zy = clampZoom((bottom - top) / dy / (1 - 2 * PAD));
-
-    const sc = scaleOffset().scale;
-    cam.cx = (x0 + x1) / 2 - ((left + right) / 2 - 0.5) / sc[0];
-    cam.cy = (y0 + y1) / 2 - ((top + bottom) / 2 - 0.5) / sc[1];
-  }
-
   const ui = {
     thresh: document.getElementById('thresh'),
     alpha: document.getElementById('alpha'),
@@ -595,7 +568,6 @@ async function main() {
   };
 
   let selected = -1;
-  let camBeforeSelect = null;  // 選択解除で元の全体ビューに戻せるように覚えておく
   let searchActive = false;
 
   // 検索用に小文字化したタイトルを一度だけ作る(毎キーストロークで作り直さない)
@@ -762,7 +734,9 @@ async function main() {
   let highlightedCluster = -1;
   let localRest = { papers: 0, clusters: 0 };   // 表示から漏れた分(必ず件数を出す)
 
-  function paintLineage(fitCamera) {
+  // カメラには一切触らない(2026-07-30 決定)。クリックのたびに縮尺が変わると
+  // 「どこを見ていたか」が失われるため、ズーム/パンはユーザー操作専用。
+  function paintLineage() {
     nodeState.fill(0);
     edgeState.fill(0);
     if (!lineage) { uploadStates(); return; }
@@ -772,9 +746,8 @@ async function main() {
     // (ローカルクラスタ選択 > サブ帯選択 > 絞り込みなし)
     const clSet = highlightedCluster >= 0 && localClusters ? localClusters[highlightedCluster].set : null;
     const keep = (v) => clSet ? clSet.has(v) : (highlightedSub < 0 || meta.nodes[v].s === highlightedSub);
-    const shown = [i];
-    for (const v of up) if (keep(v)) { nodeState[v] = S_UP; shown.push(v); }
-    for (const v of down) if (keep(v)) { nodeState[v] = S_DOWN; shown.push(v); }
+    for (const v of up) if (keep(v)) nodeState[v] = S_UP;
+    for (const v of down) if (keep(v)) nodeState[v] = S_DOWN;
     nodeState[i] = S_SELF;
 
     // エッジは「両端が残っている系譜ノード」のものだけ
@@ -787,7 +760,6 @@ async function main() {
     }
 
     uploadStates();
-    if (fitCamera) fitTo(shown);
     document.querySelectorAll('#lineageLists li.trend').forEach((el) => {
       el.classList.toggle('picked', el.classList.contains('local')
         ? parseInt(el.dataset.cl, 10) === highlightedCluster
@@ -795,8 +767,7 @@ async function main() {
     });
   }
 
-  function select(i, keepCamera) {
-    if (i >= 0 && selected < 0) camBeforeSelect = { ...cam };
+  function select(i) {
     selected = i;
     searchActive = false;
     highlightedSub = -1;
@@ -807,8 +778,7 @@ async function main() {
     if (i < 0) {
       lineage = null;
       lineageEl.style.display = 'none';
-      if (camBeforeSelect) { Object.assign(cam, camBeforeSelect); camBeforeSelect = null; }
-      paintLineage(false);
+      paintLineage();
       return;
     }
 
@@ -820,7 +790,7 @@ async function main() {
       down: bfs(i, outAdj, maxDepth),   // 未来方向 = この論文を(間接的に)引用したもの
     };
     showLineagePanel(i, lineage.up, lineage.down);
-    paintLineage(!keepCamera);
+    paintLineage();
   }
 
   // 系譜の中の1トレンドに絞る。再クリックで系譜全体に戻る。
@@ -829,7 +799,7 @@ async function main() {
     if (!lineage) return;
     highlightedSub = highlightedSub === sub ? -1 : sub;
     highlightedCluster = -1;
-    paintLineage(true);
+    paintLineage();
   }
 
   // --- 系譜のローカル再クラスタリング(オンデマンド・API 不要)---
@@ -953,7 +923,7 @@ async function main() {
     localClusters = kept.map((g) => ({ ids: g, set: new Set(g), label: clusterLabel(g), name: null }));
     highlightedCluster = -1;
     renderLocalClusters();
-    paintLineage(false);
+    paintLineage();
   }
 
   function renderLocalClusters() {
@@ -980,7 +950,7 @@ async function main() {
   function toggleLocalCluster(k) {
     highlightedCluster = highlightedCluster === k ? -1 : k;
     highlightedSub = -1;
-    paintLineage(true);
+    paintLineage();
   }
 
   // --- ローカルクラスタの LLM 命名(任意・ボタン押下時のみ)---
@@ -1294,7 +1264,7 @@ async function main() {
       alert('Up to 8 people can be pinned. Remove one with the × in the legend first.');
       return;
     }
-    if (selected >= 0) select(selected, true);
+    if (selected >= 0) select(selected);
   });
 
   // --- 操作 ---
