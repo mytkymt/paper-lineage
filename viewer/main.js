@@ -240,7 +240,7 @@ async function load() {
     fetchBuffer('edge_lab.bin'),
     fetchBuffer('node_lab.bin'),
     fetch(DATA + 'meta.json'),
-    fetch('./band-names.json'),   // F3 の命名。無い/古い分はキーワード表示に落ちる
+    fetch('/viewer/band-names.json'),   // F3 の命名。無い/古い分はキーワード表示に落ちる(絶対パス: ルート URL は rewrite なので相対だと 404)
     fetch(DATA + 'edge_intent.bin'),  // citation intent(任意 — 無ければモードを無効化)
   ]);
   if (!metaRes.ok) throw new Error('Cannot load meta.json');
