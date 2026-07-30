@@ -49,7 +49,25 @@ console must be clean.
   subs AND selects (highlight + right-panel top-cited list); sub click narrows; re-click
   clears; map band/sub labels are clickable to the same action; while a field is
   selected hover/click hits only member papers; drilling into a paper switches to the
-  normal lineage view; Esc order is menu → paper selection → field.
+  normal lineage view; Esc order is tutorial overlay → menu → paper selection → field.
+- **Field panel sections**: two collapsible `details.fold` blocks, each with an
+  inner scroll area — "Most cited" (top 30, "… N more" line) and
+  "Authors — click to pin a color (N)" listing ALL authors (no cap; ~9k rows on the
+  biggest band renders in ~55ms); BOTH default closed on a fresh field selection;
+  fold open/closed state survives only the re-render caused by a pin toggle.
+  Author rows (and search People rows) pin/unpin ONLY — they must NOT open the
+  author panel (15-limit alert unchanged).
+- **Author panel** opens ONLY from the bottom legend: clicking a pinned person's
+  chip isolates them AND shows their panel — paper count, year range, last-author
+  count, lab-lineage links, Fields list (top 10 of N, click drills into the field),
+  Papers list (scrollable, cap labeled). Re-clicking the chip clears the isolate
+  and closes the panel; the "Other labs" chip isolates without a panel. Clicking a
+  paper switches to the normal paper panel; Esc closes the author panel first and
+  restores the field panel (folds closed) if a field was selected. Author chips
+  inside the PAPER panel keep the old behaviour (pin + stay on the paper).
+- **People search ranking**: exact whole-query name match first, then names
+  containing every term, then partial matches; ties by paper count ("chun yu" puts
+  Chun Yu on top, not the most-published partial match).
 - **External links are plain anchors** (doi ↗ in the panel, Open DOI in the context
   menu): plain click opens a foreground tab; the browser-native Cmd/Ctrl+click is the
   supported way to open in background (JS cannot force it — a synthetic-click hack was
@@ -58,6 +76,15 @@ console must be clean.
   leave bands unchanged.
 - **Toggles**: Scope (any/last) changes line spread; the "Color by" segmented control
   (People/Venue) swaps point colours and the legend.
+- **Lineage lines checkbox** (Lineage group, default on): off hides the selected
+  paper's lineage lines AND pinned people's lab lines in one switch — points stay
+  highlighted/coloured either way; with lines off, isolate keeps ambient edges
+  (must not blank the map) while still dimming/restricting points.
+- **Tutorial overlay**: first load auto-opens the video muted; × closes for the
+  session, "Don't show this again" sets localStorage `plTutorialNever` (no auto-open
+  after reload); the "Tutorial ▶" panel link reopens it with sound; the 13MB video
+  gets its `src` only when the overlay opens (check Network on a flagged reload);
+  Esc closes the overlay without touching the selection.
 - **Venue selection**: in venue colour mode, clicking a legend venue chip highlights
   that venue's papers (points only, no edges), lists its most-cited papers in the
   panel, and restricts hover/click to them; re-click or Esc clears; the chip shows an

@@ -150,6 +150,42 @@
   #lineage li .y { color: #6d7488; font-variant-numeric: tabular-nums; margin-right: 6px; }
   #lineage h3 { font-size: 11px; color: #8b91a3; margin: 12px 0 0; font-weight: 500; }
 
+  /* 分野パネルの折りたたみセクション(論文リスト・著者リスト) */
+  #lineage details.fold { margin-top: 10px; }
+  #lineage details.fold summary { cursor: pointer; list-style: none; user-select: none;
+                                  font-size: 11px; color: #8b91a3; }
+  #lineage details.fold summary::-webkit-details-marker { display: none; }
+  #lineage details.fold summary::before { content: '▸ '; color: #5d6478; }
+  #lineage details.fold[open] > summary::before { content: '▾ '; }
+  #lineage .person { display: flex; align-items: center; gap: 5px; padding: 3px 0;
+                     border-top: 1px solid #1c2029; color: #aab2c4; cursor: pointer;
+                     font-size: 11px; }
+  #lineage .person:hover { color: #fff; }
+  #lineage .person i { width: 8px; height: 8px; border-radius: 2px; flex: 0 0 8px; }
+  #lineage .person i.empty { border: 1px solid #3a4152; background: transparent; }
+  #lineage .person .sub { color: #5d6478; margin-left: auto; flex: 0 0 auto; }
+  /* 折りたたみ内の長いリスト(分野の著者30人・著者の論文)は内部スクロール */
+  #lineage details.fold .scroll { max-height: 300px; overflow-y: auto; }
+
+  /* チュートリアル動画のオーバーレイ(初回訪問時 + パネルの Tutorial リンク) */
+  #tut { position: fixed; inset: 0; z-index: 10; background: rgba(4,5,8,.72);
+         display: none; align-items: flex-start; justify-content: center;
+         padding-top: 4vh; }
+  #tut .box { background: #0d0f16; border: 1px solid #2b3142; border-radius: 10px;
+              width: min(1240px, 94vw); padding: 10px 12px 12px;
+              box-shadow: 0 12px 48px #000c; }
+  #tut .bar { display: flex; justify-content: space-between; align-items: center;
+              margin-bottom: 8px; color: #eef; }
+  #tut .bar .x { cursor: pointer; color: #6d7488; font-size: 16px; line-height: 1;
+                 padding: 0 4px; }
+  #tut .bar .x:hover { color: #fff; }
+  #tut video { width: 100%; max-height: 80vh; border-radius: 6px; display: block; background: #000; }
+  #tut .ft { margin-top: 8px; display: flex; justify-content: flex-end; }
+  #tut .ft button { background: #141824; color: #aab2c4; border: 1px solid #2a3040;
+                    border-radius: 4px; padding: 4px 10px; font: inherit; font-size: 11px;
+                    cursor: pointer; }
+  #tut .ft button:hover { color: #fff; border-color: #3d4560; }
+
   #axis { position: fixed; bottom: 0; left: 0; right: 0; height: 22px; pointer-events: none;
           font-variant-numeric: tabular-nums; color: #5d6478; }
   #axis div { position: absolute; transform: translateX(-50%); }
@@ -262,6 +298,11 @@
       <input id="depth" type="range" min="1" max="9" step="1" value="2">
     <span class="val" id="depthVal">2 hops</span>
   </div>
+  <div class="row">
+    <label>Lineage lines</label>
+    <input id="clickLines" type="checkbox" checked title="Show lineage lines: the citation lineage of a selected paper and the lab lineage of pinned people. Off highlights points only.">
+    <span class="val"></span>
+  </div>
   </details>
 
   <div id="stats">Loading…</div>
@@ -276,6 +317,15 @@
     <span class="owner">Maintained by <a href="https://www.miyatakeyama.to/" target="_blank" rel="noopener">Yamato Miyatake</a> · Saitama University</span>
     <a href="https://github.com/mytkymt/paper-lineage" target="_blank" rel="noopener">GitHub ↗</a>
     <a href="https://github.com/mytkymt/paper-lineage/issues" target="_blank" rel="noopener">Feedback ↗</a>
+    <a href="/docs/media/tutorial.mp4" id="tutorialLink">Tutorial ▶</a>
+  </div>
+</div>
+
+<div id="tut">
+  <div class="box">
+    <div class="bar"><span>Quick tour — how to read this map</span><span class="x" id="tutClose" title="Close">×</span></div>
+    <video id="tutVideo" controls playsinline></video>
+    <div class="ft"><button id="tutNever">Don't show this again</button></div>
   </div>
 </div>
 
@@ -300,6 +350,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=52"></script>
+<script type="module" src="/viewer/main.js?v=57"></script>
 </body>
 </html>
