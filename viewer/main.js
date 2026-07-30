@@ -730,7 +730,17 @@ async function main() {
     lineageEl.scrollTop = 0;
     // 右パネルと地図右端の帯ラベルが重なるので、論文選択時と同様にラベルを隠す
     document.body.classList.add('has-selection');
+    // 地図ラベル経由でもツリー上で現在地が分かるように、Fields を開いて該当行を見せる
+    if (kind === 'sub') {
+      const bi = meta.bands.findIndex((b) => (b.subbands || []).includes(idx));
+      if (bi >= 0) expandedBands.add(bi);
+    }
     renderFieldTree();
+    if (kind !== 'venue') {
+      document.getElementById('grpFields').open = true;
+      const picked = document.querySelector('#fieldTree .picked');
+      if (picked) picked.scrollIntoView({ block: 'nearest' });
+    }
     drawLegend();
     schedule();
   }
