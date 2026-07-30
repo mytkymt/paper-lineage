@@ -182,17 +182,12 @@
 
 <div id="controls" class="panel">
   <div class="hd1"><h1>HCI Research Trails</h1><span id="panelToggle" title="Collapse panel">–</span></div>
-  <input id="search" type="search" placeholder="Search papers or people — Enter selects the top paper" autocomplete="off">
+  <input id="search" type="search" placeholder="Search papers, people or fields — Enter selects the top paper" autocomplete="off">
+  <div id="searchResults"></div>
   <details id="grpFields" open>
     <summary>Fields</summary>
     <div id="fieldTree"></div>
   </details>
-  <div class="row">
-    <label>Peripheral venues</label>
-    <input id="venueSet" type="checkbox" title="Add peripheral venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
-    <span class="val"></span>
-  </div>
-  <div id="searchResults"></div>
   <details id="grpPeople" open>
     <summary>People &amp; labs</summary>
   <div class="row">
@@ -213,6 +208,11 @@
       <option value="attr">People &amp; labs</option>
       <option value="venue">Venue</option>
     </select>
+    <span class="val"></span>
+  </div>
+  <div class="row">
+    <label>Peripheral venues</label>
+    <input id="venueSet" type="checkbox" title="Add peripheral venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
     <span class="val"></span>
   </div>
   <div class="row">
@@ -273,6 +273,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=39"></script>
+<script type="module" src="/viewer/main.js?v=40"></script>
 </body>
 </html>

@@ -1320,6 +1320,22 @@ async function main() {
              (lab ? ` · lineage ${lab.edges}` : ' · no lineage') + '</span></div>';
     }).join('');
 
+    // フィールド(帯・サブ帯)も名前・キーワードで検索できるようにする
+    const fieldHits = [];
+    const fieldText = (o) => ((o.name || '') + ' ' + (o.keywords || []).join(' ')).toLowerCase();
+    (meta.bands || []).forEach((b, bi) => {
+      if (b.community == null) return;
+      if (terms.every((t) => fieldText(b).includes(t))) fieldHits.push({ kind: 'band', idx: bi, o: b });
+    });
+    (meta.subbands || []).forEach((sb, si) => {
+      if (terms.every((t) => fieldText(sb).includes(t))) fieldHits.push({ kind: 'sub', idx: si, o: sb });
+    });
+    const fieldRows = fieldHits.slice(0, 5).map((f) =>
+      `<div class="fieldhit" data-fk="${f.kind}" data-fi="${f.idx}">` +
+      `${escapeHtml(f.o.name || (f.o.keywords || []).slice(0, 3).join(' \u00b7 '))}` +
+      `<span class="sub" style="float:right;color:#5d6478">${(f.o.papers || 0).toLocaleString()}` +
+      `${f.kind === 'band' ? ' \u00b7 band' : ''}</span></div>`).join('');
+
     const paperRows = hits.slice(0, MAX_LIST).map((i) => {
       const nd = meta.nodes[i];
       return `<div data-i="${i}"><span class="y">${nd.y}</span>${escapeHtml(nd.t.slice(0, 78))}</div>`;
@@ -1327,6 +1343,7 @@ async function main() {
 
     box.innerHTML =
       chips +
+      (fieldRows ? `<div class="grp">Fields — click to explore${fieldHits.length > 5 ? ` (top 5 of ${fieldHits.length})` : ''}</div>${fieldRows}` : '') +
       (peopleRows ? `<div class="grp">People — click to pin a color${people.length > 6 ? ` (top 6 of ${people.length})` : ''}</div>${peopleRows}` : '') +
       `<div class="grp">Papers ${hits.length.toLocaleString()}` +
       (byAuthor ? ` (${byAuthor.toLocaleString()} via author match)` : '') +
@@ -1354,6 +1371,14 @@ async function main() {
     if (term) {
       searchEl.value = (searchEl.value.trim() + ' ' + term.dataset.term).trim();
       runSearch(searchEl.value);
+      return;
+    }
+    // フィールド: クリックで選択
+    const fh = e.target.closest('div.fieldhit');
+    if (fh) {
+      const kind = fh.dataset.fk, idx = parseInt(fh.dataset.fi, 10);
+      if (kind === 'band') expandedBands.add(idx);
+      selectField(kind, idx);
       return;
     }
     // 人: クリックで色を固定 / 解除
