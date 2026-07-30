@@ -1,6 +1,6 @@
 // paper-lineage viewer — 時間単調レイアウトの WebGL2 描画。
 //
-// 設計方針(docs/algorithms.md):
+// 設計方針(docs/lineage.md、詳細はローカルの docs-dev/algorithms.md):
 //  - ノード数 10^4〜10^5、エッジ 10^5〜10^6 を一度に描く。DOM は使わない。
 //  - エッジは**加算合成 + 低 alpha**。重なった場所が明るくなるので、
 //    「濃いところ = 太い流れ」が自動的に浮かび上がる。SPC 重みを alpha に載せる。
