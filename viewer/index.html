@@ -67,6 +67,13 @@
   #legend { bottom: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: 620px; }
   #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
   #legend span.lab { cursor: pointer; }
+  #legend span[data-venue] { cursor: pointer; }
+  #legend span[data-venue]:hover, #legend span[data-venue].on { color: #fff; }
+  .seg { display: flex; border: 1px solid #2a3040; border-radius: 6px; overflow: hidden; }
+  .seg button { background: none; border: 0; color: #8b91a3; font: inherit; font-size: 11px;
+                padding: 3px 10px; cursor: pointer; }
+  .seg button.on { background: #232b3d; color: #fff; }
+  .seg button:hover { color: #fff; }
   #legend span.lab:hover { color: #fff; }
   #legend span.lab.off { opacity: .35; }
   #legend span.lab b { color: #6d7488; font-weight: 400; font-variant-numeric: tabular-nums; }
@@ -200,6 +207,18 @@
     <summary>Fields</summary>
     <div id="fieldTree"></div>
   </details>
+  <div class="row">
+    <label>Color by</label>
+    <div class="seg" id="colorSeg">
+      <button data-v="attr" class="on">People</button><button data-v="venue">Venue</button>
+    </div>
+    <span class="val"></span>
+  </div>
+  <div class="row">
+    <label>Peripheral venues</label>
+    <input id="venueSet" type="checkbox" title="Add peripheral venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
+    <span class="val"></span>
+  </div>
   <details id="grpPeople" open>
     <summary>People &amp; labs</summary>
   <div class="row">
@@ -213,20 +232,7 @@
   </details>
 
   <details id="grpView">
-    <summary>Display</summary>
-  <div class="row">
-    <label>Color</label>
-    <select id="colorMode">
-      <option value="attr">People &amp; labs</option>
-      <option value="venue">Venue</option>
-    </select>
-    <span class="val"></span>
-  </div>
-  <div class="row">
-    <label>Peripheral venues</label>
-    <input id="venueSet" type="checkbox" title="Add peripheral venues (HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS, ToH) — partially included: only papers with at least one citation link to the core corpus">
-    <span class="val"></span>
-  </div>
+    <summary>Appearance</summary>
   <div class="row">
     <label>Line alpha</label>
     <input id="alpha" type="range" min="0.005" max="0.6" step="0.005" value="0.36">
@@ -294,6 +300,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=48"></script>
+<script type="module" src="/viewer/main.js?v=49"></script>
 </body>
 </html>

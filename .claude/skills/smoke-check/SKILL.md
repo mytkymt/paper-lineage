@@ -54,7 +54,12 @@ console must be clean.
   panel and Open DOI in the context menu must not steal focus from the map.
 - **Axis-split zoom**: Shift+scroll must leave the year axis unchanged; Alt+scroll must
   leave bands unchanged.
-- **Toggles**: Scope (any/last) changes line spread; Color venue/people swaps legend.
+- **Toggles**: Scope (any/last) changes line spread; the "Color by" segmented control
+  (People/Venue) swaps point colours and the legend.
+- **Venue selection**: in venue colour mode, clicking a legend venue chip highlights
+  that venue's papers (points only, no edges), lists its most-cited papers in the
+  panel, and restricts hover/click to them; re-click or Esc clears; the chip shows an
+  active state that clears with the selection.
 - **Local clusters**: selecting a paper computes them automatically (no button) — ≤8
   local cluster rows with counts + TF-IDF labels, plus a "+N papers in M smaller
   clusters" line when anything is dropped; clicking a row filters BOTH directions (and

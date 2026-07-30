@@ -559,7 +559,7 @@ async function main() {
     gamma: document.getElementById('gamma'),
     psize: document.getElementById('psize'),
     depth: document.getElementById('depth'),
-    colorMode: document.getElementById('colorMode'),
+    colorMode: { value: 'attr' },   // セグメントUI(#colorSeg)が書き込む状態
     roleMode: document.getElementById('roleMode'),
   };
 
@@ -681,6 +681,7 @@ async function main() {
     lineageEl.classList.remove('field-mode');
     document.body.classList.remove('has-selection');
     renderFieldTree();
+    drawLegend();   // venue チップの選択中マークも消す
     schedule();
   }
 
@@ -688,8 +689,24 @@ async function main() {
     if (fieldSel && fieldSel.kind === kind && fieldSel.idx === idx) { clearField(); return; }
     select(-1);                       // 論文選択・検索ハイライトを畳む
     fieldSel = { kind, idx };
-    const o = fieldObj();
-    const members = fieldMembers(o);
+    let o, members;
+    if (kind === 'venue') {
+      // venue は帯ではないので y 区間を持たない。ノードの venue キーで拾う。
+      members = [];
+      let ymin = Infinity, ymax = -Infinity;
+      for (let i = 0; i < n; i++) {
+        if (meta.nodes[i].v !== idx) continue;
+        members.push(i);
+        const yr = meta.nodes[i].y;
+        if (yr < ymin) ymin = yr;
+        if (yr > ymax) ymax = yr;
+      }
+      o = { name: (idx || '?').toUpperCase() + (LINKED_VENUES.has(idx) ? ' — peripheral (linked subset)' : ''),
+            papers: members.length, years: members.length ? [ymin, ymax] : null, keywords: [] };
+    } else {
+      o = fieldObj();
+      members = fieldMembers(o);
+    }
     nodeState.fill(0); edgeState.fill(0);
     for (const i of members) nodeState[i] = S_MATCH;
     // 線は光らせない: 大きな分野では数万本が同時に光って眩しいだけになる。
@@ -714,6 +731,7 @@ async function main() {
     // 右パネルと地図右端の帯ラベルが重なるので、論文選択時と同様にラベルを隠す
     document.body.classList.add('has-selection');
     renderFieldTree();
+    drawLegend();
     schedule();
   }
 
@@ -1742,7 +1760,13 @@ async function main() {
     if (selected >= 0) select(selected);
   });
   ui.roleMode.addEventListener('change', applyPinned);
-  ui.colorMode.addEventListener('change', () => {
+  document.getElementById('colorSeg').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-v]');
+    if (!b || ui.colorMode.value === b.dataset.v) return;
+    ui.colorMode.value = b.dataset.v;
+    for (const el of document.querySelectorAll('#colorSeg button')) {
+      el.classList.toggle('on', el === b);
+    }
     // 点の色は属性バッファを差し替える(毎フレーム分岐させない)
     gl.bindVertexArray(nodeVao);
     attrib(nodeProg, 'aColor', ui.colorMode.value === 'venue' ? venueColorBuf : attrColorBuf, 3);
@@ -1754,6 +1778,8 @@ async function main() {
   // 凡例クリックで1ラボに絞り込む(再クリックで解除)。
   // 8色は隣接ペア基準では通るが CVD ΔE 6–8 の帯域なので、色だけに頼らせない二次符号化。
   document.getElementById('legend').addEventListener('click', (e) => {
+    const vch = e.target.closest('span[data-venue]');
+    if (vch) { selectField('venue', vch.dataset.venue); drawLegend(); return; }
     const un = e.target.closest('[data-unpin]');
     if (un) {
       pinned.splice(parseInt(un.dataset.unpin, 10), 1);
@@ -1792,7 +1818,8 @@ async function main() {
           const col = VENUE_COLORS[v] || DEFAULT_COLOR;
           const rgb = col.map((x) => Math.round(x * 255)).join(',');
           const linked = LINKED_VENUES.has(v) ? ' <b>peripheral</b>' : '';
-          return `<span><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()}${linked} ${c}</span>`;
+          const on = fieldSel && fieldSel.kind === 'venue' && fieldSel.idx === v ? ' class="on"' : '';
+          return `<span data-venue="${v}"${on}><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()}${linked} ${c}</span>`;
         })
         .join('');
       return;
