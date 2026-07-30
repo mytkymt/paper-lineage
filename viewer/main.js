@@ -929,11 +929,20 @@ async function main() {
   function renderLocalClusters() {
     const box = document.getElementById('localResults');
     if (!box || !localClusters) return;
-    const total = 1 + lineage.up.size + lineage.down.size;
+    // グローバルのトレンド行と同じ表記に揃える:
+    // 上流/下流の件数(u↑/d↓)+ 2色の積み上げバー(長さ=合計・色=比率)
+    const max = Math.max(...localClusters.map((c) => c.ids.length), 1);
     const rows = localClusters.map((c, k) => {
-      const pct = Math.round((c.ids.length / total) * 100);
-      return `<li class="trend local" data-cl="${k}" title="${escapeHtml(c.label)}">` +
-             `<span class="n">${c.ids.length}</span><span class="bar" style="width:${pct}%"></span>` +
+      let u = 0, d = 0;
+      for (const v of c.ids) {
+        if (lineage.up.has(v)) u++;
+        else if (lineage.down.has(v)) d++;   // ハブ自身はどちらでもないので数えない
+      }
+      const wu = (u / max) * 100, wd = (d / max) * 100;
+      return `<li class="trend local" data-cl="${k}" title="${escapeHtml(c.label)} — ${u} upstream · ${d} downstream">` +
+             `<span class="cnt"><em class="u">${u}↑</em><em class="d">${d}↓</em></span>` +
+             `<span class="bar2"><i class="u" style="width:${wu.toFixed(1)}%"></i>` +
+             `<i class="d" style="width:${wd.toFixed(1)}%"></i></span>` +
              `${escapeHtml(c.name || c.label)}</li>`;
     }).join('');
     const named = localClusters.some((c) => c.name);
