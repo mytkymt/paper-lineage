@@ -1946,7 +1946,24 @@ async function main() {
     const q = viewParams();
     if (venueSet.checked) q.set('venues', 'related');
     else q.delete('venues');
-    q.delete('v');   // カメラはデータセット間で座標系(帯構成)が違うので持ち越さない
+    // カメラの生座標はデータセット間で座標系(帯構成)が違うので使えない。
+    // 代わりに「中心の年・見えている年幅・中心の帯 + 帯内位置・縦ズーム」に翻訳して
+    // 持ち越し、復元側で新しい座標系に写像する(v2)。計算は切替時の数回だけ。
+    q.delete('v');
+    const span = yearMax - yearMin;
+    const b = (meta.bands || []).find(
+      (bb) => bb.community != null && cam.cy >= bb.y0 && cam.cy < bb.y1);
+    const r = (x) => Math.round(x * 1e4) / 1e4;
+    q.set('v2', [
+      r(yearMin + cam.cx * span),                      // 中心の年
+      r(span / cam.zx),                                // 見えている年幅
+      b ? (fieldName(b) || '').replace(/~/g, '') : '', // 中心の帯(同名で対応付け)
+      r(b ? (cam.cy - b.y0) / (b.y1 - b.y0) : cam.cy), // 帯内位置(帯が無ければ絶対値)
+      r(cam.zy),
+      // 帯の対応付けは名前が違うことがある(データセットごとに再命名される)ので、
+      // キーワードでも照合できるように上位語を持ち越す
+      b ? (b.keywords || []).slice(0, 8).join('|').replace(/~/g, '') : '',
+    ].join('~'));
     location.search = q.toString();
   });
 
@@ -2276,6 +2293,40 @@ async function main() {
       pendingPan = -1;
       cam.cx = v[0]; cam.cy = v[1];
       cam.zx = clampZoom(v[2]); cam.zy = clampZoom(v[3]);
+    }
+    // v2 = データセット切替が持ち越したカメラ(年・帯ベース)。この座標系に写像する。
+    const v2 = q.get('v2');
+    if (v2) {
+      const [yr, win, bandName, fr, zy, kws] = v2.split('~');
+      const span = yearMax - yearMin;
+      const winYears = parseFloat(win);
+      if (Number.isFinite(winYears) && winYears > 0) cam.zx = clampZoom(span / winYears);
+      const year = parseFloat(yr);
+      if (Number.isFinite(year)) cam.cx = (year - yearMin) / span;
+      const zyv = parseFloat(zy);
+      if (Number.isFinite(zyv)) cam.zy = clampZoom(zyv);
+      const frac = parseFloat(fr);
+      const real = (meta.bands || []).filter((bb) => bb.community != null);
+      let b = bandName
+        ? real.find((bb) => (fieldName(bb) || '').replace(/~/g, '') === bandName)
+        : null;
+      if (!b && kws) {
+        // 同名の帯が無ければキーワードの重なりが最大の帯へ(再命名・再クラスタ対策)
+        const want = new Set(kws.split('|').filter(Boolean));
+        let best = 0;
+        for (const bb of real) {
+          const ov = (bb.keywords || []).slice(0, 8).filter((k) => want.has(k)).length;
+          if (ov > best) { best = ov; b = bb; }
+        }
+      }
+      if (b && Number.isFinite(frac)) cam.cy = b.y0 + frac * (b.y1 - b.y0);
+      else if (Number.isFinite(frac)) cam.cy = frac;   // 同名の帯が無ければ絶対位置で妥協
+      cancelCamAnim();
+      pendingPan = -1;
+      // 復元し終えた v2 は URL から消す(共有・リロードで再適用しない)
+      const q2 = new URLSearchParams(location.search);
+      q2.delete('v2');
+      history.replaceState(null, '', location.pathname + (q2.toString() ? '?' + q2.toString() : ''));
     }
     schedule();
   }
