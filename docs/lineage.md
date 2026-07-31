@@ -9,6 +9,12 @@ deterministic — same corpus, same clicks, same result. Code:
 
 - **Corpus**: 38,791 papers from 13 HCI venues (1981–2026), fetched from Semantic
   Scholar; references resolved via OpenAlex and joined by DOI.
+- Records that are containers rather than papers are dropped before anything else:
+  proceedings volumes, companion/adjunct volumes, Extended Abstracts volumes and
+  "Session details:" dividers (about 900 entries). A venue search returns these as
+  ordinary hits, and their citation counts are enormous — the 2017 CHI proceedings
+  record alone showed 2,217 — so leaving them in put meaningless bright dots on the
+  map. The test is the start of the title only; nothing is inferred from content.
 - Only citations with **both ends inside the corpus** are kept — 371,893 edges.
   About 75% of references point outside the 13 venues and are excluded; the UI
   says so wherever this limits what you see.

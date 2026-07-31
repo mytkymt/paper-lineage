@@ -28,6 +28,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -40,6 +41,27 @@ WORKS_PATH = ROOT / "data" / "openalex" / "works.jsonl"
 # 出版年がこの範囲外のものは捨てる(明らかなデータ誤り除け)
 MIN_YEAR = 1960
 MAX_YEAR = 2027
+
+# 論文ではなく「入れ物」の記録。会議録そのもの・セッションの仕切り・Extended
+# Abstracts の巻など。S2 の venue 検索はこれらも1件として返すが、中身が無いのに
+# 被引用数だけ巨大(2017 CHI の会議録で 2,217)なので、地図に置くと意味のない
+# 大きな点になり、系譜も濁る。タイトル先頭の決め打ちだけで判定する(本文や
+# キーワードで推測すると本物の論文を巻き込む)。
+NON_PAPER = [
+    (re.compile(r"^proceedings of\b"), "proceedings volume"),
+    (re.compile(r"^(adjunct|companion)\s+(proceedings|publication)\b"), "companion volume"),
+    (re.compile(r"^session details\b"), "session divider"),
+    (re.compile(r"^\S+\s+['\u2019]\d\d\s+extended abstracts\b"), "extended-abstracts volume"),
+    (re.compile(r"^extended abstracts of\b"), "extended-abstracts volume"),
+]
+
+
+def non_paper_kind(title: str | None) -> str | None:
+    t = (title or "").strip().lower()
+    for pat, label in NON_PAPER:
+        if pat.search(t):
+            return label
+    return None
 
 
 def load_works() -> dict[str, dict]:
@@ -82,6 +104,20 @@ def main() -> None:
     # 追記されていても、コアの出力は拡張導入前とバイト単位で一致し続ける。
     allowed = CORE_KEYS | EXTRA_KEYS if extended else CORE_KEYS
     works = {wid: w for wid, w in works.items() if w.get("venue_key") in allowed}
+
+    # 会議録・セッション仕切りなど、論文ではない入れ物の記録を落とす
+    dropped_kind: Counter[str] = Counter()
+    keep_ids = []
+    for wid, w in works.items():
+        kind = non_paper_kind(w.get("title"))
+        if kind:
+            dropped_kind[kind] += 1
+        else:
+            keep_ids.append(wid)
+    if dropped_kind:
+        works = {wid: works[wid] for wid in keep_ids}
+        for kind, cnt in dropped_kind.most_common():
+            print(f"  非論文を除外 {kind:26s}: {cnt:,}")
     print(f"  corpus nodes: {len(works)}")
 
     # (year, id) の全順序。この順序に沿う向きのエッジだけを残せば必ず DAG。
