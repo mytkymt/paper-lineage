@@ -23,7 +23,11 @@ console must be clean.
 ## 3. Interactions (each one has broken at least once)
 
 - **Search**: a paper query shows Related terms chips + paper list; a person query
-  ("ishii") shows People rows with `papers · lineage N` / `no lineage`.
+  ("ishii") shows People rows with `N papers · lab lineage`.
+- **Author rows behave the same everywhere** (search results, field panel, paper
+  panel): click adds the person to the legend and colours their name; clicking the
+  same row again removes them from the legend. The list that is on screen must
+  repaint — the field panel and search results are not redrawn by refreshFocus.
 - **Pin/unpin**: click a person row → appears in legend; × in legend removes; a 16th
   pin alerts instead of silently failing. **Removing someone must not recolour anyone
   else** — slots are kept as tombstones, so the remaining chips keep their exact

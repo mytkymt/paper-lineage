@@ -736,10 +736,12 @@ async function main() {
       const slot = pinned.findIndex((q) => q && q.ai === ai);
       const dot = slot >= 0 ? authorDot(slot) : '';
       const lab = labByAuthor.has(ai) ? meta.labs[labByAuthor.get(ai)] : null;
+      const on = slot >= 0 && focused.includes(slot);
       return `<div class="person${slot >= 0 ? '' : ' nodot'}" data-ai="${ai}">${dot}` +
-             `${escapeHtml(meta.authors[ai] || '?')}` +
+             `<b${on ? ` style="color:${LAB_HEX[slot]}"` : ''}>` +
+             `${escapeHtml(meta.authors[ai] || '?')}</b>` +
              `<span class="sub">${cnt} papers` +
-             (lab ? ` · lab lineage${lab.gens >= 3 ? ` ${lab.gens} gen` : ''}` : '') +
+             (lab ? ' · lab lineage' : '') +
              '</span></div>';
     }).join('');
     // 既定はどちらも閉。ピン変更の再描画では明示的に開いた状態だけ引き継ぐ
@@ -797,11 +799,32 @@ async function main() {
              : `<i class="${focused.includes(slot) ? 'on' : 'dim'}" style="background:${LAB_HEX[slot]}"></i>`;
   const isFocusedAuthor = (ai) => { const sl = slotOfAuthor(ai); return sl >= 0 && focused.includes(sl); };
 
+  // 著者行のクリックはどこから押しても同じ意味にする:
+  //   選択中でない → 色を確保して選択(一覧に入る)
+  //   選択中       → 一覧から外す(ピンごと解除)
+  function toggleAuthorRow(ai) {
+    let ok;
+    if (isFocusedAuthor(ai)) {
+      togglePinned(ai);   // ピン解除。unpinSlot がフォーカスからも外す
+      refreshFocus();
+      ok = true;
+    } else {
+      ok = focusAuthor(ai);
+    }
+    // 出したままの一覧の色見本を描き直す。分野パネルはフォーカス表示が抑止されるので
+    // 自動では更新されず、検索結果も同様。
+    if (ok) {
+      if (fieldSel) renderFieldPanel(true);
+      if (searchEl.value.trim()) runSearchList(searchEl.value);
+    }
+    return ok;
+  }
+
   const metaLineFor = (st) =>
     `${st.papers.length.toLocaleString()} papers` +
     (st.papers.length ? ` · ${st.y0}–${st.y1}` : '') +
     (st.firstN || st.lastN ? ` · first author on ${st.firstN} · last author on ${st.lastN}` : '') +
-    (st.lab ? ` · lab lineage${st.lab.gens >= 3 ? ` \u2014 ${st.lab.gens} generations deep` : ''}` : '');
+    (st.lab ? ' · lab lineage' : '');
 
   const TOPF = 10;
   function authorBody(ai, st) {
@@ -1592,7 +1615,9 @@ async function main() {
       const slot = pinned.findIndex((q) => q && q.ai === p.ai);
       const lab = labByAuthor.has(p.ai) ? meta.labs[labByAuthor.get(p.ai)] : null;
       const dot = authorDot(slot);
-      return `<div class="person" data-ai="${p.ai}">${dot}${escapeHtml(meta.authors[p.ai])}` +
+      const on = slot >= 0 && focused.includes(slot);
+      return `<div class="person" data-ai="${p.ai}">${dot}` +
+             `<b${on ? ` style="color:${LAB_HEX[slot]}"` : ''}>${escapeHtml(meta.authors[p.ai])}</b>` +
              `<span class="sub">${p.papers} papers` +
              (lab ? ' · lab lineage' : '') + '</span></div>';
     }).join('');
@@ -1661,15 +1686,7 @@ async function main() {
     if (person) {
       const q = searchEl.value;
       const pai = parseInt(person.dataset.ai, 10);
-      // 選択中の人をもう一度押したら、フォーカスを外すだけでなく一覧からも消す。
-      // 一覧に居るが未選択(既定のピンなど)の場合は、消さずに選択する。
-      if (isFocusedAuthor(pai)) {
-        togglePinned(pai);
-        refreshFocus();
-        runSearchList(q);
-        return;
-      }
-      if (!focusAuthor(pai)) {
+      if (!toggleAuthorRow(pai)) {
         alert('Up to 15 people can be pinned. Remove one with the × in the legend first.');
         return;
       }
@@ -1813,7 +1830,7 @@ async function main() {
     // 著者行: 色を確保してフォーカスへ(分野パネルからでも著者フォーカスに移る)
     const person = e.target.closest('div.person[data-ai]');
     if (person) {
-      if (!focusAuthor(parseInt(person.dataset.ai, 10))) {
+      if (!toggleAuthorRow(parseInt(person.dataset.ai, 10))) {
         alert('Up to 15 people can be pinned. Remove one with the × in the legend first.');
       }
       return;
