@@ -89,6 +89,7 @@ def main() -> None:
     print(f"corpus DOIs: {len(corpus)}  already fetched: {len(done)}  todo: {len(todo)}")
 
     found = 0
+    recovered = 0   # フィルタ検索から漏れて単体取得で拾えた分
     with WORKS_PATH.open("a") as wf, DONE_PATH.open("a") as df:
         for i in range(0, len(todo), oa.OR_LIMIT):
             batch = todo[i : i + oa.OR_LIMIT]
@@ -100,14 +101,35 @@ def main() -> None:
                     "per-page": oa.OR_LIMIT,
                 },
             )
+            got: set[str] = set()
             for work in data.get("results") or []:
                 rec = slim(work)
                 doi = rec.get("doi")
                 if doi and doi in corpus:
                     rec["venue_key"] = corpus[doi]["venue_key"]
                     rec["s2_venue"] = corpus[doi]["s2_venue"]
+                    got.add(doi)
                 wf.write(json.dumps(rec, ensure_ascii=False) + "\n")
                 found += 1
+
+            # フィルタ検索から漏れた DOI は単体エンドポイントで引き直す。
+            # OpenAlex は「/works/doi:X は返すが filter=doi:X は 0 件」という
+            # 状態を取ることがあり(登録直後の論文で実測)、バッチだけだと
+            # 新しい論文が恒久的に欠落する。
+            for d in batch:
+                if d in got:
+                    continue
+                try:
+                    work = oa.get(f"/works/doi:{d}", params={"select": SELECT})
+                except Exception:
+                    continue          # 本当に無い DOI(404)はここで諦める
+                rec = slim(work)
+                if rec.get("doi"):
+                    rec["venue_key"] = corpus[d]["venue_key"]
+                    rec["s2_venue"] = corpus[d]["s2_venue"]
+                    wf.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                    found += 1
+                    recovered += 1
             # 見つからなかった DOI も done に入れる(毎回引き直さないため)
             for d in batch:
                 df.write(d + "\n")
@@ -116,6 +138,8 @@ def main() -> None:
             done_n = i + len(batch)
             print(f"  {done_n}/{len(todo)} requested, {found} works found", flush=True)
 
+    if recovered:
+        print(f"  filter 検索から漏れて単体取得で回収: {recovered:,}")
     print(f"\nwrote {WORKS_PATH}")
 
 
