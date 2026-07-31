@@ -2386,10 +2386,15 @@ async function main() {
       else if (Number.isFinite(frac)) cam.cy = frac;   // 同名の帯が無ければ絶対位置で妥協
       cancelCamAnim();
       pendingPan = -1;
-      // 復元し終えた v2 は URL から消す(共有・リロードで再適用しない)
-      const q2 = new URLSearchParams(location.search);
-      q2.delete('v2');
-      history.replaceState(null, '', location.pathname + (q2.toString() ? '?' + q2.toString() : ''));
+    }
+
+    // 復元し終えたビューの指定は URL から消す。リロードは常にまっさらな地図から
+    // 始まる(共有リンクを開いた直後だけ復元される)。コーパスの選択 venues は
+    // ビューではなく設定なので残す — 消すとリロードでデータセットが切り替わる。
+    const keep = new URLSearchParams();
+    if (q.get('venues')) keep.set('venues', q.get('venues'));
+    if (keep.toString() !== new URLSearchParams(location.search).toString()) {
+      history.replaceState(null, '', location.pathname + (keep.toString() ? '?' + keep : ''));
     }
     schedule();
   }
