@@ -33,12 +33,13 @@ itself is the lineage; everything else dims.
 
 ## Reading a year column
 
-Within one year, papers are ordered left to right by their venue's usual month
-(TEI in February … CHI in May … UIST in October … TOCHI last), so a year column
-reads roughly as that year's conference calendar. Venues shift by a few weeks
-between years and journals publish continuously, so this is an approximate
-order, not a date — but it is the same order in every year and fully
-deterministic.
+Within one year, each venue sits at its own x, placed by the venue's usual
+month: TEI in February on the left, CHI in May, the autumn cluster (UbiComp,
+ASSETS, UIST, CHI PLAY, CSCW) on the right. Papers from the same venue and year
+share that x exactly — they are not spread around it, so venues read as clean
+columns and the gap between years stays visible. Venues shift by a few weeks
+between years and journals publish continuously, so the month is nominal, not a
+date; the layout is identical in every year and fully deterministic.
 
 ## Trend breakdown (side panel)
 

@@ -657,9 +657,10 @@ def main() -> None:
     ap.add_argument(
         "--jitter",
         type=float,
-        default=0.35,
-        help="年内の x ゆらぎ(年単位)。0 だと各年が1本の縦線に潰れて、"
-        "エッジの始点・終点が完全に重なり流れが読みにくくなる。",
+        default=0.6,
+        help="年内に学会を並べる幅(年単位)。0 だと各年が1本の縦線に潰れ、"
+        "エッジの始点・終点が完全に重なって流れが読みにくくなる。"
+        "0.6 なら年の半分を使い、残り半分が年と年の間の隙間になる。",
     )
     args = ap.parse_args()
 
@@ -723,15 +724,16 @@ def main() -> None:
     x = years.astype(np.float32)
     if args.jitter > 0:
         from .venues import EXTRA_VENUES, VENUES
-        _by_month = sorted([*VENUES, *EXTRA_VENUES], key=lambda v: (v.month, v.key))
-        vrank = {v.key: i for i, v in enumerate(_by_month)}
-        vk = np.array([vrank.get(n.get("venue_key"), len(vrank)) for n in nodes], dtype=np.int64)
-        for yr in np.unique(years):
-            m = np.flatnonzero(years == yr)
-            if len(m) < 2:
-                continue
-            order = m[np.lexsort((m, vk[m]))]   # venue 順 → 元順で安定
-            x[order] += (np.linspace(0.0, 1.0, len(order), dtype=np.float32) - 0.5) * args.jitter
+        # 学会ごとに1本の位置に固める。同じ学会の論文は**同じ x** に置き、学会内では
+        # 散らさない(散らすと年の境界が滲んで、どの年かが読めなくなる)。
+        # 位置は概略の開催月そのもの: 年の中の相対位置 = (month-1)/12 - 0.5。
+        # jitter は年内に使う幅で、既定 0.35 なら 2月 ≈ 年-0.15、12月 ≈ 年+0.15。
+        months = {v.key: v.month for v in [*VENUES, *EXTRA_VENUES]}
+        frac = np.array(
+            [(months.get(n.get("venue_key"), 6.5) - 1.0) / 12.0 - 0.5 for n in nodes],
+            dtype=np.float32,
+        )
+        x += frac * args.jitter
     pos = np.empty((len(nodes), 2), dtype=np.float32)
     pos[:, 0] = x
     pos[:, 1] = y
