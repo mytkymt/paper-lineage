@@ -807,6 +807,45 @@ async function main() {
            `<div class="scroll">` + olRows(st.papers, 200) + '</div></details>';
   }
 
+  // 著者カードはドラッグで並べ替えられる(focused の順序 = カードの表示順)。
+  let dragSlot = -1;
+  const listsEl = document.getElementById('lineageLists');
+  listsEl.addEventListener('dragstart', (e) => {
+    const card = e.target.closest('.acard[data-slot]');
+    if (!card) return;
+    dragSlot = parseInt(card.dataset.slot, 10);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', card.dataset.slot);   // Firefox はこれが無いと DnD しない
+  });
+  listsEl.addEventListener('dragover', (e) => {
+    if (dragSlot < 0) return;
+    const card = e.target.closest('.acard[data-slot]');
+    if (!card) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    for (const el of listsEl.querySelectorAll('.acard.dragover')) el.classList.remove('dragover');
+    if (parseInt(card.dataset.slot, 10) !== dragSlot) card.classList.add('dragover');
+  });
+  listsEl.addEventListener('drop', (e) => {
+    const card = e.target.closest('.acard[data-slot]');
+    if (dragSlot < 0 || !card) return;
+    e.preventDefault();
+    const target = parseInt(card.dataset.slot, 10);
+    if (target !== dragSlot) {
+      const from = focused.indexOf(dragSlot), to = focused.indexOf(target);
+      if (from >= 0 && to >= 0) {
+        focused.splice(from, 1);
+        focused.splice(to, 0, dragSlot);
+        renderFocusPanel();
+      }
+    }
+    dragSlot = -1;
+  });
+  listsEl.addEventListener('dragend', () => {
+    dragSlot = -1;
+    for (const el of listsEl.querySelectorAll('.acard.dragover')) el.classList.remove('dragover');
+  });
+
   // 2人目以降のカードの開閉状態。人を足しても既に開いた人は開いたままにする。
   const cardOpen = new Set();
 
@@ -828,7 +867,8 @@ async function main() {
     // 全員を同じカードにする。1人目も折りたためる(既定は開いた状態)。
     document.getElementById('lineageLists').innerHTML = people.map((slot) => {
       const ai = pinned[slot].ai, st = statsFor(ai);
-      return `<details class="acard"${cardOpen.has(ai) ? ' open' : ''} data-ai="${ai}">` +
+      return `<details class="acard"${cardOpen.has(ai) ? ' open' : ''} data-ai="${ai}"` +
+             ` data-slot="${slot}" draggable="true">` +
              `<summary><i style="background:${LAB_HEX[slot]}"></i>` +
              `${escapeHtml(meta.authors[ai] || '?')}` +
              `<em class="drop" data-drop="${slot}" title="Remove from selection">×</em></summary>` +
