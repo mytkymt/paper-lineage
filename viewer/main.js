@@ -704,6 +704,52 @@ async function main() {
 
   // --- 帯(コミュニティ)の境界とラベル ---
   // ラベルは band-names.json(F3 の LLM 命名)。名前が無い/古い帯はキーワード表示。
+  // 分野(帯・サブ帯・venue)のホバープレビュー。null = なし
+  let fieldPreview = null;
+
+  // 分野のメンバーを S_MATCH で塗る(選択とプレビューの共通処理)
+  function paintFieldSet(kind, idx) {
+    nodeState.fill(0); edgeState.fill(0);
+    if (kind === 'venue') {
+      for (let i = 0; i < n; i++) if (meta.nodes[i].v === idx) nodeState[i] = S_MATCH;
+    } else {
+      const o = kind === 'band' ? meta.bands[idx] : meta.subbands[idx];
+      if (o) {
+        for (let i = 0; i < n; i++) {
+          const y = np[i * 2 + 1];
+          if (y >= o.y0 && y < o.y1) nodeState[i] = S_MATCH;
+        }
+      }
+    }
+    uploadStates();
+  }
+
+  function previewField(kind, idx) {
+    // 論文・検索・著者フォーカスの表示中は邪魔しない
+    // (フォーカス中に乗っ取ると、著者の色が消えて見える)。
+    if (selected >= 0 || searchActive || focusOn()) return;
+    if (fieldSel && fieldSel.kind === kind && fieldSel.idx === idx) return;
+    fieldPreview = { kind, idx };
+    paintFieldSet(kind, idx);
+    schedule();
+  }
+  function clearFieldPreview() {
+    if (!fieldPreview) return;
+    fieldPreview = null;
+    if (fieldSel) paintFieldSet(fieldSel.kind, fieldSel.idx);
+    else { nodeState.fill(0); edgeState.fill(0); uploadStates(); }
+    schedule();
+  }
+  // 少し置いてから光らせる(通過しただけで地図が明滅しないように)。
+  // 解除はコンテナの mouseleave で行う — 行単位の mouseout は速いマウス移動で
+  // 取りこぼし、プレビューが固定されて残るバグの原因だった。
+  let fpTimer = 0;
+  const fpStart = (kind, idx) => {
+    clearTimeout(fpTimer);
+    fpTimer = setTimeout(() => previewField(kind, idx), 120);
+  };
+  const fpStop = () => { clearTimeout(fpTimer); clearFieldPreview(); };
+
   // --- Fields(帯 = 分野)ブラウザ ---
   // 帯・サブ帯は y 区間なので、所属はノードの y 座標だけで決まる。
   let fieldSel = null;   // {kind: 'band'|'sub', idx}
@@ -1053,15 +1099,10 @@ async function main() {
     treeEl.addEventListener('mouseover', (e) => {
       const fb = e.target.closest('.fb');
       const fs = e.target.closest('.fs');
-      if (fb) previewField('band', parseInt(fb.dataset.b, 10));
-      else if (fs) previewField('sub', parseInt(fs.dataset.s, 10));
+      if (fb) fpStart('band', parseInt(fb.dataset.b, 10));
+      else if (fs) fpStart('sub', parseInt(fs.dataset.s, 10));
     });
-    treeEl.addEventListener('mouseout', (e) => {
-      const row = e.target.closest('.fb, .fs');
-      if (!row) return;
-      if (e.relatedTarget && row.contains(e.relatedTarget)) return;
-      clearFieldPreview();
-    });
+    treeEl.addEventListener('mouseleave', fpStop);
   }
 
   const bandsEl = document.getElementById('bands');
@@ -1069,15 +1110,10 @@ async function main() {
     bandsEl.addEventListener('mouseover', (e) => {
       const lbl = e.target.closest('.lbl');
       if (!lbl) return;
-      if (lbl.dataset.sub != null) previewField('sub', parseInt(lbl.dataset.sub, 10));
-      else if (lbl.dataset.band != null) previewField('band', parseInt(lbl.dataset.band, 10));
+      if (lbl.dataset.sub != null) fpStart('sub', parseInt(lbl.dataset.sub, 10));
+      else if (lbl.dataset.band != null) fpStart('band', parseInt(lbl.dataset.band, 10));
     });
-    bandsEl.addEventListener('mouseout', (e) => {
-      const lbl = e.target.closest('.lbl');
-      if (!lbl) return;
-      if (e.relatedTarget && lbl.contains(e.relatedTarget)) return;
-      clearFieldPreview();
-    });
+    bandsEl.addEventListener('mouseleave', fpStop);
   }
   function drawBands(scale, offset) {
     if (!meta.bands) return;
@@ -1192,41 +1228,6 @@ async function main() {
   // 「どこを見ていたか」が失われるため、ズーム/パンはユーザー操作専用。
   // ホバー中だけの絞り込み(クリックで確定する前の下見)。-1 = プレビューなし
   let previewSub = -1, previewCluster = -1;
-  // 分野(帯・サブ帯・venue)のホバープレビュー。null = なし
-  let fieldPreview = null;
-
-  // 分野のメンバーを S_MATCH で塗る(選択とプレビューの共通処理)
-  function paintFieldSet(kind, idx) {
-    nodeState.fill(0); edgeState.fill(0);
-    if (kind === 'venue') {
-      for (let i = 0; i < n; i++) if (meta.nodes[i].v === idx) nodeState[i] = S_MATCH;
-    } else {
-      const o = kind === 'band' ? meta.bands[idx] : meta.subbands[idx];
-      if (o) {
-        for (let i = 0; i < n; i++) {
-          const y = np[i * 2 + 1];
-          if (y >= o.y0 && y < o.y1) nodeState[i] = S_MATCH;
-        }
-      }
-    }
-    uploadStates();
-  }
-
-  function previewField(kind, idx) {
-    // 論文・検索の表示中は邪魔しない。選択中の分野そのものは既に光っている
-    if (selected >= 0 || searchActive) return;
-    if (fieldSel && fieldSel.kind === kind && fieldSel.idx === idx) return;
-    fieldPreview = { kind, idx };
-    paintFieldSet(kind, idx);
-    schedule();
-  }
-  function clearFieldPreview() {
-    if (!fieldPreview) return;
-    fieldPreview = null;
-    if (fieldSel) paintFieldSet(fieldSel.kind, fieldSel.idx);
-    else { nodeState.fill(0); edgeState.fill(0); uploadStates(); }
-    schedule();
-  }
 
   function paintLineage() {
     nodeState.fill(0);
