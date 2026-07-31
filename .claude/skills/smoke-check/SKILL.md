@@ -169,10 +169,10 @@ console must be clean.
   without a DOI show "No DOI on record" instead of the DOI actions.
 - Esc clears selection.
 
-- **State chips** (top, right of the controls panel): every active condition except
-  people (the legend covers those) shows as a chip — selected paper, trend/cluster
-  filter, field, search, non-default depth, related venues; each chip's × clears just
-  that condition; the row hides when nothing is active.
+- **View kind label**: the panel header names what is shown — PAPER LINEAGE / FIELD /
+  SUB-FIELD / VENUE / AUTHOR / PEOPLE · N SELECTED — and changes with every panel swap.
+- **Band panel has a Sub-fields fold** (open by default): rows narrow to that
+  sub-field on click, without going back to the tree or map labels.
 - **Hover previews** (mouse devices only): hovering a trend row, local-cluster row,
   Fields-tree row or a map band label previews the filter on the map; moving off
   restores the committed state exactly. Touch devices must not get these listeners.
