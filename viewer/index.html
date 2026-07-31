@@ -298,8 +298,9 @@
   /* パネルを開いている間も帯ラベルは残す(どの分野を見ているか分からなくなるため)。
      ただし右パネル(320px + 余白)と重なるので、その手前まで寄せる。
      パネルが地図の大半を覆う狭い画面では、従来どおり畳む。 */
-  body.has-selection #bands .lbl { right: 352px; max-width: calc(100vw - 640px); }
-  body.has-selection #bands .lbl.sub { right: 358px; }
+  /* パネル実幅 = 320 + padding 24 + border 2 = 346px。余白込みで 372px 退避 */
+  body.has-selection #bands .lbl { right: 372px; max-width: calc(100vw - 660px); }
+  body.has-selection #bands .lbl.sub { right: 378px; }
   @media (max-width: 900px) {
     body.has-selection #bands { display: none; }
   }
@@ -493,6 +494,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=91"></script>
+<script type="module" src="/viewer/main.js?v=92"></script>
 </body>
 </html>
