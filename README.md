@@ -27,12 +27,17 @@ Research areas appear as named horizontal bands; citations flow left to right.
 
 ![A person's lab thread](docs/media/trail-person.png)
 
-- Search a name and pin it to a colour (up to 15 people).
-- Their papers surface across the map, and same-lab citations (same last author at both
-  ends) draw the lab's thread through the decades.
-- Click a legend chip to focus one person: only their papers stay bright and clickable,
-  and the panel switches to them — their sub-fields, their papers, and how often they
-  are first or last author.
+- Search a name to add it to the legend (up to 15 people).
+- Click them and their papers light up across the map, with same-lab citations (same
+  last author at both ends) drawing the lab's thread through the decades. Nobody is
+  coloured until you pick them, so colour always means "the people I am looking at".
+- Click a legend chip, a search result or an author's name to focus them: only their
+  papers stay bright and clickable, and the panel switches to them — their sub-fields,
+  their papers, and how often they are first or last author.
+- Click several people to compare them. Each keeps their own colour, and the panel
+  stacks them, the first one open and the rest collapsed under their names. The
+  selection survives while you read a paper's lineage, where their papers keep their
+  colour instead of the upstream/downstream one.
 - A toggle switches between "any authorship" and "last-author only".
 
 ## 3. Explore the field
@@ -58,7 +63,7 @@ by name, so a shared link keeps pointing at the same thing after the map is rebu
 
 ![Tour](docs/media/tour.gif)
 
-A quick tour plays the first time you open the map, and the **Tutorial** link replays it:
+The **Tutorial** link in the panel plays a walkthrough:
 [docs/media/tutorial.mp4](docs/media/tutorial.mp4)
 
 ## Reading the map
@@ -66,7 +71,7 @@ A quick tour plays the first time you open the map, and the **Tutorial** link re
 - **x-axis = publication year.** Citations only ever flow left to right.
 - **Bands = citation communities**, sized by paper count.
 - **Bright routes = main paths** (edges weighted by search path count).
-- **Dot size = citations.** Colours belong to the people you pin.
+- **Dot size = citations.** Colour belongs to the people you have selected.
 - **Lineage lines** can be switched off when you only want to read the points.
 
 ## Data notes

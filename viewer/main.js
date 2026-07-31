@@ -126,7 +126,7 @@ const EDGE_VS = `#version 300 es
   uniform float uOnlyLineage; // 1 = 系譜以外を描かない
   uniform float uColorMode;   // 0 = ラボ, 1 = venue(エッジは単色)
   uniform float uAttrOnly;    // 1 = ラボ線だけ描く
-  uniform float uIsolate;     // >=0 のときそのスロットのラボだけ描く
+  uniform int uIsoMask;       // 0 = 絞り込みなし。bit i = スロット i の人にフォーカス中
   uniform float uClickLines;  // 0 = クリック起因の線(選択系譜・ラボ線)を描かない
   uniform vec3  uLabColors[16];
   out vec4 vColor;
@@ -136,7 +136,8 @@ const EDGE_VS = `#version 300 es
     if (uSelActive > 0.5 && uOnlyLineage > 0.5 && !inLineage) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
     bool isLab = aLab < 254.0 && uClickLines > 0.5;
     if (uAttrOnly > 0.5 && !isLab) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
-    if (uClickLines > 0.5 && uIsolate >= 0.0 && abs(aLab - uIsolate) > 0.5) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
+    int lab = int(aLab);
+    if (uClickLines > 0.5 && uIsoMask != 0 && (lab > 15 || (uIsoMask & (1 << lab)) == 0)) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
 
     // 重みが大きいほど濃く。重み0のエッジも薄く残す(全体の地形として意味がある)
     float a = uAlpha * (0.25 + 0.75 * aWeight);
@@ -192,6 +193,7 @@ const NODE_VS = `#version 300 es
   in vec3 aColor;
   in float aMag;      // log(1 + cited_by) を 0..1 に正規化したもの
   in float aBoost;    // 固定した人の論文を拡大(クリックしやすさ)
+  in float aFocus;    // 1 = 選択中の著者の論文
   in float aState;
   ${VIEW}
   ${LINEAGE_COLORS}
@@ -208,11 +210,15 @@ const NODE_VS = `#version 300 es
     vColor = aColor;
     vAlpha = 0.85;
     if (uSelActive > 0.5) {
+      // 系譜・分野・検索の中でも、**選択中の著者の論文は本人の色のまま**にする。
+      // 上流/下流は位置(選択論文の左右)で読めるので、色を人に譲っても向きは失われない。
+      bool mine = aFocus > 0.5;
       if (aState < 0.5) { vAlpha = 0.13; }
-      else if (aState < 1.5) { vColor = C_UP; size *= 1.5; }
-      else if (aState < 2.5) { vColor = C_DOWN; size *= 1.5; }
-      else if (aState < 3.5) { vColor = C_SELF; size *= 4.0; }
-      else { vColor = C_MATCH; size *= 2.6; }
+      else if (aState < 1.5) { if (!mine) vColor = C_UP; size *= 1.5; }
+      else if (aState < 2.5) { if (!mine) vColor = C_DOWN; size *= 1.5; }
+      else if (aState < 3.5) { vColor = C_SELF; size *= 0.6; }   // 選択論文は小さく(扇の中心なので位置で分かる)
+      else { if (!mine) vColor = C_MATCH; size *= 1.35; }   // 分野・検索のヒットは数が多いので控えめに
+      if (mine && aState > 0.5) size *= 1.25;   // 人の色は目立たせないと系譜の海に埋もれる
     }
     gl_PointSize = size;
   }`;
@@ -370,7 +376,7 @@ async function main() {
     // ラボモードの点の色は applyChosenLabs() が埋める(選択で変わるため)
   }
 
-  let edgeSlotBuf = null, attrColorBuf = null, nodeBoostBuf = null;
+  let edgeSlotBuf = null, attrColorBuf = null, nodeBoostBuf = null, nodeFocusBuf = null;
   let topIdxBuf = null, topIdxCount = 0;   // 色付きノードを最前面に描く2パス目用
   // 選んだラボ → 色スロット。選ばれていないラボ線は「その他のラボ」スロット(8)。
   // 著者 -> その人の論文。人での検索と色付けに使う。
@@ -389,6 +395,7 @@ async function main() {
   // 人を絞り込んだときの pick 制限と、点の拡大に使う。
   const nodeSlot = new Uint8Array(n).fill(255);
   const nodeBoost = new Float32Array(n).fill(1);
+  const nodeFocus = new Float32Array(n);   // 1 = 選択中の著者の論文(系譜表示中も色を保つ)
 
   function applyPinned() {
     // 当て方は点にも線にも同じ定義を使う:
@@ -402,6 +409,7 @@ async function main() {
     // 固定した人ごとのビット。スロットは最大8なので Uint8 で足りる。
     const mask = new Uint16Array(n);
     pinned.forEach((p, slot) => {
+      if (!p) return;   // 空きスロット(色を動かさないために穴を残している)
       for (const i of papersByAuthor.get(p.ai) || []) {
         const as = meta.nodes[i].a || [];
         if (lastOnly && as[as.length - 1] !== p.ai) continue;
@@ -413,13 +421,22 @@ async function main() {
     // するが、絞り込み中はその人のビットが立っていれば**その人のスロット**として
     // 扱う — さもないと共著論文が「他人の論文」扱いになり、pick からも外れて
     // クリックできなくなる(実際に起きたバグ)。
-    const isoBit = isolatedLab >= 0 && isolatedLab < 15 ? 1 << isolatedLab : 0;
-    const slotOf = (m, fallback) =>
-      m ? (m & isoBit ? isolatedLab : 31 - Math.clz32(m & -m)) : fallback;
+    // 複数フォーカス中に両者の共著論文が来たら、フォーカス集合の中で若いスロットを採る
+    // (決定論のため。フォーカス外の人しか居なければ従来どおり最小スロット)。
+    const focBits = focusBits();      // 誰の色にするか(抑止中も有効)
+    const isoBits = isoMask();        // 他を沈めるか(表示中のみ)
+    const lowest = (b) => 31 - Math.clz32(b & -b);
+    const slotOf = (m, fallback) => {
+      if (!m) return fallback;
+      const hit = m & focBits;
+      return lowest(hit || m);
+    };
 
+    // 色が付くのは**選んだ人だけ**。ピンはあくまで候補で、選ぶまでは他のラボと同じ扱い。
     for (let e = 0; e < edgeCount; e++) {
       const m = mask[edges[e * 2]] & mask[edges[e * 2 + 1]];
-      const v = slotOf(m, edgeLab[e] === NO_LAB ? 255 : 15);   // 固定していないラボ線は「その他」
+      let v = slotOf(m, edgeLab[e] === NO_LAB ? 255 : 15);
+      if (v < 15 && !(focBits & (1 << v))) v = 15;   // 選んでいない人の線は「その他のラボ」
       edgeA[e * 2] = v; edgeA[e * 2 + 1] = v;
     }
 
@@ -427,9 +444,11 @@ async function main() {
       const slot = slotOf(mask[i], nodeLab[i] === NO_LAB ? 255 : 15);
       nodeSlot[i] = slot;
       // 固定した人の論文は点を大きくして、狙ってクリックできるようにする
-      nodeBoost[i] = slot < 15 ? (isolatedLab >= 0 && slot === isolatedLab ? 2.4 : 1.7) : 1.0;
-      let lc = slot === 255 ? NON_LAB : LAB_RGB[slot];
-      if (isolatedLab >= 0 && slot !== isolatedLab) lc = NON_LAB;  // isolate dims points too
+      const inFocus = slot < 15 && (focBits & (1 << slot)) !== 0;
+      nodeFocus[i] = inFocus ? 1 : 0;
+      nodeBoost[i] = inFocus ? 2.4 : 1.0;
+      // 選んでいない人の論文は、ピン済みでも色を持たない(選択が唯一の発色条件)
+      const lc = inFocus ? LAB_RGB[slot] : NON_LAB;
       attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
     }
 
@@ -440,21 +459,33 @@ async function main() {
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, attrColors);
       gl.bindBuffer(gl.ARRAY_BUFFER, nodeBoostBuf);
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, nodeBoost);
+      gl.bindBuffer(gl.ARRAY_BUFFER, nodeFocusBuf);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, nodeFocus);
       rebuildTopIdx();
     }
     drawLegend();
     schedule();
   }
 
+  // 色はスロット番号で決まるので、**外した人の穴は埋めない**。詰めると後ろの人の色が
+  // 全部ずれて、見ていた線が別人の色になる。末尾の空きだけ回収してスロットを枯らさない。
+  const pinCount = () => pinned.reduce((t, p) => t + (p ? 1 : 0), 0);
+  function unpinSlot(slot) {
+    if (!pinned[slot]) return;
+    pinned[slot] = null;
+    focused = focused.filter((s) => s !== slot);
+    while (pinned.length && !pinned[pinned.length - 1]) pinned.pop();
+    applyPinned();
+  }
   function togglePinned(ai) {
-    const at = pinned.findIndex((p) => p.ai === ai);
-    isolatedLab = -1;   // スロットが入れ替わるので絞り込みは必ず解除
-    if (at >= 0) pinned.splice(at, 1);
-    else if (pinned.length < LAB_HEX.length) {
-      pinned.push({ ai, labId: labByAuthor.has(ai) ? labByAuthor.get(ai) : null });
-    } else {
-      return false;   // 8スロット使い切り
+    const at = pinned.findIndex((p) => p && p.ai === ai);
+    if (at >= 0) { unpinSlot(at); return true; }
+    let slot = pinned.findIndex((p) => !p);
+    if (slot < 0) {
+      if (pinned.length >= LAB_HEX.length) return false;   // スロット使い切り
+      slot = pinned.length;
     }
+    pinned[slot] = { ai, labId: labByAuthor.has(ai) ? labByAuthor.get(ai) : null };
     applyPinned();
     return true;
   }
@@ -526,6 +557,8 @@ async function main() {
   attrib(nodeProg, 'aColor', attrColorBuf, 3);
   nodeBoostBuf = buffer(nodeBoost, gl.DYNAMIC_DRAW);
   attrib(nodeProg, 'aBoost', nodeBoostBuf, 1);
+  nodeFocusBuf = buffer(nodeFocus, gl.DYNAMIC_DRAW);
+  attrib(nodeProg, 'aFocus', nodeFocusBuf, 1);
   topIdxBuf = gl.createBuffer();
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, topIdxBuf);   // nodeVao に記録される
   attrib(nodeProg, 'aMag', buffer(mags), 1);
@@ -603,7 +636,7 @@ async function main() {
     gl.uniform1f(uni(edgeProg, 'uColorMode'),
       ui.colorMode.value === 'venue' ? 1 : 0);
     gl.uniform1f(uni(edgeProg, 'uAttrOnly'), 0);    // Lineage lines only UI は廃止
-    gl.uniform1f(uni(edgeProg, 'uIsolate'), isolatedLab);
+    gl.uniform1i(uni(edgeProg, 'uIsoMask'), isoMask());
     gl.uniform1f(uni(edgeProg, 'uClickLines'), ui.clickLines.checked ? 1 : 0);
     gl.uniform3fv(uni(edgeProg, 'uLabColors'), LAB_FLAT);
     gl.bindVertexArray(edgeVao);
@@ -668,7 +701,6 @@ async function main() {
   let fieldSel = null;   // {kind: 'band'|'sub', idx}
   let fieldPanelMembers = null;   // 選択中分野のメンバー(被引用順)。ピン変更時の再描画に使う
   let fieldPanelHeader = null;    // 分野パネルの見出し。著者パネルから Esc で戻るとき復元する
-  let authorSel = -1;             // 著者パネルに出している著者。論文選択が常に優先
   const fieldObj = () =>
     fieldSel && (fieldSel.kind === 'band' ? meta.bands[fieldSel.idx] : meta.subbands[fieldSel.idx]);
   const fieldMembers = (o) => {
@@ -694,8 +726,7 @@ async function main() {
       b[1] - a[1] || String(meta.authors[a[0]]).localeCompare(String(meta.authors[b[0]])));
     // 著者は全員出す(スクロール内なので切り捨て不要)。件数はサマリーに明示。
     const auRows = authors.map(([ai, cnt]) => {
-      const slot = pinned.findIndex((q) => q.ai === ai);
-      const dot = slot >= 0 ? `<i style="background:${LAB_HEX[slot]}"></i>` : '<i class="empty"></i>';
+      const dot = authorDot(pinned.findIndex((q) => q && q.ai === ai));
       return `<div class="person" data-ai="${ai}">${dot}${escapeHtml(meta.authors[ai] || '?')}` +
              `<span class="sub">${cnt} papers</span></div>`;
     }).join('');
@@ -713,11 +744,13 @@ async function main() {
       (auRows || '<span class="hintline">No author data</span>') + '</div></details>';
   }
 
-  // --- 著者パネル ---
-  // 論文を選択していないときに著者をクリックすると、その人の情報を右パネルに出す。
-  // 論文を選択すると論文パネルが常に優先する(select() が authorSel を消す)。
-  function showAuthorPanel(ai) {
-    authorSel = ai;
+  // --- 著者フォーカスとパネル ---
+  // ピン = 色を持つ / フォーカス = その中でいま注目している部分集合。著者行のクリックは
+  // どこから押しても「ピンを確保してフォーカスをトグル」に統一する(ピン解除は凡例の × だけ)。
+  // 複数人を選べるので、パネルは1人目を開いたまま、2人目以降を折りたたみで縦に積む。
+  const authorStats = new Map();   // 著者ごとの集計は使い回す(論文数千件の走査)
+  function statsFor(ai) {
+    if (authorStats.has(ai)) return authorStats.get(ai);
     const byCited = (a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0);
     const papers = (papersByAuthor.get(ai) || []).slice().sort(byCited);
     // 著者順の数え方は論文パネルの ◂ 印と同じ定義に揃える: 単著は著者順に意味が無いので
@@ -735,49 +768,124 @@ async function main() {
       }
       if (nd.s != null && nd.s >= 0) bySub.set(nd.s, (bySub.get(nd.s) || 0) + 1);
     }
-    const lab = labByAuthor.has(ai) ? meta.labs[labByAuthor.get(ai)] : null;
-    document.getElementById('selTitle').textContent = meta.authors[ai] || '?';
-    document.getElementById('selMeta').innerHTML =
-      `${papers.length.toLocaleString()} papers` +
-      (papers.length ? ` · ${y0}–${y1}` : '') +
-      (firstN || lastN ? ` · first author on ${firstN} · last author on ${lastN}` : '') +
-      (lab ? ` · lab lineage ${lab.edges.toLocaleString()} links` : '') +
-      `<br><span class="cov">Counting only papers inside this corpus’ venues</span>`;
-    const fields = [...bySub.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0]);
-    const TOPF = 10;
-    const fieldRows = fields.slice(0, TOPF).map(([si, cnt]) => {
+    const st = {
+      papers, y0, y1, firstN, lastN,
+      lab: labByAuthor.has(ai) ? meta.labs[labByAuthor.get(ai)] : null,
+      fields: [...bySub.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0]),
+    };
+    authorStats.set(ai, st);
+    return st;
+  }
+
+  // 著者名の色づけは全部ここを通す。色が付くのは選択中の人だけ、ピンだけの人は
+  // 彩度を落とした候補として出す(凡例と同じ規則)。
+  const slotOfAuthor = (ai) => pinned.findIndex((q) => q && q.ai === ai);
+  const authorDot = (slot) =>
+    slot < 0 ? '<i class="empty"></i>'
+             : `<i class="${focused.includes(slot) ? 'on' : 'dim'}" style="background:${LAB_HEX[slot]}"></i>`;
+  const isFocusedAuthor = (ai) => { const sl = slotOfAuthor(ai); return sl >= 0 && focused.includes(sl); };
+
+  const metaLineFor = (st) =>
+    `${st.papers.length.toLocaleString()} papers` +
+    (st.papers.length ? ` · ${st.y0}–${st.y1}` : '') +
+    (st.firstN || st.lastN ? ` · first author on ${st.firstN} · last author on ${st.lastN}` : '') +
+    (st.lab ? ` · lab lineage ${st.lab.edges.toLocaleString()} links` : '');
+
+  const TOPF = 10;
+  function authorBody(ai, st) {
+    const fieldRows = st.fields.slice(0, TOPF).map(([si, cnt]) => {
       const sb = meta.subbands[si];
       return `<div class="person frow" data-fk="sub" data-fi="${si}">` +
              `${escapeHtml(sb.name || (sb.keywords || []).slice(0, 3).join(' · '))}` +
              `<span class="sub">${cnt} papers</span></div>`;
     }).join('');
-    document.getElementById('lineageLists').innerHTML =
-      `<details class="fold" open><summary>Fields — click to explore` +
-      (fields.length > TOPF ? ` (top ${TOPF} of ${fields.length})` : '') +
-      `</summary>` +
-      (fieldRows || '<span class="hintline">No field data</span>') + '</details>' +
-      `<details class="fold" open><summary>Papers — most cited first, click to trace</summary>` +
-      `<div class="scroll">` + olRows(papers, 200) + '</div></details>';
+    return `<details class="fold" open><summary>Fields — click to explore` +
+           (st.fields.length > TOPF ? ` (top ${TOPF} of ${st.fields.length})` : '') +
+           `</summary>` +
+           (fieldRows || '<span class="hintline">No field data</span>') + '</details>' +
+           `<details class="fold" open><summary>Papers — most cited first, click to trace</summary>` +
+           `<div class="scroll">` + olRows(st.papers, 200) + '</div></details>';
+  }
+
+  // 2人目以降のカードの開閉状態。人を足しても既に開いた人は開いたままにする。
+  const cardOpen = new Set();
+
+  function renderFocusPanel() {
+    if (!focusOn()) return;
+    const people = focused.filter((s) => s < 15 && pinned[s]);
+    if (!people.length) {   // Other labs だけを選んでいる状態。地図は絞るがパネルは出さない
+      lineageEl.style.display = 'none';
+      lineageEl.classList.remove('field-mode');
+      document.body.classList.remove('has-selection');
+      return;
+    }
+    document.getElementById('selTitle').textContent =
+      people.length > 1 ? `${people.length} people` : (meta.authors[pinned[people[0]].ai] || '?');
+    document.getElementById('selMeta').innerHTML =
+      `<span class="cov">Counting only papers inside this corpus’ venues` +
+      (people.length > 1 ? ` · <span class="act" data-clear="1">clear all</span>` : '') + `</span>`;
+
+    // 全員を同じカードにする。1人目も折りたためる(既定は開いた状態)。
+    document.getElementById('lineageLists').innerHTML = people.map((slot) => {
+      const ai = pinned[slot].ai, st = statsFor(ai);
+      return `<details class="acard"${cardOpen.has(ai) ? ' open' : ''} data-ai="${ai}">` +
+             `<summary><i style="background:${LAB_HEX[slot]}"></i>` +
+             `${escapeHtml(meta.authors[ai] || '?')}` +
+             `<em class="drop" data-drop="${slot}" title="Remove from selection">×</em></summary>` +
+             `<div class="ameta">${metaLineFor(st)}</div>` + authorBody(ai, st) + '</details>';
+    }).join('');
     lineageEl.classList.add('field-mode');   // 論文パネル用の counts / 著者行は使わない
     lineageEl.style.display = 'block';
     lineageEl.scrollTop = 0;
     document.body.classList.add('has-selection');
   }
 
-  // 著者パネルを閉じる。分野選択が生きていれば分野パネルの内容に戻す。
-  function closeAuthorPanel() {
-    if (authorSel < 0) return;
-    authorSel = -1;
-    if (fieldSel && fieldPanelMembers && fieldPanelHeader) {
-      document.getElementById('selTitle').textContent = fieldPanelHeader.title;
-      document.getElementById('selMeta').innerHTML = fieldPanelHeader.meta;
-      renderFieldPanel();
-      lineageEl.scrollTop = 0;
-    } else {
+  // フォーカスの表示が抑止されている(論文・分野・検索が出ている)ときは、
+  // パネルを畳んで地図の色も戻す。集合そのものは保持する。
+  function refreshFocus() {
+    applyPinned();          // 中で drawLegend()、点と線の色・pick 対象が入れ替わる
+    if (focusOn()) renderFocusPanel();
+    else if (selected < 0 && !fieldSel && !searchActive) {   // -1 は truthy なので比較で書く
       lineageEl.style.display = 'none';
       lineageEl.classList.remove('field-mode');
       document.body.classList.remove('has-selection');
     }
+  }
+
+  function toggleFocusSlot(slot) {
+    if (slot < 0 || slot > 15) return;
+    const at = focused.indexOf(slot);
+    if (at >= 0) focused.splice(at, 1);
+    else {
+      if (!focused.length && pinned[slot]) cardOpen.add(pinned[slot].ai);   // 1人目は開いて出す
+      focused.push(slot);
+    }
+    // 論文・分野の選択は壊さない — 背景で足しておき、Esc で戻ったときに効く。
+    // 検索のハイライト(黄)だけは畳む。何を見ているのか分からなくなるため。
+    if (focused.length && searchActive) {
+      searchActive = false;
+      nodeState.fill(0); edgeState.fill(0); uploadStates();
+    }
+    refreshFocus();
+  }
+
+  // 著者行のクリック(検索結果・分野パネル・論文パネルのチップ・凡例)はすべてここへ。
+  // 論文を選択中でも**フォーカスには足す**(表示は抑止されたまま、Esc で戻ってくる)。
+  function focusAuthor(ai) {
+    let slot = pinned.findIndex((p) => p && p.ai === ai);
+    if (slot < 0) {
+      if (!togglePinned(ai)) return false;   // 15人上限
+      slot = pinned.findIndex((p) => p && p.ai === ai);
+    }
+    toggleFocusSlot(slot);
+    return true;
+  }
+
+  function clearFocus() {
+    if (!focused.length) return;
+    focused = [];
+    cardOpen.clear();
+    refreshFocus();
   }
 
   function clearField() {
@@ -785,13 +893,13 @@ async function main() {
     fieldSel = null;
     fieldPanelMembers = null;
     fieldPanelHeader = null;
-    authorSel = -1;
     nodeState.fill(0); edgeState.fill(0); uploadStates();
     lineageEl.style.display = 'none';
     lineageEl.classList.remove('field-mode');
     document.body.classList.remove('has-selection');
     renderFieldTree();
     drawLegend();   // venue チップの選択中マークも消す
+    refreshFocus(); // 分野を閉じたら著者フォーカスへ戻る
     schedule();
   }
 
@@ -855,6 +963,7 @@ async function main() {
       }
     }
     renderFieldTree();
+    if (focused.length) applyPinned();   // 分野表示中はフォーカスの絞り込みを解く
     if (kind !== 'venue') {
       document.getElementById('grpFields').open = true;
       const picked = document.querySelector('#fieldTree .picked');
@@ -988,7 +1097,7 @@ async function main() {
       else if (st === S_DOWN) buckets[1].push(i);
       else if (st === S_MATCH) buckets[2].push(i);
       else if (st === S_SELF) buckets[3].push(i);
-      else if (nodeSlot[i] < 15) buckets[0].push(i);
+      else if (nodeFocus[i]) buckets[0].push(i);
     }
     const idx = new Uint32Array(buckets.reduce((t, b) => t + b.length, 0));
     let off = 0;
@@ -1079,7 +1188,6 @@ async function main() {
     selected = i;
     searchActive = false;
     fieldSel = null;
-    authorSel = -1;   // 論文パネルが常に優先。解除(-1)でも著者パネルは閉じる
     renderFieldTree();
     highlightedSub = -1;
     localClusters = null;
@@ -1090,6 +1198,7 @@ async function main() {
       lineage = null;
       lineageEl.style.display = 'none';
       paintLineage();
+      refreshFocus();   // 論文を閉じたら、選んでいた著者がそのまま戻ってくる
       return;
     }
 
@@ -1101,6 +1210,7 @@ async function main() {
       down: bfs(i, outAdj, maxDepth),   // 未来方向 = この論文を(間接的に)引用したもの
     };
     showLineagePanel(i, lineage.up, lineage.down);
+    refreshFocus();         // 沈めていた色を焼き直す(系譜表示中は絞り込みを解く)
     runLocalClustering();   // local clusters は常時表示(選択のたびに自動計算、数十ms)
     paintLineage();
     panToNode(i);           // パネル表示後に呼ぶ(パネル幅を差し引いて中心を出すため)
@@ -1378,12 +1488,19 @@ async function main() {
 
   const lowerAuthors = (meta.authors || []).map((a) => a.toLowerCase());
 
-  function runSearch(query) {
+  // listOnly = 結果リストだけ描き直す。著者をフォーカスした直後に呼ぶ用で、
+  // 地図のハイライト(黄)や選択状態には触れない。
+  const runSearchList = (q) => runSearch(q, true);
+  function runSearch(query, listOnly) {
     const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
     const box = document.getElementById('searchResults');
 
     if (!terms.length) {
-      if (searchActive) { searchActive = false; nodeState.fill(0); edgeState.fill(0); uploadStates(); }
+      if (searchActive) {
+        searchActive = false;
+        nodeState.fill(0); edgeState.fill(0); uploadStates();
+        refreshFocus();   // 検索を消したら選択中の著者が戻ってくる
+      }
       box.innerHTML = '';
       return;
     }
@@ -1434,18 +1551,21 @@ async function main() {
     const hits = [...hitSet];
     hits.sort((a, b) => (meta.nodes[b].c || 0) - (meta.nodes[a].c || 0));
 
-    selected = -1;
-    fieldSel = null;
-    authorSel = -1;
-    renderFieldTree();
-    lineageEl.style.display = 'none';
-    lineageEl.classList.remove('field-mode');
-    document.body.classList.remove('has-selection');
-    searchActive = hits.length > 0;
-    nodeState.fill(0);
-    edgeState.fill(0);
-    for (const i of hits.slice(0, MAX_MARK)) nodeState[i] = S_MATCH;
-    uploadStates();
+    if (!listOnly) {
+      selected = -1;
+      fieldSel = null;
+      renderFieldTree();
+      lineageEl.style.display = 'none';
+      lineageEl.classList.remove('field-mode');
+      document.body.classList.remove('has-selection');
+      searchActive = hits.length > 0;
+      nodeState.fill(0);
+      edgeState.fill(0);
+      for (const i of hits.slice(0, MAX_MARK)) nodeState[i] = S_MATCH;
+      uploadStates();
+      // 検索し直したらフォーカスの表示は一旦引っ込む(集合は保持。著者を押せば戻る)
+      if (focused.length) applyPinned();
+    }
 
     // --- 関連語(共起 PMI)。クリックで語を足す。 ---
     let chips = '';
@@ -1457,9 +1577,9 @@ async function main() {
     }
 
     const peopleRows = people.slice(0, 6).map((p) => {
-      const slot = pinned.findIndex((q) => q.ai === p.ai);
+      const slot = pinned.findIndex((q) => q && q.ai === p.ai);
       const lab = labByAuthor.has(p.ai) ? meta.labs[labByAuthor.get(p.ai)] : null;
-      const dot = slot >= 0 ? `<i style="background:${LAB_HEX[slot]}"></i>` : '<i class="empty"></i>';
+      const dot = authorDot(slot);
       return `<div class="person" data-ai="${p.ai}">${dot}${escapeHtml(meta.authors[p.ai])}` +
              `<span class="sub">${p.papers} papers` +
              (lab ? ` · lineage ${lab.edges}` : ' · no lineage') + '</span></div>';
@@ -1524,14 +1644,15 @@ async function main() {
       selectField(fh.dataset.fk, parseInt(fh.dataset.fi, 10));
       return;
     }
-    // 人: クリックで色を固定 / 解除(著者パネルは凡例チップから開く)
+    // 人: クリックで色を確保 + フォーカスをトグル(検索ハイライトは解除して著者へ移る)
     const person = e.target.closest('div.person');
     if (person) {
-      if (!togglePinned(parseInt(person.dataset.ai, 10))) {
+      const q = searchEl.value;
+      if (!focusAuthor(parseInt(person.dataset.ai, 10))) {
         alert('Up to 15 people can be pinned. Remove one with the × in the legend first.');
         return;
       }
-      runSearch(searchEl.value);
+      runSearchList(q);   // 結果リストは残す(続けて別の人も足せるように)
       return;
     }
     const row = e.target.closest('div[data-i]');
@@ -1629,11 +1750,11 @@ async function main() {
     const as = nd.a || [];
     document.getElementById('selAuthors').innerHTML = as.length
       ? as.map((ai, k) => {
-          const slot = pinned.findIndex((q) => q.ai === ai);
+          const slot = pinned.findIndex((q) => q && q.ai === ai);
           const isLast = k === as.length - 1 && as.length > 1;
           return `<span class="au${isLast ? ' last' : ''}" data-ai="${ai}"` +
                  (isLast ? ' title="Last author"' : '') +
-                 (slot >= 0 ? ` style="color:${LAB_HEX[slot]}"` : '') +
+                 (slot >= 0 && focused.includes(slot) ? ` style="color:${LAB_HEX[slot]}"` : '') +
                  `>${escapeHtml(meta.authors[ai] || '?')}${isLast ? ' ◂' : ''}</span>`;
         }).join('')
       : '<span class="au none">No author data</span>';
@@ -1664,25 +1785,51 @@ async function main() {
     // 著者パネルの Fields 行: クリックでその分野を選択
     const frow = e.target.closest('div.frow[data-fk]');
     if (frow) { selectField(frow.dataset.fk, parseInt(frow.dataset.fi, 10)); return; }
-    // 分野パネルの著者行: ピンの付け外しだけ(著者パネルは凡例チップから開く)
+    // カードの × / clear all
+    const drop = e.target.closest('[data-drop]');
+    if (drop) { toggleFocusSlot(parseInt(drop.dataset.drop, 10)); return; }
+    if (e.target.closest('[data-clear]')) { clearFocus(); return; }
+    // 著者行: 色を確保してフォーカスへ(分野パネルからでも著者フォーカスに移る)
     const person = e.target.closest('div.person[data-ai]');
     if (person) {
-      if (!togglePinned(parseInt(person.dataset.ai, 10))) {
+      if (!focusAuthor(parseInt(person.dataset.ai, 10))) {
         alert('Up to 15 people can be pinned. Remove one with the × in the legend first.');
-        return;
       }
-      if (fieldSel) renderFieldPanel(true);   // ドットの色を最新のピン状態に合わせる
       return;
     }
     const li = e.target.closest('li[data-i]');
     if (li) select(parseInt(li.dataset.i, 10));
   });
 
-  document.getElementById('lineageClose').addEventListener('click', () => select(-1));
+  // 2人目以降のカードの開閉を覚えておく(toggle はバブルしないので捕捉フェーズで拾う)
+  document.getElementById('lineageLists').addEventListener('toggle', (e) => {
+    const card = e.target;
+    if (!card.classList || !card.classList.contains('acard')) return;
+    const ai = parseInt(card.dataset.ai, 10);
+    if (!Number.isFinite(ai)) return;
+    if (card.open) cardOpen.add(ai); else cardOpen.delete(ai);
+  }, true);
+
+  // メタ行の「clear all」(著者フォーカスの一括解除)
+  document.getElementById('selMeta').addEventListener('click', (e) => {
+    if (e.target.closest('[data-clear]')) clearFocus();
+  });
+  document.getElementById('lineageClose').addEventListener('click', () => {
+    if (selected < 0 && focusOn()) { clearFocus(); return; }   // 著者パネルの × は選択解除
+    select(-1);
+  });
   document.getElementById('selAuthors').addEventListener('click', (e) => {
     const au = e.target.closest('.au[data-ai]');
     if (!au) return;
-    if (!togglePinned(parseInt(au.dataset.ai, 10))) {
+    // 論文パネルは開いたまま。フォーカスにだけ足しておき、Esc で論文を閉じると
+    // その人たちが地図に残る。**色が付いている人をもう一度押したらリストごと外す** —
+    // ここには凡例のような × が無いので、これが唯一の取り消し手段になる。
+    const ai = parseInt(au.dataset.ai, 10);
+    const slot = pinned.findIndex((q) => q && q.ai === ai);
+    if (slot >= 0 && focused.includes(slot)) {
+      unpinSlot(slot);
+      refreshFocus();
+    } else if (!focusAuthor(ai)) {
       alert('Up to 15 people can be pinned. Remove one with the × in the legend first.');
       return;
     }
@@ -1836,12 +1983,14 @@ async function main() {
     const restrictLineage = selected >= 0 || searchActive || !!fieldSel;
     // 人を絞り込み中は、その人の論文だけをクリック/ホバー対象にする
     // (系譜選択と同じ発想 — 沈めた点に吸われて別の論文へ飛ばないように)
-    const restrictPerson = !restrictLineage && isolatedLab >= 0 && isolatedLab < 15;
+    const isoBits = isoMask();
+    const restrictPerson = !restrictLineage && isoBits !== 0 && (isoBits & (1 << 15)) === 0;
     const { scale } = scaleOffset();
     const [ux, uy] = screenToNorm(clientX, clientY);
     // 画面上 12px を正規化座標に直したものを探索半径にする。
     // 人フォーカス中は対象が疎(数十点)で競合もいないので、半径を広げて狙いやすくする。
-    const r = restrictPerson ? 26 : 12;
+    // 複数人だと対象が密になり、半径を広げると隣の人の論文を拾ってしまう
+    const r = restrictPerson && focused.length === 1 ? 26 : 12;
     const rx = r / canvas.clientWidth / scale[0];
     const ry = r / canvas.clientHeight / scale[1];
     const g0x = Math.max(0, ((ux - rx) * GRID) | 0), g1x = Math.min(GRID - 1, ((ux + rx) * GRID) | 0);
@@ -1854,7 +2003,7 @@ async function main() {
         if (!cell) continue;
         for (const i of cell) {
           if (restrictLineage && nodeState[i] === S_NONE) continue;
-          if (restrictPerson && nodeSlot[i] !== isolatedLab) continue;
+          if (restrictPerson && (nodeSlot[i] > 15 || (isoBits & (1 << nodeSlot[i])) === 0)) continue;
           const dx = (np[i * 2] - ux) / rx, dy = (np[i * 2 + 1] - uy) / ry;
           const d = dx * dx + dy * dy;
           if (d < bestD) { bestD = d; best = i; }
@@ -1869,10 +2018,16 @@ async function main() {
     const i = pick(e.clientX, e.clientY);
     if (i < 0) { tooltip.style.display = 'none'; return; }
     const nd = meta.nodes[i];
-    const as = (nd.a || []).map((ai) => meta.authors[ai] || '?');
-    const authors = as.length
-      ? `<div class="m">${escapeHtml(as.slice(0, 6).join(', '))}` +
-        (as.length > 6 ? ` +${as.length - 6} more` : '') + '</div>'
+    // 選択中の人はツールチップの中でも本人の色にする(地図のどの色が誰かをここで確かめられる)
+    const aIds = nd.a || [];
+    const names = aIds.slice(0, 6).map((ai) => {
+      const nm = escapeHtml(meta.authors[ai] || '?');
+      const sl = slotOfAuthor(ai);
+      return sl >= 0 && focused.includes(sl) ? `<b style="color:${LAB_HEX[sl]}">${nm}</b>` : nm;
+    });
+    const authors = aIds.length
+      ? `<div class="m">${names.join(', ')}` +
+        (aIds.length > 6 ? ` +${aIds.length - 6} more` : '') + '</div>'
       : '';
     tooltip.innerHTML =
       `<div class="t">${escapeHtml(nd.t)}</div>` + authors +
@@ -1923,41 +2078,35 @@ async function main() {
     schedule();
   });
 
-  // 凡例クリックで1ラボに絞り込む(再クリックで解除)。
-  // 8色は隣接ペア基準では通るが CVD ΔE 6–8 の帯域なので、色だけに頼らせない二次符号化。
+  // 凡例チップ = 人の選択。クリックのたびにフォーカス集合へ出し入れする(累積トグル)。
+  // 15色は隣接ペア基準では通るが CVD ΔE 6–8 の帯域なので、色だけに頼らせない二次符号化。
   document.getElementById('legend').addEventListener('click', (e) => {
     const vch = e.target.closest('span[data-venue]');
     if (vch) { selectField('venue', vch.dataset.venue); drawLegend(); return; }
     const un = e.target.closest('[data-unpin]');
     if (un) {
-      const idx = parseInt(un.dataset.unpin, 10);
-      const removedAi = pinned[idx] ? pinned[idx].ai : -1;
-      pinned.splice(idx, 1);
-      isolatedLab = -1;
-      applyPinned();
-      if (authorSel === removedAi) closeAuthorPanel();
-      if (searchEl.value.trim()) runSearch(searchEl.value);
+      unpinSlot(parseInt(un.dataset.unpin, 10));   // スロットは空けたまま(色を動かさない)
+      refreshFocus();
+      // 一覧の色見本だけ描き直す。runSearch を全実行すると selected を -1 にしてしまい、
+      // 論文を見ている最中に人を外すと系譜まで消えていた。
+      if (searchEl.value.trim()) runSearchList(searchEl.value);
+      if (fieldSel) renderFieldPanel(true);
       return;
     }
     const chip = e.target.closest('span.lab');
     if (!chip) return;
-    const slot = parseInt(chip.dataset.slot, 10);
-    isolatedLab = isolatedLab === slot ? -1 : slot;
-    applyPinned();   // recolours points for the isolate as well
-    // 凡例チップ = 人の選択。絞り込みと同時に著者パネルを出す(論文選択中は論文が優先。
-    // slot 15 = Other labs は個人ではないのでパネルなし)
-    if (slot < 15 && pinned[slot]) {
-      if (isolatedLab === slot && selected < 0) showAuthorPanel(pinned[slot].ai);
-      else if (isolatedLab < 0 && authorSel === pinned[slot].ai) closeAuthorPanel();
-    }
+    toggleFocusSlot(parseInt(chip.dataset.slot, 10));
   });
   window.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     // メニューが開いていれば Esc はまずそれだけを閉じる(選択は保持)
     if (ctxEl.style.display !== 'none' && ctxEl.style.display !== '') { hideCtx(); return; }
     if (shareOpen()) { closeShare(); return; }   // 共有シートが開いていれば選択には触れない
-    if (selected < 0 && authorSel >= 0) { closeAuthorPanel(); return; }
-    if (selected < 0 && fieldSel) { clearField(); return; }
+    // 具体的なビューから順に1段ずつ戻す。著者フォーカスは最後まで残るので、
+    // 論文や分野を閉じると「さっき選んだ人たち」がそのまま戻ってくる。
+    if (selected >= 0) { select(-1); return; }
+    if (fieldSel) { clearField(); return; }
+    if (focused.length) { clearFocus(); return; }
     select(-1);
   });
 
@@ -1966,7 +2115,16 @@ async function main() {
   let totalLabEdges = 0;
   for (const lv of edgeLab) if (lv !== NO_LAB) totalLabEdges++;
   const LAB_FLAT = new Float32Array(LAB_RGB.flat());
-  let isolatedLab = -1;
+  // フォーカス中の人(pinned のスロット番号、選択順)。ピン = 色を持つ / フォーカス = その中で
+  // いま注目している部分集合、の2段構え。フォーカスは**永続的な選択**で、より具体的な
+  // ビュー(論文 > 分野 > 検索)が出ている間は表示だけ抑止し、Esc で戻ってくる。
+  let focused = [];
+  const focusOn = () => selected < 0 && !searchActive && !fieldSel && focused.length > 0;
+  // focusBits = 選ばれている人(表示が抑止されていても有効)。色の帰属はこちらで決める。
+  // isoMask = 「その人たちだけを残す」絞り込み。論文・分野・検索が出ている間は 0 にして、
+  // 系譜や分野のハイライトを壊さない。
+  const focusBits = () => focused.reduce((m, s) => m | (1 << s), 0);
+  const isoMask = () => (focusOn() ? focusBits() : 0);
 
   function drawLegend() {
     const el = document.getElementById('legend');
@@ -1985,27 +2143,30 @@ async function main() {
     }
     // 固定した人の凡例。クリックで1人に絞り込む(色だけに identity を負わせない二次符号化)。
     const pinnedEdges = pinned.reduce(
-      (t, q) => t + (q.labId != null ? meta.labs[q.labId].edges : 0), 0);
+      (t, q) => t + (q && q.labId != null ? meta.labs[q.labId].edges : 0), 0);
     const otherEdges = totalLabEdges - pinnedEdges;
     el.innerHTML = pinned
       .map((p, i) => {
+        if (!p) return '';   // 空きスロット(色を保つために残してある)
         const lab = p.labId != null ? meta.labs[p.labId] : null;
-        const on = isolatedLab < 0 || isolatedLab === i;
-        return `<span class="lab${on ? '' : ' off'}" data-slot="${i}">` +
-               `<i style="background:${LAB_HEX[i]}"></i>${escapeHtml(meta.authors[p.ai])}` +
+        const sel = focused.includes(i) ? ' sel' : '';
+        // 未選択でも「押したら何色になるか」は分かるように、彩度だけ CSS で落とす
+        return `<span class="lab${sel}" data-slot="${i}">` +
+               `<i style="background:${LAB_HEX[i]}"></i>` +
+               `${escapeHtml(meta.authors[p.ai])}` +
                `<em class="unpin" data-unpin="${i}" title="Unpin">×</em></span>`;
       })
       .join('') +
-      `<span class="lab${isolatedLab < 0 || isolatedLab === 15 ? '' : ' off'}" data-slot="15">` +
+      `<span class="lab${focused.includes(15) ? ' sel' : ''}" data-slot="15">` +
       `<i style="background:${LAB_OTHER}"></i>Other labs · ${otherEdges.toLocaleString()} links</span>` +
-      (pinned.length ? '' : '<span class="hintline">Search for a person to pin their color</span>');
+      (pinCount() ? '' : '<span class="hintline">Search for a person to pin their color</span>');
   }
 
   // 既定は自己引用系譜が長い順に上位8人。あとは検索で入れ替えられる。
   pinned = (meta.labs || []).slice(0, 5)
     .map((lab, id) => ({ ai: lab.ai, labId: id }));
   applyPinned();   // 中で drawLegend() まで走る
-  const defaultPins = pinned.map((p) => meta.authors[p.ai]).join(';');
+  const defaultPins = pinned.map((p) => (p ? meta.authors[p.ai] : '')).join(';');
 
   // --- 共有リンク(URL に「今見ている状態」を持たせる)---
   // 識別子は**再ビルドで変わらないもの**を使う: 論文は DOI、人と分野は名前。
@@ -2031,8 +2192,6 @@ async function main() {
     if (selected >= 0) {
       const nd = meta.nodes[selected];
       q.set('paper', nd.d || 'i' + selected);
-    } else if (authorSel >= 0) {
-      q.set('author', meta.authors[authorSel] || '');
     } else if (fieldSel) {
       if (fieldSel.kind === 'venue') q.set('venue', fieldSel.idx);
       else {
@@ -2042,8 +2201,11 @@ async function main() {
     } else if (searchEl.value.trim()) {
       q.set('q', searchEl.value.trim());
     }
+    // 選択中の著者は、論文や分野が主役のときも一緒に載せる(Esc で戻ってくる状態なので)
+    const foc = focused.filter((sl) => sl < 15 && pinned[sl]).map((sl) => meta.authors[pinned[sl].ai]);
+    if (foc.length) q.set('authors', foc.join(';'));
     // ピンは既定と違うときだけ載せる(既定は毎回同じなので URL を汚さない)
-    const names = pinned.map((p) => meta.authors[p.ai]).join(';');
+    const names = pinned.map((p) => (p ? meta.authors[p.ai] : '')).join(';');
     if (names !== defaultPins) q.set('pins', names);
     const r = (x) => Math.round(x * 1e4) / 1e4;
     q.set('v', [r(cam.cx), r(cam.cy), r(cam.zx), r(cam.zy)].join(','));
@@ -2077,16 +2239,13 @@ async function main() {
     }
 
     const paper = q.get('paper');
-    const author = q.get('author');
+    const author = q.get('authors') || q.get('author');   // author= は旧リンクの互換
     const band = q.get('band'), sub = q.get('sub'), venue = q.get('venue');
     if (paper) {
       const i = /^i\d+$/.test(paper) ? Math.min(n - 1, parseInt(paper.slice(1), 10)) : paperByDoi(paper);
       if (i >= 0) select(i);
       else statsEl.insertAdjacentHTML('beforeend',
         '<span class="ext">Shared link: that paper is not in this corpus</span>');
-    } else if (author) {
-      const ai = lowerAuthors.indexOf(author.toLowerCase());
-      if (ai >= 0) showAuthorPanel(ai);
     } else if (venue) {
       selectField('venue', venue);
     } else if (band || sub) {
@@ -2096,6 +2255,15 @@ async function main() {
     } else if (q.get('q')) {
       searchEl.value = q.get('q');
       runSearch(searchEl.value);
+    }
+
+    // 著者フォーカスは論文・分野と併存できるので、主選択とは独立に復元する
+    if (author) {
+      for (const nm of author.split(';').map((x) => x.trim()).filter(Boolean)) {
+        const ai = lowerAuthors.indexOf(nm.toLowerCase());
+        if (ai >= 0) focusAuthor(ai);
+      }
+      if (!paper && !venue && !band && !sub && !q.get('q')) refreshFocus();
     }
 
     // カメラは最後に。選択が走らせた自動パンより共有された画角を優先する。
@@ -2134,7 +2302,13 @@ async function main() {
       const nd = meta.nodes[selected];
       return `“${nd.t}” (${nd.y}, ${(nd.v || '?').toUpperCase()}) — its citation lineage on ${site}`;
     }
-    if (authorSel >= 0) return `${meta.authors[authorSel]} on ${site}`;
+    if (focusOn()) {
+      const nm = focused.filter((sl) => sl < 15 && pinned[sl]).map((sl) => meta.authors[pinned[sl].ai]);
+      if (nm.length) {
+        return (nm.length <= 3 ? nm.join(', ') : `${nm.slice(0, 3).join(', ')} and ${nm.length - 3} more`) +
+               ` on ${site}`;
+      }
+    }
     if (fieldSel) {
       const nm = fieldSel.kind === 'venue'
         ? String(fieldSel.idx).toUpperCase() : fieldName(fieldObj());
@@ -2196,7 +2370,8 @@ async function main() {
   window.PL = {
     pick, meta, cam,
     nodeSlot: () => nodeSlot,
-    isolated: () => isolatedLab,
+    focused: () => focused.slice(),
+    focusOn,
     pinned: () => pinned,
     // ノード i の画面座標(px)
     screenPos: (i) => {
@@ -2219,10 +2394,9 @@ async function main() {
 }
 
 // --- チュートリアル動画のオーバーレイ ---
-// 初回訪問時に自動で開く(「Don't show this again」で以後抑止、× はその回だけ閉じる)。
-// 動画は 13MB あるので、開くまで src を与えない(再訪ユーザーの帯域を食わない)。
+// **自動では出さない**(初回訪問でいきなり動画を被せるのはやめた)。パネルの
+// Tutorial リンクからだけ開く。動画は 13MB あるので、開くまで src を与えない。
 // main() より先に登録することで、Esc がまず動画を閉じ、選択解除には届かないようにする。
-const TUT_NEVER = 'plTutorialNever';
 const tutEl = document.getElementById('tut');
 const tutVideo = document.getElementById('tutVideo');
 function openTutorial(muted) {
@@ -2233,10 +2407,6 @@ function openTutorial(muted) {
 }
 function closeTutorial() { tutVideo.pause(); tutEl.style.display = 'none'; }
 document.getElementById('tutClose').addEventListener('click', closeTutorial);
-document.getElementById('tutNever').addEventListener('click', () => {
-  localStorage.setItem(TUT_NEVER, '1');
-  closeTutorial();
-});
 document.getElementById('tutorialLink').addEventListener('click', (e) => {
   e.preventDefault();        // href はフォールバック(中クリックで生の動画が開ける)
   openTutorial(false);       // 明示的な操作なので音声あり
@@ -2248,9 +2418,4 @@ window.addEventListener('keydown', (e) => {
     e.stopImmediatePropagation();
   }
 });
-// 共有リンクで来た人には自動再生しない — 見に来た当のビューを動画で隠すことになる。
-const _sharedView = ['paper', 'author', 'band', 'sub', 'venue', 'q']
-  .some((k) => new URLSearchParams(location.search).has(k));
-if (!localStorage.getItem(TUT_NEVER) && !_sharedView) openTutorial(true);
-
 main();

@@ -24,10 +24,21 @@ console must be clean.
 
 - **Search**: a paper query shows Related terms chips + paper list; a person query
   ("ishii") shows People rows with `papers · lineage N` / `no lineage`.
-- **Pin/unpin**: click a person row → appears in legend; × in legend removes; 9th pin
-  alerts instead of silently failing.
-- **Isolate**: click a legend chip → other chips get `.off` **and points dim too**;
-  re-click clears. Re-query the chip after each click (legend re-renders).
+- **Pin/unpin**: click a person row → appears in legend; × in legend removes; a 16th
+  pin alerts instead of silently failing. **Removing someone must not recolour anyone
+  else** — slots are kept as tombstones, so the remaining chips keep their exact
+  colours (only trailing empties are reclaimed).
+- **Author colouring is one rule everywhere**: a name or swatch takes its real colour
+  only when that person is selected. The hover tooltip colours selected authors inline,
+  the paper panel's author chips colour only selected ones, and the search/field author
+  swatches keep the hue but sit under a `saturate(.3)` filter (`i.dim`) until selected.
+- **Focus**: nothing on the map is coloured until you pick someone. Legend chips start
+  desaturated — the dot keeps the person's hue under a CSS `saturate(.3)` filter so you
+  can tell what colour they will get — with muted text; clicking one gives it `.sel`,
+  full colour and a bright label, **and only then do that person's points and lab lines
+  take colour**.
+  Re-click clears. Click several chips to focus several people. Re-query the chip after
+  each click (legend re-renders).
 - **Lineage**: select a paper → panel shows authors (last author marked ◂) and
   "N of M references are inside this corpus". Zero in-corpus refs must show the
   corpus-boundary explanation, never a bare empty list.
@@ -39,35 +50,60 @@ console must be clean.
   of the lineage panel — zoom must NOT change (`PL.cam.zx/zy` unchanged); drag or
   wheel mid-animation interrupts the pan. While the pane is hidden the pan is
   deferred and fires on visibilitychange.
-- **Person focus (legend chip)**: hover/click only hits that person's papers (others are
-  excluded, radius widened to 26px); their points render enlarged. **Co-authored papers
-  must stay clickable and coloured under EVERY co-author's isolate**, not just the
-  earliest-pinned one (slot assignment must prefer the isolated person's bit).
+- **Person focus** is a multi-select. A legend chip, a search People row, a field-panel
+  author row and an author chip in the paper panel all do the same thing: ensure the
+  person is pinned, then toggle them in the focus set (**unpinning is the legend × only**).
+  Hover/click hits only focused people's papers and their points render enlarged; the
+  widened 26px radius applies only when exactly one person is focused, since several make
+  the target field dense. **Co-authored papers must stay clickable and coloured under
+  EVERY co-author's focus** (slot assignment prefers the focused bits, lowest among them).
 - **Search hover**: while search highlights are active, hover/click only hits matched
   papers; clearing the search restores normal picking.
 - **Fields tree**: 14 band rows (pseudo "no-links" band excluded); band click expands
   subs AND selects (highlight + right-panel top-cited list); sub click narrows; re-click
   clears; map band/sub labels are clickable to the same action; while a field is
   selected hover/click hits only member papers; drilling into a paper switches to the
-  normal lineage view; Esc order is tutorial overlay → menu → paper selection → field.
+  normal lineage view.
+- **Band labels stay visible while a panel is open** — they shift left of the right
+  panel (`right: 352px`) instead of being hidden, so you can still see which band you
+  are in and click through to it. Below 900px they are hidden as before.
 - **Field panel sections**: two collapsible `details.fold` blocks, each with an
   inner scroll area — "Most cited" (top 30, "… N more" line) and
   "Authors — click to pin a color (N)" listing ALL authors (no cap; ~9k rows on the
   biggest band renders in ~55ms); BOTH default closed on a fresh field selection;
   fold open/closed state survives only the re-render caused by a pin toggle.
-  Author rows (and search People rows) pin/unpin ONLY — they must NOT open the
-  author panel (15-limit alert unchanged).
-- **Author panel** opens ONLY from the bottom legend: clicking a pinned person's
-  chip isolates them AND shows their panel — paper count, year range, last-author
-  count, lab-lineage links, Fields list (top 10 of N, click drills into the field),
-  Papers list (scrollable, cap labeled). Re-clicking the chip clears the isolate
-  and closes the panel; the "Other labs" chip isolates without a panel. Clicking a
-  paper switches to the normal paper panel; Esc closes the author panel first and
-  restores the field panel (folds closed) if a field was selected. Author chips
-  inside the PAPER panel keep the old behaviour (pin + stay on the paper).
+  Author rows focus the person (see below); the 15-limit alert is unchanged.
+- **Author panel** stacks every focused person: the first is laid out as before
+  every person is a card that collapses at their name (dot + name + × to drop), the
+  first open by default and the rest closed; the title reads "N people" past one and
+  the meta line carries "clear all". Inside a card: paper count, year range,
+  first/last-author counts, lab-lineage links, Fields (top 10 of N) and a scrollable
+  Papers list. The "Other labs" chip focuses without contributing a card. Fold state
+  survives adding a person.
+- **The focus set is persistent state.** Selecting a paper, a field or running a
+  search only *suspends* its display — the set survives, the legend keeps those chips
+  in full colour, and Esc brings it back. Esc order is share sheet → context menu →
+  paper → field → focus. **No author click ever drops a paper or field selection** —
+  from the paper panel, the legend or a field's author list they are added in the
+  background, and the search highlight is the only thing that gives way. Removing
+  someone from the legend while a paper is open must keep the paper too: refresh the
+  results list with `runSearchList`, never the full `runSearch` (which resets
+  `selected` and used to wipe the lineage).
+- **Paper-panel author chips cycle add → remove.** An uncoloured name pins and
+  focuses that person; clicking a name that is already coloured drops them from the
+  legend entirely, since the paper panel has no × of its own.
+- **Focused colours survive a lineage/field/search view**: those papers keep their own
+  colour instead of the upstream/downstream/match colour (direction still reads from
+  position) and are drawn slightly larger. Watch for stale dimming — `applyPinned()`
+  must re-run whenever the display flips between focused and suspended, or
+  non-focused points stay greyed.
 - **People search ranking**: exact whole-query name match first, then names
   containing every term, then partial matches; ties by paper count ("chun yu" puts
   Chun Yu on top, not the most-published partial match).
+- **Search → focus**: clicking a People row drops the yellow match highlight and switches
+  the map to the focused people, while the results list stays so more people can be added.
+  Typing a new query suspends the focus display (yellow comes back) without losing the
+  set, so people found under different queries accumulate.
 - **External links are plain anchors** (doi ↗ in the panel, Open DOI in the context
   menu): plain click opens a foreground tab; the browser-native Cmd/Ctrl+click is the
   supported way to open in background (JS cannot force it — a synthetic-click hack was
@@ -78,14 +114,12 @@ console must be clean.
   (People/Venue) swaps point colours and the legend.
 - **Lineage lines checkbox** (Lineage group, default on): off hides the selected
   paper's lineage lines AND pinned people's lab lines in one switch — points stay
-  highlighted/coloured either way; with lines off, isolate keeps ambient edges
+  highlighted/coloured either way; with lines off, focus keeps ambient edges
   (must not blank the map) while still dimming/restricting points.
-- **Tutorial overlay**: first load auto-opens the video muted; × closes for the
-  session, "Don't show this again" sets localStorage `plTutorialNever` (no auto-open
-  after reload); the "Tutorial" panel link reopens it with sound; the 13MB video
-  gets its `src` only when the overlay opens (check Network on a flagged reload);
-  Esc closes the overlay without touching the selection. It must NOT auto-open when
-  the URL carries view state — a shared link would be hidden behind the video.
+- **Tutorial overlay** never opens by itself — only the "Tutorial" panel link opens
+  it, with sound. The 13MB video gets its `src` only when the overlay opens (check
+  the Network tab on a fresh load: nothing until you click). Esc and × close the
+  overlay without touching the selection.
 - **Share sheet** (the "Share" panel link): opens an overlay with the link, a Copy
   button and X / Bluesky / LinkedIn / Email targets built from `intent` URLs — no
   third-party scripts may ever be loaded here. The headline sentence describes the
@@ -95,7 +129,8 @@ console must be clean.
   rewritten as you browse. Esc and a backdrop click close the sheet without
   touching the selection. `navigator.share` only: the "More…" button appears.
 - **Deep links**: `?paper=<doi>` (`i<index>` only when a paper has no DOI),
-  `?author=<name>`, `?band=`/`?sub=<field name>`, `?venue=<key>`, `?q=<query>`,
+  `?authors=<names;…>` (the focus set, written alongside whatever else is selected;
+  the older single `?author=` is still accepted), `?band=`/`?sub=<field name>`, `?venue=<key>`, `?q=<query>`,
   `?pins=<names;…>` (written only when the pins differ from the default five) and
   `?v=cx,cy,zx,zy`. Identifiers are DOIs and names, never indices, because indices
   change on every rebuild — a shared link must not silently point at a different
@@ -136,7 +171,7 @@ console must be clean.
   **pick() tests are meaningless while hidden** (all coordinates degenerate) — take a
   screenshot first to force a visible frame, then test.
 - **Re-query legend chips after every click** — the legend re-renders, detaching old nodes.
-- `window.PL` exposes `pick`, `meta`, `nodeSlot()`, `isolated()`, `pinned()`,
+- `window.PL` exposes `pick`, `meta`, `nodeSlot()`, `focused()`, `focusOn()`, `pinned()`,
   `screenPos(i)` for closure-internal verification.
 - A "colored dot near a person's line" is not necessarily their paper — verify with
   `PL.meta.nodes[i]` before concluding a pick bug (CoDine looked like an Ishii dot;
@@ -148,8 +183,9 @@ console must be clean.
   only inverse). Vertical pan/zoom/hover inverting means this broke.
 - Edges accumulate in the HDR buffer + log tone map — never thin the data to fix density.
 - Any display cap (top-N lists, highlight cap) must be labeled in the UI, never silent.
-- Categorical colors: pinned people up to 15 + "Other" (product decision); isolate/labels
-  are the required secondary encoding. Other categorical uses stay at max 8.
+- Categorical colors: pinned people up to 15 + "Other" (product decision); focus/labels
+  are the required secondary encoding. Pinning alone must never colour anything — a
+  colour on the map always means that person is selected. Other categorical uses stay at max 8.
 - UI copy is English and neutral: say "lab lineage", not "self-citation".
 - Production serves the map at `/` only: `vercel.json` redirects `/viewer`,
   `/viewer/` and `/viewer/index.html` there, and `<link rel="canonical">` points at

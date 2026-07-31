@@ -62,7 +62,10 @@ for one lineage only. Computed automatically on every selection:
 A citation is a **lab edge** when the same person is last author on both ends.
 When you pin people (up to 15), each edge is tested against the pinned set with a
 per-person bitmask; the Scope toggle switches between "any authorship" and
-"last-author only" for both points and lines. **Lineage lines** turns the selected
+"last-author only" for both points and lines. Focusing people narrows the map to
+that subset — the same bitmask goes to the shader, so any number of them can be
+lit at once. A focused person's papers keep their colour inside a lineage view as
+well, where direction is still readable from position. **Lineage lines** turns the selected
 paper's lineage and the pinned people's lab threads off together, leaving the
 points as the only encoding.
 
