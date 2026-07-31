@@ -153,12 +153,28 @@ def lab_lines(
 
     labs = []
     lab_author_ids = []
+    # ラボ内の**世代の深さ**(最長の引用鎖)。本数は「1本だけ自分を引いた人」も
+    # 「10年続く系列を持つ人」も同じ尺度に潰してしまうので、鎖の長さを別に持つ。
+    # ノード番号は (year, id) のトポロジカル順なので、昇順の DP で最長路が出る。
+    lab_edge_list: dict[str, list[tuple[int, int]]] = defaultdict(list)
+    for e in lab_mask:
+        a = last_authors[dst[e]]
+        if a:
+            lab_edge_list[a].append((int(src[e]), int(dst[e])))
+
+    def longest_chain(es: list[tuple[int, int]]) -> int:
+        depth: dict[int, int] = {}
+        for u, v in sorted(es):
+            depth[v] = max(depth.get(v, 1), depth.get(u, 1) + 1)
+        return max(depth.values()) if depth else 1
+
     for a, cnt in ranked:
         lab_author_ids.append(a)
         ps = papers_of.get(a) or []
         labs.append({
             "name": names.get(a, a),
             "edges": cnt,
+            "gens": longest_chain(lab_edge_list.get(a) or []),
             "papers": len(ps),
             "years": [min(nodes[i]["year"] for i in ps), max(nodes[i]["year"] for i in ps)]
             if ps else None,
@@ -167,7 +183,7 @@ def lab_lines(
     print(f"  ラボ線: {len(ranked):,} ラボ(色を付けるラボはビューア側で選択)")
     for lab in labs[:8]:
         yr = f"{lab['years'][0]}-{lab['years'][1]}" if lab["years"] else "-"
-        print(f"    {lab['edges']:>4} 本  {yr}  {lab['name']}")
+        print(f"    {lab['edges']:>4} 本 {lab['gens']:>3} 世代  {yr}  {lab['name']}")
     return edge_lab, node_lab, labs, lab_author_ids
 
 

@@ -63,7 +63,11 @@ for one lineage only. Computed automatically on every selection:
 
 ## Lab threads
 
-A citation is a **lab edge** when the same person is last author on both ends.
+A citation is a **lab edge** when the same person is last author on both ends —
+the person cited work they themselves led. The panel reports the **depth** of that
+line (the longest chain of such citations, computed by dynamic programming over the
+DAG) rather than a raw link count: 58% of people who have any lab edge have a chain
+of just two papers, while a sustained line runs 10+ generations.
 When you pin people (up to 15), each edge is tested against the pinned set with a
 per-person bitmask; the Scope toggle switches between "any authorship" and
 "last-author only" for both points and lines. Focusing people narrows the map to

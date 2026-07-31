@@ -793,7 +793,7 @@ async function main() {
     `${st.papers.length.toLocaleString()} papers` +
     (st.papers.length ? ` · ${st.y0}–${st.y1}` : '') +
     (st.firstN || st.lastN ? ` · first author on ${st.firstN} · last author on ${st.lastN}` : '') +
-    (st.lab ? ` · lab lineage ${st.lab.edges.toLocaleString()} links` : '');
+    (st.lab ? ` · lab lineage${st.lab.gens >= 3 ? ` \u2014 ${st.lab.gens} generations deep` : ''}` : '');
 
   const TOPF = 10;
   function authorBody(ai, st) {
@@ -1586,7 +1586,7 @@ async function main() {
       const dot = authorDot(slot);
       return `<div class="person" data-ai="${p.ai}">${dot}${escapeHtml(meta.authors[p.ai])}` +
              `<span class="sub">${p.papers} papers` +
-             (lab ? ` · lineage ${lab.edges}` : ' · no lineage') + '</span></div>';
+             (lab ? ' · lab lineage' : '') + '</span></div>';
     }).join('');
 
     // フィールド(帯・サブ帯)も名前・キーワードで検索できるようにする
@@ -1652,7 +1652,16 @@ async function main() {
     const person = e.target.closest('div.person');
     if (person) {
       const q = searchEl.value;
-      if (!focusAuthor(parseInt(person.dataset.ai, 10))) {
+      const pai = parseInt(person.dataset.ai, 10);
+      // 選択中の人をもう一度押したら、フォーカスを外すだけでなく一覧からも消す。
+      // 一覧に居るが未選択(既定のピンなど)の場合は、消さずに選択する。
+      if (isFocusedAuthor(pai)) {
+        togglePinned(pai);
+        refreshFocus();
+        runSearchList(q);
+        return;
+      }
+      if (!focusAuthor(pai)) {
         alert('Up to 15 people can be pinned. Remove one with the × in the legend first.');
         return;
       }
