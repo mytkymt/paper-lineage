@@ -1063,6 +1063,7 @@ async function main() {
   // 左パネルのツリー。バンド行クリック = 選択 + サブ展開、再クリックで解除。
   const expandedBands = new Set();
   function renderFieldTree() {
+    renderStateChips();
     const box = document.getElementById('fieldTree');
     if (!box || !meta.bands) return;
     const parts = [];
@@ -1229,6 +1230,59 @@ async function main() {
   // ホバー中だけの絞り込み(クリックで確定する前の下見)。-1 = プレビューなし
   let previewSub = -1, previewCluster = -1;
 
+  // いま効いている条件を上部にチップで出す。人は凡例が既にその役を担うので載せない。
+  // 注意: 起動時の renderFieldTree からも呼ばれるため、モジュール後方の変数に
+  // 依存しない(要素はその場で引く)。
+  function renderStateChips() {
+    const stateEl = document.getElementById('state');
+    if (!stateEl) return;
+    const chips = [];
+    if (EXT_MODE) chips.push({ act: 'venues', t: '+ related venues' });
+    if (selected >= 0) {
+      chips.push({ act: 'sel', t: '\u201c' + (meta.nodes[selected].t || '').slice(0, 34) + '\u201d' });
+      if (highlightedCluster >= 0 && localClusters && localClusters[highlightedCluster]) {
+        const c = localClusters[highlightedCluster];
+        chips.push({ act: 'trend', t: '\u21b3 ' + (c.name || c.label || '').slice(0, 30) });
+      } else if (highlightedSub >= 0 && meta.subbands[highlightedSub]) {
+        chips.push({ act: 'trend', t: '\u21b3 ' + (fieldName(meta.subbands[highlightedSub]) || '').slice(0, 30) });
+      }
+    }
+    if (fieldSel) {
+      chips.push({ act: 'field', t: (fieldSel.kind === 'venue'
+        ? String(fieldSel.idx).toUpperCase()
+        : (fieldName(fieldObj()) || '')).slice(0, 30) });
+    }
+    if (searchActive && searchEl.value.trim()) {
+      chips.push({ act: 'search', t: 'search: ' + searchEl.value.trim().slice(0, 24) });
+    }
+    const dv = parseInt(ui.depth.value, 10);
+    if (dv !== 2) chips.push({ act: 'depth', t: 'depth: ' + (dv >= 9 ? 'all' : dv + ' hop' + (dv > 1 ? 's' : '')) });
+    stateEl.innerHTML = chips.map((c) =>
+      `<span class="chip">${escapeHtml(c.t)}` +
+      `<em data-act="${c.act}" role="button" aria-label="Clear this filter" title="Clear this filter">\u00d7</em></span>`).join('');
+    stateEl.style.display = chips.length ? 'flex' : 'none';
+  }
+  document.getElementById('state').addEventListener('click', (e) => {
+    const em = e.target.closest('em[data-act]');
+    if (!em) return;
+    const act = em.dataset.act;
+    if (act === 'sel') select(-1);
+    else if (act === 'trend') {
+      previewSub = previewCluster = -1;
+      highlightedSub = -1; highlightedCluster = -1;
+      paintLineage();
+    } else if (act === 'field') clearField();
+    else if (act === 'search') { searchEl.value = ''; runSearch(''); }
+    else if (act === 'depth') {
+      ui.depth.value = '2';
+      ui.depth.dispatchEvent(new Event('input'));
+      renderStateChips();
+    } else if (act === 'venues') {
+      venueSet.checked = false;
+      venueSet.dispatchEvent(new Event('change'));   // 状態を引き継いでコア版へ
+    }
+  });
+
   function paintLineage() {
     nodeState.fill(0);
     edgeState.fill(0);
@@ -1257,6 +1311,7 @@ async function main() {
     }
 
     uploadStates();
+    renderStateChips();
     document.querySelectorAll('#lineageLists li.trend').forEach((el) => {
       el.classList.toggle('picked', el.classList.contains('local')
         ? parseInt(el.dataset.cl, 10) === highlightedCluster
@@ -1684,6 +1739,7 @@ async function main() {
       lineageEl.classList.remove('field-mode');
       document.body.classList.remove('has-selection');
       searchActive = hits.length > 0;
+      renderStateChips();
       nodeState.fill(0);
       edgeState.fill(0);
       for (const i of hits.slice(0, MAX_MARK)) nodeState[i] = S_MATCH;
@@ -2269,6 +2325,7 @@ async function main() {
     const v = parseInt(ui.depth.value, 10);
     document.getElementById('depthVal').textContent = v >= 9 ? 'all' : v === 1 ? '1 hop' : `${v} hops`;
     if (selected >= 0) select(selected);
+    renderStateChips();
   });
   ui.roleMode.addEventListener('change', applyPinned);
   ui.lines.addEventListener('change', schedule);

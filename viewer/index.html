@@ -310,6 +310,19 @@
     body.has-selection #bands { display: none; }
   }
 
+  /* いま効いている条件のチップ列。× でその条件だけ外せる */
+  #state { position: fixed; top: 46px; left: 300px; z-index: 3; display: none;
+           flex-wrap: wrap; gap: 6px; max-width: calc(100vw - 680px); pointer-events: auto; }
+  #state .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11px;
+                 color: #aab2c4; background: rgba(12,14,20,.88); border: 1px solid #2a3040;
+                 border-radius: 999px; padding: 3px 6px 3px 10px; white-space: nowrap; }
+  #state .chip em { font-style: normal; color: #6d7488; cursor: pointer; padding: 0 4px;
+                    border-radius: 999px; }
+  #state .chip em:hover { color: #fff; background: #ffffff14; }
+  @media (max-width: 700px) {
+    #state { top: 4px !important; left: 4px; right: 4px; max-width: none; z-index: 1; }
+  }
+
   /* キーボード操作のフォーカスを見えるように */
   :focus-visible { outline: 2px solid #6d90c9; outline-offset: 1px; border-radius: 3px; }
 
@@ -520,6 +533,7 @@
 </div>
 
 <div id="legend" class="panel"></div>
+<div id="state" aria-label="Active filters"></div>
 <div id="tooltip" class="panel"></div>
 <div id="ctx" class="panel"></div>
 
@@ -540,6 +554,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=101"></script>
+<script type="module" src="/viewer/main.js?v=102"></script>
 </body>
 </html>
