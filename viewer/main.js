@@ -619,7 +619,7 @@ async function main() {
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
     resizeHdr(w, h);
     const { scale, offset } = scaleOffset();
-    const selActive = selected >= 0 || searchActive || fieldSel ? 1 : 0;
+    const selActive = selected >= 0 || searchActive || fieldSel || fieldPreview ? 1 : 0;
     const onlyLineage = 0;   // 「Lineage only」UI は廃止(常に全体を薄く残す)
 
     // エッジ: 加算合成で「重なり量」を貯める。HDR バッファがあればそちらへ。
@@ -673,7 +673,7 @@ async function main() {
     gl.uniform1f(uni(nodeProg, 'uSelActive'), selActive);
     gl.uniform1f(uni(nodeProg, 'uOnlyLineage'), onlyLineage);
     gl.uniform1f(uni(nodeProg, 'uFocusDim'),
-      focused.length && !(selected >= 0 || searchActive || fieldSel) ? 1 : 0);
+      focused.length && !(selected >= 0 || searchActive || fieldSel || fieldPreview) ? 1 : 0);
     gl.bindVertexArray(nodeVao);
     gl.drawArrays(gl.POINTS, 0, n);
     // 2パス目: 色の付いた点(固定した人・系譜・検索ヒット・選択)を優先順に重ね描き
@@ -877,6 +877,7 @@ async function main() {
     lineageEl.style.display = 'block';
     lineageEl.scrollTop = 0;
     document.body.classList.add('has-selection');
+    revealPanelOnMobile();
   }
 
   // フォーカスの表示が抑止されている(論文・分野・検索が出ている)ときは、
@@ -1003,6 +1004,7 @@ async function main() {
     }
     renderFieldTree();
     if (focused.length) applyPinned();   // 分野表示中はフォーカスの絞り込みを解く
+    revealPanelOnMobile();
     if (kind !== 'venue') {
       document.getElementById('grpFields').open = true;
       const picked = document.querySelector('#fieldTree .picked');
@@ -1046,8 +1048,37 @@ async function main() {
     if (fs) selectField('sub', parseInt(fs.dataset.s, 10));
   });
   renderFieldTree();   // 起動時に一覧を出す
+  if (!window.matchMedia('(hover: none)').matches) {
+    const treeEl = document.getElementById('fieldTree');
+    treeEl.addEventListener('mouseover', (e) => {
+      const fb = e.target.closest('.fb');
+      const fs = e.target.closest('.fs');
+      if (fb) previewField('band', parseInt(fb.dataset.b, 10));
+      else if (fs) previewField('sub', parseInt(fs.dataset.s, 10));
+    });
+    treeEl.addEventListener('mouseout', (e) => {
+      const row = e.target.closest('.fb, .fs');
+      if (!row) return;
+      if (e.relatedTarget && row.contains(e.relatedTarget)) return;
+      clearFieldPreview();
+    });
+  }
 
   const bandsEl = document.getElementById('bands');
+  if (!window.matchMedia('(hover: none)').matches) {
+    bandsEl.addEventListener('mouseover', (e) => {
+      const lbl = e.target.closest('.lbl');
+      if (!lbl) return;
+      if (lbl.dataset.sub != null) previewField('sub', parseInt(lbl.dataset.sub, 10));
+      else if (lbl.dataset.band != null) previewField('band', parseInt(lbl.dataset.band, 10));
+    });
+    bandsEl.addEventListener('mouseout', (e) => {
+      const lbl = e.target.closest('.lbl');
+      if (!lbl) return;
+      if (e.relatedTarget && lbl.contains(e.relatedTarget)) return;
+      clearFieldPreview();
+    });
+  }
   function drawBands(scale, offset) {
     if (!meta.bands) return;
     const H = canvas.clientHeight;
@@ -1159,16 +1190,58 @@ async function main() {
 
   // カメラには一切触らない(2026-07-30 決定)。クリックのたびに縮尺が変わると
   // 「どこを見ていたか」が失われるため、ズーム/パンはユーザー操作専用。
+  // ホバー中だけの絞り込み(クリックで確定する前の下見)。-1 = プレビューなし
+  let previewSub = -1, previewCluster = -1;
+  // 分野(帯・サブ帯・venue)のホバープレビュー。null = なし
+  let fieldPreview = null;
+
+  // 分野のメンバーを S_MATCH で塗る(選択とプレビューの共通処理)
+  function paintFieldSet(kind, idx) {
+    nodeState.fill(0); edgeState.fill(0);
+    if (kind === 'venue') {
+      for (let i = 0; i < n; i++) if (meta.nodes[i].v === idx) nodeState[i] = S_MATCH;
+    } else {
+      const o = kind === 'band' ? meta.bands[idx] : meta.subbands[idx];
+      if (o) {
+        for (let i = 0; i < n; i++) {
+          const y = np[i * 2 + 1];
+          if (y >= o.y0 && y < o.y1) nodeState[i] = S_MATCH;
+        }
+      }
+    }
+    uploadStates();
+  }
+
+  function previewField(kind, idx) {
+    // 論文・検索の表示中は邪魔しない。選択中の分野そのものは既に光っている
+    if (selected >= 0 || searchActive) return;
+    if (fieldSel && fieldSel.kind === kind && fieldSel.idx === idx) return;
+    fieldPreview = { kind, idx };
+    paintFieldSet(kind, idx);
+    schedule();
+  }
+  function clearFieldPreview() {
+    if (!fieldPreview) return;
+    fieldPreview = null;
+    if (fieldSel) paintFieldSet(fieldSel.kind, fieldSel.idx);
+    else { nodeState.fill(0); edgeState.fill(0); uploadStates(); }
+    schedule();
+  }
+
   function paintLineage() {
     nodeState.fill(0);
     edgeState.fill(0);
     if (!lineage) { uploadStates(); return; }
 
     const { i, up, down } = lineage;
-    // 絞り込み中は、上流・下流の**どちらも**その集合だけを残す
-    // (ローカルクラスタ選択 > サブ帯選択 > 絞り込みなし)
-    const clSet = highlightedCluster >= 0 && localClusters ? localClusters[highlightedCluster].set : null;
-    const keep = (v) => clSet ? clSet.has(v) : (highlightedSub < 0 || meta.nodes[v].s === highlightedSub);
+    // 絞り込み中は、上流・下流の**どちらも**その集合だけを残す。
+    // ホバーのプレビューがあればそれを優先(クラスタ > サブ帯 > なし)。
+    let clSet = null, subSel = -1;
+    if (previewCluster >= 0 && localClusters) clSet = localClusters[previewCluster].set;
+    else if (previewSub >= 0) subSel = previewSub;
+    else if (highlightedCluster >= 0 && localClusters) clSet = localClusters[highlightedCluster].set;
+    else subSel = highlightedSub;
+    const keep = (v) => clSet ? clSet.has(v) : (subSel < 0 || meta.nodes[v].s === subSel);
     for (const v of up) if (keep(v)) nodeState[v] = S_UP;
     for (const v of down) if (keep(v)) nodeState[v] = S_DOWN;
     nodeState[i] = S_SELF;
@@ -1196,6 +1269,16 @@ async function main() {
   function cancelCamAnim() {
     if (camAnim) { cancelAnimationFrame(camAnim); camAnim = null; }
   }
+  const isMobile = () => window.innerWidth <= 700;
+  // モバイルでは選択パネルが地図の下に出る。開いたことが分かるように、
+  // 地図(52dvh)のすぐ下までスクロールして頭を見せる。
+  function revealPanelOnMobile() {
+    if (!isMobile() || lineageEl.style.display !== 'block') return;
+    const y = lineageEl.getBoundingClientRect().top + window.scrollY
+            - Math.round(window.innerHeight * 0.52);
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  }
+
   let pendingPan = -1;   // 非表示中(canvas 0×0)に選択された場合、表示時にパンをやり直す
   function panToNode(i) {
     const w = canvas.clientWidth, h = canvas.clientHeight;
@@ -1204,7 +1287,7 @@ async function main() {
     const { scale } = scaleOffset();
     // 右の系譜パネルが地図に被るので、パネルを除いた領域の中心に置く。
     // 画面が狭くてパネルが支配的なときは素直に画面中心。
-    const panelW = lineageEl.offsetWidth ? lineageEl.offsetWidth + 24 : 344;
+    const panelW = isMobile() ? 0 : (lineageEl.offsetWidth ? lineageEl.offsetWidth + 24 : 344);
     const px = w > panelW * 2 ? (w - panelW) / 2 : w / 2;
     const tx = np[i * 2] - (px / w - 0.5) / scale[0];
     const ty = np[i * 2 + 1];
@@ -1227,6 +1310,7 @@ async function main() {
     selected = i;
     searchActive = false;
     fieldSel = null;
+    previewSub = previewCluster = -1;
     renderFieldTree();
     highlightedSub = -1;
     localClusters = null;
@@ -1253,6 +1337,7 @@ async function main() {
     runLocalClustering();   // local clusters は常時表示(選択のたびに自動計算、数十ms)
     paintLineage();
     panToNode(i);           // パネル表示後に呼ぶ(パネル幅を差し引いて中心を出すため)
+    revealPanelOnMobile();
   }
 
   // 系譜の中の1トレンドに絞る。再クリックで系譜全体に戻る。
@@ -1856,6 +1941,30 @@ async function main() {
   document.getElementById('selMeta').addEventListener('click', (e) => {
     if (e.target.closest('[data-clear]')) clearFocus();
   });
+  // トレンド行・ローカルクラスタ行はホバーで絞り込みを下見できる(クリックで確定)。
+  // タッチ端末は hover が無い(タップ直前に発火して二重描画になるだけ)ので付けない。
+  if (!window.matchMedia('(hover: none)').matches) {
+    const lists = document.getElementById('lineageLists');
+    lists.addEventListener('mouseover', (e) => {
+      const row = e.target.closest('li.trend');
+      if (!row || !lineage) return;
+      if (row.classList.contains('local')) {
+        previewCluster = parseInt(row.dataset.cl, 10); previewSub = -1;
+      } else if (row.dataset.sub != null) {
+        previewSub = parseInt(row.dataset.sub, 10); previewCluster = -1;
+      } else return;
+      paintLineage();
+    });
+    lists.addEventListener('mouseout', (e) => {
+      const row = e.target.closest('li.trend');
+      if (!row) return;
+      if (e.relatedTarget && row.contains(e.relatedTarget)) return;
+      if (previewSub < 0 && previewCluster < 0) return;
+      previewSub = previewCluster = -1;
+      paintLineage();
+    });
+  }
+
   document.getElementById('lineageClose').addEventListener('click', () => {
     if (selected < 0 && focusOn()) { clearFocus(); return; }   // 著者パネルの × は選択解除
     select(-1);
@@ -1880,13 +1989,31 @@ async function main() {
 
   // --- 操作 ---
   let dragging = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
+  // タッチのピンチズーム用に、押されている指を追跡する
+  const ptrs = new Map();
+  let pinchD = 0;   // 直前の2本指間距離。0 = ピンチ中ではない
   canvas.addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;   // 右・中クリックはドラッグにも選択にもしない
+    ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+    if (ptrs.size === 2) {
+      // 2本目が着いたらドラッグをやめてピンチに移る(指を離すまでクリック扱いもしない)
+      dragging = false;
+      canvas.classList.remove('dragging');
+      const [a, b] = [...ptrs.values()];
+      pinchD = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      return;
+    }
     dragging = true;
     lastX = downX = e.clientX; lastY = downY = e.clientY;
     canvas.classList.add('dragging'); canvas.setPointerCapture(e.pointerId);
   });
+  const endPtr = (e) => {
+    ptrs.delete(e.pointerId);
+    if (ptrs.size < 2) pinchD = 0;
+  };
+  canvas.addEventListener('pointercancel', endPtr);
   canvas.addEventListener('pointerup', (e) => {
+    endPtr(e);
     if (e.button !== 0 || !dragging) return;
     dragging = false;
     canvas.classList.remove('dragging');
@@ -1898,6 +2025,25 @@ async function main() {
     }
   });
   canvas.addEventListener('pointermove', (e) => {
+    if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pinchD > 0 && ptrs.size === 2) {
+      const [a, b] = [...ptrs.values()];
+      const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (d > 0) {
+        const f = d / pinchD;
+        pinchD = d;
+        const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+        const [ux, uy] = screenToNorm(mx, my);
+        cam.zx = clampZoom(cam.zx * f);
+        cam.zy = clampZoom(cam.zy * f);
+        const s2 = scaleOffset().scale;
+        cam.cx = ux - (mx / canvas.clientWidth - 0.5) / s2[0];
+        cam.cy = uy - (my / canvas.clientHeight - 0.5) / s2[1];
+        cancelCamAnim();
+        schedule();
+      }
+      return;
+    }
     if (dragging) {
       cancelCamAnim();
       const { scale } = scaleOffset();
@@ -2156,7 +2302,7 @@ async function main() {
   } catch { /* 位置が壊れていたら既定のまま */ }
   let lgDrag = null;
   legendEl.addEventListener('pointerdown', (e) => {
-    if (e.button !== 0) return;
+    if (e.button !== 0 || isMobile()) return;   // モバイルは CSS で位置固定なので掴ませない
     lgDrag = { x: e.clientX, y: e.clientY, r: legendEl.getBoundingClientRect(), moved: false };
     // ここでは setPointerCapture しない: キャプチャすると後続の click の target が
     // 凡例本体に付け替えられ、チップのクリックが一切効かなくなる(実測)。
@@ -2253,6 +2399,8 @@ async function main() {
         .join('');
       return;
     }
+    el.title = 'People pinned for colouring — the default five have the longest lab lineages. '
+             + 'Click a name to focus, \u00d7 to remove, search to add your own.';
     // 固定した人の凡例。クリックで1人に絞り込む(色だけに identity を負わせない二次符号化)。
     const pinnedEdges = pinned.reduce(
       (t, q) => t + (q && q.labId != null ? meta.labs[q.labId].edges : 0), 0);

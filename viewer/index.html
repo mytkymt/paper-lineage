@@ -25,7 +25,7 @@
   /* canvas は置換要素なので inset:0 だけでは伸びず、width/height 属性(描画バッファ)が
      CSS サイズとして使われてしまう。毎フレーム dpr 倍に膨らむので必ず CSS で固定する。 */
   #canvas { position: fixed; inset: 0; width: 100vw; height: 100vh;
-            display: block; cursor: grab; }
+            display: block; cursor: grab; touch-action: none; }
   #canvas.dragging { cursor: grabbing; }
 
   .panel { position: fixed; background: rgba(12,14,20,.88); backdrop-filter: blur(8px);
@@ -35,6 +35,7 @@
                    margin: 0 0 8px; }
   #controls h1 { margin: 0; font-size: 13px; letter-spacing: .04em; }
   #panelToggle { cursor: pointer; color: #6d7488; font-size: 13px; line-height: 1;
+                 background: none; border: 0; font-family: inherit;
                  padding: 2px 4px; user-select: none; }
   #panelToggle:hover { color: #fff; }
   #controls.collapsed { width: auto; }
@@ -308,6 +309,47 @@
   @media (max-width: 900px) {
     body.has-selection #bands { display: none; }
   }
+
+  /* キーボード操作のフォーカスを見えるように */
+  :focus-visible { outline: 2px solid #6d90c9; outline-offset: 1px; border-radius: 3px; }
+
+  /* タッチ主体の端末では当たり判定を広げる(44px 目安) */
+  @media (pointer: coarse) {
+    input[type="checkbox"] { transform: scale(1.45); transform-origin: left center; }
+    #legend span { padding: 6px 2px; }
+    #fieldTree .fb, #fieldTree .fs, #lineage .person, #searchResults div,
+    #lineage li.trend, #lineage li[data-i] { padding-top: 8px; padding-bottom: 8px; }
+    .seg button { padding: 8px 14px; }
+    .links a { padding: 6px 2px; }
+  }
+
+  /* ---- モバイル: 地図を上に固定し、パネルは下に積んで縦スクロール ---- */
+  @media (max-width: 700px) {
+    html, body { height: auto; overflow-x: hidden; overflow-y: auto; }
+    body { display: flex; flex-direction: column; min-height: 100dvh; }
+    #canvas { position: sticky; top: 0; height: 52dvh; width: 100vw; z-index: 0; }
+    /* パネルは通常フローで地図の下へ。スクロールすると地図の上に乗り上げる
+       (ボトムシート的な読み方)。系譜パネルを先、コントロールを後に。 */
+    #controls, #lineage {
+      position: relative; top: auto; left: auto; right: auto;
+      width: auto; max-height: none; margin: 8px 8px 0; z-index: 2; order: 2;
+    }
+    #lineage { order: 1; }
+    #lineage .phd { position: static; margin: 0 0 4px; padding: 0; border: 0; background: none; }
+    #bands { height: 52dvh; z-index: 1; }
+    #axis { top: calc(52dvh - 22px); bottom: auto; z-index: 1; }
+    /* パネルは地図に被らないので、選択中でも帯ラベルは出す・退避しない */
+    body.has-selection #bands { display: block; }
+    body.has-selection #bands .lbl { right: 8px; max-width: 46vw; }
+    body.has-selection #bands .lbl.sub { right: 14px; }
+    /* 凡例は地図の左下に固定(ドラッグ位置より優先) */
+    #legend {
+      left: 8px !important; top: calc(52dvh - 30px) !important;
+      right: auto !important; bottom: auto !important;
+      transform: translateY(-100%); max-width: calc(100vw - 16px);
+      z-index: 1; font-size: 10px; gap: 3px 8px;
+    }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -361,7 +403,7 @@
 </noscript>
 
 <div id="controls" class="panel">
-  <div class="hd1"><h1>HCI Research Trails</h1><span id="panelToggle" title="Collapse panel">–</span></div>
+  <div class="hd1"><h1>HCI Research Trails</h1><button id="panelToggle" aria-label="Collapse panel" title="Collapse panel">–</button></div>
   <input id="search" type="search" placeholder="Search papers, people or fields — Enter selects the top paper" autocomplete="off">
   <div id="searchResults"></div>
   <div class="row">
@@ -483,7 +525,7 @@
 
 <div id="lineage" class="panel">
   <div class="phd">
-  <span class="close" id="lineageClose">×</span>
+  <span class="close" id="lineageClose" role="button" aria-label="Close panel" tabindex="0">×</span>
   <h2 id="selTitle"></h2>
   </div>
   <div class="meta" id="selMeta"></div>
@@ -498,6 +540,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=99"></script>
+<script type="module" src="/viewer/main.js?v=100"></script>
 </body>
 </html>

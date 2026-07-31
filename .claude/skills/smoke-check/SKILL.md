@@ -169,6 +169,13 @@ console must be clean.
   without a DOI show "No DOI on record" instead of the DOI actions.
 - Esc clears selection.
 
+- **Hover previews** (mouse devices only): hovering a trend row, local-cluster row,
+  Fields-tree row or a map band label previews the filter on the map; moving off
+  restores the committed state exactly. Touch devices must not get these listeners.
+- **Mobile (≤700px)**: map sticks to the top (~52dvh) with the panels stacking below
+  in page scroll; selecting anything scrolls the panel head to just under the map;
+  two-finger pinch zooms; no horizontal scroll at 390px.
+
 ## 3.5 Testing pitfalls (each cost real time)
 
 - **Module caching**: the pane caches `main.js` aggressively. `index.html` loads it as
