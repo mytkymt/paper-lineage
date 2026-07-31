@@ -200,6 +200,7 @@ const NODE_VS = `#version 300 es
   uniform float uPointSize;
   uniform float uSelActive;
   uniform float uOnlyLineage;
+  uniform float uFocusDim;    // 1 = 著者フォーカス中(他の選択なし)。背景の点をほぼ消す
   out vec3 vColor;
   out float vAlpha;
   void main() {
@@ -209,6 +210,7 @@ const NODE_VS = `#version 300 es
     float size = uPointSize * (0.7 + 1.8 * aMag) * aBoost;
     vColor = aColor;
     vAlpha = 0.85;
+    if (uFocusDim > 0.5 && aFocus < 0.5) vAlpha = 0.07;
     if (uSelActive > 0.5) {
       // 系譜・分野・検索の中でも、**選択中の著者の論文は本人の色のまま**にする。
       // 上流/下流は位置(選択論文の左右)で読めるので、色を人に譲っても向きは失われない。
@@ -666,6 +668,8 @@ async function main() {
     gl.uniform1f(uni(nodeProg, 'uPointSize'), parseFloat(ui.psize.value) * dpr);
     gl.uniform1f(uni(nodeProg, 'uSelActive'), selActive);
     gl.uniform1f(uni(nodeProg, 'uOnlyLineage'), onlyLineage);
+    gl.uniform1f(uni(nodeProg, 'uFocusDim'),
+      focused.length && !(selected >= 0 || searchActive || fieldSel) ? 1 : 0);
     gl.bindVertexArray(nodeVao);
     gl.drawArrays(gl.POINTS, 0, n);
     // 2パス目: 色の付いた点(固定した人・系譜・検索ヒット・選択)を優先順に重ね描き
@@ -807,45 +811,6 @@ async function main() {
            `<div class="scroll">` + olRows(st.papers, 200) + '</div></details>';
   }
 
-  // 著者カードはドラッグで並べ替えられる(focused の順序 = カードの表示順)。
-  let dragSlot = -1;
-  const listsEl = document.getElementById('lineageLists');
-  listsEl.addEventListener('dragstart', (e) => {
-    const card = e.target.closest('.acard[data-slot]');
-    if (!card) return;
-    dragSlot = parseInt(card.dataset.slot, 10);
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', card.dataset.slot);   // Firefox はこれが無いと DnD しない
-  });
-  listsEl.addEventListener('dragover', (e) => {
-    if (dragSlot < 0) return;
-    const card = e.target.closest('.acard[data-slot]');
-    if (!card) return;
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    for (const el of listsEl.querySelectorAll('.acard.dragover')) el.classList.remove('dragover');
-    if (parseInt(card.dataset.slot, 10) !== dragSlot) card.classList.add('dragover');
-  });
-  listsEl.addEventListener('drop', (e) => {
-    const card = e.target.closest('.acard[data-slot]');
-    if (dragSlot < 0 || !card) return;
-    e.preventDefault();
-    const target = parseInt(card.dataset.slot, 10);
-    if (target !== dragSlot) {
-      const from = focused.indexOf(dragSlot), to = focused.indexOf(target);
-      if (from >= 0 && to >= 0) {
-        focused.splice(from, 1);
-        focused.splice(to, 0, dragSlot);
-        renderFocusPanel();
-      }
-    }
-    dragSlot = -1;
-  });
-  listsEl.addEventListener('dragend', () => {
-    dragSlot = -1;
-    for (const el of listsEl.querySelectorAll('.acard.dragover')) el.classList.remove('dragover');
-  });
-
   // 2人目以降のカードの開閉状態。人を足しても既に開いた人は開いたままにする。
   const cardOpen = new Set();
 
@@ -867,8 +832,7 @@ async function main() {
     // 全員を同じカードにする。1人目も折りたためる(既定は開いた状態)。
     document.getElementById('lineageLists').innerHTML = people.map((slot) => {
       const ai = pinned[slot].ai, st = statsFor(ai);
-      return `<details class="acard"${cardOpen.has(ai) ? ' open' : ''} data-ai="${ai}"` +
-             ` data-slot="${slot}" draggable="true">` +
+      return `<details class="acard"${cardOpen.has(ai) ? ' open' : ''} data-ai="${ai}">` +
              `<summary><i style="background:${LAB_HEX[slot]}"></i>` +
              `${escapeHtml(meta.authors[ai] || '?')}` +
              `<em class="drop" data-drop="${slot}" title="Remove from selection">×</em></summary>` +
@@ -2140,7 +2104,55 @@ async function main() {
 
   // 凡例チップ = 人の選択。クリックのたびにフォーカス集合へ出し入れする(累積トグル)。
   // 15色は隣接ペア基準では通るが CVD ΔE 6–8 の帯域なので、色だけに頼らせない二次符号化。
+  // 凡例パネルはドラッグで移動できる(位置は localStorage に保存)。
+  // チップのクリックと共存させるため、5px 以上動いたときだけドラッグ扱いにする。
+  const legendEl = document.getElementById('legend');
+  try {
+    const lp = JSON.parse(localStorage.getItem('plLegendPos') || 'null');
+    if (lp && Number.isFinite(lp.left) && Number.isFinite(lp.top)) {
+      legendEl.style.left = Math.min(window.innerWidth - 60, Math.max(0, lp.left)) + 'px';
+      legendEl.style.top = Math.min(window.innerHeight - 30, Math.max(0, lp.top)) + 'px';
+      legendEl.style.right = 'auto';
+      legendEl.style.bottom = 'auto';
+    }
+  } catch { /* 位置が壊れていたら既定のまま */ }
+  let lgDrag = null;
+  legendEl.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    lgDrag = { x: e.clientX, y: e.clientY, r: legendEl.getBoundingClientRect(), moved: false };
+    // ここでは setPointerCapture しない: キャプチャすると後続の click の target が
+    // 凡例本体に付け替えられ、チップのクリックが一切効かなくなる(実測)。
+  });
+  // move/up は window で受ける: キャプチャは click の target を凡例に付け替えて
+  // チップを殺し、非キャプチャだとポインタが凡例の外へ出た瞬間に途切れるため。
+  window.addEventListener('pointermove', (e) => {
+    if (!lgDrag) return;
+    const dx = e.clientX - lgDrag.x, dy = e.clientY - lgDrag.y;
+    if (!lgDrag.moved && Math.hypot(dx, dy) < 5) return;
+    lgDrag.moved = true;
+    legendEl.style.left = Math.min(window.innerWidth - 60, Math.max(0, lgDrag.r.left + dx)) + 'px';
+    legendEl.style.top = Math.min(window.innerHeight - 30, Math.max(0, lgDrag.r.top + dy)) + 'px';
+    legendEl.style.right = 'auto';
+    legendEl.style.bottom = 'auto';
+  });
+  const lgEnd = () => {
+    if (!lgDrag) return;
+    if (lgDrag.moved) {
+      try {
+        localStorage.setItem('plLegendPos', JSON.stringify({
+          left: parseFloat(legendEl.style.left), top: parseFloat(legendEl.style.top),
+        }));
+      } catch { /* 保存できなくても移動自体は有効 */ }
+      legendEl.dataset.dragged = '1';            // 直後の click を1回だけ無効化
+      setTimeout(() => { delete legendEl.dataset.dragged; }, 0);
+    }
+    lgDrag = null;
+  };
+  window.addEventListener('pointerup', lgEnd);
+  window.addEventListener('pointercancel', lgEnd);
+
   document.getElementById('legend').addEventListener('click', (e) => {
+    if (legendEl.dataset.dragged) return;   // ドラッグの終わりをクリックにしない
     const vch = e.target.closest('span[data-venue]');
     if (vch) { selectField('venue', vch.dataset.venue); drawLegend(); return; }
     const un = e.target.closest('[data-unpin]');
@@ -2275,8 +2287,8 @@ async function main() {
   // 共有する URL を組み立てる。**アドレスバーは書き換えない** — 既定は素のリンクで、
   // 状態を載せるかどうかは共有シートのチェックボックスで選ぶ(既定はオフ)。
   // 受け取った側の URL はそのまま残す(ブックマークすれば同じビューに戻れる)。
-  const cleanUrl = () =>
-    location.origin + location.pathname + (EXT_MODE ? '?venues=related' : '');
+  // 素のリンクは本当に素にする(venues=related も付けない — トップを共有する意図なので)
+  const cleanUrl = () => location.origin + location.pathname;
   const shareUrl = (deep) => deep ? location.origin + location.pathname + '?' + viewParams().toString()
                                   : cleanUrl();
 
@@ -2414,7 +2426,12 @@ async function main() {
 
   // チェックボックスの状態だけで URL 欄と各 intent を組み直す。
   function fillShare() {
-    const url = shareUrl(shareEls.deep.checked), text = shareText();
+    // ビュー固有の文面(「〜 on HCI Research Trails」)は Link to this view のときだけ。
+    // 素のリンクにビューの説明を付けると、開いた先(トップ)と食い違う。
+    const deepOn = shareEls.deep.checked;
+    const url = shareUrl(deepOn);
+    const text = deepOn ? shareText()
+                        : 'HCI Research Trails \u2014 a citation map of 39,000 HCI papers';
     const eu = encodeURIComponent(url), et = encodeURIComponent(text);
     shareEls.what.textContent = text;
     shareEls.url.value = url;

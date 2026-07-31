@@ -88,6 +88,7 @@
 
   #legend { bottom: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: 620px; }
   #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
+  #legend { user-select: none; touch-action: none; }
   #legend span.lab { cursor: pointer; }
   #legend span[data-venue] { cursor: pointer; }
   #legend span[data-venue]:hover, #legend span[data-venue].on { color: #fff; }
@@ -199,8 +200,6 @@
   #lineage details.acard > summary { cursor: pointer; list-style: none; user-select: none;
     display: flex; align-items: center; gap: 5px; color: #c3c8d6; font-size: 12px; }
   #lineage details.acard > summary::-webkit-details-marker { display: none; }
-  #lineage details.acard > summary { cursor: grab; }
-  #lineage details.acard.dragover { border-top: 2px solid #4a5473; }
   #lineage details.acard > summary::before { content: '▸'; color: #5d6478; }
   #lineage details.acard[open] > summary::before { content: '▾'; }
   #lineage details.acard > summary i { width: 8px; height: 8px; border-radius: 2px; flex: 0 0 8px; }
@@ -493,6 +492,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=88"></script>
+<script type="module" src="/viewer/main.js?v=89"></script>
 </body>
 </html>
