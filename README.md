@@ -22,11 +22,11 @@ Research areas appear as named horizontal bands; citations flow left to right.
 - Right-click a paper for DOI and copy actions.
 - How all of this is computed: [docs/lineage.md](docs/lineage.md).
 
-## 2. Follow a person
+## 2. Follow people
 
-![A person's lab thread](docs/media/trail-person.png)
+![People and their lab threads](docs/media/trail-person.png)
 
-- Search a name to add it to the legend (up to 15 people).
+- Search names to add them to the legend (up to 15 people).
 - Click them and their papers light up across the map, with same-lab citations (same
   last author at both ends) drawing the lab's thread through the decades.
 - Focus one or several people: only their papers stay bright, and the panel shows each
