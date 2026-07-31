@@ -12,15 +12,14 @@ Research areas appear as named horizontal bands; citations flow left to right.
 
 ![A paper's lineage](docs/media/trail-paper.png)
 
-- Click any paper: everything it builds on (upstream) and everything that later built on
-  it (downstream) lights up, without losing your place on the map.
+- Click any paper: everything it builds on (upstream) and everything that later built
+  on it (downstream) lights up.
 - The side panel breaks the lineage down by research trend, with upstream:downstream
   ratio bars — click a trend to filter the view to it.
 - **Local clusters** split the lineage by its own citation structure — e.g. UltraHaptics'
   708 descendants resolve into eight branches (VR haptics, mid-air ultrasound, EMS,
-  levitation, …). Optional LLM naming for the branches, using your own API key.
-- Authors, corpus coverage, and DOI links included. Right-click a paper for DOI and
-  copy actions without touching the selection.
+  levitation, …).
+- Right-click a paper for DOI and copy actions.
 - How all of this is computed: [docs/lineage.md](docs/lineage.md).
 
 ## 2. Follow a person
@@ -29,15 +28,9 @@ Research areas appear as named horizontal bands; citations flow left to right.
 
 - Search a name to add it to the legend (up to 15 people).
 - Click them and their papers light up across the map, with same-lab citations (same
-  last author at both ends) drawing the lab's thread through the decades. Nobody is
-  coloured until you pick them, so colour always means "the people I am looking at".
-- Click a legend chip, a search result or an author's name to focus them: only their
-  papers stay bright and clickable, and the panel switches to them — their sub-fields,
-  their papers, and how often they are first or last author.
-- Click several people to compare them. Each keeps their own colour, and the panel
-  stacks them, the first one open and the rest collapsed under their names. The
-  selection survives while you read a paper's lineage, where their papers keep their
-  colour instead of the upstream/downstream one.
+  last author at both ends) drawing the lab's thread through the decades.
+- Focus one or several people: only their papers stay bright, and the panel shows each
+  person's sub-fields and most cited work side by side.
 - A toggle switches between "any authorship" and "last-author only".
 
 ## 3. Explore the field
@@ -54,10 +47,9 @@ Research areas appear as named horizontal bands; citations flow left to right.
 
 ## Share what you are looking at
 
-**Share** offers the plain link by default. Tick "Link to this view" and it also carries
-the selected paper, the people you pinned and the camera, so a particular lineage can be
-sent to a co-author or cited in a talk. Papers are identified by DOI and people and fields
-by name, so a shared link keeps pointing at the same thing after the map is rebuilt.
+**Share** offers the plain link by default. Tick "Link to this view" and it also
+carries the selected paper, the people and the camera — a particular lineage can be
+sent to a co-author or cited in a talk.
 
 ## Tutorial
 
@@ -72,7 +64,6 @@ The **Tutorial** link in the panel plays a walkthrough:
 - **Bands = citation communities**, sized by paper count.
 - **Bright routes = main paths** (edges weighted by search path count).
 - **Dot size = citations.** Colour belongs to the people you have selected.
-- **Lineage lines** can be switched off when you only want to read the points.
 
 ## Data notes
 
