@@ -729,10 +729,18 @@ async function main() {
     const authors = [...counts.entries()].sort((a, b) =>
       b[1] - a[1] || String(meta.authors[a[0]]).localeCompare(String(meta.authors[b[0]])));
     // 著者は全員出す(スクロール内なので切り捨て不要)。件数はサマリーに明示。
+    // 行の形は他の一覧(検索結果の人・著者カードの分野)と同じ:
+    // 色ドットは**選んだ人だけ**。全員に空の四角を並べるとチェックボックスの列に
+    // 見えて、1,600 行では特にうるさい。
     const auRows = authors.map(([ai, cnt]) => {
-      const dot = authorDot(pinned.findIndex((q) => q && q.ai === ai));
-      return `<div class="person" data-ai="${ai}">${dot}${escapeHtml(meta.authors[ai] || '?')}` +
-             `<span class="sub">${cnt} papers</span></div>`;
+      const slot = pinned.findIndex((q) => q && q.ai === ai);
+      const dot = slot >= 0 ? authorDot(slot) : '';
+      const lab = labByAuthor.has(ai) ? meta.labs[labByAuthor.get(ai)] : null;
+      return `<div class="person${slot >= 0 ? '' : ' nodot'}" data-ai="${ai}">${dot}` +
+             `${escapeHtml(meta.authors[ai] || '?')}` +
+             `<span class="sub">${cnt} papers` +
+             (lab ? ` · lab lineage${lab.gens >= 3 ? ` ${lab.gens} gen` : ''}` : '') +
+             '</span></div>';
     }).join('');
     // 既定はどちらも閉。ピン変更の再描画では明示的に開いた状態だけ引き継ぐ
     const open = preserve
