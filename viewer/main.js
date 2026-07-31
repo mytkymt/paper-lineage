@@ -1941,9 +1941,12 @@ async function main() {
   const venueSet = document.getElementById('venueSet');
   venueSet.checked = EXT_MODE;
   venueSet.addEventListener('change', () => {
-    const q = new URLSearchParams(location.search);
+    // 今の作業状態(選択・分野・検索・ピン・フォーカス)ごとデータセットを切り替える。
+    // viewParams(共有リンクと同じ機構)に載せてリロード後に applyUrlState が復元する。
+    const q = viewParams();
     if (venueSet.checked) q.set('venues', 'related');
     else q.delete('venues');
+    q.delete('v');   // カメラはデータセット間で座標系(帯構成)が違うので持ち越さない
     location.search = q.toString();
   });
 
