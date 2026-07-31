@@ -34,8 +34,10 @@ itself is the lineage; everything else dims.
 ## Trend breakdown (side panel)
 
 Every paper belongs to one of 117 **sub-fields**, precomputed by two-level
-Louvain community detection on the full citation graph (14 top-level bands,
-nested sub-bands; fixed seed). The panel counts how many lineage papers fall in
+Louvain community detection ([Blondel et al., 2008](https://doi.org/10.1088/1742-5468/2008/10/P10008))
+on the full citation graph (14 top-level bands, nested sub-bands; fixed seed —
+plain Louvain is order-sensitive, so node order and seeds are pinned to keep the
+partition reproducible). The panel counts how many lineage papers fall in
 each sub-field, split into upstream ← / downstream → (the arrows match the map,
 where time runs left to right), and draws the ratio bars
 from those counts. Clicking a row filters the lineage to that sub-field — in
@@ -49,11 +51,13 @@ for one lineage only. Computed automatically on every selection:
 1. Take the subgraph induced by the lineage papers, **excluding edges that touch
    the selected paper** (the hub connects to everything by construction and
    would glue all clusters together).
-2. Run Louvain on that subgraph (single pass over all 372k edges to extract it —
-   a few tens of ms).
+2. Run Louvain ([Blondel et al., 2008](https://doi.org/10.1088/1742-5468/2008/10/P10008))
+   on that subgraph (single pass over all 372k edges to extract it — a few tens
+   of ms).
 3. Keep clusters with ≥ 3 papers, up to 8; anything dropped is reported as
    "+N papers in M smaller clusters".
-4. Label each cluster with its top TF-IDF title terms (IDF over the whole
+4. Label each cluster with its top TF-IDF title terms
+   ([Spärck Jones, 1972](https://doi.org/10.1108/eb026526); IDF over the whole
    corpus). Optional LLM naming replaces these labels using your own API key,
    cached in your browser's localStorage.
 
@@ -73,6 +77,22 @@ points as the only encoding.
 
 Edge weights are **search path counts** (SPC / main path analysis): how many
 source-to-sink paths in the DAG pass through each edge, computed by dynamic
-programming in log space. Bright routes are the field's main paths, not just
+programming in log space. Main path analysis is due to
+[Hummon & Doreian (1989)](https://doi.org/10.1016/0378-8733(89)90017-8); the SPC
+weight is [Batagelj (2003)](https://arxiv.org/abs/cs/0309023). Bright routes are the field's main paths, not just
 high-degree nodes. Rendering accumulates all edges in an HDR buffer with log
 tone-mapping, so density differences stay visible without thinning the data.
+
+## References
+
+- V. Blondel, J.-L. Guillaume, R. Lambiotte, E. Lefebvre (2008).
+  *Fast unfolding of communities in large networks.* J. Stat. Mech.
+  [doi:10.1088/1742-5468/2008/10/P10008](https://doi.org/10.1088/1742-5468/2008/10/P10008)
+- N. P. Hummon, P. Doreian (1989). *Connectivity in a citation network: The
+  development of DNA theory.* Social Networks 11(1).
+  [doi:10.1016/0378-8733(89)90017-8](https://doi.org/10.1016/0378-8733(89)90017-8)
+- V. Batagelj (2003). *Efficient algorithms for citation network analysis.*
+  [arXiv:cs/0309023](https://arxiv.org/abs/cs/0309023)
+- K. Spärck Jones (1972). *A statistical interpretation of term specificity and
+  its application in retrieval.* Journal of Documentation 28(1).
+  [doi:10.1108/eb026526](https://doi.org/10.1108/eb026526)
