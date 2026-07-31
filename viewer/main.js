@@ -1026,7 +1026,7 @@ async function main() {
       const mid = (top + bottom) / 2 - 7;
       // 中心が画面外のラベルは出さない。クランプすると画面端に積み重なって読めない。
       if (bottom - top >= 26 && mid >= 4 && mid <= H - 16) {
-        parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px" title="${escapeHtml(kw(band))}">${escapeHtml(bandLabel(band))}</div>`);
+        parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px" title="${escapeHtml(bandTitle(band))}">${escapeHtml(bandLabel(band))}</div>`);
       }
       // 拡大してサブ帯が十分な高さになったら、その中の内訳も出す
       for (const si of band.subbands || []) {
@@ -1036,7 +1036,7 @@ async function main() {
         parts.push(`<div class="sep sub" style="top:${st.toFixed(1)}px"></div>`);
         const smid = (st + sb) / 2 - 6;
         if (smid < 4 || smid > H - 14) continue;
-        parts.push(`<div class="lbl sub" data-sub="${si}" style="top:${smid.toFixed(1)}px" title="${escapeHtml(kw(sub))}">${escapeHtml(subLabel(sub))}</div>`);
+        parts.push(`<div class="lbl sub" data-sub="${si}" style="top:${smid.toFixed(1)}px" title="${escapeHtml(bandTitle(sub))}">${escapeHtml(subLabel(sub))}</div>`);
       }
     }
     bandsEl.innerHTML = parts.join('');
@@ -1053,13 +1053,13 @@ async function main() {
   });
 
   const kw = (o) => (o.keywords || []).join(' · ');
-  const bandLabel = (band) => {
-    const yrs = band.years ? `${band.years[0]}–${band.years[1]} · ` : '';
-    const count = `${band.papers.toLocaleString()} papers`;
-    return band.name ? `${band.name} · ${yrs}${count}` : `${yrs}${count} · ${kw(band)}`;
-  };
-  const subLabel = (sub) =>
-    sub.name ? `${sub.name} · ${sub.papers}` : `${sub.papers} papers · ${kw(sub)}`;
+  // ラベルは名前だけ(年代はほぼ全帯 2026 までで情報が無く、規模は帯の広さで
+  // 読めるため)。年代・件数はツールチップに退避して情報自体は残す。
+  const bandLabel = (band) => band.name || kw(band);
+  const subLabel = (sub) => sub.name || kw(sub);
+  const bandTitle = (o) =>
+    `${o.years ? o.years[0] + '\u2013' + o.years[1] + ' \u00b7 ' : ''}` +
+    `${(o.papers || 0).toLocaleString()} papers \u2014 ${kw(o)}`;
 
   // --- 系譜(選択した論文の上流・下流)---
   function bfs(startNode, adj, maxDepth) {
