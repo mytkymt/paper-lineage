@@ -140,14 +140,17 @@ const EDGE_VS = `#version 300 es
     if (uClickLines > 0.5 && uIsoMask != 0 && (lab > 15 || (uIsoMask & (1 << lab)) == 0)) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
 
     // 重みが大きいほど濃く。重み0のエッジも薄く残す(全体の地形として意味がある)
-    float a = uAlpha * (0.25 + 0.75 * aWeight);
-    vec3 c = vec3(0.35, 0.55, 0.95);
-    if (uColorMode < 0.5) {
-      c = isLab ? uLabColors[int(aLab)] : vec3(${NON_LAB[0]}, ${NON_LAB[1]}, ${NON_LAB[2]});
+    // 線の既定は「地」の見え方 = people モードでラボ線ではないエッジと同じ。
+    // venue モードではエッジに venue が定まらない(両端で違う)ので、色分けは点だけに
+    // 任せて線はこの地のままにする。こうすると切り替えても線の明るさが変わらない。
+    float a = uAlpha * (0.25 + 0.75 * aWeight) * 0.6;
+    vec3 c = vec3(${NON_LAB[0]}, ${NON_LAB[1]}, ${NON_LAB[2]});
+    if (uColorMode < 0.5 && isLab) {
+      c = uLabColors[int(aLab)];
       // ラボ線は全体の 4.7% しかなく、等 alpha だと他のエッジの海に埋もれて
       // 「太いライン」として見えない。可視性のための増幅で、量の表現ではない。
-      // 「その他のラボ」(2,113 ラボ分)は色付き8ラボを埋めてしまうので抑える。
-      a *= isLab ? (aLab < 14.5 ? 4.0 : 0.9) : 0.6;
+      // 「その他のラボ」(2,000 ラボ分)は色付きスロットを埋めてしまうので抑える。
+      a *= aLab < 14.5 ? (4.0 / 0.6) : 1.5;
     }
     if (uSelActive > 0.5) {
       if (aState < 0.5 || uClickLines < 0.5) { a *= 0.12; }  // 系譜外(または線オフ)は沈める

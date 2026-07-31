@@ -726,13 +726,19 @@ def main() -> None:
         from .venues import EXTRA_VENUES, VENUES
         # 学会ごとに1本の位置に固める。同じ学会の論文は**同じ x** に置き、学会内では
         # 散らさない(散らすと年の境界が滲んで、どの年かが読めなくなる)。
-        # 位置は概略の開催月そのもの: 年の中の相対位置 = (month-1)/12 - 0.5。
-        # jitter は年内に使う幅で、既定 0.35 なら 2月 ≈ 年-0.15、12月 ≈ 年+0.15。
+        # 位置は開催月そのものではなく、月で並べたときの**順位を等間隔**にしたもの。
+        # 月をそのまま使うと秋(9〜12月)に7会場が団子になって読めない。欲しいのは
+        # 「その年に開かれた順」であって日付ではないので、等間隔で構わない。
         months = {v.key: v.month for v in [*VENUES, *EXTRA_VENUES]}
-        frac = np.array(
-            [(months.get(n.get("venue_key"), 6.5) - 1.0) / 12.0 - 0.5 for n in nodes],
-            dtype=np.float32,
+        present = sorted(
+            {n.get("venue_key") for n in nodes if n.get("venue_key") in months},
+            key=lambda k: (months[k], k),
         )
+        # 位置はデータセット内の全 venue で決める(年ごとに決めると、その年に無い
+        # 会場のぶん位置がずれて年をまたいだ比較ができなくなる)。
+        span = max(1, len(present) - 1)
+        vpos = {k: i / span - 0.5 for i, k in enumerate(present)}
+        frac = np.array([vpos.get(n.get("venue_key"), 0.0) for n in nodes], dtype=np.float32)
         x += frac * args.jitter
     pos = np.empty((len(nodes), 2), dtype=np.float32)
     pos[:, 0] = x

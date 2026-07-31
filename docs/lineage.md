@@ -33,13 +33,14 @@ itself is the lineage; everything else dims.
 
 ## Reading a year column
 
-Within one year, each venue sits at its own x, placed by the venue's usual
-month: TEI in February on the left, CHI in May, the autumn cluster (UbiComp,
-ASSETS, UIST, CHI PLAY, CSCW) on the right. Papers from the same venue and year
-share that x exactly — they are not spread around it, so venues read as clean
-columns and the gap between years stays visible. Venues shift by a few weeks
-between years and journals publish continuously, so the month is nominal, not a
-date; the layout is identical in every year and fully deterministic.
+Within one year, each venue sits at its own x, and papers from the same venue
+and year share that x exactly — they are not spread around it, so venues read as
+clean columns and the gap between years stays visible. The columns are evenly
+spaced in the order the venues usually happen (TEI, IUI, CHI, … UIST, CSCW,
+TOCHI). The spacing is even rather than proportional to the calendar because
+most HCI conferences fall between September and November, which would crowd them
+into an unreadable clump; what the axis carries is the order, not the date. The
+layout is identical in every year and fully deterministic.
 
 ## Trend breakdown (side panel)
 
