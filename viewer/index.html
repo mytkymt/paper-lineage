@@ -86,9 +86,10 @@
   .links a { color: #8fa6d8; text-decoration: none; }
   .links a:hover { color: #fff; }
 
-  #legend { bottom: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: 620px; }
+  #legend { top: 12px; left: 300px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: 620px; }
   #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
-  #legend { user-select: none; touch-action: none; }
+  #legend { user-select: none; touch-action: none; cursor: grab; }
+  #legend.dragging, #legend.dragging * { cursor: grabbing !important; }
   #legend span.lab { cursor: pointer; }
   #legend span[data-venue] { cursor: pointer; }
   #legend span[data-venue]:hover, #legend span[data-venue].on { color: #fff; }
@@ -492,6 +493,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=89"></script>
+<script type="module" src="/viewer/main.js?v=90"></script>
 </body>
 </html>

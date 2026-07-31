@@ -2129,6 +2129,7 @@ async function main() {
     if (!lgDrag) return;
     const dx = e.clientX - lgDrag.x, dy = e.clientY - lgDrag.y;
     if (!lgDrag.moved && Math.hypot(dx, dy) < 5) return;
+    if (!lgDrag.moved) legendEl.classList.add('dragging');
     lgDrag.moved = true;
     legendEl.style.left = Math.min(window.innerWidth - 60, Math.max(0, lgDrag.r.left + dx)) + 'px';
     legendEl.style.top = Math.min(window.innerHeight - 30, Math.max(0, lgDrag.r.top + dy)) + 'px';
@@ -2137,6 +2138,7 @@ async function main() {
   });
   const lgEnd = () => {
     if (!lgDrag) return;
+    legendEl.classList.remove('dragging');
     if (lgDrag.moved) {
       try {
         localStorage.setItem('plLegendPos', JSON.stringify({
