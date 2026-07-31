@@ -278,14 +278,28 @@ function applyBandNames(meta, names) {
   if (!names) { console.warn('band-names.json not loaded; labels fall back to keywords'); return; }
   const sig3 = (o) => (o.keywords || []).slice(0, 3).join('|');
   const sig5 = (o) => (o.keywords || []).slice(0, 5).join('|');
-  const by5 = new Map(), by3 = new Map();
-  for (const e of [...(names.bands || []), ...(names.subbands || [])]) {
-    if (e.sig5) by5.set(e.sig5, e.name);
-    else if (e.sig) by3.set(e.sig, e.name);
-  }
+  // 帯とサブ帯は名前空間を分ける: 帯の中に「その帯とほぼ同じ内容の巨大サブ帯」が
+  // あると署名まで一致するため、共有マップだと両者が同じ名前になってしまう。
+  // 帯は bands のエントリだけ、サブ帯は subbands を先に見て bands にフォールバック。
+  const mk = (list) => {
+    const b5 = new Map(), b3 = new Map();
+    for (const e of list || []) {
+      if (e.sig5) b5.set(e.sig5, e.name);
+      else if (e.sig) b3.set(e.sig, e.name);
+    }
+    return [b5, b3];
+  };
+  const [band5, band3] = mk(names.bands);
+  const [sub5, sub3] = mk(names.subbands);
   let unnamed = 0;
-  for (const o of [...(meta.bands || []), ...(meta.subbands || [])]) {
-    const name = by5.get(sig5(o)) ?? by3.get(sig3(o));
+  for (const o of meta.bands || []) {
+    const name = band5.get(sig5(o)) ?? band3.get(sig3(o));
+    if (name) o.name = name;
+    else if (o.community != null) unnamed++;
+  }
+  for (const o of meta.subbands || []) {
+    const name = sub5.get(sig5(o)) ?? sub3.get(sig3(o))
+              ?? band5.get(sig5(o)) ?? band3.get(sig3(o));
     if (name) o.name = name;
     else unnamed++;
   }

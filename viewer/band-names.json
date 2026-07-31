@@ -222,6 +222,18 @@
     {
       "sig": "health|care|support",
       "name": "Health & Wellbeing"
+    },
+    {
+      "sig": "vehicles|autonomous|automated",
+      "name": "Automotive & Autonomous Vehicle UIs"
+    },
+    {
+      "sig": "games|game|player",
+      "name": "Gamification & Engagement"
+    },
+    {
+      "sig": "online|social|media",
+      "name": "Social Media & Online Communities"
     }
   ],
   "subbands": [
@@ -1976,7 +1988,7 @@
     },
     {
       "sig5": "graphical|personas|applications|usability|task",
-      "name": "UI Toolkits & Usability"
+      "name": "UI Systems & Evaluation"
     },
     {
       "sig5": "accessibility|blind|accessible|people|disability",
@@ -2284,7 +2296,7 @@
     },
     {
       "sig5": "blind|impaired|visually|accessible|people",
-      "name": "Blind & Low-vision Access"
+      "name": "Visual Impairment Support"
     },
     {
       "sig5": "accessibility|color|web|vision|deficiency",
@@ -2372,7 +2384,7 @@
     },
     {
       "sig5": "privacy|trigger-action|smart|data|programming",
-      "name": "Smart Home Privacy"
+      "name": "End-user Home Automation"
     },
     {
       "sig5": "voice|conversational|agents|chatbot|agent",
@@ -2493,6 +2505,38 @@
     {
       "sig5": "crowdfunding|blog|emotion|text-based|enterprise",
       "name": "Crowdfunding & Blogging"
+    },
+    {
+      "sig5": "vehicles|autonomous|automated|driving|external",
+      "name": "Autonomous Driving UIs"
+    },
+    {
+      "sig5": "vehicles|automated|autonomous|driving|external",
+      "name": "Autonomous Driving UIs"
+    },
+    {
+      "sig5": "games|game|player|exergames|training",
+      "name": "Exergames & Training"
+    },
+    {
+      "sig5": "games|game|player|experience|gameplay",
+      "name": "Player Experience"
+    },
+    {
+      "sig5": "reality|virtual|augmented|video|depth",
+      "name": "Immersive Video & Depth"
+    },
+    {
+      "sig5": "blind|people|accessibility|virtual|reality",
+      "name": "Accessible VR"
+    },
+    {
+      "sig5": "games|game|play|experience|location-based",
+      "name": "Location-based Play"
+    },
+    {
+      "sig5": "robot|robots|human-robot|social|hri",
+      "name": "Social Robots"
     }
   ]
 }
