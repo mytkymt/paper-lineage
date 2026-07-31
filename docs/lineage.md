@@ -84,9 +84,9 @@ per-person bitmask; the Scope toggle switches between "any authorship" and
 "last-author only" for both points and lines. Focusing people narrows the map to
 that subset — the same bitmask goes to the shader, so any number of them can be
 lit at once. A focused person's papers keep their colour inside a lineage view as
-well, where direction is still readable from position. **Lineage lines** turns the selected
-paper's lineage and the pinned people's lab threads off together, leaving the
-points as the only encoding.
+well, where direction is still readable from position. **Lines** (in Appearance) turns every
+citation line off, leaving the points as the only encoding — the lineage still
+reads as upstream to the left and downstream to the right.
 
 ## Edge brightness
 

@@ -114,6 +114,9 @@ console must be clean.
   tried and reverted).
 - **Axis-split zoom**: Shift+scroll must leave the year axis unchanged; Alt+scroll must
   leave bands unchanged.
+- **Lines** (Appearance): unchecking skips the edge pass entirely — no citation lines
+  anywhere, including a selected paper's lineage; the lineage still reads from the
+  points (upstream teal / downstream orange).
 - **Toggles**: Scope (any/last) changes line spread; the "Color by" segmented control
   (People/Venue) swaps point colours and the legend.
 - **Lineage lines checkbox** (Lineage group, default on): off hides the selected

@@ -127,17 +127,16 @@ const EDGE_VS = `#version 300 es
   uniform float uColorMode;   // 0 = ラボ, 1 = venue(エッジは単色)
   uniform float uAttrOnly;    // 1 = ラボ線だけ描く
   uniform int uIsoMask;       // 0 = 絞り込みなし。bit i = スロット i の人にフォーカス中
-  uniform float uClickLines;  // 0 = クリック起因の線(選択系譜・ラボ線)を描かない
   uniform vec3  uLabColors[16];
   out vec4 vColor;
   void main() {
     bool inLineage = aState > 0.5;
     if (aWeight < uThreshold && !inLineage) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
     if (uSelActive > 0.5 && uOnlyLineage > 0.5 && !inLineage) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
-    bool isLab = aLab < 254.0 && uClickLines > 0.5;
+    bool isLab = aLab < 254.0;
     if (uAttrOnly > 0.5 && !isLab) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
     int lab = int(aLab);
-    if (uClickLines > 0.5 && uIsoMask != 0 && (lab > 15 || (uIsoMask & (1 << lab)) == 0)) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
+    if (uIsoMask != 0 && (lab > 15 || (uIsoMask & (1 << lab)) == 0)) { gl_Position = vec4(2.0); vColor = vec4(0.0); return; }
 
     // 重みが大きいほど濃く。重み0のエッジも薄く残す(全体の地形として意味がある)
     // 線の既定は「地」の見え方 = people モードでラボ線ではないエッジと同じ。
@@ -153,7 +152,7 @@ const EDGE_VS = `#version 300 es
       a *= aLab < 14.5 ? (4.0 / 0.6) : 1.5;
     }
     if (uSelActive > 0.5) {
-      if (aState < 0.5 || uClickLines < 0.5) { a *= 0.12; }  // 系譜外(または線オフ)は沈める
+      if (aState < 0.5) { a *= 0.12; }                       // 系譜外は沈める
       else {
         c = aState < 1.5 ? C_UP : C_DOWN;
         a = max(a, 0.30) * 2.2;                              // 系譜は必ず見えるように
@@ -599,7 +598,7 @@ async function main() {
     gamma: document.getElementById('gamma'),
     psize: document.getElementById('psize'),
     depth: document.getElementById('depth'),
-    clickLines: document.getElementById('clickLines'),
+    lines: document.getElementById('lines'),
     colorMode: { value: 'attr' },   // セグメントUI(#colorSeg)が書き込む状態
     roleMode: document.getElementById('roleMode'),
   };
@@ -631,6 +630,8 @@ async function main() {
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+    // 線オフは描画パスごと飛ばす(uniform で沈めるより速く、意味も明快)
+    if (ui.lines.checked) {
     gl.useProgram(edgeProg);
     gl.uniform2fv(uni(edgeProg, 'uScale'), scale);
     gl.uniform2fv(uni(edgeProg, 'uOffset'), offset);
@@ -642,10 +643,10 @@ async function main() {
       ui.colorMode.value === 'venue' ? 1 : 0);
     gl.uniform1f(uni(edgeProg, 'uAttrOnly'), 0);    // Lineage lines only UI は廃止
     gl.uniform1i(uni(edgeProg, 'uIsoMask'), isoMask());
-    gl.uniform1f(uni(edgeProg, 'uClickLines'), ui.clickLines.checked ? 1 : 0);
     gl.uniform3fv(uni(edgeProg, 'uLabColors'), LAB_FLAT);
     gl.bindVertexArray(edgeVao);
     gl.drawArrays(gl.LINES, 0, edgeCount * 2);
+    }
 
     // 蓄積した重なり量を対数圧縮して画面に出す
     if (hdrOk) {
@@ -2123,7 +2124,7 @@ async function main() {
     if (selected >= 0) select(selected);
   });
   ui.roleMode.addEventListener('change', applyPinned);
-  ui.clickLines.addEventListener('change', schedule);
+  ui.lines.addEventListener('change', schedule);
   document.getElementById('colorSeg').addEventListener('click', (e) => {
     const b = e.target.closest('button[data-v]');
     if (!b || ui.colorMode.value === b.dataset.v) return;

@@ -414,6 +414,11 @@
     <input id="psize" type="range" min="0.5" max="8" step="0.1" value="2.5">
     <span class="val" id="psizeVal">2.5</span>
   </div>
+  <div class="row">
+    <label>Lines</label>
+    <input id="lines" type="checkbox" checked title="Draw citation lines. Off leaves the papers only — useful when the map gets too dense to read.">
+    <span class="val"></span>
+  </div>
   </details>
 
   <details id="grpLineage" open>
@@ -422,11 +427,6 @@
     <label>Depth</label>
       <input id="depth" type="range" min="1" max="9" step="1" value="2">
     <span class="val" id="depthVal">2 hops</span>
-  </div>
-  <div class="row">
-    <label>Lineage lines</label>
-    <input id="clickLines" type="checkbox" checked title="Show lineage lines: the citation lineage of a selected paper and the lab lineage of pinned people. Off highlights points only.">
-    <span class="val"></span>
   </div>
   </details>
 
@@ -498,6 +498,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=98"></script>
+<script type="module" src="/viewer/main.js?v=99"></script>
 </body>
 </html>
