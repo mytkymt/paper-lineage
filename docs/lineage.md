@@ -31,6 +31,15 @@ Both are bounded by the **Depth** slider (default 2 hops; "all" = unbounded —
 safe because the graph is acyclic). The union of the two sets plus the paper
 itself is the lineage; everything else dims.
 
+## Reading a year column
+
+Within one year, papers are ordered left to right by their venue's usual month
+(TEI in February … CHI in May … UIST in October … TOCHI last), so a year column
+reads roughly as that year's conference calendar. Venues shift by a few weeks
+between years and journals publish continuously, so this is an approximate
+order, not a date — but it is the same order in every year and fully
+deterministic.
+
 ## Trend breakdown (side panel)
 
 Every paper belongs to one of 117 **sub-fields**, precomputed by two-level

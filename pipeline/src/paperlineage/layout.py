@@ -716,12 +716,15 @@ def main() -> None:
 
     # x は年そのもの。ビューア側で正規化する。
     # 年内は乱数ではなく venue 順に並べる(縦線への潰れ防止 + 学会ごとに束になる)。
-    # venue の順序は venues.py の定義順で全年共通 — CHI は常に年の左端、のように
-    # 年をまたいで一貫し、完全に決定的。
+    # 並び順は venues.py の概略開催月なので、年の中を左から右に読むとその年の学会が
+    # 開かれた順になる(TEI 2月 → CHI 5月 → UIST 10月 …)。実際の開催月は年ごとに
+    # 前後し、ジャーナルは暦月を持たないので**おおよその順序**であって日付ではない。
+    # 順序自体は全年共通で完全に決定的。
     x = years.astype(np.float32)
     if args.jitter > 0:
         from .venues import EXTRA_VENUES, VENUES
-        vrank = {v.key: i for i, v in enumerate([*VENUES, *EXTRA_VENUES])}
+        _by_month = sorted([*VENUES, *EXTRA_VENUES], key=lambda v: (v.month, v.key))
+        vrank = {v.key: i for i, v in enumerate(_by_month)}
         vk = np.array([vrank.get(n.get("venue_key"), len(vrank)) for n in nodes], dtype=np.int64)
         for yr in np.unique(years):
             m = np.flatnonzero(years == yr)
