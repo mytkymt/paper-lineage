@@ -259,8 +259,8 @@
                     cursor: pointer; }
   #tut .ft button:hover { color: #fff; border-color: #3d4560; }
 
-  #axis { position: fixed; bottom: 0; left: 0; right: 0; height: 22px; pointer-events: none;
-          font-variant-numeric: tabular-nums; color: #5d6478; }
+  #axis { position: fixed; bottom: 0; left: 0; right: 0; height: 24px; pointer-events: none;
+          font-variant-numeric: tabular-nums; color: #6d7488; font-size: 13px; }
   #axis div { position: absolute; transform: translateX(-50%); }
 
   /* 帯(コミュニティ)の境界とラベル */
@@ -277,12 +277,12 @@
   #fieldTree .picked { color: #fff; background: #ffffff0d; border-radius: 3px; }
   #lineage.field-mode .counts, #lineage.field-mode #selAuthors { display: none; }
   #bands .sep { position: absolute; left: 0; right: 0; height: 1px; background: #ffffff10; }
-  #bands .lbl { position: absolute; right: 8px; max-width: 46vw; color: #7b8398; font-size: 11px;
+  #bands .lbl { position: absolute; right: 8px; max-width: 46vw; color: #8b93a8; font-size: 13px;
                 text-align: right; text-shadow: 0 0 6px #000, 0 0 3px #000;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   /* サブ帯(帯の中のサブ分野)は薄く。拡大したときだけ出る。 */
   #bands .sep.sub { background: #ffffff08; }
-  #bands .lbl.sub { color: #5d6478; font-size: 10px; right: 14px; }
+  #bands .lbl.sub { color: #6d7488; font-size: 12px; right: 14px; }
 
   #lineage ol.trends { margin: 4px 0 0; }
   #lineage li.trend { position: relative; border-top: 1px solid #1c2029; cursor: default;
@@ -543,6 +543,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=106"></script>
+<script type="module" src="/viewer/main.js?v=107"></script>
 </body>
 </html>

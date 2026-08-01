@@ -709,7 +709,7 @@ async function main() {
     // (画面の底に置いたままだと、縮小時にラベルが地図から離れて浮く)。
     const H = canvas.clientHeight;
     const dataBottom = (1 * scale[1] + offset[1]) * H;
-    axisEl.style.top = Math.min(H - 22, dataBottom + 2).toFixed(1) + 'px';
+    axisEl.style.top = Math.min(H - 24, dataBottom + 2).toFixed(1) + 'px';
     axisEl.style.bottom = 'auto';
     const step = cam.zx > 6 ? 1 : cam.zx > 3 ? 2 : cam.zx > 1.5 ? 5 : 10;
     const parts = [];
@@ -1181,18 +1181,18 @@ async function main() {
       const top = toPx(band.y0), bottom = toPx(band.y1);
       if (bottom < 0 || top > H) continue;
       parts.push(`<div class="sep" style="top:${top.toFixed(1)}px"></div>`);
-      const mid = (top + bottom) / 2 - 7;
+      const mid = (top + bottom) / 2 - 8;
       // 中心が画面外のラベルは出さない。クランプすると画面端に積み重なって読めない。
-      if (bottom - top >= 26 && mid >= 4 && mid <= H - 16) {
+      if (bottom - top >= 30 && mid >= 4 && mid <= H - 18) {
         parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px;${lblPos}" title="${escapeHtml(bandTitle(band))}">${escapeHtml(bandLabel(band))}</div>`);
       }
       // 拡大してサブ帯が十分な高さになったら、その中の内訳も出す
       for (const si of band.subbands || []) {
         const sub = meta.subbands[si];
         const st = toPx(sub.y0), sb = toPx(sub.y1);
-        if (sb < 0 || st > H || sb - st < 22) continue;
+        if (sb < 0 || st > H || sb - st < 26) continue;
         parts.push(`<div class="sep sub" style="top:${st.toFixed(1)}px"></div>`);
-        const smid = (st + sb) / 2 - 6;
+        const smid = (st + sb) / 2 - 7;
         if (smid < 4 || smid > H - 14) continue;
         parts.push(`<div class="lbl sub" data-sub="${si}" style="top:${smid.toFixed(1)}px;${subPos}" title="${escapeHtml(bandTitle(sub))}">${escapeHtml(subLabel(sub))}</div>`);
       }
