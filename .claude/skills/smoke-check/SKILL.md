@@ -46,6 +46,9 @@ console must be clean.
 - **Lineage**: select a paper → panel shows authors (last author marked ◂) and
   "N of M references are inside this corpus". Zero in-corpus refs must show the
   corpus-boundary explanation, never a bare empty list.
+- **Selected rows read as selected**: a committed trend/cluster/field row carries a
+  3px accent bar (the WCAG 1.4.11 state indicator, ~6:1 against the panel) plus a
+  raised background and white text — never colour alone, never a 3% wash.
 - **Trend filter**: clicking a trend row keeps BOTH upstream and downstream of that
   sub-field; clicking a different row switches (must not AND to empty); re-click restores.
 - **Hover during selection** only hits lineage nodes; clicking empty space clears

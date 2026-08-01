@@ -93,7 +93,9 @@
   #legend.dragging, #legend.dragging * { cursor: grabbing !important; }
   #legend span.lab { cursor: pointer; }
   #legend span[data-venue] { cursor: pointer; }
-  #legend span[data-venue]:hover, #legend span[data-venue].on { color: #fff; }
+  #legend span[data-venue]:hover { color: #fff; }
+  #legend span[data-venue].on { color: #fff; background: #ffffff14;
+                                box-shadow: inset 0 -2px 0 #6d90c9; border-radius: 3px; }
   .seg { display: flex; border: 1px solid #2a3040; border-radius: 6px; overflow: hidden; }
   .seg button { background: none; border: 0; color: #8b91a3; font: inherit; font-size: 11px;
                 padding: 3px 10px; cursor: pointer; }
@@ -171,7 +173,11 @@
                             padding: 0 4px; margin-left: 4px; display: inline-block; }
   #searchResults .chips b:hover { color: #fff; border-color: #4a5473; }
   #lineage li.trend { cursor: pointer; }
-  #lineage li.trend.picked { color: #fff; background: #ffffff08; }
+  /* 選択の確定表示。WCAG 1.4.11 は状態の指標に 3:1 を要求するので、色の濃淡
+     だけに頼らず**左のアクセントバー**を主指標にする(色覚に依存しない)。
+     背景と文字は補助の冗長符号。 */
+  #lineage li.trend.picked { color: #fff; background: #ffffff14;
+                             box-shadow: inset 3px 0 0 #6d90c9; }
   #legend .hintline { color: #5d6478; }
   #lineage .counts { display: flex; gap: 10px; margin-bottom: 8px; }
   #lineage .counts b { font-variant-numeric: tabular-nums; }
@@ -274,7 +280,8 @@
   #fieldTree .fs { padding-left: 16px; color: #8b91a3; font-size: 11px; }
   #fieldTree .fb b, #fieldTree .fs b { margin-left: auto; color: #5d6478; font-weight: 400;
     font-variant-numeric: tabular-nums; }
-  #fieldTree .picked { color: #fff; background: #ffffff0d; border-radius: 3px; }
+  #fieldTree .picked { color: #fff; background: #ffffff14; border-radius: 3px;
+                       box-shadow: inset 3px 0 0 #6d90c9; }
   #lineage.field-mode .counts, #lineage.field-mode #selAuthors { display: none; }
   #bands .sep { position: absolute; left: 0; right: 0; height: 1px; background: #ffffff10; }
   #bands .lbl { position: absolute; right: 8px; max-width: 46vw; color: #8b93a8; font-size: 13px;
@@ -286,6 +293,7 @@
 
   #lineage ol.trends { margin: 4px 0 0; }
   #lineage li.trend { position: relative; border-top: 1px solid #1c2029; cursor: default;
+                      transition: background .12s;
                       padding: 4px 0 7px 44px; font-size: 11px; overflow: hidden; }
   #lineage li.trend .n { position: absolute; left: 0; color: #8b91a3;
                          font-variant-numeric: tabular-nums; }
@@ -543,6 +551,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=107"></script>
+<script type="module" src="/viewer/main.js?v=108"></script>
 </body>
 </html>
