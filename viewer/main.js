@@ -1162,12 +1162,19 @@ async function main() {
     const H = canvas.clientHeight;
     const W = canvas.clientWidth;
     const toPx = (y) => (y * scale[1] + offset[1]) * H;
-    // ラベルの右端はデータの右端に沿わせる(縮小時に画面右端で浮かないように)。
-    // 選択パネルが出ている間はパネル手前まで退避する従来の下限も守る。
+    // 縮小して地図の右に空きがあるときは、ラベルの**左端**をデータの右端に付けて
+    // 空き側へ出す(地図に重ねない)。地図が画面を満たしているときは従来どおり
+    // 画面右端(選択パネルが出ていればその手前)に右寄せ。
     const dataRight = (1 * scale[0] + offset[0]) * W;
     const base = document.body.classList.contains('has-selection') && window.innerWidth > 900
       ? 372 : 8;
-    const lblRight = Math.max(base, W - dataRight + 8).toFixed(1);
+    const attached = dataRight + 60 < W - base;   // ラベルを置ける空きがあるか
+    const lblPos = attached
+      ? `left:${(dataRight + 10).toFixed(1)}px;right:auto;max-width:${Math.max(60, W - dataRight - 20).toFixed(0)}px`
+      : `right:${base}px`;
+    const subPos = attached
+      ? `left:${(dataRight + 16).toFixed(1)}px;right:auto;max-width:${Math.max(60, W - dataRight - 26).toFixed(0)}px`
+      : `right:${base + 6}px`;
     const parts = [];
 
     for (const band of meta.bands) {
@@ -1177,7 +1184,7 @@ async function main() {
       const mid = (top + bottom) / 2 - 7;
       // 中心が画面外のラベルは出さない。クランプすると画面端に積み重なって読めない。
       if (bottom - top >= 26 && mid >= 4 && mid <= H - 16) {
-        parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px;right:${lblRight}px" title="${escapeHtml(bandTitle(band))}">${escapeHtml(bandLabel(band))}</div>`);
+        parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px;${lblPos}" title="${escapeHtml(bandTitle(band))}">${escapeHtml(bandLabel(band))}</div>`);
       }
       // 拡大してサブ帯が十分な高さになったら、その中の内訳も出す
       for (const si of band.subbands || []) {
@@ -1187,7 +1194,7 @@ async function main() {
         parts.push(`<div class="sep sub" style="top:${st.toFixed(1)}px"></div>`);
         const smid = (st + sb) / 2 - 6;
         if (smid < 4 || smid > H - 14) continue;
-        parts.push(`<div class="lbl sub" data-sub="${si}" style="top:${smid.toFixed(1)}px;right:${(+lblRight + 6).toFixed(1)}px" title="${escapeHtml(bandTitle(sub))}">${escapeHtml(subLabel(sub))}</div>`);
+        parts.push(`<div class="lbl sub" data-sub="${si}" style="top:${smid.toFixed(1)}px;${subPos}" title="${escapeHtml(bandTitle(sub))}">${escapeHtml(subLabel(sub))}</div>`);
       }
     }
     bandsEl.innerHTML = parts.join('');
