@@ -705,6 +705,12 @@ async function main() {
   // --- 年軸のラベル ---
   function drawAxis() {
     const { scale, offset } = scaleOffset();
+    // ズームアウトで地図が画面より小さいときは、軸をデータの下端に寄せる
+    // (画面の底に置いたままだと、縮小時にラベルが地図から離れて浮く)。
+    const H = canvas.clientHeight;
+    const dataBottom = (1 * scale[1] + offset[1]) * H;
+    axisEl.style.top = Math.min(H - 22, dataBottom + 2).toFixed(1) + 'px';
+    axisEl.style.bottom = 'auto';
     const step = cam.zx > 6 ? 1 : cam.zx > 3 ? 2 : cam.zx > 1.5 ? 5 : 10;
     const parts = [];
     for (let year = Math.ceil(yearMin / step) * step; year <= yearMax; year += step) {
@@ -1154,7 +1160,14 @@ async function main() {
   function drawBands(scale, offset) {
     if (!meta.bands) return;
     const H = canvas.clientHeight;
+    const W = canvas.clientWidth;
     const toPx = (y) => (y * scale[1] + offset[1]) * H;
+    // ラベルの右端はデータの右端に沿わせる(縮小時に画面右端で浮かないように)。
+    // 選択パネルが出ている間はパネル手前まで退避する従来の下限も守る。
+    const dataRight = (1 * scale[0] + offset[0]) * W;
+    const base = document.body.classList.contains('has-selection') && window.innerWidth > 900
+      ? 372 : 8;
+    const lblRight = Math.max(base, W - dataRight + 8).toFixed(1);
     const parts = [];
 
     for (const band of meta.bands) {
@@ -1164,7 +1177,7 @@ async function main() {
       const mid = (top + bottom) / 2 - 7;
       // 中心が画面外のラベルは出さない。クランプすると画面端に積み重なって読めない。
       if (bottom - top >= 26 && mid >= 4 && mid <= H - 16) {
-        parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px" title="${escapeHtml(bandTitle(band))}">${escapeHtml(bandLabel(band))}</div>`);
+        parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px;right:${lblRight}px" title="${escapeHtml(bandTitle(band))}">${escapeHtml(bandLabel(band))}</div>`);
       }
       // 拡大してサブ帯が十分な高さになったら、その中の内訳も出す
       for (const si of band.subbands || []) {
@@ -1174,7 +1187,7 @@ async function main() {
         parts.push(`<div class="sep sub" style="top:${st.toFixed(1)}px"></div>`);
         const smid = (st + sb) / 2 - 6;
         if (smid < 4 || smid > H - 14) continue;
-        parts.push(`<div class="lbl sub" data-sub="${si}" style="top:${smid.toFixed(1)}px" title="${escapeHtml(bandTitle(sub))}">${escapeHtml(subLabel(sub))}</div>`);
+        parts.push(`<div class="lbl sub" data-sub="${si}" style="top:${smid.toFixed(1)}px;right:${(+lblRight + 6).toFixed(1)}px" title="${escapeHtml(bandTitle(sub))}">${escapeHtml(subLabel(sub))}</div>`);
       }
     }
     bandsEl.innerHTML = parts.join('');
