@@ -29,6 +29,20 @@ class Venue:
     # 年によって前後するので概略で十分。常時刊行のジャーナルは暦月を持たないので、
     # 関連する会議の時期(IMWUT→UbiComp、TOG→SIGGRAPH)か年半ばに置く。
     month: float = 6.0
+    # S2 が同じ会議を別の正規化名でも持っていることがある(改称・表記ゆれ)。
+    # 実例: DIS は 2026 から "Symposium on ..." に変わり、"Conference on ..." には
+    # 2025 までしか入らなくなった。両方を引かないと最新年が丸ごと欠ける。
+    aliases: tuple[str, ...] = ()
+    # S2 の venue クラスタが汚れているとき、DOI 接頭辞で足切りする。
+    # 実例: DIS の "Symposium on ..." には物理・人口統計の論文まで同じ venue 名で
+    # 入っており(S2 側のメタデータ誤り)、venue 名では区別できない。ACM 会議なので
+    # 10.1145/ を要求すれば確実に分かれる。必要な venue にだけ設定する。
+    doi_prefix: str | None = None
+
+    @property
+    def search_names(self) -> list[str]:
+        """bulk search に投げる名前すべて(コンマは除去済み)。"""
+        return [n.replace(",", "") for n in (self.s2_name, *self.aliases)]
 
     @property
     def search_venue(self) -> str:
@@ -40,7 +54,8 @@ VENUES: list[Venue] = [
     Venue("chi", "International Conference on Human Factors in Computing Systems", "CHI", 15435, month=5),
     Venue("pacmhci", "Proc. ACM Hum. Comput. Interact.", "PACM HCI", 3699, month=11.5),
     Venue("uist", "ACM Symposium on User Interface Software and Technology", "UIST", 3261, month=10.5),
-    Venue("dis", "Conference on Designing Interactive Systems", "DIS", 2441, month=7),
+    Venue("dis", "Conference on Designing Interactive Systems", "DIS", 2441, month=7,
+          aliases=("Symposium on Designing Interactive Systems",), doi_prefix="10.1145/"),
     Venue("assets", "International ACM SIGACCESS Conference on Computers and Accessibility", "ASSETS", 2198, month=10),
     Venue("iui", "International Conference on Intelligent User Interfaces", "IUI", 2108, month=3),
     Venue("cscw", "Conference on Computer Supported Cooperative Work", "CSCW", 2019, month=11.2),

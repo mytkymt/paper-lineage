@@ -39,6 +39,14 @@ Two gotchas the probe output helps with:
   comma-separated list); the pipeline strips commas automatically, but verify
   the probed count is non-zero.
 - Venues that renamed or split (like CSCW → PACM HCI in 2017) need both names.
+- S2 sometimes files one conference under two normalized names at once — DIS 2026
+  moved to "Symposium on Designing Interactive Systems" while "Conference on …"
+  kept everything up to 2025, so querying one name silently loses whole years. Put
+  the extra names in `aliases=(...)`; the fetcher merges them and de-duplicates.
+- A venue cluster can also be contaminated: that same Symposium name carried physics
+  and demography papers with the identical `venue` string, so the field itself cannot
+  filter them. Set `doi_prefix="10.1145/"` (or the publisher prefix for your venue)
+  and the fetcher drops anything else, reporting the count.
 
 ## 2. Run the pipeline
 

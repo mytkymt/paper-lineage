@@ -24,22 +24,43 @@ OUT_DIR = Path(__file__).resolve().parents[3] / "data" / "corpus"
 
 
 def fetch_venue(v: Venue, out_path: Path) -> int:
-    """1 venue 分を全ページ取得して JSONL に書く。戻り値は件数。"""
+    """1 venue 分を全ページ取得して JSONL に書く。戻り値は件数(重複除去後)。
+
+    S2 の正規化名が複数ある会議(改称など)は全部の名前を引いて1ファイルに束ねる。
+    名前をまたいで同じ論文が返ることがあるので paperId で重複を落とす。
+    """
+    seen: set[str] = set()
     n = 0
-    token: str | None = None
+    off_venue = 0   # DOI 接頭辞で弾いた件数(venue クラスタの汚れ)
     with out_path.open("w") as f:
-        while True:
-            page = s2.search_bulk(v.search_venue, fields=FIELDS, token=token)
-            data = page.get("data") or []
-            for paper in data:
-                # venue 完全一致で来ているはずだが、念のため記録しておく
-                paper["_venue_key"] = v.key
-                f.write(json.dumps(paper, ensure_ascii=False) + "\n")
-                n += 1
-            token = page.get("token")
-            print(f"  {v.label}: {n} / {page.get('total')}", flush=True)
-            if not token or not data:
-                break
+        for name in v.search_names:
+            token: str | None = None
+            got = 0
+            while True:
+                page = s2.search_bulk(name, fields=FIELDS, token=token)
+                data = page.get("data") or []
+                for paper in data:
+                    pid = paper.get("paperId")
+                    if pid and pid in seen:
+                        continue
+                    if v.doi_prefix:
+                        doi = (paper.get("externalIds") or {}).get("DOI") or ""
+                        if not doi.startswith(v.doi_prefix):
+                            off_venue += 1
+                            continue
+                    if pid:
+                        seen.add(pid)
+                    # venue 完全一致で来ているはずだが、念のため記録しておく
+                    paper["_venue_key"] = v.key
+                    f.write(json.dumps(paper, ensure_ascii=False) + "\n")
+                    n += 1
+                    got += 1
+                token = page.get("token")
+                print(f"  {v.label} [{name[:34]}]: {got} / {page.get('total')} (計 {n})", flush=True)
+                if not token or not data:
+                    break
+    if off_venue:
+        print(f"  {v.label}: DOI 接頭辞 {v.doi_prefix} 以外を除外 {off_venue}", flush=True)
     return n
 
 
