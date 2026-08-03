@@ -157,6 +157,14 @@
     border-radius: 999px; padding: 4px 13px; font-size: 11px; }
   #lockBadge:hover { background: rgba(215,168,60,.26); color: #fff; }
   body.view-locked #lockBadge { display: block; }
+  /* 固定した集合の外を押されたときの合図 */
+  #lockBadge.nudge { animation: lockNudge 1.5s ease-out; }
+  @keyframes lockNudge {
+    0%   { background: rgba(215,168,60,.5); color: #0a0c12; box-shadow: 0 0 0 5px rgba(215,168,60,.22); }
+    18%  { background: rgba(215,168,60,.5); color: #0a0c12; box-shadow: 0 0 0 5px rgba(215,168,60,.22); }
+    100% { background: rgba(215,168,60,.14); color: #e8c46a; box-shadow: 0 0 0 0 rgba(215,168,60,0); }
+  }
+  @media (prefers-reduced-motion: reduce) { #lockBadge.nudge { animation: none; } }
   /* 系譜を1本ずつ辿るための送り。キーの ← → と同じ動き */
   .pnav { display: none; gap: 4px; flex: 0 0 auto; }
   #lineage.has-nav .pnav { display: inline-flex; }
@@ -607,6 +615,6 @@
 <div id="nodeCursor" aria-hidden="true"></div>
 <button id="lockBadge" title="Release the lock (L)">View locked — click to release</button>
 
-<script type="module" src="/viewer/main.js?v=127"></script>
+<script type="module" src="/viewer/main.js?v=128"></script>
 </body>
 </html>

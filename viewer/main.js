@@ -1298,6 +1298,23 @@ async function main() {
   // 飛ばされて二度と行けない論文が出てしまうため。
   let lockedOrder = null, lockedAt = null;
   const lockBtn = document.getElementById('lockView');
+  const lockBadge = document.getElementById('lockBadge');
+  const LOCK_BADGE_LABEL = lockBadge.textContent;
+  let lockNudgeTimer = 0;
+  // 固定した集合の外を押されたときの合図。何も起きないままだと「固まった」と
+  // 誤解されるので、バッジを一瞬光らせて理由を出す。
+  function nudgeLock() {
+    lockBadge.textContent = 'Locked — release to select other papers';
+    lockBadge.classList.remove('nudge');
+    void lockBadge.offsetWidth;   // アニメーションを頭から流し直す
+    lockBadge.classList.add('nudge');
+    clearTimeout(lockNudgeTimer);
+    lockNudgeTimer = setTimeout(() => {
+      lockBadge.textContent = LOCK_BADGE_LABEL;
+      lockBadge.classList.remove('nudge');
+    }, 1500);
+  }
+
   function setLocked(on) {
     if (on) {
       // 光っている点の作り方は表示ごとに違う: 論文の系譜・分野・検索は nodeState、
@@ -1335,6 +1352,11 @@ async function main() {
       lockedUniforms = null;
       lockedOrder = null;
       lockedAt = null;
+    }
+    if (!on) {
+      clearTimeout(lockNudgeTimer);
+      lockBadge.textContent = LOCK_BADGE_LABEL;
+      lockBadge.classList.remove('nudge');
     }
     viewLocked = on;
     lockBtn.setAttribute('aria-pressed', String(on));
@@ -2172,7 +2194,7 @@ async function main() {
   }
   lockBtn.addEventListener('click', toggleLock);
   // 地図側からも外せるように、バッジ自体を解除ボタンにする
-  document.getElementById('lockBadge').addEventListener('click', toggleLock);
+  lockBadge.addEventListener('click', toggleLock);
 
   document.getElementById('lineageClose').addEventListener('click', () => {
     if (selected < 0 && focusOn()) { clearFocus(); return; }   // 著者パネルの × は選択解除
@@ -2233,10 +2255,24 @@ async function main() {
       // ロック中は固定した集合の外を押しても何も起きない。地図を眺めていて
       // 空きを押しただけでロックが外れるのは事故なので、解除は Lock view
       // ボタン・バッジ・Esc だけに限る。
-      if (hit < 0 && viewLocked) return;
+      if (hit < 0 && viewLocked) { nudgeLock(); return; }
       select(hit);
     }
   });
+  // ロック中のダブルクリック = そこへ固定を張り直す。「解除 → 選び直し →
+  // 再ロック」の3手を1つにまとめたもの。以後の解除はこの論文に戻る。
+  canvas.addEventListener('dblclick', (e) => {
+    if (!viewLocked || e.button !== 0) return;
+    const hit = pick(e.clientX, e.clientY);
+    if (hit < 0) return;
+    setLocked(false);   // ここでは基準に戻さない(帰るのではなく張り直すため)
+    select(hit);
+    uploadStates();
+    applyPinned();
+    setLocked(true);
+    schedule();
+  });
+
   canvas.addEventListener('pointermove', (e) => {
     if (ptrs.has(e.pointerId)) ptrs.set(e.pointerId, [e.clientX, e.clientY]);
     if (pinchD > 0 && ptrs.size === 2) {
