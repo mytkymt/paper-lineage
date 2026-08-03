@@ -183,6 +183,12 @@ console must be clean.
   Clearing the selection releases the lock so no un-clearable highlight can be left.
   Three ways in and out: the header button, the badge itself, and the L key (which is
   ignored while typing in a text field).
+- **Releasing returns to what was locked** — the paper/field/search and the camera as
+  they were at lock time, not whatever was opened while locked.
+- **Current-paper marker**: a ring follows the selected paper (gold while locked) so
+  it is findable on a frozen map. Exclude #nodeCursor and #tooltip when diffing.
+- **Arrow keys** step to the nearest paper in that direction, staying inside the
+  frozen set while locked and inside the lineage otherwise.
 - **Local clusters** in the lineage panel are collapsed by default; opening one keeps
   it open across later selections.
 - **View kind label**: the panel header names what is shown — PAPER LINEAGE / FIELD /

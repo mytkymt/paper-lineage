@@ -45,7 +45,7 @@ const LINKED_VENUES = new Set(['hri', 'ieeevr', 'ismar', 'siggraph', 'tog', 'ijh
 const DEFAULT_COLOR = [0.55, 0.58, 0.65];
 
 // 選択状態。シェーダにも同じ数値を渡す。
-const S_NONE = 0, S_UP = 1, S_DOWN = 2, S_SELF = 3, S_MATCH = 4;
+const S_NONE = 0, S_UP = 1, S_DOWN = 2, S_SELF = 3, S_MATCH = 4, S_FIELD = 5;
 
 // ---------- WebGL ヘルパ ----------
 
@@ -85,6 +85,7 @@ const LINEAGE_COLORS = `
   const vec3 C_DOWN  = vec3(1.00, 0.60, 0.32);   // その後の系譜(未来側)
   const vec3 C_SELF  = vec3(1.00, 1.00, 1.00);
   const vec3 C_MATCH = vec3(1.00, 0.90, 0.35);   // 検索ヒット
+  const vec3 C_FIELD = vec3(1.00, 1.00, 1.00);   // 分野の所属(検索と混ざらないよう別色)
 `;
 
 // ラボ(= ラストオーサー)ごとの色。位置が「いつ・どのトレンドか」を既に表しているので、
@@ -221,7 +222,8 @@ const NODE_VS = `#version 300 es
       else if (aState < 1.5) { if (!mine) vColor = C_UP; size *= 1.5; }
       else if (aState < 2.5) { if (!mine) vColor = C_DOWN; size *= 1.5; }
       else if (aState < 3.5) { vColor = C_SELF; size *= 0.6; }   // 選択論文は小さく(扇の中心なので位置で分かる)
-      else { if (!mine) vColor = C_MATCH; size *= 1.35; }   // 分野・検索のヒットは数が多いので控えめに
+      else if (aState < 4.5) { if (!mine) vColor = C_MATCH; size *= 1.35; }   // 検索ヒットは数が多いので控えめに
+      else { if (!mine) vColor = C_FIELD; size *= 1.35; }                      // 分野の所属
       if (mine && aState > 0.5) size *= 1.25;   // 人の色は目立たせないと系譜の海に埋もれる
     }
     gl_PointSize = size;
@@ -721,6 +723,7 @@ async function main() {
     }
     axisEl.innerHTML = parts.join('');
     drawBands(scale, offset);
+    drawNodeCursor();
   }
 
   // --- 帯(コミュニティ)の境界とラベル ---
@@ -728,17 +731,18 @@ async function main() {
   // 分野(帯・サブ帯・venue)のホバープレビュー。null = なし
   let fieldPreview = null;
 
-  // 分野のメンバーを S_MATCH で塗る(選択とプレビューの共通処理)
+  // 分野のメンバーを S_FIELD(白)で塗る。検索ヒットの黄色とは別扱いにして、
+  // 「分野の所属」と「検索の一致」が同じ色にならないようにする。
   function paintFieldSet(kind, idx) {
     nodeState.fill(0); edgeState.fill(0);
     if (kind === 'venue') {
-      for (let i = 0; i < n; i++) if (meta.nodes[i].v === idx) nodeState[i] = S_MATCH;
+      for (let i = 0; i < n; i++) if (meta.nodes[i].v === idx) nodeState[i] = S_FIELD;
     } else {
       const o = kind === 'band' ? meta.bands[idx] : meta.subbands[idx];
       if (o) {
         for (let i = 0; i < n; i++) {
           const y = np[i * 2 + 1];
-          if (y >= o.y0 && y < o.y1) nodeState[i] = S_MATCH;
+          if (y >= o.y0 && y < o.y1) nodeState[i] = S_FIELD;
         }
       }
     }
@@ -1064,7 +1068,7 @@ async function main() {
       members = fieldMembers(o);
     }
     nodeState.fill(0); edgeState.fill(0);
-    for (const i of members) nodeState[i] = S_MATCH;
+    for (const i of members) nodeState[i] = S_FIELD;
     // 線は光らせない: 大きな分野では数万本が同時に光って眩しいだけになる。
     // 分野の骨格は点の分布で十分読める(線が見たければ論文を選択する)。
     uploadStates();
@@ -1153,6 +1157,22 @@ async function main() {
       else fpStop();
     });
     treeEl.addEventListener('mouseleave', fpStop);
+  }
+
+  // 見ている論文の目印。ロック中は地図の色が固まっているので、これが無いと
+  // どれを開いているのか分からない。GPU の状態には触らず DOM を重ねる。
+  const cursorEl = document.getElementById('nodeCursor');
+  function drawNodeCursor() {
+    if (selected < 0 || !canvas.clientWidth) { cursorEl.style.display = 'none'; return; }
+    const { scale, offset } = scaleOffset();
+    const x = (np[selected * 2] * scale[0] + offset[0]) * canvas.clientWidth;
+    const y = (np[selected * 2 + 1] * scale[1] + offset[1]) * canvas.clientHeight;
+    if (x < -40 || y < -40 || x > canvas.clientWidth + 40 || y > canvas.clientHeight + 40) {
+      cursorEl.style.display = 'none'; return;
+    }
+    cursorEl.style.display = 'block';
+    cursorEl.style.left = x.toFixed(1) + 'px';
+    cursorEl.style.top = y.toFixed(1) + 'px';
   }
 
   const bandsEl = document.getElementById('bands');
@@ -1263,6 +1283,9 @@ async function main() {
   // 見た目を決めるのはバッファだけではない。減光の有無や絞り込みマスクは
   // 選択から毎フレーム計算されるので、ロック中はその値も止める。
   let lockedUniforms = null;
+  // ロックした時点で何を見ていたか。解除したらここへ戻す(ロック中に開いた
+  // 論文へ移るのではなく、基準にしていた画面に帰る)。
+  let lockAnchor = null;
   const lockBtn = document.getElementById('lockView');
   function setLocked(on) {
     if (on) {
@@ -1279,6 +1302,13 @@ async function main() {
         selActive: selected >= 0 || searchActive || fieldSel || fieldPreview ? 1 : 0,
         focusDim: focused.length && !(selected >= 0 || searchActive || fieldSel || fieldPreview) ? 1 : 0,
         isoMask: isoMask(),
+      };
+      lockAnchor = {
+        selected,
+        field: fieldSel ? { kind: fieldSel.kind, idx: fieldSel.idx } : null,
+        search: searchActive ? searchEl.value : '',
+        focus: focusOn(),
+        cam: { cx: cam.cx, cy: cam.cy, zx: cam.zx, zy: cam.zy },
       };
     } else {
       lockedPick = null;
@@ -1311,7 +1341,7 @@ async function main() {
       const st = nodeState[i];
       if (st === S_UP) buckets[1].push(i);
       else if (st === S_DOWN) buckets[1].push(i);
-      else if (st === S_MATCH) buckets[2].push(i);
+      else if (st === S_MATCH || st === S_FIELD) buckets[2].push(i);
       else if (st === S_SELF) buckets[3].push(i);
       else if (nodeFocus[i]) buckets[0].push(i);
     }
@@ -2088,13 +2118,24 @@ async function main() {
   }
 
   function toggleLock() {
+    const anchor = lockAnchor;
     setLocked(!viewLocked);
     if (!viewLocked) {
-      // 解除 = 今の選択の見え方へ追いつく。ロック中に貯めた nodeState は
-      // 最新の選択のものなので、上げ直すだけで整合する。
+      // 解除 = ロックしたときに見ていた画面へ戻す。
+      // ロック中にどれだけ他の論文を覗いても、基準は失われない。
+      if (anchor) {
+        if (anchor.selected >= 0) select(anchor.selected);
+        else if (anchor.field) selectField(anchor.field.kind, anchor.field.idx);
+        else if (anchor.search) { searchEl.value = anchor.search; runSearch(anchor.search); }
+        else select(-1);        // 著者フォーカスはここで表示が戻る
+        cancelCamAnim();
+        cam.cx = anchor.cam.cx; cam.cy = anchor.cam.cy;
+        cam.zx = anchor.cam.zx; cam.zy = anchor.cam.zy;
+        pendingPan = -1;
+      }
       uploadStates();
-      applyPinned();   // ロック中に据え置いた人の色・強調も今の状態へ戻す
-      if (selected >= 0) panToNode(selected);
+      applyPinned();   // ロック中に据え置いた人の色・強調も戻す
+      lockAnchor = null;
     }
     schedule();
   }
@@ -2496,7 +2537,38 @@ async function main() {
     if (!chip) return;
     toggleFocusSlot(parseInt(chip.dataset.slot, 10));
   });
+  // 矢印キーで隣の論文へ。押した向きのコーン(±45°)の中で**画面上いちばん近い**
+  // ものを選ぶ。ロック中は光っている集合の中だけを渡り歩く。
+  function stepSelection(dx, dy) {
+    if (selected < 0) return false;
+    const { scale } = scaleOffset();
+    const sx = np[selected * 2], sy = np[selected * 2 + 1];
+    let best = -1, bestD = Infinity;
+    for (let i = 0; i < n; i++) {
+      if (i === selected) continue;
+      if (lockedPick && !lockedPick[i]) continue;
+      if (!lockedPick && lineage && !lineage.up.has(i) && !lineage.down.has(i)) continue;
+      const ax = (np[i * 2] - sx) * scale[0], ay = (np[i * 2 + 1] - sy) * scale[1];
+      const along = ax * dx + ay * dy;
+      if (along <= 0) continue;                       // 逆方向は見ない
+      if (Math.abs(ax * -dy + ay * dx) > along) continue;   // コーンの外
+      const d = ax * ax + ay * ay;
+      if (d < bestD) { bestD = d; best = i; }
+    }
+    if (best < 0) return false;
+    select(best);
+    return true;
+  }
+
   window.addEventListener('keydown', (e) => {
+    const arrows = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+    if (arrows[e.key] && selected >= 0) {
+      const t = e.target;
+      if (!(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA'))) {
+        if (stepSelection(...arrows[e.key])) e.preventDefault();
+        return;
+      }
+    }
     // L で切り替え。入力欄に文字を打っている最中は拾わない
     if ((e.key === 'l' || e.key === 'L') && !e.metaKey && !e.ctrlKey && !e.altKey) {
       const t = e.target;

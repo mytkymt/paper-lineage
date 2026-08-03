@@ -21,8 +21,9 @@ Research areas appear as named horizontal bands; citations flow left to right.
   descendants, for instance, resolve into branches like VR haptics, mid-air
   ultrasound, EMS and levitation.
 - Right-click a paper for DOI and copy actions.
-- **Lock view** freezes the highlight, so you can click through other papers and read
-  each one's panel while the map keeps showing the lineage you are comparing against.
+- **Lock view** (or the L key) freezes the highlight, so you can click through other
+  papers — or step with the arrow keys — and read each one's panel while the map keeps
+  showing the lineage you are comparing against. Releasing returns to what you locked.
 - How all of this is computed: [docs/lineage.md](docs/lineage.md).
 
 ## 2. Follow people
