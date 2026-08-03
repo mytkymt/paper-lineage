@@ -172,6 +172,11 @@ console must be clean.
   without a DOI show "No DOI on record" instead of the DOI actions.
 - Esc clears selection.
 
+- **Lock view** (panel header): while locked the map keeps exactly the highlight it
+  had, clicking other papers only swaps the panel, picking is unrestricted (the whole
+  map stays clickable) and selection no longer pans the camera; a "View locked" badge
+  shows at the bottom. Releasing repaints to the current selection and pans to it.
+  Clearing the selection releases the lock so no un-clearable highlight can be left.
 - **View kind label**: the panel header names what is shown — PAPER LINEAGE / FIELD /
   SUB-FIELD / VENUE / AUTHOR / PEOPLE · N SELECTED — and changes with every panel swap.
 - **Band panel has a Sub-fields fold** (open by default): rows narrow to that

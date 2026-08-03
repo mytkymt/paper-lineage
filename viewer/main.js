@@ -1253,7 +1253,19 @@ async function main() {
     return seen;
   }
 
+  // ビューのロック。地図のハイライトだけを固定し、パネルは選択に追随させる
+  // (別の論文を見比べるため)。解除すると今の選択の状態へ地図を戻す。
+  let viewLocked = false;
+  const lockBtn = document.getElementById('lockView');
+  function setLocked(on) {
+    viewLocked = on;
+    lockBtn.setAttribute('aria-pressed', String(on));
+    lockBtn.textContent = on ? 'Locked' : 'Lock view';
+    document.body.classList.toggle('view-locked', on);
+  }
+
   function uploadStates() {
+    if (viewLocked) return;   // 地図は据え置き。nodeState 自体は更新しておく
     gl.bindBuffer(gl.ARRAY_BUFFER, nodeStateBuf);
     gl.bufferSubData(gl.ARRAY_BUFFER, 0, nodeState);
     gl.bindBuffer(gl.ARRAY_BUFFER, edgeStateBuf);
@@ -1356,6 +1368,7 @@ async function main() {
 
   let pendingPan = -1;   // 非表示中(canvas 0×0)に選択された場合、表示時にパンをやり直す
   function panToNode(i) {
+    if (viewLocked) return;   // ロック中は視点も動かさない
     const w = canvas.clientWidth, h = canvas.clientHeight;
     if (!w || !h) { pendingPan = i; return; }
     pendingPan = -1;
@@ -1393,6 +1406,8 @@ async function main() {
     highlightedCluster = -1;
     document.body.classList.toggle('has-selection', i >= 0);
 
+    // 何も選んでいない状態でロックだけ残ると、消せないハイライトになる
+    if (i < 0 && viewLocked) setLocked(false);
     if (i < 0) {
       lineage = null;
       lineageEl.style.display = 'none';
@@ -2042,6 +2057,17 @@ async function main() {
     });
   }
 
+  lockBtn.addEventListener('click', () => {
+    setLocked(!viewLocked);
+    if (!viewLocked) {
+      // 解除 = 今の選択の見え方へ追いつく。ロック中に貯めた nodeState は
+      // 最新の選択のものなので、上げ直すだけで整合する。
+      uploadStates();
+      if (selected >= 0) panToNode(selected);
+    }
+    schedule();
+  });
+
   document.getElementById('lineageClose').addEventListener('click', () => {
     if (selected < 0 && focusOn()) { clearFocus(); return; }   // 著者パネルの × は選択解除
     select(-1);
@@ -2265,7 +2291,7 @@ async function main() {
   function pick(clientX, clientY) {
     // 系譜選択中は系譜内、検索ハイライト中は検索ヒットだけを対象にする
     // (どちらも nodeState が非ゼロの点 = 明るく描かれている点に一致する)
-    const restrictLineage = selected >= 0 || searchActive || !!fieldSel;
+    const restrictLineage = !viewLocked && (selected >= 0 || searchActive || !!fieldSel);
     // 人を絞り込み中は、その人の論文だけをクリック/ホバー対象にする
     // (系譜選択と同じ発想 — 沈めた点に吸われて別の論文へ飛ばないように)
     const isoBits = isoMask();

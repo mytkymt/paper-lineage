@@ -141,6 +141,17 @@
                   margin: -10px -12px 4px; padding: 10px 12px 6px;
                   border-bottom: 1px solid #1c2029; }
   #lineage .phd h2 { margin: 0; }
+  #lockView { float: right; margin: -1px 8px 0 0; background: none; cursor: pointer;
+              border: 1px solid #2a3040; border-radius: 999px; padding: 2px 9px;
+              color: #8b91a3; font: inherit; font-size: 10px; }
+  #lockView:hover { color: #fff; border-color: #3d4560; }
+  #lockView[aria-pressed="true"] { color: #0a0c12; background: #d7a83c; border-color: #d7a83c; }
+  /* ロック中は地図の縁に印を出す。パネルだけの表示だと、地図が固まっている
+     理由が分からないまま操作することになる。 */
+  body.view-locked::after { content: 'View locked'; position: fixed; left: 50%; bottom: 26px;
+    transform: translateX(-50%); z-index: 4; pointer-events: none;
+    background: rgba(215,168,60,.14); border: 1px solid #d7a83c; color: #e8c46a;
+    border-radius: 999px; padding: 3px 12px; font-size: 11px; }
   #lineage .pkind { color: #6d7488; font-size: 9px; letter-spacing: .12em;
                     text-transform: uppercase; margin-bottom: 2px; }
   #lineage h2 { margin: 0 0 2px; font-size: 12px; color: #eef; font-weight: 600; }
@@ -536,6 +547,8 @@
 <div id="lineage" class="panel">
   <div class="phd">
   <span class="close" id="lineageClose" role="button" aria-label="Close panel" tabindex="0">×</span>
+  <button id="lockView" aria-pressed="false"
+          title="Freeze what the map is showing. You can keep clicking other papers — the panel follows, the map stays. Releasing it moves the map to whatever is selected now.">Lock view</button>
   <div class="pkind" id="selKind"></div>
   <h2 id="selTitle"></h2>
   </div>
@@ -551,6 +564,6 @@
 <div id="bands"></div>
 <div id="axis"></div>
 
-<script type="module" src="/viewer/main.js?v=110"></script>
+<script type="module" src="/viewer/main.js?v=111"></script>
 </body>
 </html>
