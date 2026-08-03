@@ -2,8 +2,9 @@
 
 **Live: https://hci-research-trails.vercel.app**
 
-An interactive map of HCI research — **38,791 papers and 371,893 citations
+An interactive map of HCI research — **about 39,000 papers and 380,000 citations
 from 13 major venues (1981–2026)**, laid out along time on a single WebGL canvas.
+A toggle adds seven neighbouring venues, taking it to about 47,000 papers.
 Research areas appear as named horizontal bands; citations flow left to right.
 
 ![Overview](docs/media/overview.png)
@@ -16,9 +17,9 @@ Research areas appear as named horizontal bands; citations flow left to right.
   on it (downstream) lights up.
 - The side panel breaks the lineage down by research trend, with upstream:downstream
   ratio bars — click a trend to filter the view to it.
-- **Local clusters** split the lineage by its own citation structure — e.g. UltraHaptics'
-  708 descendants resolve into eight branches (VR haptics, mid-air ultrasound, EMS,
-  levitation, …).
+- **Local clusters** split the lineage by its own citation structure — UltraHaptics'
+  descendants, for instance, resolve into branches like VR haptics, mid-air
+  ultrasound, EMS and levitation.
 - Right-click a paper for DOI and copy actions.
 - How all of this is computed: [docs/lineage.md](docs/lineage.md).
 

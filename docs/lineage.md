@@ -7,7 +7,7 @@ deterministic — same corpus, same clicks, same result. Code:
 
 ## The citation graph
 
-- **Corpus**: 38,791 papers from 13 HCI venues (1981–2026), fetched from Semantic
+- **Corpus**: about 39,000 papers from 13 HCI venues (1981–2026), fetched from Semantic
   Scholar; references resolved via OpenAlex and joined by DOI.
 - Records that are containers rather than papers are dropped before anything else:
   proceedings volumes, companion/adjunct volumes, Extended Abstracts volumes and
@@ -15,7 +15,7 @@ deterministic — same corpus, same clicks, same result. Code:
   ordinary hits, and their citation counts are enormous — the 2017 CHI proceedings
   record alone showed 2,217 — so leaving them in put meaningless bright dots on the
   map. The test is the start of the title only; nothing is inferred from content.
-- Only citations with **both ends inside the corpus** are kept — 371,893 edges.
+- Only citations with **both ends inside the corpus** are kept — roughly 380,000 edges.
   About 75% of references point outside the 13 venues and are excluded; the UI
   says so wherever this limits what you see.
 - Edges are forced into a **time-monotone DAG**: papers are totally ordered by
@@ -69,7 +69,7 @@ for one lineage only. Computed automatically on every selection:
    the selected paper** (the hub connects to everything by construction and
    would glue all clusters together).
 2. Run Louvain ([Blondel et al., 2008](https://doi.org/10.1088/1742-5468/2008/10/P10008))
-   on that subgraph (single pass over all 372k edges to extract it — a few tens
+   on that subgraph (a single pass over the whole edge list to extract it — a few tens
    of ms).
 3. Keep clusters with ≥ 3 papers, up to 8; anything dropped is reported as
    "+N papers in M smaller clusters".
