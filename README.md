@@ -68,9 +68,9 @@ sent to a co-author or cited in a talk.
 
 ## Tutorial
 
-The whole thing in 15 seconds:
+Eleven seconds of it moving — no narration, just the parts that light up:
 
-![Tour, fast-forward](docs/media/tour-fast.gif)
+![Highlights](docs/media/tour-fast.gif)
 
 The **Tutorial** link in the panel plays the full 87-second walkthrough
 ([docs/media/tutorial.mp4](docs/media/tutorial.mp4)), which is also available as a
