@@ -68,10 +68,13 @@ sent to a co-author or cited in a talk.
 
 ## Tutorial
 
-![Tour](docs/media/tour.gif)
+The whole thing in 15 seconds:
 
-The **Tutorial** link in the panel plays a walkthrough:
-[docs/media/tutorial.mp4](docs/media/tutorial.mp4)
+![Tour, fast-forward](docs/media/tour-fast.gif)
+
+The **Tutorial** link in the panel plays the full 87-second walkthrough
+([docs/media/tutorial.mp4](docs/media/tutorial.mp4)), which is also available as a
+[full-speed GIF](docs/media/tour.gif).
 
 ## Reading the map
 
