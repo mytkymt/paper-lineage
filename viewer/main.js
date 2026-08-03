@@ -1564,6 +1564,8 @@ async function main() {
     paintLineage();
   }
 
+  let localOpen = false;   // 既定は畳む。開いたら次の選択でも開いたままにする
+
   function renderLocalClusters() {
     const box = document.getElementById('localResults');
     if (!box || !localClusters) return;
@@ -1593,13 +1595,14 @@ async function main() {
     }).join('');
     const named = localClusters.some((c) => c.name);
     box.innerHTML =
-      `<h3>Local clusters — click to filter</h3><ol class="trends">${rows}</ol>` +
+      `<details class="fold"${localOpen ? ' open' : ''} id="localFold">` +
+      `<summary>Local clusters — click to filter</summary><ol class="trends">${rows}</ol>` +
       (localRest.papers > 0
         ? `<span class="hintline">+ ${localRest.papers.toLocaleString()} papers in ${localRest.clusters} smaller clusters (not shown)</span>`
         : '') +
       `<button id="nameBtn" class="mini"${named ? ' disabled' : ''}>` +
       `${named ? 'Named with AI' : 'Name clusters with AI'}</button>` +
-      `<span class="hintline" id="nameStatus"></span>`;
+      `<span class="hintline" id="nameStatus"></span></details>`;
   }
 
   function toggleLocalCluster(k) {
@@ -2022,6 +2025,7 @@ async function main() {
 
   // 2人目以降のカードの開閉を覚えておく(toggle はバブルしないので捕捉フェーズで拾う)
   document.getElementById('lineageLists').addEventListener('toggle', (e) => {
+    if (e.target.id === 'localFold') localOpen = e.target.open;
     const card = e.target;
     if (!card.classList || !card.classList.contains('acard')) return;
     const ai = parseInt(card.dataset.ai, 10);
@@ -2057,7 +2061,7 @@ async function main() {
     });
   }
 
-  lockBtn.addEventListener('click', () => {
+  function toggleLock() {
     setLocked(!viewLocked);
     if (!viewLocked) {
       // 解除 = 今の選択の見え方へ追いつく。ロック中に貯めた nodeState は
@@ -2066,7 +2070,10 @@ async function main() {
       if (selected >= 0) panToNode(selected);
     }
     schedule();
-  });
+  }
+  lockBtn.addEventListener('click', toggleLock);
+  // 地図側からも外せるように、バッジ自体を解除ボタンにする
+  document.getElementById('lockBadge').addEventListener('click', toggleLock);
 
   document.getElementById('lineageClose').addEventListener('click', () => {
     if (selected < 0 && focusOn()) { clearFocus(); return; }   // 著者パネルの × は選択解除
@@ -2459,6 +2466,12 @@ async function main() {
     toggleFocusSlot(parseInt(chip.dataset.slot, 10));
   });
   window.addEventListener('keydown', (e) => {
+    // L で切り替え。入力欄に文字を打っている最中は拾わない
+    if ((e.key === 'l' || e.key === 'L') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      const t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
+      if (viewLocked || selected >= 0 || fieldSel || focusOn()) { toggleLock(); return; }
+    }
     if (e.key !== 'Escape') return;
     // メニューが開いていれば Esc はまずそれだけを閉じる(選択は保持)
     if (ctxEl.style.display !== 'none' && ctxEl.style.display !== '') { hideCtx(); return; }

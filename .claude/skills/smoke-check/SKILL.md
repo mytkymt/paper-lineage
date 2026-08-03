@@ -177,6 +177,10 @@ console must be clean.
   map stays clickable) and selection no longer pans the camera; a "View locked" badge
   shows at the bottom. Releasing repaints to the current selection and pans to it.
   Clearing the selection releases the lock so no un-clearable highlight can be left.
+  Three ways in and out: the header button, the badge itself, and the L key (which is
+  ignored while typing in a text field).
+- **Local clusters** in the lineage panel are collapsed by default; opening one keeps
+  it open across later selections.
 - **View kind label**: the panel header names what is shown — PAPER LINEAGE / FIELD /
   SUB-FIELD / VENUE / AUTHOR / PEOPLE · N SELECTED — and changes with every panel swap.
 - **Band panel has a Sub-fields fold** (open by default): rows narrow to that
