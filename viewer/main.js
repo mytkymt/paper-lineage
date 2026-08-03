@@ -2223,6 +2223,10 @@ async function main() {
     // ほとんど動いていなければクリックとして扱う
     if (Math.abs(e.clientX - downX) < 4 && Math.abs(e.clientY - downY) < 4) {
       const hit = pick(e.clientX, e.clientY);
+      // ロック中は固定した集合の外を押しても何も起きない。地図を眺めていて
+      // 空きを押しただけでロックが外れるのは事故なので、解除は Lock view
+      // ボタン・バッジ・Esc だけに限る。
+      if (hit < 0 && viewLocked) return;
       select(hit);
     }
   });
