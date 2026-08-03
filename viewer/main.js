@@ -3007,7 +3007,7 @@ async function main() {
 
   // 開発用の覗き窓(スモークチェックが closure 内を検証できるように)
   window.PL = {
-    pick, meta, cam,
+    pick, meta, cam, homeCam,
     nodeSlot: () => nodeSlot,
     focused: () => focused.slice(),
     focusOn,
