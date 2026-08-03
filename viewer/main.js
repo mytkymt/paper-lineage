@@ -1155,7 +1155,16 @@ async function main() {
       if (lbl.dataset.sub != null) fpStart('sub', parseInt(lbl.dataset.sub, 10));
       else if (lbl.dataset.band != null) fpStart('band', parseInt(lbl.dataset.band, 10));
     });
-    bandsEl.addEventListener('mouseleave', fpStop);
+    // #bands は画面全体を覆う入れ物なので mouseleave はまず発火しない
+    // (ラベルから地図の真ん中へ動いても境界を出ない)。ラベル単位の mouseout で
+    // 解除し、取りこぼしに備えて地図の上を動いたときにも必ず解除する。
+    bandsEl.addEventListener('mouseout', (e) => {
+      const lbl = e.target.closest('.lbl');
+      if (!lbl) return;
+      if (e.relatedTarget && lbl.contains(e.relatedTarget)) return;
+      fpStop();
+    });
+    canvas.addEventListener('pointermove', () => { if (fieldPreview) fpStop(); });
   }
   function drawBands(scale, offset) {
     if (!meta.bands) return;
