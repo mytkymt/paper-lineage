@@ -2051,6 +2051,7 @@ async function main() {
     lineageEl.classList.remove('field-mode');
     lineageEl.style.display = 'block';
     lineageEl.scrollTop = 0;
+    updatePaperNav();
   }
 
   document.getElementById('lineageLists').addEventListener('click', (e) => {
@@ -2537,10 +2538,13 @@ async function main() {
     if (!chip) return;
     toggleFocusSlot(parseInt(chip.dataset.slot, 10));
   });
-  // 矢印キーで隣の論文へ。押した向きのコーン(±45°)の中で**画面上いちばん近い**
-  // ものを選ぶ。ロック中は光っている集合の中だけを渡り歩く。
-  function stepSelection(dx, dy) {
-    if (selected < 0) return false;
+  // ← → だけで渡り歩く。x は年なので「左 = より前、右 = より後」で意味が通り、
+  // 上下方向に絞らないぶん行き止まりが出ない。候補は押した側の半平面すべてで、
+  // その中から**画面上いちばん近い**ものを選ぶ(縦に飛びすぎない)。
+  // ロック中は光っている集合、通常時は選択中の系譜の中だけを歩く。
+  // 送り先があるか(ボタンの活性判定にも使う)
+  function stepTarget(dir) {
+    if (selected < 0) return -1;
     const { scale } = scaleOffset();
     const sx = np[selected * 2], sy = np[selected * 2 + 1];
     let best = -1, bestD = Infinity;
@@ -2549,23 +2553,34 @@ async function main() {
       if (lockedPick && !lockedPick[i]) continue;
       if (!lockedPick && lineage && !lineage.up.has(i) && !lineage.down.has(i)) continue;
       const ax = (np[i * 2] - sx) * scale[0], ay = (np[i * 2 + 1] - sy) * scale[1];
-      const along = ax * dx + ay * dy;
-      if (along <= 0) continue;                       // 逆方向は見ない
-      if (Math.abs(ax * -dy + ay * dx) > along) continue;   // コーンの外
+      if (ax * dir <= 0) continue;   // 押した側だけ
       const d = ax * ax + ay * ay;
       if (d < bestD) { bestD = d; best = i; }
     }
-    if (best < 0) return false;
-    select(best);
+    return best;
+  }
+  function stepSelection(dir) {
+    const t = stepTarget(dir);
+    if (t < 0) return false;
+    select(t);
     return true;
   }
+  function updatePaperNav() {
+    const nav = selected >= 0;
+    lineageEl.classList.toggle('has-nav', nav);
+    if (!nav) return;
+    document.getElementById('prevPaper').disabled = stepTarget(-1) < 0;
+    document.getElementById('nextPaper').disabled = stepTarget(1) < 0;
+  }
+  document.getElementById('prevPaper').addEventListener('click', () => stepSelection(-1));
+  document.getElementById('nextPaper').addEventListener('click', () => stepSelection(1));
 
   window.addEventListener('keydown', (e) => {
-    const arrows = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
-    if (arrows[e.key] && selected >= 0) {
+    const dir = e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowRight' ? 1 : 0;
+    if (dir && selected >= 0) {
       const t = e.target;
       if (!(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA'))) {
-        if (stepSelection(...arrows[e.key])) e.preventDefault();
+        if (stepSelection(dir)) e.preventDefault();
         return;
       }
     }

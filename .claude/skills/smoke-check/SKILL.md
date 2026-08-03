@@ -187,8 +187,11 @@ console must be clean.
   they were at lock time, not whatever was opened while locked.
 - **Current-paper marker**: a ring follows the selected paper (gold while locked) so
   it is findable on a frozen map. Exclude #nodeCursor and #tooltip when diffing.
-- **Arrow keys** step to the nearest paper in that direction, staying inside the
-  frozen set while locked and inside the lineage otherwise.
+- **← → only** (no up/down) step to the nearest paper earlier/later — nearest in 2D
+  screen distance within that half of the map, so the walk is monotone in time and
+  never dead-ends. The ◀ ▶ buttons in the panel header do the same and disable when
+  there is nowhere left to go; they appear only in the paper view (hidden by
+  .field-mode, which both the field and author panels use).
 - **Local clusters** in the lineage panel are collapsed by default; opening one keeps
   it open across later selections.
 - **View kind label**: the panel header names what is shown — PAPER LINEAGE / FIELD /

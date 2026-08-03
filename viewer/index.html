@@ -154,6 +154,16 @@
     border-radius: 999px; padding: 4px 13px; font-size: 11px; }
   #lockBadge:hover { background: rgba(215,168,60,.26); color: #fff; }
   body.view-locked #lockBadge { display: block; }
+  /* 系譜を1本ずつ辿るための送り。キーの ← → と同じ動き */
+  .pnav { float: right; display: none; gap: 4px; margin: -1px 10px 0 0; }
+  #lineage.has-nav .pnav { display: inline-flex; }
+  /* 論文以外のビュー(分野・著者)では送りを出さない */
+  #lineage.field-mode .pnav { display: none; }
+  .pnav button { background: none; border: 1px solid #2a3040; border-radius: 5px;
+                 color: #8b91a3; font: inherit; font-size: 10px; line-height: 1;
+                 padding: 3px 7px; cursor: pointer; }
+  .pnav button:hover:not(:disabled) { color: #fff; border-color: #3d4560; }
+  .pnav button:disabled { color: #3a4152; cursor: default; }
   #lineage .pkind { color: #6d7488; font-size: 9px; letter-spacing: .12em;
                     text-transform: uppercase; margin-bottom: 2px; }
   #lineage h2 { margin: 0 0 2px; font-size: 12px; color: #eef; font-weight: 600; }
@@ -511,7 +521,7 @@
       <li><b>Shift+scroll</b> topics only · <b>Alt+scroll</b> time only</li>
       <li><b>Legend chip</b> — focus people (click several)</li>
     <li><b>L</b> — lock the map while you read other papers</li>
-    <li><b>Arrow keys</b> — step to the nearest paper that way</li>
+    <li><b>← →</b> — step to the nearest paper earlier or later</li>
     </ul>
   </details>
   <div class="links">
@@ -560,6 +570,10 @@
   <span class="close" id="lineageClose" role="button" aria-label="Close panel" tabindex="0">×</span>
   <button id="lockView" aria-pressed="false"
           title="Freeze what the map is showing. You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
+  <span class="pnav" id="pnav">
+    <button id="prevPaper" aria-label="Previous paper (left arrow)" title="Nearest paper earlier in time (←)">◀</button>
+    <button id="nextPaper" aria-label="Next paper (right arrow)" title="Nearest paper later in time (→)">▶</button>
+  </span>
   <div class="pkind" id="selKind"></div>
   <h2 id="selTitle"></h2>
   </div>
@@ -577,6 +591,6 @@
 <div id="nodeCursor" aria-hidden="true"></div>
 <button id="lockBadge" title="Release the lock (L)">View locked — click to release</button>
 
-<script type="module" src="/viewer/main.js?v=114"></script>
+<script type="module" src="/viewer/main.js?v=117"></script>
 </body>
 </html>
