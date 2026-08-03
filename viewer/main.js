@@ -1286,6 +1286,10 @@ async function main() {
   // ロックした時点で何を見ていたか。解除したらここへ戻す(ロック中に開いた
   // 論文へ移るのではなく、基準にしていた画面に帰る)。
   let lockAnchor = null;
+  // ロック時に固定した集合を年代順に並べたもの(と、その中での位置)。
+  // 送りはこの並びをそのまま1つずつ動く。移動先で計算し直すと、近さの都合で
+  // 飛ばされて二度と行けない論文が出てしまうため。
+  let lockedOrder = null, lockedAt = null;
   const lockBtn = document.getElementById('lockView');
   function setLocked(on) {
     if (on) {
@@ -1303,6 +1307,15 @@ async function main() {
         focusDim: focused.length && !(selected >= 0 || searchActive || fieldSel || fieldPreview) ? 1 : 0,
         isoMask: isoMask(),
       };
+      if (lockedPick) {
+        lockedOrder = [];
+        for (let i = 0; i < n; i++) if (lockedPick[i]) lockedOrder.push(i);
+        // x は年(同年内は venue 順)。np はその順に単調なのでそのまま並べる
+        lockedOrder.sort((a, b) => np[a * 2] - np[b * 2] || np[a * 2 + 1] - np[b * 2 + 1]);
+        lockedAt = new Map(lockedOrder.map((v, k) => [v, k]));
+      } else {
+        lockedOrder = null; lockedAt = null;
+      }
       lockAnchor = {
         selected,
         field: fieldSel ? { kind: fieldSel.kind, idx: fieldSel.idx } : null,
@@ -1313,6 +1326,8 @@ async function main() {
     } else {
       lockedPick = null;
       lockedUniforms = null;
+      lockedOrder = null;
+      lockedAt = null;
     }
     viewLocked = on;
     lockBtn.setAttribute('aria-pressed', String(on));
@@ -1991,10 +2006,16 @@ async function main() {
     return `<ol>${rows}${more}</ol>`;
   }
 
-  function listHtml(title, ids, limit) {
+  // 上流・下流は件数が数千になるので、パネルごと伸ばさずそれぞれの枠内で
+  // スクロールさせる。開閉状態は選択をまたいで覚える。
+  function listHtml(title, ids, limit, key) {
     if (!ids.length) return '';
-    return `<h3>${title}</h3>` + olRows(ids, limit);
+    const open = key ? listOpen[key] : true;
+    return `<details class="fold lin"${open ? ' open' : ''} data-lk="${key || ''}">` +
+           `<summary>${title}</summary>` +
+           `<div class="scroll">` + olRows(ids, limit) + `</div></details>`;
   }
+  const listOpen = { up: true, down: true };
 
   // その論文の参照のうち、何本がコーパス内に着地しているか(= 1ホップ上流の本数)
   const countRefsInCorpus = (i) => inAdj.start[i + 1] - inAdj.start[i];
@@ -2026,14 +2047,14 @@ async function main() {
 
     // 著者。最後がラストオーサー(= ラボの主宰)なので印を付ける。クリックで色を固定。
     const as = nd.a || [];
+    // 著者は全員同じ扱いで並べる(ラストオーサーの印や強調はしない)。
+    // 色が付くのは選択中の人だけ。
     document.getElementById('selAuthors').innerHTML = as.length
-      ? as.map((ai, k) => {
+      ? as.map((ai) => {
           const slot = pinned.findIndex((q) => q && q.ai === ai);
-          const isLast = k === as.length - 1 && as.length > 1;
-          return `<span class="au${isLast ? ' last' : ''}" data-ai="${ai}"` +
-                 (isLast ? ' title="Last author"' : '') +
+          return `<span class="au" data-ai="${ai}"` +
                  (slot >= 0 && focused.includes(slot) ? ` style="color:${LAB_HEX[slot]}"` : '') +
-                 `>${escapeHtml(meta.authors[ai] || '?')}${isLast ? ' ◂' : ''}</span>`;
+                 `>${escapeHtml(meta.authors[ai] || '?')}</span>`;
         }).join('')
       : '<span class="au none">No author data</span>';
     document.getElementById('upCount').textContent = up.size.toLocaleString();
@@ -2044,10 +2065,10 @@ async function main() {
     const upIds = [...up].sort(byCited);
     const downIds = [...down].sort(byCited);
     document.getElementById('lineageLists').innerHTML =
-      trendHtml(upIds, downIds) +
+      `<div class="trendbox">` + trendHtml(upIds, downIds) + `</div>` +
       `<div id="localBox"><div id="localResults"></div></div>` +
-      listHtml('Upstream — most cited first', upIds, 12) +
-      listHtml('Downstream — most cited first', downIds, 12);
+      listHtml('Upstream — most cited first', upIds, 200, 'up') +
+      listHtml('Downstream — most cited first', downIds, 200, 'down');
     lineageEl.classList.remove('field-mode');
     lineageEl.style.display = 'block';
     lineageEl.scrollTop = 0;
@@ -2083,6 +2104,8 @@ async function main() {
   // 2人目以降のカードの開閉を覚えておく(toggle はバブルしないので捕捉フェーズで拾う)
   document.getElementById('lineageLists').addEventListener('toggle', (e) => {
     if (e.target.id === 'localFold') localOpen = e.target.open;
+    const lk = e.target.dataset && e.target.dataset.lk;
+    if (lk) listOpen[lk] = e.target.open;
     const card = e.target;
     if (!card.classList || !card.classList.contains('acard')) return;
     const ai = parseInt(card.dataset.ai, 10);
@@ -2545,6 +2568,13 @@ async function main() {
   // 送り先があるか(ボタンの活性判定にも使う)
   function stepTarget(dir) {
     if (selected < 0) return -1;
+    // ロック中は固定した並びを1つずつ。これで接続論文を年代順に全部たどれる。
+    if (lockedOrder) {
+      const at = lockedAt.has(selected) ? lockedAt.get(selected) : -1;
+      if (at < 0) return dir > 0 ? lockedOrder[0] : lockedOrder[lockedOrder.length - 1];
+      const nxt = at + dir;
+      return nxt >= 0 && nxt < lockedOrder.length ? lockedOrder[nxt] : -1;
+    }
     const { scale } = scaleOffset();
     const sx = np[selected * 2], sy = np[selected * 2 + 1];
     let best = -1, bestD = Infinity;

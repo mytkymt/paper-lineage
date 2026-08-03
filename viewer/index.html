@@ -141,9 +141,12 @@
                   margin: -10px -12px 4px; padding: 10px 12px 6px;
                   border-bottom: 1px solid #1c2029; }
   #lineage .phd h2 { margin: 0; }
-  #lockView { float: right; margin: -1px 14px 0 0; background: none; cursor: pointer;
-              border: 1px solid #2a3040; border-radius: 999px; padding: 2px 9px;
-              color: #8b91a3; font: inherit; font-size: 10px; }
+  /* 種別ラベル・送り・ロック・閉じるを1行に並べ、縦中央で揃える */
+  #lineage .ptop { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+  #lineage .ptop .pkind { margin: 0 auto 0 0; }   /* 左に寄せ、残りを右へ押す */
+  #lockView { background: none; cursor: pointer; flex: 0 0 auto;
+              border: 1px solid #2a3040; border-radius: 999px; padding: 3px 9px;
+              color: #8b91a3; font: inherit; font-size: 10px; line-height: 1; }
   #lockView:hover { color: #fff; border-color: #3d4560; }
   #lockView[aria-pressed="true"] { color: #0a0c12; background: #d7a83c; border-color: #d7a83c; }
   /* ロック中は地図の縁に印を出す。パネルだけの表示だと、地図が固まっている
@@ -155,17 +158,18 @@
   #lockBadge:hover { background: rgba(215,168,60,.26); color: #fff; }
   body.view-locked #lockBadge { display: block; }
   /* 系譜を1本ずつ辿るための送り。キーの ← → と同じ動き */
-  .pnav { float: right; display: none; gap: 4px; margin: -1px 10px 0 0; }
+  .pnav { display: none; gap: 4px; flex: 0 0 auto; }
   #lineage.has-nav .pnav { display: inline-flex; }
   /* 論文以外のビュー(分野・著者)では送りを出さない */
   #lineage.field-mode .pnav { display: none; }
   .pnav button { background: none; border: 1px solid #2a3040; border-radius: 5px;
                  color: #8b91a3; font: inherit; font-size: 10px; line-height: 1;
                  padding: 3px 7px; cursor: pointer; }
+  #lineage .ptop .close { float: none; flex: 0 0 auto; line-height: 1; }
   .pnav button:hover:not(:disabled) { color: #fff; border-color: #3d4560; }
   .pnav button:disabled { color: #3a4152; cursor: default; }
   #lineage .pkind { color: #6d7488; font-size: 9px; letter-spacing: .12em;
-                    text-transform: uppercase; margin-bottom: 2px; }
+                    text-transform: uppercase; line-height: 1; }
   #lineage h2 { margin: 0 0 2px; font-size: 12px; color: #eef; font-weight: 600; }
   #lineage .meta { color: #7f879b; margin-bottom: 8px; }
   #lineage .cov { color: #6d7488; font-size: 11px; }
@@ -181,7 +185,6 @@
   #selAuthors { margin: 0 0 8px; display: flex; flex-wrap: wrap; gap: 2px 8px; font-size: 11px; }
   #selAuthors .au { color: #8b91a3; cursor: pointer; }
   #selAuthors .au:hover { color: #fff; }
-  #selAuthors .au.last { color: #c3c8d6; }
   #selAuthors .au.none { cursor: default; }
   #searchResults .grp { color: #6d7488; border: 0; cursor: default; margin-top: 4px; }
   #searchResults .person { display: flex; align-items: center; gap: 5px; }
@@ -249,6 +252,11 @@
 
   /* 折りたたみ内の長いリスト(分野の著者30人・著者の論文)は内部スクロール */
   #lineage details.fold .scroll { max-height: 300px; overflow-y: auto; }
+  /* トレンド・上流・下流は各枠の中だけでスクロールさせ、3枠で画面の残り高さを
+     等分する(パネル全体を縦スクロールしなくても下流まで手が届くように)。
+     330px は見出し・著者・件数など高さの決まっている部分のぶん。 */
+  #lineage .trendbox, #lineage details.fold.lin .scroll {
+    max-height: max(100px, calc((100vh - 330px) / 3)); overflow-y: auto; }
 
   /* オーバーレイ: チュートリアル動画(初回訪問時 + Tutorial リンク)と共有シート */
   /* 上下中央。背が高いときに上が切れないよう、overflow + margin:auto を併用する */
@@ -378,6 +386,9 @@
       width: auto; max-height: none; margin: 8px 8px 0; z-index: 2; order: 2;
     }
     #lineage { order: 1; }
+    /* ページごと縦スクロールで読む前提なので、枠内スクロールはやめて全部伸ばす */
+    #lineage .trendbox, #lineage details.fold.lin .scroll {
+      max-height: none; overflow: visible; }
     #lineage .phd { position: static; margin: 0 0 4px; padding: 0; border: 0; background: none; }
     #bands { height: 52dvh; z-index: 1; }
     #axis { top: calc(52dvh - 22px); bottom: auto; z-index: 1; }
@@ -570,14 +581,16 @@
 
 <div id="lineage" class="panel">
   <div class="phd">
-  <span class="close" id="lineageClose" role="button" aria-label="Close panel" tabindex="0">×</span>
-  <button id="lockView" aria-pressed="false"
-          title="Freeze what the map is showing. You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
-  <span class="pnav" id="pnav">
-    <button id="prevPaper" aria-label="Previous paper (left arrow)" title="Nearest paper earlier in time (←)">◀</button>
-    <button id="nextPaper" aria-label="Next paper (right arrow)" title="Nearest paper later in time (→)">▶</button>
-  </span>
-  <div class="pkind" id="selKind"></div>
+  <div class="ptop">
+    <div class="pkind" id="selKind"></div>
+    <span class="pnav" id="pnav">
+      <button id="prevPaper" aria-label="Previous paper (left arrow)" title="Previous paper in time (←)">◀</button>
+      <button id="nextPaper" aria-label="Next paper (right arrow)" title="Next paper in time (→)">▶</button>
+    </span>
+    <button id="lockView" aria-pressed="false"
+            title="Freeze what the map is showing. You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
+    <span class="close" id="lineageClose" role="button" aria-label="Close panel" tabindex="0">×</span>
+  </div>
   <h2 id="selTitle"></h2>
   </div>
   <div class="meta" id="selMeta"></div>
@@ -594,6 +607,6 @@
 <div id="nodeCursor" aria-hidden="true"></div>
 <button id="lockBadge" title="Release the lock (L)">View locked — click to release</button>
 
-<script type="module" src="/viewer/main.js?v=118"></script>
+<script type="module" src="/viewer/main.js?v=125"></script>
 </body>
 </html>
