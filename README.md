@@ -21,10 +21,18 @@ Research areas appear as named horizontal bands; citations flow left to right.
   descendants, for instance, resolve into branches like VR haptics, mid-air
   ultrasound, EMS and levitation.
 - Right-click a paper for DOI and copy actions.
-- **Lock view** (or the L key) freezes the highlight, so you can click through other
-  papers — or step with the arrow keys — and read each one's panel while the map keeps
-  showing the lineage you are comparing against. Releasing returns to what you locked.
+- Upstream and downstream each scroll inside the panel, so it always fits the screen.
 - How all of this is computed: [docs/lineage.md](docs/lineage.md).
+
+### Lock the view and read across it
+
+![Lock view](docs/media/trail-lock.png)
+
+**Lock view** (or the L key) freezes the highlight. You can then click through other
+papers — or walk the whole frozen lineage in date order with ◀ ▶ and the arrow keys —
+and read each one's panel while the map keeps showing the lineage you are comparing
+against. A ring marks the paper you are on, clicks outside the frozen set do nothing,
+and releasing returns you to the view you locked.
 
 ## 2. Follow people
 
@@ -41,7 +49,8 @@ Research areas appear as named horizontal bands; citations flow left to right.
 
 ![Sub-fields opening under zoom](docs/media/trail-field.png)
 
-- 14 bands and 117 sub-fields, all named; labels appear as you zoom.
+- 14 bands and 112 sub-fields, all named; labels appear as you zoom (16 and 141 with
+  related venues on).
 - Browse them all from the **Fields tree** (or search them by name): selecting a field
   highlights its papers and lists both its most cited work and everyone publishing in it.
 - **Shift+scroll zooms topics without stretching time**; Alt+scroll zooms time only.

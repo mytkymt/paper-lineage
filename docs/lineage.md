@@ -50,7 +50,7 @@ layout is identical in every year and fully deterministic.
 
 ## Trend breakdown (side panel)
 
-Every paper belongs to one of 117 **sub-fields**, precomputed by two-level
+Every paper belongs to one of 112 **sub-fields**, precomputed by two-level
 Louvain community detection ([Blondel et al., 2008](https://doi.org/10.1088/1742-5468/2008/10/P10008))
 on the full citation graph (14 top-level bands, nested sub-bands; fixed seed —
 plain Louvain is order-sensitive, so node order and seeds are pinned to keep the
