@@ -470,7 +470,7 @@ async function main() {
       attrColors[i * 3] = lc[0]; attrColors[i * 3 + 1] = lc[1]; attrColors[i * 3 + 2] = lc[2];
     }
 
-    if (edgeSlotBuf) {
+    if (edgeSlotBuf && !viewLocked) {
       gl.bindBuffer(gl.ARRAY_BUFFER, edgeSlotBuf);
       gl.bufferSubData(gl.ARRAY_BUFFER, 0, edgeA);
       gl.bindBuffer(gl.ARRAY_BUFFER, attrColorBuf);
@@ -633,7 +633,8 @@ async function main() {
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
     resizeHdr(w, h);
     const { scale, offset } = scaleOffset();
-    const selActive = selected >= 0 || searchActive || fieldSel || fieldPreview ? 1 : 0;
+    const selActive = lockedUniforms ? lockedUniforms.selActive
+      : (selected >= 0 || searchActive || fieldSel || fieldPreview ? 1 : 0);
     const onlyLineage = 0;   // 「Lineage only」UI は廃止(常に全体を薄く残す)
 
     // エッジ: 加算合成で「重なり量」を貯める。HDR バッファがあればそちらへ。
@@ -656,7 +657,7 @@ async function main() {
     gl.uniform1f(uni(edgeProg, 'uColorMode'),
       ui.colorMode.value === 'venue' ? 1 : 0);
     gl.uniform1f(uni(edgeProg, 'uAttrOnly'), 0);    // Lineage lines only UI は廃止
-    gl.uniform1i(uni(edgeProg, 'uIsoMask'), isoMask());
+    gl.uniform1i(uni(edgeProg, 'uIsoMask'), lockedUniforms ? lockedUniforms.isoMask : isoMask());
     gl.uniform3fv(uni(edgeProg, 'uLabColors'), LAB_FLAT);
     gl.bindVertexArray(edgeVao);
     gl.drawArrays(gl.LINES, 0, edgeCount * 2);
@@ -686,8 +687,8 @@ async function main() {
     gl.uniform1f(uni(nodeProg, 'uPointSize'), parseFloat(ui.psize.value) * dpr);
     gl.uniform1f(uni(nodeProg, 'uSelActive'), selActive);
     gl.uniform1f(uni(nodeProg, 'uOnlyLineage'), onlyLineage);
-    gl.uniform1f(uni(nodeProg, 'uFocusDim'),
-      focused.length && !(selected >= 0 || searchActive || fieldSel || fieldPreview) ? 1 : 0);
+    gl.uniform1f(uni(nodeProg, 'uFocusDim'), lockedUniforms ? lockedUniforms.focusDim
+      : (focused.length && !(selected >= 0 || searchActive || fieldSel || fieldPreview) ? 1 : 0));
     gl.bindVertexArray(nodeVao);
     gl.drawArrays(gl.POINTS, 0, n);
     // 2パス目: 色の付いた点(固定した人・系譜・検索ヒット・選択)を優先順に重ね描き
@@ -1256,8 +1257,33 @@ async function main() {
   // ビューのロック。地図のハイライトだけを固定し、パネルは選択に追随させる
   // (別の論文を見比べるため)。解除すると今の選択の状態へ地図を戻す。
   let viewLocked = false;
+  // ロックした瞬間に「光っていた点」を控える。ロック中のクリック判定はこれを使う
+  // (地図が固定されている以上、押せる点も固定でないと辻褄が合わない)。
+  let lockedPick = null;
+  // 見た目を決めるのはバッファだけではない。減光の有無や絞り込みマスクは
+  // 選択から毎フレーム計算されるので、ロック中はその値も止める。
+  let lockedUniforms = null;
   const lockBtn = document.getElementById('lockView');
   function setLocked(on) {
+    if (on) {
+      // 光っている点の作り方は表示ごとに違う: 論文の系譜・分野・検索は nodeState、
+      // 著者フォーカスは nodeFocus。両方を見て「見えている点」を1つの集合にする。
+      const set = new Uint8Array(n);
+      let any = 0;
+      for (let i = 0; i < n; i++) {
+        if (nodeState[i] !== S_NONE || nodeFocus[i]) { set[i] = 1; any++; }
+      }
+      // 何も強調していないときは全体をクリック可能なままにする
+      lockedPick = any ? set : null;
+      lockedUniforms = {
+        selActive: selected >= 0 || searchActive || fieldSel || fieldPreview ? 1 : 0,
+        focusDim: focused.length && !(selected >= 0 || searchActive || fieldSel || fieldPreview) ? 1 : 0,
+        isoMask: isoMask(),
+      };
+    } else {
+      lockedPick = null;
+      lockedUniforms = null;
+    }
     viewLocked = on;
     lockBtn.setAttribute('aria-pressed', String(on));
     lockBtn.textContent = on ? 'Locked' : 'Lock view';
@@ -2067,6 +2093,7 @@ async function main() {
       // 解除 = 今の選択の見え方へ追いつく。ロック中に貯めた nodeState は
       // 最新の選択のものなので、上げ直すだけで整合する。
       uploadStates();
+      applyPinned();   // ロック中に据え置いた人の色・強調も今の状態へ戻す
       if (selected >= 0) panToNode(selected);
     }
     schedule();
@@ -2298,7 +2325,10 @@ async function main() {
   function pick(clientX, clientY) {
     // 系譜選択中は系譜内、検索ハイライト中は検索ヒットだけを対象にする
     // (どちらも nodeState が非ゼロの点 = 明るく描かれている点に一致する)
-    const restrictLineage = !viewLocked && (selected >= 0 || searchActive || !!fieldSel);
+    // ロック中は凍結した集合、そうでなければ今の選択で絞る
+    const frozen = viewLocked ? lockedPick : null;
+    const restrictLineage = frozen ? true
+      : (!viewLocked && (selected >= 0 || searchActive || !!fieldSel));
     // 人を絞り込み中は、その人の論文だけをクリック/ホバー対象にする
     // (系譜選択と同じ発想 — 沈めた点に吸われて別の論文へ飛ばないように)
     const isoBits = isoMask();
@@ -2320,7 +2350,8 @@ async function main() {
         const cell = grid.get(gy * GRID + gx);
         if (!cell) continue;
         for (const i of cell) {
-          if (restrictLineage && nodeState[i] === S_NONE) continue;
+          if (frozen) { if (!frozen[i]) continue; }
+          else if (restrictLineage && nodeState[i] === S_NONE) continue;
           if (restrictPerson && (nodeSlot[i] > 15 || (isoBits & (1 << nodeSlot[i])) === 0)) continue;
           const dx = (np[i * 2] - ux) / rx, dy = (np[i * 2 + 1] - uy) / ry;
           const d = dx * dx + dy * dy;

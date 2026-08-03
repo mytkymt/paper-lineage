@@ -173,9 +173,13 @@ console must be clean.
 - Esc clears selection.
 
 - **Lock view** (panel header): while locked the map keeps exactly the highlight it
-  had, clicking other papers only swaps the panel, picking is unrestricted (the whole
-  map stays clickable) and selection no longer pans the camera; a "View locked" badge
-  shows at the bottom. Releasing repaints to the current selection and pans to it.
+  had — check this in ALL THREE views (paper lineage, author focus, field), since each
+  paints through a different path (nodeState / nodeFocus+colour buffers / nodeState)
+  and each has its own uniforms (uSelActive, uFocusDim, uIsoMask) that are recomputed
+  from the selection. Clicking only swaps the panel, only papers that were lit stay
+  clickable, and selection no longer pans the camera; a "View locked" badge shows at
+  the bottom. When diffing screenshots, hide #tooltip first — it follows the pointer
+  and will make an otherwise-frozen map look changed. Releasing repaints to the current selection and pans to it.
   Clearing the selection releases the lock so no un-clearable highlight can be left.
   Three ways in and out: the header button, the badge itself, and the L key (which is
   ignored while typing in a text field).
