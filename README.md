@@ -68,7 +68,7 @@ sent to a co-author or cited in a talk.
 
 ## Tutorial
 
-Seventeen seconds of it moving — no narration, just the parts that light up:
+Nineteen seconds of it moving — no narration, just the parts that light up:
 
 ![Highlights](docs/media/tour-fast.gif)
 
