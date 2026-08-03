@@ -590,16 +590,34 @@ async function main() {
   // --- カメラ ---
   // 軸ごとに独立したズーム。等方ズームだと「サブ帯を見たい = 時代も拡大」になってしまうため、
   // Shift+ホイールでトピック軸(縦)だけ、Alt+ホイールで時間軸(横)だけを拡大できる。
-  // cx,cy = 画面中心にくる正規化座標。
-  // 横位置は真ん中(0.5)ではなく少し左に寄せた位置から始める。等倍だと最近年が
-  // 右の系譜パネルの下に隠れてしまい、論文が集中している 2000 年代以降が読めない。
-  // 実測(1600x900・パネルを開いた状態でパネルに隠れない範囲に入る論文数):
-  // cx=0.5 で 18,013 件 → cx=0.66 で 34,892 件。左に外れるのは 369 件で、
-  // ほとんど論文のない 1980 年代前半。パネルが地図に重ならない縦積みの画面幅では
-  // 寄せる必要がないので、そのときだけ中央のままにする。
-  const cam = { zx: 1, zy: 1, cx: window.innerWidth > 900 ? 0.66 : 0.5, cy: 0.5 };
+  // cx,cy = 画面中心にくる正規化座標。初期値は homeCam() が決める。
+  const cam = { zx: 1, zy: 1, cx: 0.5, cy: 0.5 };
   const PAD = 0.04;
   const clampZoom = (z) => Math.min(400, Math.max(0.5, z));
+
+  // 起動時の画角。倍率は等倍のまま(時間軸を伸ばすと帯の形が読みにくくなる)、
+  // 横位置だけずらして 2000 年が左端の少し内側に来るようにする。こうすると
+  // 最新年の右に帯の名前ぶんの余白ができ、名前は系譜パネルに接して並び、
+  // 年の軸は画面の一番下、縦は全帯がそのまま入る。
+  // 中央のままだと論文が集中する 2000 年代以降がパネルの下に潜って読めない。
+  // パネルが地図に重ならない縦積みの画面幅では、寄せる必要がないので中央のまま。
+  const HOME_YEAR = 2000;      // 左端に見えていてほしい年
+  const LINEAGE_W = 332;       // #lineage の幅 320 + 右余白 12
+  const BAND_LBL_W = 256;      // 帯の名前が要る幅(いちばん長い名前 + 余白)
+  function homeCam() {
+    const W = window.innerWidth;
+    const span = yearMax - yearMin;
+    if (W <= 900 || span <= 0) return { zx: 1, cx: 0.5 };   // 縦積みでは重ならない
+    const sx = 1 - 2 * PAD;                       // 等倍(zx=1)での実効倍率
+    // 最新年の右に帯の名前ぶんだけ空け、その名前が系譜パネルに接する位置に置く
+    const right = (W - LINEAGE_W - BAND_LBL_W) / W;
+    let cx = 1 - (right - 0.5) / sx;
+    // ただし 2000 年を画面外に追い出してまでは寄せない
+    const u0 = Math.max(0, Math.min(1, (HOME_YEAR - yearMin) / span));
+    cx = Math.min(cx, u0 + 0.5 / sx);
+    return { zx: 1, cx };
+  }
+  Object.assign(cam, homeCam());
 
   function scaleOffset() {
     const sx = cam.zx * (1 - 2 * PAD);
@@ -1477,8 +1495,14 @@ async function main() {
     // 画面が狭くてパネルが支配的なときは素直に画面中心。
     const panelW = isMobile() ? 0 : (lineageEl.offsetWidth ? lineageEl.offsetWidth + 24 : 344);
     const px = w > panelW * 2 ? (w - panelW) / 2 : w / 2;
-    const tx = np[i * 2] - (px / w - 0.5) / scale[0];
-    const ty = np[i * 2 + 1];
+    let tx = np[i * 2] - (px / w - 0.5) / scale[0];
+    let ty = np[i * 2 + 1];
+    // 右へは初期画角より先に行かない。最新年より右にあるのは空白だけで、
+    // そこまで送ると帯の名前がパネルから離れて画面の収まりが崩れる。
+    tx = Math.min(tx, homeCam().cx);
+    // 縦は全体が入っているうちは動かさない(帯が画面外に出ないように)
+    ty = scale[1] <= 1 ? 0.5
+       : Math.max(0.5 / scale[1], Math.min(1 - 0.5 / scale[1], ty));
     cancelCamAnim();
     // 非表示タブでは rAF が発火せずアニメが永久に進まないので、即座に着地させる
     if (document.hidden) { cam.cx = tx; cam.cy = ty; schedule(); return; }
