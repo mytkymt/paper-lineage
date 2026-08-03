@@ -763,12 +763,18 @@ async function main() {
   // 少し置いてから光らせる(通過しただけで地図が明滅しないように)。
   // 解除はコンテナの mouseleave で行う — 行単位の mouseout は速いマウス移動で
   // 取りこぼし、プレビューが固定されて残るバグの原因だった。
-  let fpTimer = 0;
+  // 起動は mouseover ではなく **mousemove** で拾う。mouseover はポインタが
+  // 止まっていてもパネルが閉じるなどで下の要素が変わると発火し、その後は
+  // mouseout も来ないのでプレビューが焼き付いたまま残る(実際に起きた)。
+  let fpTimer = 0, fpArmed = '';
   const fpStart = (kind, idx) => {
+    const key = kind + idx;
+    if (key === fpArmed) return;   // 同じ行の上で動いている間は数え直さない
+    fpArmed = key;
     clearTimeout(fpTimer);
     fpTimer = setTimeout(() => previewField(kind, idx), 120);
   };
-  const fpStop = () => { clearTimeout(fpTimer); clearFieldPreview(); };
+  const fpStop = () => { clearTimeout(fpTimer); fpArmed = ''; clearFieldPreview(); };
 
   // --- Fields(帯 = 分野)ブラウザ ---
   // 帯・サブ帯は y 区間なので、所属はノードの y 座標だけで決まる。
@@ -1138,18 +1144,19 @@ async function main() {
   renderFieldTree();   // 起動時に一覧を出す
   if (!window.matchMedia('(hover: none)').matches) {
     const treeEl = document.getElementById('fieldTree');
-    treeEl.addEventListener('mouseover', (e) => {
+    treeEl.addEventListener('mousemove', (e) => {
       const fb = e.target.closest('.fb');
       const fs = e.target.closest('.fs');
       if (fb) fpStart('band', parseInt(fb.dataset.b, 10));
       else if (fs) fpStart('sub', parseInt(fs.dataset.s, 10));
+      else fpStop();
     });
     treeEl.addEventListener('mouseleave', fpStop);
   }
 
   const bandsEl = document.getElementById('bands');
   if (!window.matchMedia('(hover: none)').matches) {
-    bandsEl.addEventListener('mouseover', (e) => {
+    bandsEl.addEventListener('mousemove', (e) => {
       const lbl = e.target.closest('.lbl');
       if (!lbl) return;
       if (lbl.dataset.sub != null) fpStart('sub', parseInt(lbl.dataset.sub, 10));
@@ -1379,6 +1386,7 @@ async function main() {
     searchActive = false;
     fieldSel = null;
     previewSub = previewCluster = -1;
+    if (fieldPreview) { fieldPreview = null; }   // 状態が変わるのでホバーの下見は捨てる
     renderFieldTree();
     highlightedSub = -1;
     localClusters = null;
