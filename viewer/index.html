@@ -293,7 +293,10 @@
   #axis div { position: absolute; transform: translateX(-50%); }
 
   /* いま開いている論文の目印。ロック中は地図が固定なのでこれが手がかりになる */
-  #nodeCursor { position: fixed; display: none; width: 20px; height: 20px; z-index: 3;
+  /* box-sizing を指定しないと枠 2px 分だけ大きくなり(20→24px)、負マージンでの
+     中心合わせが 2px ずれる。点のど真ん中に置きたいので border-box にする。 */
+  #nodeCursor { position: fixed; display: none; box-sizing: border-box;
+                width: 20px; height: 20px; z-index: 3;
                 margin: -10px 0 0 -10px; border-radius: 50%; pointer-events: none;
                 border: 2px solid #fff; box-shadow: 0 0 0 1px #0009, 0 0 10px #000c; }
   body.view-locked #nodeCursor { border-color: #d7a83c;
@@ -591,6 +594,6 @@
 <div id="nodeCursor" aria-hidden="true"></div>
 <button id="lockBadge" title="Release the lock (L)">View locked — click to release</button>
 
-<script type="module" src="/viewer/main.js?v=117"></script>
+<script type="module" src="/viewer/main.js?v=118"></script>
 </body>
 </html>
