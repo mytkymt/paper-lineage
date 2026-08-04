@@ -28,10 +28,11 @@ Research areas appear as named horizontal bands; citations flow left to right.
 
 ![Lock view](docs/media/trail-lock.png)
 
-**Lock view** (or the L key) freezes the highlight. You can then click through other
-papers — or walk the whole frozen lineage in date order with ◀ ▶ and the arrow keys —
-and read each one's panel while the map keeps showing the lineage you are comparing
-against. A ring marks the paper you are on, and releasing returns you to the view you
+**Lock view** (or the L key) freezes the highlight. The button sits under the map with
+the ◀ ▶ steppers, in the same place whether the view is locked or not. You can click
+through other papers — or walk the whole frozen lineage in date order with ◀ ▶ and the
+arrow keys — and read each one's panel while the map keeps showing the lineage you are
+comparing against. A ring marks the paper you are on, and releasing returns you to the view you
 locked. Clicking outside the frozen set does nothing — the badge flashes to say why —
 and double-clicking a paper inside it moves the lock there, so the comparison can
 follow wherever the reading takes you.

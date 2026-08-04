@@ -998,6 +998,7 @@ async function main() {
     }).join('');
     lineageEl.classList.add('field-mode');   // 論文パネル用の counts / 著者行は使わない
     lineageEl.style.display = 'block';
+    updatePaperNav();
     lineageEl.scrollTop = 0;
     document.body.classList.add('has-selection');
     revealPanelOnMobile();
@@ -1113,6 +1114,7 @@ async function main() {
     renderFieldPanel();
     lineageEl.classList.add('field-mode');
     lineageEl.style.display = 'block';
+    updatePaperNav();
     lineageEl.scrollTop = 0;
     // 右パネルと地図右端の帯ラベルが重なるので、論文選択時と同様にラベルを隠す
     document.body.classList.add('has-selection');
@@ -1316,21 +1318,22 @@ async function main() {
   // 飛ばされて二度と行けない論文が出てしまうため。
   let lockedOrder = null, lockedAt = null;
   const lockBtn = document.getElementById('lockView');
-  const lockBadge = document.getElementById('lockBadge');
-  const LOCK_BADGE_LABEL = lockBadge.textContent;
+  const lockHint = document.getElementById('lockHint');
   let lockNudgeTimer = 0;
   // 固定した集合の外を押されたときの合図。何も起きないままだと「固まった」と
-  // 誤解されるので、バッジを一瞬光らせて理由を出す。
+  // 誤解されるので、ボタンを一瞬光らせて理由を上に出す。ボタンの文字自体は
+  // 変えない — 幅が動くと両隣の送りがずれてしまう。
   function nudgeLock() {
-    lockBadge.textContent = 'Locked — release to select other papers';
-    lockBadge.classList.remove('nudge');
-    void lockBadge.offsetWidth;   // アニメーションを頭から流し直す
-    lockBadge.classList.add('nudge');
+    lockHint.textContent = 'Release to click other papers';
+    lockHint.classList.add('on');
+    lockBtn.classList.remove('nudge');
+    void lockBtn.offsetWidth;   // アニメーションを頭から流し直す
+    lockBtn.classList.add('nudge');
     clearTimeout(lockNudgeTimer);
     lockNudgeTimer = setTimeout(() => {
-      lockBadge.textContent = LOCK_BADGE_LABEL;
-      lockBadge.classList.remove('nudge');
-    }, 1500);
+      lockHint.classList.remove('on');
+      lockBtn.classList.remove('nudge');
+    }, 1600);
   }
 
   function setLocked(on) {
@@ -1373,8 +1376,8 @@ async function main() {
     }
     if (!on) {
       clearTimeout(lockNudgeTimer);
-      lockBadge.textContent = LOCK_BADGE_LABEL;
-      lockBadge.classList.remove('nudge');
+      lockHint.classList.remove('on');
+      lockBtn.classList.remove('nudge');
     }
     viewLocked = on;
     lockBtn.setAttribute('aria-pressed', String(on));
@@ -1534,6 +1537,7 @@ async function main() {
     if (i < 0 && viewLocked) setLocked(false);
     if (i < 0) {
       lineage = null;
+      updatePaperNav();
       lineageEl.style.display = 'none';
       paintLineage();
       refreshFocus();   // 論文を閉じたら、選んでいた著者がそのまま戻ってくる
@@ -2124,6 +2128,7 @@ async function main() {
       listHtml('Downstream — most cited first', downIds, 200, 'down');
     lineageEl.classList.remove('field-mode');
     lineageEl.style.display = 'block';
+    updatePaperNav();
     lineageEl.scrollTop = 0;
     updatePaperNav();
   }
@@ -2214,11 +2219,10 @@ async function main() {
       applyPinned();   // ロック中に据え置いた人の色・強調も戻す
       lockAnchor = null;
     }
+    updatePaperNav();
     schedule();
   }
   lockBtn.addEventListener('click', toggleLock);
-  // 地図側からも外せるように、バッジ自体を解除ボタンにする
-  lockBadge.addEventListener('click', toggleLock);
 
   document.getElementById('lineageClose').addEventListener('click', () => {
     if (selected < 0 && focusOn()) { clearFocus(); return; }   // 著者パネルの × は選択解除
@@ -2666,12 +2670,12 @@ async function main() {
     select(t);
     return true;
   }
+  // 送りは論文を開いているときだけ意味がある。分野・著者の表示では行き先が
+  // 決まらないので、かたまりの幅が動かないよう消さずに無効化しておく。
   function updatePaperNav() {
     const nav = selected >= 0;
-    lineageEl.classList.toggle('has-nav', nav);
-    if (!nav) return;
-    document.getElementById('prevPaper').disabled = stepTarget(-1) < 0;
-    document.getElementById('nextPaper').disabled = stepTarget(1) < 0;
+    document.getElementById('prevPaper').disabled = !nav || stepTarget(-1) < 0;
+    document.getElementById('nextPaper').disabled = !nav || stepTarget(1) < 0;
   }
   document.getElementById('prevPaper').addEventListener('click', () => stepSelection(-1));
   document.getElementById('nextPaper').addEventListener('click', () => stepSelection(1));
