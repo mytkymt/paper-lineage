@@ -47,6 +47,9 @@ follow wherever the reading takes you.
 - Focus one or several people: only their papers stay bright, and the panel shows each
   person's sub-fields and most cited work side by side.
 - A toggle switches between "any authorship" and "last-author only".
+- Clicking one of their papers drops into its lineage; a **← back link** at the top of
+  the panel returns you to the person you were reading (the same link appears when you
+  arrive from a field or from a search).
 
 ## 3. Explore the field
 

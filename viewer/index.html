@@ -144,6 +144,12 @@
   /* 種別ラベル・送り・ロック・閉じるを1行に並べ、縦中央で揃える */
   #lineage .ptop { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
   #lineage .ptop .pkind { margin: 0 auto 0 0; }   /* 左に寄せ、× を右端へ押す */
+  /* 著者・分野・検索から論文に入ったときだけ出る「一つ戻る」。× は閉じる、
+     こちらは元いた画面に戻る、と役割を分ける。 */
+  #lineage .pback { display: none; margin: 0 0 3px; padding: 0; border: 0; background: none;
+    color: #8b91a3; font: inherit; font-size: 11px; text-align: left; cursor: pointer; }
+  #lineage .pback:hover { color: #fff; }
+  #lineage .pback.on { display: block; }
   /* 地図の上に浮かべる操作のかたまり。固定と送りは続けて使うので隣り合わせにし、
      固定中も非固定中も同じ場所に置く(トグルの位置が状態で動かないように)。 */
   #viewbar { display: none; position: fixed; left: 50%; bottom: 44px;
@@ -598,6 +604,7 @@
     <div class="pkind" id="selKind"></div>
     <span class="close" id="lineageClose" role="button" aria-label="Close panel" tabindex="0">×</span>
   </div>
+  <button class="pback" id="paperBack" type="button"></button>
   <h2 id="selTitle"></h2>
   </div>
   <div class="meta" id="selMeta"></div>
@@ -620,6 +627,6 @@
   <span id="lockHint" role="status" aria-live="polite"></span>
 </div>
 
-<script type="module" src="/viewer/main.js?v=134"></script>
+<script type="module" src="/viewer/main.js?v=135"></script>
 </body>
 </html>

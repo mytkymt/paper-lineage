@@ -1434,7 +1434,10 @@ async function main() {
   // ホバー中だけの絞り込み(クリックで確定する前の下見)。-1 = プレビューなし
   let previewSub = -1, previewCluster = -1;
 
-  const setViewKind = (t) => { document.getElementById('selKind').textContent = t; };
+  const setViewKind = (t) => {
+    document.getElementById('selKind').textContent = t;
+    document.getElementById('paperBack').classList.remove('on');
+  };
 
   function paintLineage() {
     nodeState.fill(0);
@@ -1521,7 +1524,31 @@ async function main() {
     camAnim = requestAnimationFrame(tick);
   }
 
+  // どこから論文に入ってきたか。著者や分野を見ている途中で論文を押すと画面が
+  // まるごと入れ替わるので、パネルの先頭に「← 戻る」を出すために覚えておく。
+  // 論文から論文へ移るときは元の文脈を引き継ぐ(送りで辿っても迷子にならない)。
+  let paperFrom = null;
+  function captureOrigin() {
+    if (selected >= 0) return;   // すでに論文を見ている = 文脈は据え置き
+    const label = (document.getElementById('selTitle').textContent || '').trim();
+    if (fieldSel) paperFrom = { kind: 'field', fk: fieldSel.kind, idx: fieldSel.idx, label };
+    else if (searchActive && searchEl.value.trim()) {
+      const q = searchEl.value.trim();
+      paperFrom = { kind: 'search', q, label: `“${q}”` };
+    } else if (focused.length) paperFrom = { kind: 'people', label };
+    else paperFrom = null;
+  }
+  function goBackFromPaper() {
+    const from = paperFrom;
+    if (!from) return;
+    if (from.kind === 'field') { select(-1); selectField(from.fk, from.idx); }
+    else if (from.kind === 'search') { select(-1); searchEl.value = from.q; runSearch(from.q); }
+    else select(-1);   // 人はここで戻る(選択解除 → refreshFocus が著者パネルを出し直す)
+  }
+  document.getElementById('paperBack').addEventListener('click', goBackFromPaper);
+
   function select(i) {
+    if (i >= 0) captureOrigin(); else paperFrom = null;
     selected = i;
     searchActive = false;
     fieldSel = null;
@@ -2083,6 +2110,9 @@ async function main() {
     setViewKind('Paper lineage');
     const nd = meta.nodes[i];
     document.getElementById('selTitle').textContent = nd.t;
+    const back = document.getElementById('paperBack');
+    back.classList.toggle('on', !!paperFrom);
+    if (paperFrom) back.textContent = `← ${paperFrom.label || 'Back'}`;
     // 系譜が空になるのはデータ欠損ではなく**コーパス境界**のことが多い。
     // 参照 47 本のうちコーパス内は 3 本、のように上下流とも必ず出して誤解を防ぐ。
     const inCorpus = countRefsInCorpus(i);
@@ -2518,9 +2548,13 @@ async function main() {
       ? `<div class="m">${names.join(', ')}` +
         (aIds.length > 6 ? ` +${aIds.length - 6} more` : '') + '</div>'
       : '';
+    // 著者・分野・検索を見ている最中は、押すと論文の系譜に入れることを先に言う。
+    // 何の予告もなく画面がまるごと入れ替わるのが初見でいちばん戸惑うところ。
+    const drillIn = selected < 0 && (focused.length > 0 || fieldSel || searchActive);
     tooltip.innerHTML =
       `<div class="t">${escapeHtml(nd.t)}</div>` + authors +
       `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}` +
+      (drillIn ? ' · <b>click to trace its lineage</b>' : '') +
       ' · right-click for options</div>';
     tooltip.style.display = 'block';
     tooltip.style.left = Math.min(e.clientX + 14, window.innerWidth - 400) + 'px';
