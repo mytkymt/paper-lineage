@@ -603,14 +603,14 @@ async function main() {
   // パネルが地図に重ならない縦積みの画面幅では、寄せる必要がないので中央のまま。
   const HOME_YEAR = 2000;      // 左端に見えていてほしい年
   const LINEAGE_W = 332;       // #lineage の幅 320 + 右余白 12
-  const BAND_LBL_W = 256;      // 帯の名前が要る幅(いちばん長い名前 + 余白)
   function homeCam() {
     const W = window.innerWidth;
     const span = yearMax - yearMin;
     if (W <= 900 || span <= 0) return { zx: 1, cx: 0.5 };   // 縦積みでは重ならない
     const sx = 1 - 2 * PAD;                       // 等倍(zx=1)での実効倍率
-    // 最新年の右に帯の名前ぶんだけ空け、その名前が系譜パネルに接する位置に置く
-    const right = (W - LINEAGE_W - BAND_LBL_W) / W;
+    // 最新年が系譜パネルの左端に来る位置。帯の名前は地図の左に置くので、
+    // 右に名前ぶんの余白を取る必要はない。
+    const right = (W - LINEAGE_W) / W;
     let cx = 1 - (right - 0.5) / sx;
     // ただし 2000 年を画面外に追い出してまでは寄せない
     const u0 = Math.max(0, Math.min(1, (HOME_YEAR - yearMin) / span));
@@ -1226,26 +1226,27 @@ async function main() {
     const H = canvas.clientHeight;
     const W = canvas.clientWidth;
     const toPx = (y) => (y * scale[1] + offset[1]) * H;
-    // 縮小して地図の右に空きがあるときは、ラベルの**左端**をデータの右端に付けて
-    // 空き側へ出す(地図に重ねない)。地図が画面を満たしているときは従来どおり
-    // 画面右端(選択パネルが出ていればその手前)に右寄せ。
-    const dataRight = (1 * scale[0] + offset[0]) * W;
-    const base = document.body.classList.contains('has-selection') && window.innerWidth > 900
-      ? 372 : 8;
-    const attached = dataRight + 60 < W - base;   // ラベルを置ける空きがあるか
-    const lblPos = attached
-      ? `left:${(dataRight + 10).toFixed(1)}px;right:auto;max-width:${Math.max(60, W - dataRight - 20).toFixed(0)}px`
-      : `right:${base}px`;
-    const subPos = attached
-      ? `left:${(dataRight + 16).toFixed(1)}px;right:auto;max-width:${Math.max(60, W - dataRight - 26).toFixed(0)}px`
-      : `right:${base + 6}px`;
+    // ラベルは地図の左に縦一列で置く。左から名前を読んでから中身を見る順序になる。
+    // 置く x は左パネルの右端に合わせるので、パネルを畳めばそのぶん左へ寄る
+    // (畳んだときは画面の左端まで来る)。地図に重なるぶんは敷きで読めるようにする。
+    const ctrl = document.getElementById('controls');
+    const cr = ctrl.getBoundingClientRect();
+    const collapsed = ctrl.classList.contains('collapsed');
+    const x = isMobile() || collapsed ? 8 : Math.round(cr.right) + 10;
+    const wide = Math.max(90, Math.min(250, W - x - 40));
+    const lblPos = `left:${x}px;right:auto;max-width:${wide}px`;
+    const subPos = `left:${x + 6}px;right:auto;max-width:${wide - 6}px`;
+    // 上端の帯は凡例チップの行と重なるので、その下までずらす
+    const lg = document.getElementById('legend').getBoundingClientRect();
+    const legendLow = lg.width && x < lg.right ? lg.bottom + 6 : 0;
     const parts = [];
 
     for (const band of meta.bands) {
       const top = toPx(band.y0), bottom = toPx(band.y1);
       if (bottom < 0 || top > H) continue;
       parts.push(`<div class="sep" style="top:${top.toFixed(1)}px"></div>`);
-      const mid = (top + bottom) / 2 - 8;
+      let mid = (top + bottom) / 2 - 8;
+      if (mid < legendLow && bottom - 18 > legendLow) mid = legendLow;   // 凡例を避ける
       // 中心が画面外のラベルは出さない。クランプすると画面端に積み重なって読めない。
       if (bottom - top >= 30 && mid >= 4 && mid <= H - 18) {
         parts.push(`<div class="lbl" data-band="${meta.bands.indexOf(band)}" style="top:${mid.toFixed(1)}px;${lblPos}" title="${escapeHtml(bandTitle(band))}">${escapeHtml(bandLabel(band))}</div>`);
@@ -2468,6 +2469,7 @@ async function main() {
     const c = document.getElementById('controls').classList.toggle('collapsed');
     panelToggle.textContent = c ? '+' : '\u2013';
     panelToggle.title = c ? 'Expand panel' : 'Collapse panel';
+    schedule();   // 帯ラベルの左位置はパネルの右端に合わせているので引き直す
   });
 
   window.addEventListener('resize', schedule);

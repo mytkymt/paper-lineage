@@ -341,12 +341,14 @@
                        box-shadow: inset 3px 0 0 #6d90c9; }
   #lineage.field-mode .counts, #lineage.field-mode #selAuthors { display: none; }
   #bands .sep { position: absolute; left: 0; right: 0; height: 1px; background: #ffffff10; }
-  #bands .lbl { position: absolute; right: 8px; max-width: 46vw; color: #8b93a8; font-size: 13px;
-                text-align: right; text-shadow: 0 0 6px #000, 0 0 3px #000;
+  /* 地図の左に縦一列。データに重なるので、文字の下に敷きを入れて読めるようにする */
+  #bands .lbl { position: absolute; left: 8px; max-width: 250px; color: #8b93a8; font-size: 13px;
+    background: rgba(8,10,15,.72); padding: 1px 7px; border-radius: 4px;
+                text-align: left; text-shadow: 0 0 6px #000, 0 0 3px #000;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   /* サブ帯(帯の中のサブ分野)は薄く。拡大したときだけ出る。 */
   #bands .sep.sub { background: #ffffff08; }
-  #bands .lbl.sub { color: #6d7488; font-size: 12px; right: 14px; }
+  #bands .lbl.sub { color: #6d7488; font-size: 12px; left: 14px; background: rgba(8,10,15,.66); }
 
   #lineage ol.trends { margin: 4px 0 0; }
   #lineage li.trend { position: relative; border-top: 1px solid #1c2029; cursor: default;
@@ -371,8 +373,6 @@
      ただし右パネル(320px + 余白)と重なるので、その手前まで寄せる。
      パネルが地図の大半を覆う狭い画面では、従来どおり畳む。 */
   /* パネル実幅 = 320 + padding 24 + border 2 = 346px。余白込みで 372px 退避 */
-  body.has-selection #bands .lbl { right: 372px; max-width: calc(100vw - 660px); }
-  body.has-selection #bands .lbl.sub { right: 378px; }
   @media (max-width: 900px) {
     body.has-selection #bands { display: none; }
   }
@@ -413,8 +413,6 @@
     #axis { top: calc(52dvh - 22px); bottom: auto; z-index: 1; }
     /* パネルは地図に被らないので、選択中でも帯ラベルは出す・退避しない */
     body.has-selection #bands { display: block; }
-    body.has-selection #bands .lbl { right: 8px; max-width: 46vw; }
-    body.has-selection #bands .lbl.sub { right: 14px; }
     /* 凡例は地図の左下に固定(ドラッグ位置より優先) */
     #legend {
       left: 8px !important; top: calc(52dvh - 30px) !important;
@@ -627,6 +625,6 @@
   <span id="lockHint" role="status" aria-live="polite"></span>
 </div>
 
-<script type="module" src="/viewer/main.js?v=135"></script>
+<script type="module" src="/viewer/main.js?v=137"></script>
 </body>
 </html>

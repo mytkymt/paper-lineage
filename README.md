@@ -83,7 +83,7 @@ The **Tutorial** link in the panel plays the full 87-second walkthrough
 ## Reading the map
 
 - **x-axis = publication year.** Citations only ever flow left to right.
-- **Bands = citation communities**, sized by paper count.
+- **Bands = citation communities**, sized by paper count and named down the left edge.
 - **Bright routes = main paths** (edges weighted by search path count).
 - **Dot size = citations.** Colour belongs to the people you have selected.
 
