@@ -21,7 +21,7 @@
 <style>
   /* 角丸はこの4段だけを使う。容器・操作・ピル・小さな印。 */
   :root { color-scheme: dark; --r-panel: 8px; --r-ctl: 6px; --r-pill: 999px; --r-mark: 3px;
-          --leftx: 8px; --topx: 300px; --legendh: 62px; }
+          --leftx: 8px; --topx: 300px; --chromeh: 62px; }
   html, body { margin: 0; height: 100%; overflow: hidden; background: #07080c; color: #d7dae2;
                font: 12px/1.5 -apple-system, "Helvetica Neue", "Hiragino Sans", sans-serif; }
   /* canvas は置換要素なので inset:0 だけでは伸びず、width/height 属性(描画バッファ)が
@@ -101,15 +101,17 @@
             display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap;
             pointer-events: none; }
   #toprow > * { pointer-events: auto; }
+  /* 凡例は残った幅いっぱいに伸ばして細長く保つ。人が増えたら折り返して縦に伸びる
+     (伸びるのは凡例だけ。左パネルと操作パネルは形を変えない)。 */
   #legend { position: static; display: flex; flex-wrap: wrap; gap: 4px 12px;
-            flex: 0 1 auto; max-width: 440px; box-sizing: border-box; user-select: none; }
+            flex: 1 1 0; min-width: 240px; box-sizing: border-box; user-select: none; }
   #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
 
   /* 見てきた道すじと、地図の操作。ここが唯一の操作場所になるので位置は動かさない。 */
-  #viewnav { position: relative; display: none; align-items: center; gap: 8px;
+  #viewnav { position: relative; display: flex; align-items: center; gap: 8px;
              box-sizing: border-box; flex: 0 0 auto; }
-  #viewnav.on { display: flex; }
   #viewnav .nav-btns { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; }
+  #viewnav { min-height: var(--chromeh); }
   /* 押しやすさは Apple の目安に合わせる: ポインタで 28px、指なら 44px 以上 */
   #viewnav button { cursor: pointer; font: inherit; font-size: 11px; line-height: 1;
     min-height: 28px; min-width: 28px; border-radius: var(--r-ctl); padding: 6px 10px;
@@ -119,17 +121,10 @@
   #viewnav button:disabled { opacity: .35; cursor: default; }
   #lockView { min-width: 76px; border-radius: var(--r-pill) !important; }
   #lockView[aria-pressed="true"] { color: #0a0c12; background: #d7a83c; border-color: #d7a83c; }
-  /* パンくず: 見てきたものを古い順に並べ、押すとそこまで戻る */
-  #crumbs { display: flex; align-items: center; gap: 2px; min-width: 0; flex-wrap: nowrap;
-            overflow: hidden; }
-  #crumbs .sep { color: #4d5468; flex: 0 0 auto; }
-  #crumbs button { max-width: 110px; overflow: hidden; text-overflow: ellipsis;
-                   white-space: nowrap; border: 0; background: none; padding: 4px 5px;
-                   color: #8b91a3; }
-  #crumbs button:hover { color: #fff; background: rgba(255,255,255,.06); }
-  #crumbs button.here { color: #d7dae2; cursor: default; }
-  #crumbs button.here:hover { background: none; }
-  #crumbs button.more { max-width: none; color: #6d7488; }
+  /* 今どこを見ているかの表示。押せないので文字だけ。戻るのは ‹ の仕事。 */
+  #viewHere { max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+              color: #d7dae2; flex: 0 1 auto; }
+  #viewHere.none { color: #6d7488; }
   #lockHint { position: absolute; top: 100%; left: 12px; margin-top: 6px; white-space: nowrap;
     pointer-events: none; opacity: 0; transition: opacity .18s; font-size: 11px; color: #e8c46a;
     background: rgba(12,14,20,.92); border: 1px solid #d7a83c;
@@ -610,14 +605,14 @@
 <div id="toprow">
   <div id="legend" class="panel"></div>
   <div id="viewnav" class="panel">
+    <button id="navBack" title="Back (⌘[)" aria-label="Back">‹</button>
+    <span id="viewHere" aria-live="polite">Default view</span>
+    <button id="lockView" aria-pressed="false"
+            title="Freeze what the map is showing (L). You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
     <span class="nav-btns">
-      <button id="navBack" title="Back (⌘[)" aria-label="Back">‹</button>
       <button id="prevPaper" aria-label="Previous paper (left arrow)" title="Previous paper in time (←)">◀</button>
       <button id="nextPaper" aria-label="Next paper (right arrow)" title="Next paper in time (→)">▶</button>
-      <button id="lockView" aria-pressed="false"
-              title="Freeze what the map is showing (L). You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
     </span>
-    <nav id="crumbs" aria-label="Where you have been"></nav>
     <span id="lockHint" role="status" aria-live="polite"></span>
   </div>
 </div>
@@ -645,6 +640,6 @@
 <div id="axis"></div>
 <div id="nodeCursor" aria-hidden="true"></div>
 
-<script type="module" src="/viewer/main.js?v=146"></script>
+<script type="module" src="/viewer/main.js?v=148"></script>
 </body>
 </html>

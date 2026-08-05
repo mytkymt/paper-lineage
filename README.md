@@ -29,7 +29,7 @@ Research areas appear as named horizontal bands; citations flow left to right.
 ![Lock view](docs/media/trail-lock.png)
 
 **Lock view** (or the L key) freezes the highlight. The button sits in the bar along the
-top with the ◀ ▶ steppers and the trail of where you have been, in the same place
+top, next to what you are looking at now and the ◀ ▶ steppers, in the same place
 whether the view is locked or not. You can click
 through other papers — or walk the whole frozen lineage in date order with ◀ ▶ and the
 arrow keys — and read each one's panel while the map keeps showing the lineage you are
@@ -48,9 +48,9 @@ follow wherever the reading takes you.
 - Focus one or several people: only their papers stay bright, and the panel shows each
   person's sub-fields and most cited work side by side.
 - A toggle switches between "any authorship" and "last-author only".
-- Clicking one of their papers drops into its lineage. The bar along the top keeps the
-  trail — person › paper › paper — so ‹ (or ⌘[) walks back through everywhere you have
-  been, and any step in the trail is one click away.
+- Clicking one of their papers drops into its lineage. The bar along the top names what
+  you are looking at now, and ‹ (or ⌘[) walks back through everywhere you have been —
+  people, fields and every paper you opened — until you are back at the whole map.
 
 ## 3. Explore the field
 

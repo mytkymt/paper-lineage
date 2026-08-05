@@ -1236,21 +1236,22 @@ async function main() {
     // 上段の3つ(畳んだ左パネル・凡例・操作)は同じ高さに揃える。素の高さを測って
     // いちばん高いものに合わせるので、中身が増えても縮んで欠けることはない。
     const lg = document.getElementById('legend');
-    const nav = document.getElementById('viewnav');
     const res = document.getElementById('searchResults');
-    if (isMobile()) {   // 縦積みでは横並びにならないので高さを揃える意味がない
-      for (const el of [lg, nav, ctrl]) el.style.minHeight = '';
-      return;
-    }
-    const boxes = [lg, nav, collapsed ? ctrl : null].filter(Boolean);
-    for (const el of boxes) el.style.minHeight = '';
-    // 検索結果で伸びたぶんは数えない(結果が出るたびに凡例まで伸びてしまう)
+    lg.style.minHeight = '';
+    if (isMobile()) return;   // 縦積みでは横並びにならないので揃える意味がない
+    // 上段の基準の高さ = 畳んだ左パネルの素の高さ(検索結果で伸びたぶんは数えない)。
+    // 凡例はこれを下限にして、人が増えたぶんだけ下に伸びる。
     const keep = res.style.display;
     res.style.display = 'none';
-    const tall = Math.max(...boxes.map((el) => el.offsetHeight));
+    const wasOpen = !collapsed;
+    if (wasOpen) ctrl.classList.add('collapsed');
+    const base = ctrl.offsetHeight;
+    if (wasOpen) ctrl.classList.remove('collapsed');
     res.style.display = keep;
-    if (tall) for (const el of boxes) el.style.minHeight = tall + 'px';
-    if (!collapsed) ctrl.style.minHeight = '';
+    if (base) {
+      st.setProperty('--chromeh', base + 'px');
+      lg.style.minHeight = base + 'px';
+    }
   }
 
   function drawBands(scale, offset) {
@@ -1520,45 +1521,11 @@ async function main() {
     window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
   }
 
-  let pendingPan = -1;   // 非表示中(canvas 0×0)に選択された場合、表示時にパンをやり直す
-  function panToNode(i) {
-    if (viewLocked) return;   // ロック中は視点も動かさない
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (!w || !h) { pendingPan = i; return; }
-    pendingPan = -1;
-    const { scale } = scaleOffset();
-    // 右の系譜パネルが地図に被るので、パネルを除いた領域の中心に置く。
-    // 画面が狭くてパネルが支配的なときは素直に画面中心。
-    const panelW = isMobile() ? 0 : (lineageEl.offsetWidth ? lineageEl.offsetWidth + 24 : 344);
-    const px = w > panelW * 2 ? (w - panelW) / 2 : w / 2;
-    let tx = np[i * 2] - (px / w - 0.5) / scale[0];
-    let ty = np[i * 2 + 1];
-    // 右へは初期画角より先に行かない。最新年より右にあるのは空白だけで、
-    // そこまで送ると帯の名前がパネルから離れて画面の収まりが崩れる。
-    tx = Math.min(tx, homeCam().cx);
-    // 縦は全体が入っているうちは動かさない(帯が画面外に出ないように)
-    ty = scale[1] <= 1 ? 0.5
-       : Math.max(0.5 / scale[1], Math.min(1 - 0.5 / scale[1], ty));
-    cancelCamAnim();
-    // 非表示タブでは rAF が発火せずアニメが永久に進まないので、即座に着地させる
-    if (document.hidden) { cam.cx = tx; cam.cy = ty; schedule(); return; }
-    const sx = cam.cx, sy = cam.cy, t0 = performance.now(), DUR = 450;
-    const tick = (t) => {
-      const k = Math.min(1, (t - t0) / DUR);
-      const e = 1 - Math.pow(1 - k, 3);
-      cam.cx = sx + (tx - sx) * e;
-      cam.cy = sy + (ty - sy) * e;
-      schedule();
-      camAnim = k < 1 ? requestAnimationFrame(tick) : null;
-    };
-    camAnim = requestAnimationFrame(tick);
-  }
 
   // 見てきた道すじ。ビューの種類が変わったときだけでなく、論文から論文へ移った
   // ときも1件として積む。上段のパンくずはこの末尾から数件を出し、押すとそこまで戻る。
   // 復元に要るのは種類と鍵だけ(論文なら添字、分野なら種別+添字、人なら選択スロット)。
   const NAV_MAX = 24;      // 覚えておく上限。これ以上は古いほうから捨てる
-  const NAV_SHOW = 2;      // パンくずに出す件数(横幅が限られるので現在地を含めて2件)
   let navStack = [];
   let navRestoring = false;
   function navPush(entry) {
@@ -1582,31 +1549,20 @@ async function main() {
     } finally { navRestoring = false; }
     renderCrumbs();
   }
+  // 出すのは「今どこを見ているか」だけ。1つ前も並べると、どちらが現在地か迷う。
   function renderCrumbs() {
-    const box = document.getElementById('crumbs');
-    const nav = document.getElementById('viewnav');
-    nav.classList.toggle('on', navStack.length > 0);
-    const from = Math.max(0, navStack.length - NAV_SHOW);
-    const parts = [];
-    if (from > 0) {
-      const earlier = navStack.slice(0, from).map((e) => e.label).join(' › ');
-      parts.push(`<button data-nav="${from - 1}" class="more" title="${escapeHtml(earlier)}">…</button>`);
-    }
-    navStack.slice(from).forEach((e, k) => {
-      const idx = from + k;
-      const here = idx === navStack.length - 1;
-      if (k || from > 0) parts.push('<span class="sep">›</span>');
-      parts.push(`<button data-nav="${idx}"${here ? ' class="here" disabled' : ''}` +
-                 ` title="${escapeHtml(e.label)}">${escapeHtml(e.label)}</button>`);
-    });
-    box.innerHTML = parts.join('');
-    document.getElementById('navBack').disabled = navStack.length < 2;
+    const here = navStack[navStack.length - 1];
+    const el = document.getElementById('viewHere');
+    el.textContent = here ? here.label : 'Default view';
+    el.title = here ? here.label : 'The whole map, nothing selected';
+    el.classList.toggle('none', !here);
+    document.getElementById('navBack').disabled = navStack.length < 1;
   }
-  document.getElementById('crumbs').addEventListener('click', (e) => {
-    const b = e.target.closest('button[data-nav]');
-    if (b) navGo(parseInt(b.dataset.nav, 10));
+  // ‹ は1つ戻る。最初の1件まで戻ったら、その次は地図だけの状態に返る。
+  document.getElementById('navBack').addEventListener('click', () => {
+    if (navStack.length >= 2) navGo(navStack.length - 2);
+    else if (navStack.length === 1) { navStack.length = 0; select(-1); clearFocus(); renderCrumbs(); }
   });
-  document.getElementById('navBack').addEventListener('click', () => navGo(navStack.length - 2));
 
   function select(i) {
     selected = i;
@@ -1642,7 +1598,6 @@ async function main() {
     refreshFocus();         // 沈めていた色を焼き直す(系譜表示中は絞り込みを解く)
     runLocalClustering();   // local clusters は常時表示(選択のたびに自動計算、数十ms)
     paintLineage();
-    panToNode(i);           // パネル表示後に呼ぶ(パネル幅を差し引いて中心を出すため)
     revealPanelOnMobile();
   }
 
@@ -1927,9 +1882,6 @@ async function main() {
   function runSearch(query, listOnly) {
     const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
     const box = document.getElementById('searchResults');
-    if (!listOnly && terms.length) {
-      navPush({ kind: 'search', key: `q${query.trim()}`, q: query.trim(), label: `“${query.trim()}”` });
-    }
 
     if (!terms.length) {
       if (searchActive) {
@@ -2304,7 +2256,6 @@ async function main() {
         cancelCamAnim();
         cam.cx = anchor.cam.cx; cam.cy = anchor.cam.cy;
         cam.zx = anchor.cam.zx; cam.zy = anchor.cam.zy;
-        pendingPan = -1;
       }
       uploadStates();
       applyPinned();   // ロック中に据え置いた人の色・強調も戻す
@@ -2535,10 +2486,7 @@ async function main() {
   });
 
   window.addEventListener('resize', () => { layoutChrome(); schedule(); });
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && pendingPan >= 0 && pendingPan === selected) panToNode(pendingPan);
-    schedule();
-  });
+  document.addEventListener('visibilitychange', () => { schedule(); });
 
   // --- 最近傍探索(均等グリッド) ---
   const GRID = 512;
@@ -2742,7 +2690,7 @@ async function main() {
     }
     // ⌘[ / Ctrl+[ で1つ戻る(Safari・Finder と同じ)
     if (e.key === '[' && (e.metaKey || e.ctrlKey)) {
-      if (navStack.length > 1) { navGo(navStack.length - 2); e.preventDefault(); }
+      if (navStack.length) { document.getElementById('navBack').click(); e.preventDefault(); }
       return;
     }
     // L で切り替え。入力欄に文字を打っている最中は拾わない
@@ -2926,7 +2874,6 @@ async function main() {
     const v = (q.get('v') || '').split(',').map(Number);
     if (v.length === 4 && v.every((x) => Number.isFinite(x))) {
       cancelCamAnim();
-      pendingPan = -1;
       cam.cx = v[0]; cam.cy = v[1];
       cam.zx = clampZoom(v[2]); cam.zy = clampZoom(v[3]);
     }
@@ -2958,7 +2905,6 @@ async function main() {
       if (b && Number.isFinite(frac)) cam.cy = b.y0 + frac * (b.y1 - b.y0);
       else if (Number.isFinite(frac)) cam.cy = frac;   // 同名の帯が無ければ絶対位置で妥協
       cancelCamAnim();
-      pendingPan = -1;
     }
 
     // 復元し終えたビューの指定は URL から消す。リロードは常にまっさらな地図から
