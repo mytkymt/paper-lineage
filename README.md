@@ -2,9 +2,10 @@
 
 **Live: https://hci-research-trails.vercel.app**
 
-An interactive map of HCI research — **about 39,000 papers and 380,000 citations
-from 13 major venues (1981–2026)**, laid out along time on a single WebGL canvas.
-A toggle adds seven neighbouring venues, taking it to about 47,000 papers.
+An interactive map of HCI research — **about 47,000 papers and 450,000 citations
+(1975–2026)**, laid out along time on a single WebGL canvas. Thirteen HCI venues are
+included whole; seven neighbouring ones join through their citation links to that core,
+and a toggle drops them for the 13-venue corpus alone (about 39,000 papers).
 Research areas appear as named horizontal bands; citations flow left to right.
 
 ![Overview](docs/media/overview.png)
@@ -56,8 +57,8 @@ follow wherever the reading takes you.
 
 ![Sub-fields opening under zoom](docs/media/trail-field.png)
 
-- 14 bands and 112 sub-fields, all named; labels appear as you zoom (16 and 141 with
-  related venues on).
+- 16 bands and 141 sub-fields, all named; labels appear as you zoom (14 and 112 with
+  the core corpus alone).
 - Browse them all from the **Fields tree** (or search them by name): selecting a field
   highlights its papers and lists both its most cited work and everyone publishing in it.
 - **Shift+scroll zooms topics without stretching time**; Alt+scroll zooms time only.
@@ -95,10 +96,11 @@ The **Tutorial** link in the panel plays the full 92-second walkthrough
 
 ## Data notes
 
-Corpus: CHI, PACM HCI, UIST, DIS, ASSETS, IUI, CSCW, TEI, IMWUT, UbiComp, CHI PLAY,
-MobileHCI, TOCHI. A **Related venues** toggle adds HRI, IEEE VR, ISMAR, SIGGRAPH,
-TOG, IJHCS and IEEE ToH — partially: only papers with at least one citation link to
-the core corpus are included, and the UI marks them as such. About 75% of references point outside these venues and are excluded —
+Core corpus: CHI, PACM HCI, UIST, DIS, ASSETS, IUI, CSCW, TEI, IMWUT, UbiComp, CHI
+PLAY, MobileHCI, TOCHI. **Related venues** — HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS
+and IEEE ToH — are on by default but only partially: a paper joins if it has at least
+one citation link to the core corpus, and the UI marks them as such. The toggle in the
+panel turns them off (`?venues=core` does the same from a link). About 75% of references point outside these venues and are excluded —
 the UI states this wherever it limits what you see (an empty upstream list means the
 paper cites work outside the corpus, not missing data). Band names are LLM-generated
 once and committed; everything else is computed deterministically from citation data.

@@ -10,11 +10,11 @@
 //   シェーダ側で y を反転して合わせているので、マウス座標(clientY は下向きが正)を
 //   そのまま使ってよい。これを揃えないとパン・ズーム・ホバーが全部縦に反転する。
 
-// データセット切り替え: 既定はコア13会場。?venues=related で拡張版
-// (引用結合フィルタで部分収録した隣接venue入り)を読む。
-// 'peripheral' / 'linked' は旧 URL 互換で残す(共有済みリンクを壊さない)。
+// データセット切り替え: 既定は関連venue入り(引用結合フィルタで部分収録した隣接venue)。
+// ?venues=core でコア13会場だけに戻す。'related' / 'peripheral' / 'linked' は
+// 旧 URL 互換で残す(拡張版を指す。共有済みリンクを壊さない)。
 const _venuesParam = new URLSearchParams(location.search).get('venues');
-const EXT_MODE = _venuesParam === 'related' || _venuesParam === 'peripheral' || _venuesParam === 'linked';
+const EXT_MODE = _venuesParam !== 'core';
 const DATA = EXT_MODE ? '/data/viz-ext/' : '/data/viz/';
 
 const VENUE_COLORS = {
@@ -2460,8 +2460,8 @@ async function main() {
     // 今の作業状態(選択・分野・検索・ピン・フォーカス)ごとデータセットを切り替える。
     // viewParams(共有リンクと同じ機構)に載せてリロード後に applyUrlState が復元する。
     const q = viewParams();
-    if (venueSet.checked) q.set('venues', 'related');
-    else q.delete('venues');
+    if (venueSet.checked) q.delete('venues');
+    else q.set('venues', 'core');
     // カメラの生座標はデータセット間で座標系(帯構成)が違うので使えない。
     // 代わりに「中心の年・見えている年幅・中心の帯 + 帯内位置・縦ズーム」に翻訳して
     // 持ち越し、復元側で新しい座標系に写像する(v2)。計算は切替時の数回だけ。
@@ -2796,7 +2796,7 @@ async function main() {
 
   function viewParams() {
     const q = new URLSearchParams();
-    if (EXT_MODE) q.set('venues', 'related');
+    if (!EXT_MODE) q.set('venues', 'core');   // 既定が拡張版なので、外したときだけ書く
     if (selected >= 0) {
       const nd = meta.nodes[selected];
       q.set('paper', nd.d || 'i' + selected);
