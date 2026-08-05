@@ -83,7 +83,7 @@ The same beats as stills, one per section, are in
 the depth one hop at a time, filtering the lineage by field, locking the view to read
 across it, stacking five people, walking the Fields tree, and recolouring by venue.
 
-The **Tutorial** link in the panel plays the full 121-second walkthrough
+The **Tutorial** link in the panel plays the full 120-second walkthrough
 ([docs/media/tutorial.mp4](docs/media/tutorial.mp4)), which is also available as a
 [full-speed GIF](docs/media/tour.gif).
 
