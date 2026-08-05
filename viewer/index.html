@@ -19,7 +19,9 @@
 <meta property="og:image:alt" content="A wide dark map of HCI papers: coloured citation trails running left to right across bands of research topics, from 1981 to 2026.">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-  :root { color-scheme: dark; }
+  /* 角丸はこの4段だけを使う。容器・操作・ピル・小さな印。 */
+  :root { color-scheme: dark; --r-panel: 8px; --r-ctl: 6px; --r-pill: 999px; --r-mark: 3px;
+          --leftx: 8px; --topx: 300px; --legendh: 62px; }
   html, body { margin: 0; height: 100%; overflow: hidden; background: #07080c; color: #d7dae2;
                font: 12px/1.5 -apple-system, "Helvetica Neue", "Hiragino Sans", sans-serif; }
   /* canvas は置換要素なので inset:0 だけでは伸びず、width/height 属性(描画バッファ)が
@@ -28,8 +30,8 @@
             display: block; cursor: grab; touch-action: none; }
   #canvas.dragging { cursor: grabbing; }
 
-  .panel { position: fixed; background: rgba(12,14,20,.88); backdrop-filter: blur(8px);
-           border: 1px solid #232734; border-radius: 8px; padding: 10px 12px; }
+  .panel { position: fixed; z-index: 3; background: rgba(12,14,20,.88); backdrop-filter: blur(8px);
+           border: 1px solid #232734; border-radius: var(--r-panel); padding: 10px 12px; }
   #controls { top: 12px; left: 12px; width: 252px; }
   #controls .hd1 { display: flex; align-items: center; justify-content: space-between;
                    margin: 0 0 8px; }
@@ -38,9 +40,15 @@
                  background: none; border: 0; font-family: inherit;
                  padding: 2px 4px; user-select: none; }
   #panelToggle:hover { color: #fff; }
-  #controls.collapsed { width: auto; }
-  #controls.collapsed > *:not(.hd1) { display: none; }
-  #controls.collapsed .hd1 { margin: 0; gap: 10px; }
+  /* 畳んだ状態でも検索は使える。高さは凡例と揃える(揃わないと上段がちぐはぐに見える)。
+     入力して結果が出たときだけ下に伸び、そのぶん帯の名前の上に重なる。 */
+  #controls.collapsed { width: 252px; padding: 6px 10px; box-sizing: border-box; }
+  #controls.collapsed > *:not(.hd1):not(#search):not(#searchResults) { display: none; }
+  #controls.collapsed .hd1 { margin: 0 0 3px; gap: 10px; }
+  #controls.collapsed h1 { font-size: 11px; line-height: 1.2; }
+  #controls.collapsed #search { padding: 2px 7px; font-size: 11px; }
+  #controls.collapsed #searchResults:not(:empty) { margin-top: 6px; }
+  #controls.collapsed #searchResults:empty { display: none; }   /* 空の枠で高さが増えないように */
   #controls details { border-top: 1px solid #1c2029; margin-top: 6px; }
   #controls summary { cursor: pointer; color: #8b91a3; font-size: 11px; padding: 5px 0;
                       list-style: none; user-select: none; }
@@ -48,7 +56,7 @@
   #controls summary::before { content: '▸ '; color: #5d6478; }
   #controls details[open] > summary::before { content: '▾ '; }
   #roleMode, #colorMode { flex: 1; min-width: 0; background: #0d0f16; color: #d7dae2; font: inherit;
-                          border: 1px solid #2b3142; border-radius: 5px; padding: 3px 5px; }
+                          border: 1px solid #2b3142; border-radius: var(--r-ctl); padding: 3px 5px; }
   .row { display: flex; align-items: center; gap: 8px; margin: 7px 0; }
   .row label { flex: 0 0 74px; color: #8b91a3; }
   .row input[type=range] { flex: 1; min-width: 0; }
@@ -56,11 +64,11 @@
   #stats { color: #6d7488; margin-top: 8px; font-size: 11px; }
 
   #search { width: 100%; box-sizing: border-box; background: #0d0f16; color: #d7dae2;
-            border: 1px solid #2b3142; border-radius: 5px; padding: 5px 7px; font: inherit;
+            border: 1px solid #2b3142; border-radius: var(--r-ctl); padding: 5px 7px; font: inherit;
             margin-bottom: 4px; }
   #search:focus { outline: none; border-color: #4a5473; }
   #colorMode { flex: 1; min-width: 0; background: #0d0f16; color: #d7dae2; font: inherit;
-               border: 1px solid #2b3142; border-radius: 5px; padding: 3px 5px; }
+               border: 1px solid #2b3142; border-radius: var(--r-ctl); padding: 3px 5px; }
   #searchResults { max-height: 190px; overflow-y: auto; margin-bottom: 4px; }
   #searchResults div { padding: 3px 0; border-top: 1px solid #1c2029; color: #aab2c4;
                        cursor: pointer; font-size: 11px; }
@@ -87,16 +95,59 @@
   .links a { color: #8fa6d8; text-decoration: none; }
   .links a:hover { color: #fff; }
 
-  #legend { top: 12px; left: 300px; display: flex; flex-wrap: wrap; gap: 4px 12px; max-width: 620px; }
+  /* 上段: 凡例と操作パネルを横に並べる。位置は固定(掴んで動かさない)。
+     左端は左パネルの右端に合わせ、右は系譜パネルの手前で折り返す。 */
+  #toprow { position: fixed; top: 12px; left: var(--topx); right: 344px; z-index: 3;
+            display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap;
+            pointer-events: none; }
+  #toprow > * { pointer-events: auto; }
+  #legend { position: static; display: flex; flex-wrap: wrap; gap: 4px 12px;
+            flex: 0 1 auto; max-width: 440px; box-sizing: border-box; user-select: none; }
   #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
-  #legend { user-select: none; touch-action: none; cursor: grab; }
-  #legend.dragging, #legend.dragging * { cursor: grabbing !important; }
+
+  /* 見てきた道すじと、地図の操作。ここが唯一の操作場所になるので位置は動かさない。 */
+  #viewnav { position: relative; display: none; align-items: center; gap: 8px;
+             box-sizing: border-box; flex: 0 0 auto; }
+  #viewnav.on { display: flex; }
+  #viewnav .nav-btns { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; }
+  /* 押しやすさは Apple の目安に合わせる: ポインタで 28px、指なら 44px 以上 */
+  #viewnav button { cursor: pointer; font: inherit; font-size: 11px; line-height: 1;
+    min-height: 28px; min-width: 28px; border-radius: var(--r-ctl); padding: 6px 10px;
+    color: #8b91a3; background: rgba(255,255,255,.04); border: 1px solid #2a3040; }
+  @media (hover: none) { #viewnav button { min-height: 44px; min-width: 44px; } }
+  #viewnav button:hover:not(:disabled) { color: #fff; border-color: #3d4560; }
+  #viewnav button:disabled { opacity: .35; cursor: default; }
+  #lockView { min-width: 76px; border-radius: var(--r-pill) !important; }
+  #lockView[aria-pressed="true"] { color: #0a0c12; background: #d7a83c; border-color: #d7a83c; }
+  /* パンくず: 見てきたものを古い順に並べ、押すとそこまで戻る */
+  #crumbs { display: flex; align-items: center; gap: 2px; min-width: 0; flex-wrap: nowrap;
+            overflow: hidden; }
+  #crumbs .sep { color: #4d5468; flex: 0 0 auto; }
+  #crumbs button { max-width: 110px; overflow: hidden; text-overflow: ellipsis;
+                   white-space: nowrap; border: 0; background: none; padding: 4px 5px;
+                   color: #8b91a3; }
+  #crumbs button:hover { color: #fff; background: rgba(255,255,255,.06); }
+  #crumbs button.here { color: #d7dae2; cursor: default; }
+  #crumbs button.here:hover { background: none; }
+  #crumbs button.more { max-width: none; color: #6d7488; }
+  #lockHint { position: absolute; top: 100%; left: 12px; margin-top: 6px; white-space: nowrap;
+    pointer-events: none; opacity: 0; transition: opacity .18s; font-size: 11px; color: #e8c46a;
+    background: rgba(12,14,20,.92); border: 1px solid #d7a83c;
+    border-radius: var(--r-pill); padding: 3px 10px; }
+  #lockHint.on { opacity: 1; }
+  #lockView.nudge { animation: lockNudge 1.6s ease-out; }
+  @keyframes lockNudge {
+    0%   { box-shadow: 0 0 0 5px rgba(215,168,60,.3); }
+    18%  { box-shadow: 0 0 0 5px rgba(215,168,60,.3); }
+    100% { box-shadow: 0 0 0 0 rgba(215,168,60,0); }
+  }
+  @media (prefers-reduced-motion: reduce) { #lockView.nudge { animation: none; } }
   #legend span.lab { cursor: pointer; }
   #legend span[data-venue] { cursor: pointer; }
   #legend span[data-venue]:hover { color: #fff; }
   #legend span[data-venue].on { color: #fff; background: #ffffff14;
-                                box-shadow: inset 0 -2px 0 #6d90c9; border-radius: 3px; }
-  .seg { display: flex; border: 1px solid #2a3040; border-radius: 6px; overflow: hidden; }
+                                box-shadow: inset 0 -2px 0 #6d90c9; border-radius: var(--r-mark); }
+  .seg { display: flex; border: 1px solid #2a3040; border-radius: var(--r-ctl); overflow: hidden; }
   .seg button { background: none; border: 0; color: #8b91a3; font: inherit; font-size: 11px;
                 padding: 3px 10px; cursor: pointer; }
   .seg button.on { background: #232b3d; color: #fff; }
@@ -112,7 +163,7 @@
   #legend span.lab b { color: #6d7488; font-weight: 400; font-variant-numeric: tabular-nums; }
   #legend .unpin { margin-left: 2px; color: #5d6478; cursor: pointer; font-style: normal; }
   #legend .unpin:hover { color: #fff; }
-  #legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+  #legend i { width: 8px; height: 8px; border-radius: var(--r-mark); display: inline-block; }
 
   #tooltip { position: fixed; pointer-events: none; max-width: 380px; display: none;
              border-color: #31384a; z-index: 5; }
@@ -144,41 +195,8 @@
   /* 種別ラベル・送り・ロック・閉じるを1行に並べ、縦中央で揃える */
   #lineage .ptop { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
   #lineage .ptop .pkind { margin: 0 auto 0 0; }   /* 左に寄せ、× を右端へ押す */
-  /* 著者・分野・検索から論文に入ったときだけ出る「一つ戻る」。× は閉じる、
-     こちらは元いた画面に戻る、と役割を分ける。 */
-  #lineage .pback { display: none; margin: 0 0 3px; padding: 0; border: 0; background: none;
-    color: #8b91a3; font: inherit; font-size: 11px; text-align: left; cursor: pointer; }
-  #lineage .pback:hover { color: #fff; }
-  #lineage .pback.on { display: block; }
-  /* 地図の上に浮かべる操作のかたまり。固定と送りは続けて使うので隣り合わせにし、
-     固定中も非固定中も同じ場所に置く(トグルの位置が状態で動かないように)。 */
-  #viewbar { display: none; position: fixed; left: 50%; bottom: 44px;
-    transform: translateX(-50%); z-index: 4; align-items: center; gap: 4px; }
-  body.has-selection #viewbar, body.view-locked #viewbar { display: flex; }
-  #viewbar button { cursor: pointer; font: inherit; font-size: 11px; line-height: 1;
-    border-radius: 999px; padding: 5px 10px; color: #8b91a3;
-    background: rgba(12,14,20,.82); border: 1px solid #2a3040; }
-  #viewbar button:hover:not(:disabled) { color: #fff; border-color: #3d4560; }
-  #viewbar button:disabled { opacity: .35; cursor: default; }
-  /* Lock view ⇄ Locked で幅が変わると両隣の送りがずれるので下限を決めておく */
-  #lockView { min-width: 76px; }
-  #lockView[aria-pressed="true"] { color: #0a0c12; background: #d7a83c; border-color: #d7a83c; }
-  /* 固定した集合の外を押されたときの合図 */
-  #lockHint { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
-    margin-bottom: 7px; white-space: nowrap; pointer-events: none; opacity: 0;
-    transition: opacity .18s; font-size: 11px; color: #e8c46a;
-    background: rgba(12,14,20,.92); border: 1px solid #d7a83c;
-    border-radius: 999px; padding: 3px 10px; }
-  #lockHint.on { opacity: 1; }
-  #lockView.nudge { animation: lockNudge 1.6s ease-out; }
-  @keyframes lockNudge {
-    0%   { box-shadow: 0 0 0 5px rgba(215,168,60,.3); }
-    18%  { box-shadow: 0 0 0 5px rgba(215,168,60,.3); }
-    100% { box-shadow: 0 0 0 0 rgba(215,168,60,0); }
-  }
-  @media (prefers-reduced-motion: reduce) { #lockView.nudge { animation: none; } }
   /* 論文以外のビュー(分野・著者)では送りを出さない */
-  .pnav button { background: none; border: 1px solid #2a3040; border-radius: 5px;
+  .pnav button { background: none; border: 1px solid #2a3040; border-radius: var(--r-ctl);
                  color: #8b91a3; font: inherit; font-size: 10px; line-height: 1;
                  padding: 3px 7px; cursor: pointer; }
   #lineage .ptop .close { float: none; flex: 0 0 auto; line-height: 1; }
@@ -192,7 +210,7 @@
   #lineage a.doi { color: #6d90c9; text-decoration: none; }
   #lineage a.doi:hover { color: #9db8e8; text-decoration: underline; }
   #lineage button.mini { margin: 8px 6px 2px 0; background: #141824; color: #aab2c4;
-    border: 1px solid #2a3040; border-radius: 4px; padding: 3px 8px; font: inherit;
+    border: 1px solid #2a3040; border-radius: var(--r-ctl); padding: 3px 8px; font: inherit;
     font-size: 11px; cursor: pointer; }
   #lineage button.mini:hover:not(:disabled) { color: #fff; border-color: #3d4560; }
   #lineage button.mini:disabled { color: #5d6478; cursor: default; }
@@ -204,14 +222,14 @@
   #selAuthors .au.none { cursor: default; }
   #searchResults .grp { color: #6d7488; border: 0; cursor: default; margin-top: 4px; }
   #searchResults .person { display: flex; align-items: center; gap: 5px; }
-  #searchResults .person i { width: 8px; height: 8px; border-radius: 2px; flex: 0 0 8px; }
+  #searchResults .person i { width: 8px; height: 8px; border-radius: var(--r-mark); flex: 0 0 8px; }
   #searchResults .person i.empty { border: 1px solid #3a4152; background: transparent; }
   /* 一覧の色見本も凡例と同じ規則: 選択中は素の色、ピンだけなら彩度を落とす */
   .person i.dim { filter: saturate(.3) brightness(.85); }
   #searchResults .person .sub { color: #5d6478; margin-left: auto; flex: 0 0 auto; }
   #searchResults .chips { padding: 3px 0; color: #6d7488; }
   #searchResults .chips b { color: #8fa6d8; font-weight: 400; cursor: pointer;
-                            border: 1px solid #2b3142; border-radius: 3px;
+                            border: 1px solid #2b3142; border-radius: var(--r-mark);
                             padding: 0 4px; margin-left: 4px; display: inline-block; }
   #searchResults .chips b:hover { color: #fff; border-color: #4a5473; }
   #lineage li.trend { cursor: pointer; }
@@ -244,7 +262,7 @@
                      border-top: 1px solid #1c2029; color: #aab2c4; cursor: pointer;
                      font-size: 11px; }
   #lineage .person:hover { color: #fff; }
-  #lineage .person i { width: 8px; height: 8px; border-radius: 2px; flex: 0 0 8px; }
+  #lineage .person i { width: 8px; height: 8px; border-radius: var(--r-mark); flex: 0 0 8px; }
   #lineage .person i.empty { border: 1px solid #3a4152; background: transparent; }
   #lineage .person .sub { color: #5d6478; margin-left: auto; flex: 0 0 auto; padding-left: 10px; }
   /* 未選択の人はドットを置かず、選択済みの行と頭を揃えるぶんだけ字下げする */
@@ -258,7 +276,7 @@
   #lineage details.acard > summary::-webkit-details-marker { display: none; }
   #lineage details.acard > summary::before { content: '▸'; color: #5d6478; }
   #lineage details.acard[open] > summary::before { content: '▾'; }
-  #lineage details.acard > summary i { width: 8px; height: 8px; border-radius: 2px; flex: 0 0 8px; }
+  #lineage details.acard > summary i { width: 8px; height: 8px; border-radius: var(--r-mark); flex: 0 0 8px; }
   #lineage details.acard .drop { margin-left: auto; color: #5d6478; cursor: pointer;
     font-style: normal; padding: 0 2px; }
   #lineage details.acard .drop:hover { color: #fff; }
@@ -280,7 +298,7 @@
          display: none; align-items: center; justify-content: center;
          padding: 16px; overflow: auto; }
   #tut .box, #share .box { background: #0d0f16; border: 1px solid #2b3142;
-              border-radius: 10px; padding: 12px 16px 16px; margin: auto;
+              border-radius: var(--r-panel); padding: 12px 16px 16px; margin: auto;
               box-shadow: 0 12px 48px #000c; }
   #tut .box { width: min(1240px, 94vw); }
   #share .box { width: min(580px, 94vw); }
@@ -294,10 +312,10 @@
   #share .what { margin: 0 0 10px; color: #aab2c4; font-size: 12px; }
   #share .urlrow { display: flex; gap: 8px; }
   #share input { flex: 1; min-width: 0; background: #07080c; color: #8b91a3;
-                 border: 1px solid #2b3142; border-radius: 6px; padding: 7px 9px;
+                 border: 1px solid #2b3142; border-radius: var(--r-ctl); padding: 7px 9px;
                  font: inherit; font-size: 12px; }
   #share button, #share .targets a { background: #141824; color: #aab2c4;
-                 border: 1px solid #2a3040; border-radius: 6px; padding: 7px 14px;
+                 border: 1px solid #2a3040; border-radius: var(--r-ctl); padding: 7px 14px;
                  font: inherit; font-size: 12px; cursor: pointer; text-decoration: none;
                  white-space: nowrap; }
   #share button:hover, #share .targets a:hover { color: #fff; border-color: #3d4560; }
@@ -305,10 +323,10 @@
   #share .deep { display: flex; align-items: flex-start; gap: 7px; margin-top: 14px;
                  color: #8b91a3; font-size: 11px; cursor: pointer; }
   #share .deep input { flex: 0 0 auto; margin: 2px 0 0; }
-  #tut video { width: 100%; max-height: 80vh; border-radius: 6px; display: block; background: #000; }
+  #tut video { width: 100%; max-height: 80vh; border-radius: var(--r-ctl); display: block; background: #000; }
   #tut .ft { margin-top: 8px; display: flex; justify-content: flex-end; }
   #tut .ft button { background: #141824; color: #aab2c4; border: 1px solid #2a3040;
-                    border-radius: 4px; padding: 4px 10px; font: inherit; font-size: 11px;
+                    border-radius: var(--r-ctl); padding: 4px 10px; font: inherit; font-size: 11px;
                     cursor: pointer; }
   #tut .ft button:hover { color: #fff; border-color: #3d4560; }
 
@@ -327,7 +345,7 @@
                 box-shadow: 0 0 0 1px #0009, 0 0 12px #d7a83c99; }
 
   /* 帯(コミュニティ)の境界とラベル */
-  #bands { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  #bands { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
   #bands .lbl { pointer-events: auto; cursor: pointer; }
   #bands .lbl:hover { color: #fff; }
   #fieldTree { max-height: 44vh; overflow-y: auto; margin-top: 4px; }
@@ -337,13 +355,13 @@
   #fieldTree .fs { padding-left: 16px; color: #8b91a3; font-size: 11px; }
   #fieldTree .fb b, #fieldTree .fs b { margin-left: auto; color: #5d6478; font-weight: 400;
     font-variant-numeric: tabular-nums; }
-  #fieldTree .picked { color: #fff; background: #ffffff14; border-radius: 3px;
+  #fieldTree .picked { color: #fff; background: #ffffff14; border-radius: var(--r-mark);
                        box-shadow: inset 3px 0 0 #6d90c9; }
   #lineage.field-mode .counts, #lineage.field-mode #selAuthors { display: none; }
   #bands .sep { position: absolute; left: 0; right: 0; height: 1px; background: #ffffff10; }
   /* 地図の左に縦一列。データに重なるので、文字の下に敷きを入れて読めるようにする */
   #bands .lbl { position: absolute; left: 8px; max-width: 250px; color: #8b93a8; font-size: 13px;
-    background: rgba(8,10,15,.72); padding: 1px 7px; border-radius: 4px;
+    background: rgba(8,10,15,.72); padding: 1px 7px; border-radius: var(--r-ctl);
                 text-align: left; text-shadow: 0 0 6px #000, 0 0 3px #000;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   /* サブ帯(帯の中のサブ分野)は薄く。拡大したときだけ出る。 */
@@ -356,7 +374,7 @@
                       padding: 4px 0 7px 44px; font-size: 11px; overflow: hidden; }
   #lineage li.trend .n { position: absolute; left: 0; color: #8b91a3;
                          font-variant-numeric: tabular-nums; }
-  #lineage li.trend .bar { position: absolute; left: 34px; bottom: 0; height: 2px; border-radius: 1px; }
+  #lineage li.trend .bar { position: absolute; left: 34px; bottom: 0; height: 2px; border-radius: var(--r-mark); }
   #lineage li.trend.up .bar { background: #4fd2c2; }
   #lineage li.trend.down .bar { background: #ff9a52; }
   /* 統合トレンド行: 左に上下の件数、下に上下2色の積み上げバー */
@@ -378,7 +396,7 @@
   }
 
   /* キーボード操作のフォーカスを見えるように */
-  :focus-visible { outline: 2px solid #6d90c9; outline-offset: 1px; border-radius: 3px; }
+  :focus-visible { outline: 2px solid #6d90c9; outline-offset: 1px; border-radius: var(--r-mark); }
 
   /* タッチ主体の端末では当たり判定を広げる(44px 目安) */
   @media (pointer: coarse) {
@@ -402,9 +420,7 @@
       width: auto; max-height: none; margin: 8px 8px 0; z-index: 2; order: 2;
     }
     #lineage { order: 1; }
-    /* 縦積みでは地図の下端に置き、地図と一緒にスクロールさせる。画面下に固定すると
-       パネルを読んでいる間ずっと本文に重なってしまう。 */
-    #viewbar { position: absolute; top: calc(52dvh - 40px); bottom: auto; }
+    #controls.collapsed { width: auto; padding: 10px 12px; }
     /* ページごと縦スクロールで読む前提なので、枠内スクロールはやめて全部伸ばす */
     #lineage .trendbox, #lineage details.fold.lin .scroll {
       max-height: none; overflow: visible; }
@@ -413,13 +429,12 @@
     #axis { top: calc(52dvh - 22px); bottom: auto; z-index: 1; }
     /* パネルは地図に被らないので、選択中でも帯ラベルは出す・退避しない */
     body.has-selection #bands { display: block; }
-    /* 凡例は地図の左下に固定(ドラッグ位置より優先) */
-    #legend {
-      left: 8px !important; top: calc(52dvh - 30px) !important;
-      right: auto !important; bottom: auto !important;
-      transform: translateY(-100%); max-width: calc(100vw - 16px);
-      z-index: 1; font-size: 10px; gap: 3px 8px;
-    }
+    /* 縦積みでは上段を地図の下端にまとめて置く */
+    #toprow { position: absolute; top: calc(52dvh - 8px); left: 8px; right: 8px;
+              transform: translateY(-100%); z-index: 1; gap: 6px; }
+    #legend { max-width: calc(100vw - 16px); font-size: 10px; gap: 3px 8px; }
+    #viewnav { max-width: calc(100vw - 16px); min-height: 0; }
+    #lockHint { top: auto; bottom: 100%; margin: 0 0 6px; }
   }
 </style>
 <script type="application/ld+json">
@@ -473,8 +488,8 @@
   </p>
 </noscript>
 
-<div id="controls" class="panel">
-  <div class="hd1"><h1>HCI Research Trails</h1><button id="panelToggle" aria-label="Collapse panel" title="Collapse panel">–</button></div>
+<div id="controls" class="panel collapsed">
+  <div class="hd1"><h1>HCI Research Trails</h1><button id="panelToggle" aria-label="Expand panel" title="Expand panel">+</button></div>
   <input id="search" type="search" placeholder="Search papers, people or fields — Enter selects the top paper" autocomplete="off">
   <div id="searchResults"></div>
   <div class="row">
@@ -592,7 +607,20 @@
   </div>
 </div>
 
-<div id="legend" class="panel"></div>
+<div id="toprow">
+  <div id="legend" class="panel"></div>
+  <div id="viewnav" class="panel">
+    <span class="nav-btns">
+      <button id="navBack" title="Back (⌘[)" aria-label="Back">‹</button>
+      <button id="prevPaper" aria-label="Previous paper (left arrow)" title="Previous paper in time (←)">◀</button>
+      <button id="nextPaper" aria-label="Next paper (right arrow)" title="Next paper in time (→)">▶</button>
+      <button id="lockView" aria-pressed="false"
+              title="Freeze what the map is showing (L). You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
+    </span>
+    <nav id="crumbs" aria-label="Where you have been"></nav>
+    <span id="lockHint" role="status" aria-live="polite"></span>
+  </div>
+</div>
 <div id="tooltip" class="panel"></div>
 <div id="ctx" class="panel"></div>
 
@@ -602,7 +630,6 @@
     <div class="pkind" id="selKind"></div>
     <span class="close" id="lineageClose" role="button" aria-label="Close panel" tabindex="0">×</span>
   </div>
-  <button class="pback" id="paperBack" type="button"></button>
   <h2 id="selTitle"></h2>
   </div>
   <div class="meta" id="selMeta"></div>
@@ -617,14 +644,7 @@
 <div id="bands"></div>
 <div id="axis"></div>
 <div id="nodeCursor" aria-hidden="true"></div>
-<div id="viewbar">
-  <button id="prevPaper" aria-label="Previous paper (left arrow)" title="Previous paper in time (←)">◀</button>
-  <button id="lockView" aria-pressed="false"
-          title="Freeze what the map is showing (L). You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
-  <button id="nextPaper" aria-label="Next paper (right arrow)" title="Next paper in time (→)">▶</button>
-  <span id="lockHint" role="status" aria-live="polite"></span>
-</div>
 
-<script type="module" src="/viewer/main.js?v=137"></script>
+<script type="module" src="/viewer/main.js?v=146"></script>
 </body>
 </html>

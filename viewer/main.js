@@ -981,8 +981,10 @@ async function main() {
       return;
     }
     setViewKind(people.length > 1 ? `People \u00b7 ${people.length} selected` : 'Author');
-    document.getElementById('selTitle').textContent =
-      people.length > 1 ? `${people.length} people` : (meta.authors[pinned[people[0]].ai] || '?');
+    const peopleLabel = people.length > 1
+      ? `${people.length} people` : (meta.authors[pinned[people[0]].ai] || '?');
+    document.getElementById('selTitle').textContent = peopleLabel;
+    navPush({ kind: 'people', key: `u${focused.join('.')}`, slots: focused.slice(), label: peopleLabel });
     document.getElementById('selMeta').innerHTML =
       `<span class="cov">Counting only papers inside this corpus’ venues` +
       (people.length > 1 ? ` · <span class="act" data-clear="1">clear all</span>` : '') + `</span>`;
@@ -1104,6 +1106,7 @@ async function main() {
     const label = o.name || (o.keywords || []).slice(0, 4).join(' · ');
     const parent = kind === 'sub' ? meta.bands.find((b) => (b.subbands || []).includes(idx)) : null;
     document.getElementById('selTitle').textContent = label;
+    navPush({ kind: 'field', key: `f${kind}:${idx}`, fk: kind, idx, label });
     document.getElementById('selMeta').innerHTML =
       `${o.papers.toLocaleString()} papers · ${o.years ? o.years[0] + '\u2013' + o.years[1] : ''}` +
       (parent ? ` · in ${escapeHtml(parent.name || 'band')}` : '') +
@@ -1221,6 +1224,35 @@ async function main() {
     });
     canvas.addEventListener('pointermove', () => { if (fieldPreview) fpStop(); });
   }
+  // 上段・帯ラベル・畳んだ左パネルの寸法をまとめて決める。左パネルの幅と
+  // 凡例の高さが基準になるので、どちらかが変わったら呼び直す。
+  function layoutChrome() {
+    const ctrl = document.getElementById('controls');
+    const right = Math.round(ctrl.getBoundingClientRect().right);
+    const collapsed = ctrl.classList.contains('collapsed');
+    const st = document.documentElement.style;
+    st.setProperty('--topx', (isMobile() ? 8 : right + 10) + 'px');
+    st.setProperty('--leftx', (isMobile() || collapsed ? 8 : right + 10) + 'px');
+    // 上段の3つ(畳んだ左パネル・凡例・操作)は同じ高さに揃える。素の高さを測って
+    // いちばん高いものに合わせるので、中身が増えても縮んで欠けることはない。
+    const lg = document.getElementById('legend');
+    const nav = document.getElementById('viewnav');
+    const res = document.getElementById('searchResults');
+    if (isMobile()) {   // 縦積みでは横並びにならないので高さを揃える意味がない
+      for (const el of [lg, nav, ctrl]) el.style.minHeight = '';
+      return;
+    }
+    const boxes = [lg, nav, collapsed ? ctrl : null].filter(Boolean);
+    for (const el of boxes) el.style.minHeight = '';
+    // 検索結果で伸びたぶんは数えない(結果が出るたびに凡例まで伸びてしまう)
+    const keep = res.style.display;
+    res.style.display = 'none';
+    const tall = Math.max(...boxes.map((el) => el.offsetHeight));
+    res.style.display = keep;
+    if (tall) for (const el of boxes) el.style.minHeight = tall + 'px';
+    if (!collapsed) ctrl.style.minHeight = '';
+  }
+
   function drawBands(scale, offset) {
     if (!meta.bands) return;
     const H = canvas.clientHeight;
@@ -1435,10 +1467,7 @@ async function main() {
   // ホバー中だけの絞り込み(クリックで確定する前の下見)。-1 = プレビューなし
   let previewSub = -1, previewCluster = -1;
 
-  const setViewKind = (t) => {
-    document.getElementById('selKind').textContent = t;
-    document.getElementById('paperBack').classList.remove('on');
-  };
+  const setViewKind = (t) => { document.getElementById('selKind').textContent = t; };
 
   function paintLineage() {
     nodeState.fill(0);
@@ -1525,31 +1554,61 @@ async function main() {
     camAnim = requestAnimationFrame(tick);
   }
 
-  // どこから論文に入ってきたか。著者や分野を見ている途中で論文を押すと画面が
-  // まるごと入れ替わるので、パネルの先頭に「← 戻る」を出すために覚えておく。
-  // 論文から論文へ移るときは元の文脈を引き継ぐ(送りで辿っても迷子にならない)。
-  let paperFrom = null;
-  function captureOrigin() {
-    if (selected >= 0) return;   // すでに論文を見ている = 文脈は据え置き
-    const label = (document.getElementById('selTitle').textContent || '').trim();
-    if (fieldSel) paperFrom = { kind: 'field', fk: fieldSel.kind, idx: fieldSel.idx, label };
-    else if (searchActive && searchEl.value.trim()) {
-      const q = searchEl.value.trim();
-      paperFrom = { kind: 'search', q, label: `“${q}”` };
-    } else if (focused.length) paperFrom = { kind: 'people', label };
-    else paperFrom = null;
+  // 見てきた道すじ。ビューの種類が変わったときだけでなく、論文から論文へ移った
+  // ときも1件として積む。上段のパンくずはこの末尾から数件を出し、押すとそこまで戻る。
+  // 復元に要るのは種類と鍵だけ(論文なら添字、分野なら種別+添字、人なら選択スロット)。
+  const NAV_MAX = 24;      // 覚えておく上限。これ以上は古いほうから捨てる
+  const NAV_SHOW = 2;      // パンくずに出す件数(横幅が限られるので現在地を含めて2件)
+  let navStack = [];
+  let navRestoring = false;
+  function navPush(entry) {
+    if (navRestoring) return;
+    const top = navStack[navStack.length - 1];
+    if (top && top.kind === entry.kind && top.key === entry.key) { top.label = entry.label; renderCrumbs(); return; }
+    navStack.push(entry);
+    if (navStack.length > NAV_MAX) navStack.shift();
+    renderCrumbs();
   }
-  function goBackFromPaper() {
-    const from = paperFrom;
-    if (!from) return;
-    if (from.kind === 'field') { select(-1); selectField(from.fk, from.idx); }
-    else if (from.kind === 'search') { select(-1); searchEl.value = from.q; runSearch(from.q); }
-    else select(-1);   // 人はここで戻る(選択解除 → refreshFocus が著者パネルを出し直す)
+  function navGo(idx) {
+    const e = navStack[idx];
+    if (!e) return;
+    navStack.length = idx + 1;     // そこから先は捨てる(ブラウザの戻ると同じ)
+    navRestoring = true;
+    try {
+      if (e.kind === 'paper') select(e.i);
+      else if (e.kind === 'field') { select(-1); selectField(e.fk, e.idx); }
+      else if (e.kind === 'search') { select(-1); searchEl.value = e.q; runSearch(e.q); }
+      else if (e.kind === 'people') { select(-1); focused = e.slots.slice(); refreshFocus(); schedule(); }
+    } finally { navRestoring = false; }
+    renderCrumbs();
   }
-  document.getElementById('paperBack').addEventListener('click', goBackFromPaper);
+  function renderCrumbs() {
+    const box = document.getElementById('crumbs');
+    const nav = document.getElementById('viewnav');
+    nav.classList.toggle('on', navStack.length > 0);
+    const from = Math.max(0, navStack.length - NAV_SHOW);
+    const parts = [];
+    if (from > 0) {
+      const earlier = navStack.slice(0, from).map((e) => e.label).join(' › ');
+      parts.push(`<button data-nav="${from - 1}" class="more" title="${escapeHtml(earlier)}">…</button>`);
+    }
+    navStack.slice(from).forEach((e, k) => {
+      const idx = from + k;
+      const here = idx === navStack.length - 1;
+      if (k || from > 0) parts.push('<span class="sep">›</span>');
+      parts.push(`<button data-nav="${idx}"${here ? ' class="here" disabled' : ''}` +
+                 ` title="${escapeHtml(e.label)}">${escapeHtml(e.label)}</button>`);
+    });
+    box.innerHTML = parts.join('');
+    document.getElementById('navBack').disabled = navStack.length < 2;
+  }
+  document.getElementById('crumbs').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-nav]');
+    if (b) navGo(parseInt(b.dataset.nav, 10));
+  });
+  document.getElementById('navBack').addEventListener('click', () => navGo(navStack.length - 2));
 
   function select(i) {
-    if (i >= 0) captureOrigin(); else paperFrom = null;
     selected = i;
     searchActive = false;
     fieldSel = null;
@@ -1868,6 +1927,9 @@ async function main() {
   function runSearch(query, listOnly) {
     const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
     const box = document.getElementById('searchResults');
+    if (!listOnly && terms.length) {
+      navPush({ kind: 'search', key: `q${query.trim()}`, q: query.trim(), label: `“${query.trim()}”` });
+    }
 
     if (!terms.length) {
       if (searchActive) {
@@ -2111,9 +2173,7 @@ async function main() {
     setViewKind('Paper lineage');
     const nd = meta.nodes[i];
     document.getElementById('selTitle').textContent = nd.t;
-    const back = document.getElementById('paperBack');
-    back.classList.toggle('on', !!paperFrom);
-    if (paperFrom) back.textContent = `← ${paperFrom.label || 'Back'}`;
+    navPush({ kind: 'paper', key: `p${i}`, i, label: nd.t });
     // 系譜が空になるのはデータ欠損ではなく**コーパス境界**のことが多い。
     // 参照 47 本のうちコーパス内は 3 本、のように上下流とも必ず出して誤解を防ぐ。
     const inCorpus = countRefsInCorpus(i);
@@ -2469,10 +2529,12 @@ async function main() {
     const c = document.getElementById('controls').classList.toggle('collapsed');
     panelToggle.textContent = c ? '+' : '\u2013';
     panelToggle.title = c ? 'Expand panel' : 'Collapse panel';
+    panelToggle.setAttribute('aria-label', c ? 'Expand panel' : 'Collapse panel');
+    layoutChrome();
     schedule();   // 帯ラベルの左位置はパネルの右端に合わせているので引き直す
   });
 
-  window.addEventListener('resize', schedule);
+  window.addEventListener('resize', () => { layoutChrome(); schedule(); });
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && pendingPan >= 0 && pendingPan === selected) panToNode(pendingPan);
     schedule();
@@ -2605,57 +2667,10 @@ async function main() {
 
   // 凡例チップ = 人の選択。クリックのたびにフォーカス集合へ出し入れする(累積トグル)。
   // 15色は隣接ペア基準では通るが CVD ΔE 6–8 の帯域なので、色だけに頼らせない二次符号化。
-  // 凡例パネルはドラッグで移動できる(位置は localStorage に保存)。
-  // チップのクリックと共存させるため、5px 以上動いたときだけドラッグ扱いにする。
+  // 位置は固定。上段に他のものと並べているので、動かせると却って迷う。
   const legendEl = document.getElementById('legend');
-  try {
-    const lp = JSON.parse(localStorage.getItem('plLegendPos') || 'null');
-    if (lp && Number.isFinite(lp.left) && Number.isFinite(lp.top)) {
-      legendEl.style.left = Math.min(window.innerWidth - 60, Math.max(0, lp.left)) + 'px';
-      legendEl.style.top = Math.min(window.innerHeight - 30, Math.max(0, lp.top)) + 'px';
-      legendEl.style.right = 'auto';
-      legendEl.style.bottom = 'auto';
-    }
-  } catch { /* 位置が壊れていたら既定のまま */ }
-  let lgDrag = null;
-  legendEl.addEventListener('pointerdown', (e) => {
-    if (e.button !== 0 || isMobile()) return;   // モバイルは CSS で位置固定なので掴ませない
-    lgDrag = { x: e.clientX, y: e.clientY, r: legendEl.getBoundingClientRect(), moved: false };
-    // ここでは setPointerCapture しない: キャプチャすると後続の click の target が
-    // 凡例本体に付け替えられ、チップのクリックが一切効かなくなる(実測)。
-  });
-  // move/up は window で受ける: キャプチャは click の target を凡例に付け替えて
-  // チップを殺し、非キャプチャだとポインタが凡例の外へ出た瞬間に途切れるため。
-  window.addEventListener('pointermove', (e) => {
-    if (!lgDrag) return;
-    const dx = e.clientX - lgDrag.x, dy = e.clientY - lgDrag.y;
-    if (!lgDrag.moved && Math.hypot(dx, dy) < 5) return;
-    if (!lgDrag.moved) legendEl.classList.add('dragging');
-    lgDrag.moved = true;
-    legendEl.style.left = Math.min(window.innerWidth - 60, Math.max(0, lgDrag.r.left + dx)) + 'px';
-    legendEl.style.top = Math.min(window.innerHeight - 30, Math.max(0, lgDrag.r.top + dy)) + 'px';
-    legendEl.style.right = 'auto';
-    legendEl.style.bottom = 'auto';
-  });
-  const lgEnd = () => {
-    if (!lgDrag) return;
-    legendEl.classList.remove('dragging');
-    if (lgDrag.moved) {
-      try {
-        localStorage.setItem('plLegendPos', JSON.stringify({
-          left: parseFloat(legendEl.style.left), top: parseFloat(legendEl.style.top),
-        }));
-      } catch { /* 保存できなくても移動自体は有効 */ }
-      legendEl.dataset.dragged = '1';            // 直後の click を1回だけ無効化
-      setTimeout(() => { delete legendEl.dataset.dragged; }, 0);
-    }
-    lgDrag = null;
-  };
-  window.addEventListener('pointerup', lgEnd);
-  window.addEventListener('pointercancel', lgEnd);
 
   document.getElementById('legend').addEventListener('click', (e) => {
-    if (legendEl.dataset.dragged) return;   // ドラッグの終わりをクリックにしない
     const vch = e.target.closest('span[data-venue]');
     if (vch) { selectField('venue', vch.dataset.venue); drawLegend(); return; }
     const un = e.target.closest('[data-unpin]');
@@ -2725,6 +2740,11 @@ async function main() {
         return;
       }
     }
+    // ⌘[ / Ctrl+[ で1つ戻る(Safari・Finder と同じ)
+    if (e.key === '[' && (e.metaKey || e.ctrlKey)) {
+      if (navStack.length > 1) { navGo(navStack.length - 2); e.preventDefault(); }
+      return;
+    }
     // L で切り替え。入力欄に文字を打っている最中は拾わない
     if ((e.key === 'l' || e.key === 'L') && !e.metaKey && !e.ctrlKey && !e.altKey) {
       const t = e.target;
@@ -2760,6 +2780,7 @@ async function main() {
   const isoMask = () => (focusOn() ? focusBits() : 0);
 
   function drawLegend() {
+    setTimeout(layoutChrome, 0);   // 中身が変わると高さが変わる
     const el = document.getElementById('legend');
     if (ui.colorMode.value === 'venue') {
       el.innerHTML = Object.entries(venueCounts)
@@ -3068,6 +3089,8 @@ async function main() {
       ? '<span class="ext">+ related venues (papers linked to the core corpus)</span>'
       : '');
 
+  layoutChrome();
+  renderCrumbs();
   applyUrlState();
   render();
 }
