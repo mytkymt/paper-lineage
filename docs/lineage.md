@@ -7,11 +7,16 @@ deterministic — same corpus, same clicks, same result. Code:
 
 ## The citation graph
 
-- **Corpus**: about 39,000 papers from 13 HCI venues (1981–2026), fetched from Semantic
+- **Corpus**: about 36,000 papers from 13 HCI venues (1981–2026), fetched from Semantic
   Scholar; references resolved via OpenAlex and joined by DOI. The map ships with seven
-  related venues added on top of that core (about 47,000 papers, 1975–2026); the numbers
+  related venues added on top of that core (about 44,000 papers, 1975–2026); the numbers
   below describe the core build, and the extended one is the same pipeline with
   `--extended`.
+- Companion tracks are dropped: ACM DOIs carry the volume they came from
+  (`10.1145/<volume>.<paper>`), so `probe_volumes.py` asks Crossref for each volume's
+  title once and records the Extended Abstracts / Adjunct / Companion ones in
+  `excluded_volumes.json`. The build reads that list and drops 4,107 papers — posters,
+  late-breaking work, demos and workshop papers that are not the reviewed track.
 - Records that are containers rather than papers are dropped before anything else:
   proceedings volumes, companion/adjunct volumes, Extended Abstracts volumes and
   "Session details:" dividers (about 900 entries). A venue search returns these as
@@ -53,7 +58,7 @@ layout is identical in every year and fully deterministic.
 
 ## Trend breakdown (side panel)
 
-Every paper belongs to one of 112 **sub-fields** (141 in the extended build), precomputed by two-level
+Every paper belongs to one of 116 **sub-fields** (134 in the extended build), precomputed by two-level
 Louvain community detection ([Blondel et al., 2008](https://doi.org/10.1088/1742-5468/2008/10/P10008))
 on the full citation graph (14 top-level bands, nested sub-bands; fixed seed —
 plain Louvain is order-sensitive, so node order and seeds are pinned to keep the

@@ -34,6 +34,7 @@ from collections import Counter
 from pathlib import Path
 
 from .venues import CORE_KEYS, EXTRA_KEYS, VENUES_BY_KEY
+from .volumes import companion_volume
 
 ROOT = Path(__file__).resolve().parents[3]
 WORKS_PATH = ROOT / "data" / "openalex" / "works.jsonl"
@@ -105,11 +106,17 @@ def main() -> None:
     allowed = CORE_KEYS | EXTRA_KEYS if extended else CORE_KEYS
     works = {wid: w for wid, w in works.items() if w.get("venue_key") in allowed}
 
-    # 会議録・セッション仕切りなど、論文ではない入れ物の記録を落とす
+    # 会議録・セッション仕切りなど、論文ではない入れ物の記録と、
+    # 併設トラック(Extended Abstracts / Adjunct / Companion)の巻を落とす
     dropped_kind: Counter[str] = Counter()
     keep_ids = []
     for wid, w in works.items():
         kind = non_paper_kind(w.get("title"))
+        if not kind:
+            vol = companion_volume(w.get("doi"))
+            if vol:
+                kind = ("extended abstracts" if "extended abstract" in vol.lower()
+                        else "adjunct" if "adjunct" in vol.lower() else "companion")
         if kind:
             dropped_kind[kind] += 1
         else:
