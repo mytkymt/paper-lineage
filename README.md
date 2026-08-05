@@ -77,9 +77,14 @@ Nineteen seconds of it moving — no narration, just the parts that light up:
 
 ![Highlights](docs/media/tour-fast.gif)
 
+The same beats as stills, one per section, are in
+[docs/media/highlights/](docs/media/highlights): searching and tracing a paper, opening
+the depth one hop at a time, filtering the lineage by field, locking the view to read
+across it, stacking five people, walking the Fields tree, and recolouring by venue.
+
 The **Tutorial** link in the panel plays the full 87-second walkthrough
 ([docs/media/tutorial.mp4](docs/media/tutorial.mp4)), which is also available as a
-[full-speed GIF](docs/media/tour.gif).
+[full-speed GIF](docs/media/tour.gif). Both still show the previous layout.
 
 ## Reading the map
 
