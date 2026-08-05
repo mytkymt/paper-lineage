@@ -133,10 +133,11 @@
   #viewnav .crumb { min-width: 0; font: inherit; overflow: hidden; text-overflow: ellipsis;
                     white-space: nowrap; text-align: left; padding: 0; border: 0;
                     background: none; }
-  /* 足りないときはこちらから詰める。ただし1語も読めないほどは削らない
+  /* 現在地をできるだけ全部見せる。足りないぶんは1つ前から削り(下限まで)、
+     それでも収まらなくなって初めて現在地を省略する。
      (#viewnav .crumb の min-width:0 に勝たせるため id を2つ重ねる) */
-  #viewnav #viewPrev { flex: 0 3 auto; min-width: 56px; }
-  #viewHere { flex: 0 1 auto; color: #d7dae2; }
+  #viewnav #viewPrev { flex: 0 1000 auto; min-width: 56px; }
+  #viewnav #viewHere { flex: 1 1 auto; min-width: 0; color: #d7dae2; }
   #crumbs.solo #viewPrev, #crumbs.solo .crumb-sep { display: none; }
   #viewnav button.crumb { color: #8b91a3; cursor: pointer; }
   #viewnav button.crumb:hover:not(:disabled) { color: #fff; }
@@ -681,6 +682,6 @@
 <div id="axis"></div>
 <div id="nodeCursor" aria-hidden="true"></div>
 
-<script type="module" src="/viewer/main.js?v=164"></script>
+<script type="module" src="/viewer/main.js?v=165"></script>
 </body>
 </html>
