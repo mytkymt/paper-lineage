@@ -1559,9 +1559,11 @@ async function main() {
     el.title = here ? here.label : 'The whole map, nothing selected';
     el.classList.toggle('none', !here);
     const pv = document.getElementById('viewPrev');
-    pv.textContent = prev ? prev.label : (here ? 'Default view' : '');
-    pv.title = prev ? `Back to ${prev.label}` : (here ? 'Back to the whole map' : '');
+    pv.textContent = prev ? prev.label : 'Default view';
+    pv.title = prev ? `Back to ${prev.label}` : 'Back to the whole map';
     pv.disabled = !here;   // 現在地が無ければ戻る先も無い
+    // 地図だけの状態では「1つ前」が無いので、現在地だけを出す
+    document.getElementById('crumbs').classList.toggle('solo', !here);
     document.getElementById('navBack').disabled = navStack.length < 1;
   }
   document.getElementById('viewPrev').addEventListener('click', () => {
