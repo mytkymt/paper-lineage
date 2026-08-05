@@ -1549,15 +1549,24 @@ async function main() {
     } finally { navRestoring = false; }
     renderCrumbs();
   }
-  // 出すのは「今どこを見ているか」だけ。1つ前も並べると、どちらが現在地か迷う。
+  // 1つ前 › 現在地。どちらも幅は固定で、溢れた分は … になる。
+  // 1つ前は押すとそこへ戻る(現在地は押せない)。
   function renderCrumbs() {
     const here = navStack[navStack.length - 1];
+    const prev = navStack[navStack.length - 2];
     const el = document.getElementById('viewHere');
     el.textContent = here ? here.label : 'Default view';
     el.title = here ? here.label : 'The whole map, nothing selected';
     el.classList.toggle('none', !here);
+    const pv = document.getElementById('viewPrev');
+    pv.textContent = prev ? prev.label : (here ? 'Default view' : '');
+    pv.title = prev ? `Back to ${prev.label}` : (here ? 'Back to the whole map' : '');
+    pv.disabled = !here;   // 現在地が無ければ戻る先も無い
     document.getElementById('navBack').disabled = navStack.length < 1;
   }
+  document.getElementById('viewPrev').addEventListener('click', () => {
+    document.getElementById('navBack').click();   // ‹ と同じ動き
+  });
   // ‹ は1つ戻る。最初の1件まで戻ったら、その次は地図だけの状態に返る。
   document.getElementById('navBack').addEventListener('click', () => {
     if (navStack.length >= 2) navGo(navStack.length - 2);

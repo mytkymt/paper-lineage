@@ -104,7 +104,7 @@
   /* 凡例は残った幅いっぱいに伸ばして細長く保つ。人が増えたら折り返して縦に伸びる
      (伸びるのは凡例だけ。左パネルと操作パネルは形を変えない)。 */
   #legend { position: static; display: flex; flex-wrap: wrap; gap: 4px 12px;
-            flex: 1 1 240px; min-width: 200px; max-width: max-content;
+            flex: 1 1 160px; min-width: 160px; max-width: max-content;
             box-sizing: border-box; user-select: none; }
   #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
 
@@ -125,12 +125,17 @@
   #lockView { min-width: 76px; border-radius: var(--r-pill) !important; }
   #lockView[aria-pressed="true"] { color: #0a0c12; background: #d7a83c; border-color: #d7a83c; }
   /* 今どこを見ているかの表示。押せないので文字だけ。戻るのは ‹ の仕事。 */
-  /* 幅は画面幅で決まる固定値。中身の長さで伸び縮みさせると、押すたびに
-     Lock view と送りが左右に動いてしまう。 */
-  #viewHere { width: clamp(120px, 13vw, 210px); flex: 0 0 auto;
-              overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-              color: #d7dae2; }
+  /* 1つ前と現在地。幅は画面幅で決まる固定値にして、中身の長さで伸び縮みさせない
+     (伸び縮みすると押すたびに Lock view と送りが左右に動く)。溢れた分は … に。 */
+  #viewnav .crumb { width: clamp(70px, 7vw, 150px); flex: 0 0 auto; font: inherit;
+                    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+                    text-align: left; padding: 0; border: 0; background: none; }
+  #viewnav button.crumb { color: #8b91a3; cursor: pointer; }
+  #viewnav button.crumb:hover:not(:disabled) { color: #fff; }
+  #viewnav button.crumb:disabled { opacity: .45; cursor: default; }
+  #viewHere { color: #d7dae2; }
   #viewHere.none { color: #6d7488; }
+  #viewnav .crumb-sep { color: #4d5468; flex: 0 0 auto; }
   #lockHint { position: absolute; top: 100%; left: 12px; margin-top: 6px; white-space: nowrap;
     pointer-events: none; opacity: 0; transition: opacity .18s; font-size: 11px; color: #e8c46a;
     background: rgba(12,14,20,.92); border: 1px solid #d7a83c;
@@ -630,7 +635,9 @@
         <path d="M8 1.7v4.6L4.6 4z" fill="currentColor"/>
       </svg>
     </button>
-    <span id="viewHere" aria-live="polite">Default view</span>
+    <button id="viewPrev" class="crumb" type="button" disabled></button>
+    <span class="crumb-sep" aria-hidden="true">›</span>
+    <span id="viewHere" class="crumb here" aria-live="polite">Default view</span>
     <button id="lockView" aria-pressed="false"
             title="Freeze what the map is showing (L). You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
     <span class="nav-btns">
@@ -665,6 +672,6 @@
 <div id="axis"></div>
 <div id="nodeCursor" aria-hidden="true"></div>
 
-<script type="module" src="/viewer/main.js?v=158"></script>
+<script type="module" src="/viewer/main.js?v=161"></script>
 </body>
 </html>
