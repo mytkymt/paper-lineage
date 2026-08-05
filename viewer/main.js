@@ -2558,6 +2558,13 @@ async function main() {
     return bestD <= 1 ? best : -1;
   }
 
+  // 地図から出たら吹き出しは消す。パネルの上へ動かすと canvas の pointermove が
+  // 止まるので、こうしないと出しっぱなしのまま次の操作に持ち越される。
+  for (const ev of ['pointerleave', 'pointercancel']) {
+    canvas.addEventListener(ev, () => { tooltip.style.display = 'none'; });
+  }
+  window.addEventListener('blur', () => { tooltip.style.display = 'none'; });
+
   function hover(e) {
     if (ctxEl.style.display === 'block') { tooltip.style.display = 'none'; return; }
     const i = pick(e.clientX, e.clientY);
