@@ -2454,13 +2454,18 @@ async function main() {
     schedule();
   }, { passive: false });
   // データセット切り替え(コア13会場 ⇔ +linked venues)。URL パラメータでリロード。
-  const venueSet = document.getElementById('venueSet');
-  venueSet.checked = EXT_MODE;
-  venueSet.addEventListener('change', () => {
+  const venueSeg = document.getElementById('venueSeg');
+  for (const el of venueSeg.querySelectorAll('button')) {
+    el.classList.toggle('on', (el.dataset.v === 'core') !== EXT_MODE);
+  }
+  venueSeg.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-v]');
+    if (!btn || btn.classList.contains('on')) return;
+    const wantExt = btn.dataset.v === 'all';
     // 今の作業状態(選択・分野・検索・ピン・フォーカス)ごとデータセットを切り替える。
     // viewParams(共有リンクと同じ機構)に載せてリロード後に applyUrlState が復元する。
     const q = viewParams();
-    if (venueSet.checked) q.delete('venues');
+    if (wantExt) q.delete('venues');
     else q.set('venues', 'core');
     // カメラの生座標はデータセット間で座標系(帯構成)が違うので使えない。
     // 代わりに「中心の年・見えている年幅・中心の帯 + 帯内位置・縦ズーム」に翻訳して
