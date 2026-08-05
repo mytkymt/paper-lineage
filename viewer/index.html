@@ -97,14 +97,15 @@
 
   /* 上段: 凡例と操作パネルを横に並べる。位置は固定(掴んで動かさない)。
      左端は左パネルの右端に合わせ、右は系譜パネルの手前で折り返す。 */
-  #toprow { position: fixed; top: 12px; left: var(--topx); right: 344px; z-index: 3;
+  #toprow { position: fixed; top: 12px; left: var(--topx); right: 366px; z-index: 3;
             display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap;
             pointer-events: none; }
   #toprow > * { pointer-events: auto; }
   /* 凡例は残った幅いっぱいに伸ばして細長く保つ。人が増えたら折り返して縦に伸びる
      (伸びるのは凡例だけ。左パネルと操作パネルは形を変えない)。 */
   #legend { position: static; display: flex; flex-wrap: wrap; gap: 4px 12px;
-            flex: 1 1 0; min-width: 240px; box-sizing: border-box; user-select: none; }
+            flex: 1 1 240px; min-width: 200px; max-width: max-content;
+            box-sizing: border-box; user-select: none; }
   #legend span { display: flex; align-items: center; gap: 4px; color: #98a; }
 
   /* 見てきた道すじと、地図の操作。ここが唯一の操作場所になるので位置は動かさない。 */
@@ -122,7 +123,7 @@
   #lockView { min-width: 76px; border-radius: var(--r-pill) !important; }
   #lockView[aria-pressed="true"] { color: #0a0c12; background: #d7a83c; border-color: #d7a83c; }
   /* 今どこを見ているかの表示。押せないので文字だけ。戻るのは ‹ の仕事。 */
-  #viewHere { max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  #viewHere { max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
               color: #d7dae2; flex: 0 1 auto; }
   #viewHere.none { color: #6d7488; }
   #lockHint { position: absolute; top: 100%; left: 12px; margin-top: 6px; white-space: nowrap;
@@ -605,7 +606,7 @@
 <div id="toprow">
   <div id="legend" class="panel"></div>
   <div id="viewnav" class="panel">
-    <button id="navBack" title="Back (⌘[)" aria-label="Back">‹</button>
+    <button id="navBack" title="Back (⌘[)" aria-label="Back">↺</button>
     <span id="viewHere" aria-live="polite">Default view</span>
     <button id="lockView" aria-pressed="false"
             title="Freeze what the map is showing (L). You can keep clicking other papers — the panel follows, the map stays. Releasing it returns to what you locked.">Lock view</button>
@@ -640,6 +641,6 @@
 <div id="axis"></div>
 <div id="nodeCursor" aria-hidden="true"></div>
 
-<script type="module" src="/viewer/main.js?v=148"></script>
+<script type="module" src="/viewer/main.js?v=152"></script>
 </body>
 </html>

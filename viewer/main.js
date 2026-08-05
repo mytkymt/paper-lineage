@@ -2746,9 +2746,6 @@ async function main() {
     el.title = 'People pinned for colouring — the default five have the longest lab lineages. '
              + 'Click a name to focus, \u00d7 to remove, search to add your own.';
     // 固定した人の凡例。クリックで1人に絞り込む(色だけに identity を負わせない二次符号化)。
-    const pinnedEdges = pinned.reduce(
-      (t, q) => t + (q && q.labId != null ? meta.labs[q.labId].edges : 0), 0);
-    const otherEdges = totalLabEdges - pinnedEdges;
     el.innerHTML = pinned
       .map((p, i) => {
         if (!p) return '';   // 空きスロット(色を保つために残してある)
@@ -2761,8 +2758,6 @@ async function main() {
                `<em class="unpin" data-unpin="${i}" title="Unpin">×</em></span>`;
       })
       .join('') +
-      `<span class="lab${focused.includes(15) ? ' sel' : ''}" data-slot="15">` +
-      `<i style="background:${LAB_OTHER}"></i>Other labs · ${otherEdges.toLocaleString()} links</span>` +
       (pinCount() ? '' : '<span class="hintline">Search for a person to pin their color</span>');
   }
 
