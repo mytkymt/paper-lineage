@@ -2266,6 +2266,15 @@ async function main() {
   }
   lockBtn.addEventListener('click', toggleLock);
 
+  // 右パネルの折りたたみ。状態は選択をまたいで保つ(クラスを付け替えるだけ)。
+  const lineageToggle = document.getElementById('lineageToggle');
+  lineageToggle.addEventListener('click', () => {
+    const c = lineageEl.classList.toggle('collapsed');
+    lineageToggle.textContent = c ? '+' : '\u2013';
+    lineageToggle.title = c ? 'Expand panel' : 'Collapse panel';
+    lineageToggle.setAttribute('aria-label', lineageToggle.title);
+  });
+
   document.getElementById('lineageClose').addEventListener('click', () => {
     if (selected < 0 && focusOn()) { clearFocus(); return; }   // 著者パネルの × は選択解除
     select(-1);

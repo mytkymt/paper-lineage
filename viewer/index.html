@@ -196,6 +196,14 @@
   /* 種別ラベル・送り・ロック・閉じるを1行に並べ、縦中央で揃える */
   #lineage .ptop { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
   #lineage .ptop .pkind { margin: 0 auto 0 0; }   /* 左に寄せ、× を右端へ押す */
+  /* 畳むと見出しだけ残る。地図を広く見たいが、何を選んでいたかは忘れたくない、
+     という読み方のため(左パネルの畳みと同じ作法)。 */
+  #lineageToggle { cursor: pointer; color: #6d7488; background: none; border: 0;
+                   font: inherit; font-size: 13px; line-height: 1; padding: 2px 4px; }
+  #lineageToggle:hover { color: #fff; }
+  #lineage.collapsed { overflow: hidden; }
+  #lineage.collapsed > *:not(.phd) { display: none; }
+  #lineage.collapsed .phd { margin-bottom: -6px; padding-bottom: 0; border-bottom: 0; }
   /* 論文以外のビュー(分野・著者)では送りを出さない */
   .pnav button { background: none; border: 1px solid #2a3040; border-radius: var(--r-ctl);
                  color: #8b91a3; font: inherit; font-size: 10px; line-height: 1;
@@ -636,6 +644,7 @@
   <div class="phd">
   <div class="ptop">
     <div class="pkind" id="selKind"></div>
+    <button id="lineageToggle" aria-label="Collapse panel" title="Collapse panel">–</button>
     <span class="close" id="lineageClose" role="button" aria-label="Close panel" tabindex="0">×</span>
   </div>
   <h2 id="selTitle"></h2>
@@ -653,6 +662,6 @@
 <div id="axis"></div>
 <div id="nodeCursor" aria-hidden="true"></div>
 
-<script type="module" src="/viewer/main.js?v=154"></script>
+<script type="module" src="/viewer/main.js?v=155"></script>
 </body>
 </html>
