@@ -26,6 +26,7 @@ from collections import Counter
 from pathlib import Path
 
 from .venues import EXTRA_VENUES, VENUES
+from .volumes import companion_volume
 
 ROOT = Path(__file__).resolve().parents[3]
 PIPE = ROOT / "pipeline"
@@ -62,7 +63,14 @@ def under_indexed(today: datetime.date) -> list[str]:
         path = CORPUS / f"{v.key}.jsonl"
         if not path.exists():
             continue
-        years = Counter(json.loads(line).get("year") for line in path.open())
+        # 地図に載る論文だけを数える。併設トラックの巻は年によって索引される時期が
+        # ばらつくので、混ぜると本会議が揃っていても「少ない」と誤検知する
+        # (実測: HRI 2026 は本会議 139 本で揃っていたが、例年値が Companion 込みの 342 本)。
+        years: Counter = Counter()
+        for line in path.open():
+            rec = json.loads(line)
+            if not companion_volume((rec.get("externalIds") or {}).get("DOI")):
+                years[rec.get("year")] += 1
         due = datetime.date(today.year, min(12, int(v.month)), 1) + datetime.timedelta(days=120)
         if today < due:
             continue
@@ -84,7 +92,7 @@ def emit(**kv: str) -> None:
 
 def main(argv: list[str]) -> None:
     force, check_only = "--force" in argv, "--check" in argv
-    today = datetime.date.today()
+    today = datetime.datetime.now(datetime.timezone.utc).date()   # 実行環境に依らず UTC
     state = json.loads(STATE.read_text()) if STATE.exists() else {}
 
     run("paperlineage.fetch_corpus", "--refresh", *[v.key for v in [*VENUES, *EXTRA_VENUES]])
@@ -92,7 +100,7 @@ def main(argv: list[str]) -> None:
     prev_counts = state.get("counts") or {}
     grew = {k: counts[k] - prev_counts.get(k, 0) for k in counts if counts[k] != prev_counts.get(k, 0)}
     new_total = sum(max(0, d) for d in grew.values()) if prev_counts else 0
-    days = (today - datetime.date.fromisoformat(state["date"])).days if state.get("date") else 10**6
+    days = max(0, (today - datetime.date.fromisoformat(state["date"])).days) if state.get("date") else 10**6
     notes = under_indexed(today)
 
     want = force or (not prev_counts) or (
