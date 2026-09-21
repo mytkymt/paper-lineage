@@ -65,6 +65,8 @@ def fetch_venue(v: Venue, out_path: Path) -> int:
 
 
 def main(argv: list[str]) -> None:
+    refresh = "--refresh" in argv
+    argv = [a for a in argv if not a.startswith("--")]
     keys = argv or [v.key for v in VENUES]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -72,13 +74,37 @@ def main(argv: list[str]) -> None:
     for key in keys:
         v = VENUES_BY_KEY[key]
         out_path = OUT_DIR / f"{key}.jsonl"
-        if out_path.exists():
-            n = sum(1 for _ in out_path.open())
-            print(f"{v.label}: skip (already have {n})")
-            total += n
+        have = sum(1 for _ in out_path.open()) if out_path.exists() else 0
+        if have and not refresh:
+            print(f"{v.label}: skip (already have {have})")
+            total += have
             continue
         print(f"{v.label}: fetching…")
-        total += fetch_venue(v, out_path)
+        # 取り直しは別名に書いてから差し替える。途中で落ちたり、S2 側の不調で件数が
+        # 急に減ったりしたときに、手元の正常なコーパスを壊さないため。
+        tmp_path = out_path.with_suffix(".jsonl.tmp")
+        try:
+            try:
+                n = fetch_venue(v, tmp_path)
+            except Exception:  # noqa: BLE001 - 通信の途切れは一度だけやり直す
+                print(f"  {v.label}: 途中で切れたのでやり直します", flush=True)
+                n = fetch_venue(v, tmp_path)
+        except Exception as exc:  # noqa: BLE001
+            tmp_path.unlink(missing_ok=True)
+            if not have:
+                raise
+            print(f"  {v.label}: 取得に失敗、前回の {have:,} 件を残します ({type(exc).__name__})")
+            total += have
+            continue
+        if have and n < have * 0.97:
+            tmp_path.unlink(missing_ok=True)
+            print(f"  {v.label}: {have:,} → {n:,} 件に急減。前回のぶんを残します")
+            total += have
+            continue
+        tmp_path.replace(out_path)
+        if have:
+            print(f"  {v.label}: {have:,} → {n:,} ({n - have:+,})")
+        total += n
 
     print(f"\ncorpus total: {total} papers -> {OUT_DIR}")
 

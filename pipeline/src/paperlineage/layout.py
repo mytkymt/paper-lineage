@@ -25,7 +25,7 @@ from __future__ import annotations
 import argparse
 import os
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 
 import numpy as np
@@ -369,9 +369,78 @@ def _spectral_1d(n: int, src: np.ndarray, dst: np.ndarray, iters: int, seed: int
     return y
 
 
+def _stable_partition(
+    nodes: list[dict], src: np.ndarray, dst: np.ndarray, deg: np.ndarray, prev: dict,
+) -> tuple[list[list[int]], list[list[list[int]]], int, list[int]] | None:
+    """前回ビルドの帯・サブ帯をそのまま引き継ぎ、新しい論文だけを近傍の多数決で入れる。
+
+    Louvain は入力が少し変わるだけで分割が大きく変わる(実測: 論文 +0.2% で帯・サブ帯の
+    約4分の1が前回と対応しなくなった)。作り直すたびに地図の並びも名前も入れ替わっては
+    見に戻ってくる人が迷うので、普段の更新では分割を動かさない。新しい論文、それに
+    参照が後から埋まって孤立でなくなった論文は、引用でつながる相手の多い帯に入る。
+
+    戻り値は (帯ごとの所属, 帯ごとのサブ帯の所属, 新しく入れた数, 前回の帯番号)。
+    前回ビルドが使えないとき(初回、形式が古い)は None。
+    """
+    p_nodes, p_subs, p_bands = prev.get("nodes") or [], prev.get("subbands") or [], prev.get("bands") or []
+    real = [bi for bi, b in enumerate(p_bands) if b.get("community") is not None]
+    if not p_nodes or not p_subs or not real:
+        return None
+    sub_of_doi = {nd["d"]: nd["s"] for nd in p_nodes if nd.get("d") and nd.get("s", -1) >= 0}
+    n = len(nodes)
+    sub = np.full(n, -1, dtype=np.int64)
+    for i, nd in enumerate(nodes):
+        if deg[i] > 0:
+            sub[i] = sub_of_doi.get(nd.get("doi"), -1)
+    band_of_sub = np.array([sb["band"] for sb in p_subs], dtype=np.int64)
+    band = np.where(sub >= 0, band_of_sub[np.clip(sub, 0, None)], -1)
+
+    nbrs: list[list[int]] = [[] for _ in range(n)]
+    for a, b in zip(src.tolist(), dst.tolist()):
+        nbrs[a].append(b)
+        nbrs[b].append(a)
+
+    def vote(labels: np.ndarray, todo: list[int], same_band: bool) -> list[int]:
+        for _ in range(6):                      # 新しい論文どうしの鎖も数巡で解ける
+            left, decided = [], {}
+            for i in todo:
+                c = Counter(int(labels[j]) for j in nbrs[i]
+                            if labels[j] >= 0 and (not same_band or band[j] == band[i]))
+                if c:
+                    top = max(c.values())
+                    decided[i] = min(k for k, v in c.items() if v == top)   # 同数は小さい番号
+                else:
+                    left.append(i)
+            for i, lab in decided.items():      # 1巡ぶんをまとめて反映(順序に依らない)
+                labels[i] = lab
+            if not decided or not left:
+                return left
+            todo = left
+        return todo
+
+    fresh = [i for i in range(n) if deg[i] > 0 and band[i] < 0]
+    stray = vote(band, fresh, same_band=False)
+    if stray:                                   # どの帯ともつながらない小島は雑多の帯へ
+        misc = next((bi for bi in real if p_bands[bi].get("misc")), None)
+        if misc is None:
+            misc = min(real, key=lambda bi: p_bands[bi]["papers"])
+        band[stray] = misc
+    need_sub = [i for i in range(n) if band[i] >= 0 and sub[i] < 0]
+    for i in vote(sub, need_sub, same_band=True):
+        subs_here = p_bands[int(band[i])]["subbands"]
+        sub[i] = max(subs_here, key=lambda si: p_subs[si]["papers"])
+
+    comms = [np.flatnonzero(band == bi).tolist() for bi in real]
+    subs = [[np.flatnonzero(sub == si).tolist() for si in p_bands[bi]["subbands"]] for bi in real]
+    keep = [k for k, c in enumerate(comms) if c]
+    comms = [comms[k] for k in keep]
+    subs = [[m for m in subs[k] if m] for k in keep]
+    return comms, subs, len(fresh), [real[k] for k in keep]
+
+
 def layout_community(
     nodes: list[dict], edges: np.ndarray, iters: int, resolution: float,
-    min_size: int, sub_min_size: int,
+    min_size: int, sub_min_size: int, prev: dict | None = None,
 ) -> tuple[np.ndarray, dict]:
     """コミュニティを検出し、論文数に比例した「帯」に割り当てる。
 
@@ -399,28 +468,38 @@ def layout_community(
     g.add_nodes_from(range(n))
     g.add_edges_from(zip(src.tolist(), dst.tolist()))
 
-    print("  Louvain 実行中…", flush=True)
-    communities = nx.community.louvain_communities(g, resolution=resolution, seed=20260729)
-    # 孤立ノードは Louvain 上は単独コミュニティになるので、まとめて別扱いにする
     deg = np.bincount(np.concatenate([src, dst]), minlength=n)
     isolated = np.flatnonzero(deg == 0)
-    iso_set = set(isolated.tolist())
-    comms = [sorted(c - iso_set) for c in communities]
-    comms = [c for c in comms if c]
-    comms.sort(key=len, reverse=True)
-    found = len(comms)
+    stable = _stable_partition(nodes, src, dst, deg, prev) if prev else None
+    stable_subs: list[list[list[int]]] | None = None
+    misc_index = -1
+    if stable:
+        comms, stable_subs, n_fresh, origin = stable
+        misc_index = next((k for k, bi in enumerate(origin) if prev["bands"][bi].get("misc")), -1)
+        print(f"  前回の分割を引き継ぎ: 帯 {len(comms)} 本 / 新しく入れた論文 {n_fresh:,} 本"
+              f" / 孤立 {len(isolated):,} 本")
+    else:
+        print("  Louvain 実行中…", flush=True)
+        communities = nx.community.louvain_communities(g, resolution=resolution, seed=20260729)
+        # 孤立ノードは Louvain 上は単独コミュニティになるので、まとめて別扱いにする
+        iso_set = set(isolated.tolist())
+        comms = [sorted(c - iso_set) for c in communities]
+        comms = [c for c in comms if c]
+        comms.sort(key=len, reverse=True)
+        found = len(comms)
 
-    # 小さすぎるコミュニティは1本の「その他」帯にまとめる。
-    # そのまま帯にすると、数十個の極細帯が密集して境界線だけが白い横線に見えてしまう。
-    small = [c for c in comms if len(c) < min_size]
-    comms = [c for c in comms if len(c) >= min_size]
-    if small:
-        comms.append(sorted(v for c in small for v in c))
-    print(
-        f"  コミュニティ数: {found} → 帯 {len(comms)} 本"
-        f"(最大 {len(comms[0])} 本 / {min_size} 本未満は「その他」に統合)"
-        f" / 孤立 {len(isolated):,} 本"
-    )
+        # 小さすぎるコミュニティは1本の「その他」帯にまとめる。
+        # そのまま帯にすると、数十個の極細帯が密集して境界線だけが白い横線に見えてしまう。
+        small = [c for c in comms if len(c) < min_size]
+        comms = [c for c in comms if len(c) >= min_size]
+        if small:
+            comms.append(sorted(v for c in small for v in c))
+            misc_index = len(comms) - 1
+        print(
+            f"  コミュニティ数: {found} → 帯 {len(comms)} 本"
+            f"(最大 {len(comms[0])} 本 / {min_size} 本未満は「その他」に統合)"
+            f" / 孤立 {len(isolated):,} 本"
+        )
 
     comm_of = np.full(n, -1, dtype=np.int64)
     for ci, members in enumerate(comms):
@@ -433,7 +512,9 @@ def layout_community(
     inter = np.zeros((k, k))
     np.add.at(inter, (cs[ok], cd[ok]), 1.0)
     inter += inter.T
-    if k > 2:
+    if stable:
+        comm_order = np.arange(k)       # 前回の並びのまま(見慣れた位置を動かさない)
+    elif k > 2:
         # 小さい行列なので固有分解で厳密に解く(第2固有ベクトル = Fiedler)
         d = inter.sum(axis=1)
         d[d == 0] = 1.0
@@ -463,7 +544,10 @@ def layout_community(
         # 帯の中をさらに Louvain で割ってサブ分野にする。
         # 大きなトレンドの内訳(例: インタラクション技術 → タッチ / ジェスチャ / センシング)
         # を、時間軸を保ったまま見られるようにするため。
-        subs = _split_subcommunities(len(members), ls, ld, sub_min_size, resolution)
+        if stable_subs is not None:
+            subs = [[local[v] for v in sm_global] for sm_global in stable_subs[ci]]
+        else:
+            subs = _split_subcommunities(len(members), ls, ld, sub_min_size, resolution)
         band_sub_ids: list[int] = []
         inner = 0.0
         for si, sub_members_local in enumerate(subs):
@@ -498,7 +582,8 @@ def layout_community(
 
         bands.append({"community": int(ci), "papers": len(members),
                       "y0": round(cursor, 5), "y1": round(cursor + width, 5),
-                      "subbands": band_sub_ids})
+                      "subbands": band_sub_ids,
+                      **({"misc": True} if int(ci) == misc_index else {})})
         cursor += width
 
     if len(isolated):
@@ -655,6 +740,10 @@ def main() -> None:
         help="この本数未満のサブコミュニティは帯内の「その他」サブ帯に統合する",
     )
     ap.add_argument(
+        "--recluster", action="store_true",
+        help="前回の分割を引き継がず、Louvain からやり直す(帯の並びも名前も動きうる)",
+    )
+    ap.add_argument(
         "--jitter",
         type=float,
         default=0.6,
@@ -679,10 +768,19 @@ def main() -> None:
         print(f"  spectral iters: {args.iters}")
         print(f"  孤立ノード(コーパス内リンクなし、中央に配置): {isolated:,}")
     else:
+        # 前回ビルド(上書き前の meta.json)。分割と名前の引き継ぎ元になる。
+        prev_path = OUT_DIR / "meta.json"
+        prev_meta = json.loads(prev_path.read_text()) if prev_path.exists() else None
+        # 分割をやり直すのは、頼まれたときか、最後に Louvain を回してから論文が
+        # 15% 以上増えたとき。それまでは前回の分割に新しい論文を足していく。
+        base = (prev_meta or {}).get("partition_base") or (prev_meta or {}).get("node_count") or 0
+        recluster = args.recluster or not prev_meta or len(nodes) > base * 1.15
         y, extra = layout_community(
             nodes, edges, args.iters, args.resolution,
             args.min_community, args.min_subcommunity,
+            prev=None if recluster else prev_meta,
         )
+        extra["partition_base"] = len(nodes) if recluster else base
         # 帯 / サブ帯が意味のある集団になっているか、キーワードと代表論文で確認できるようにする
         df, n_docs = _global_df(nodes)
 
@@ -714,6 +812,18 @@ def main() -> None:
             describe(band, by_band[ci])
         for si, sub in enumerate(extra["subbands"]):
             describe(sub, by_sub[si])
+
+        # 名前は前回ビルドから所属論文の重なりで引き継ぐ
+        from .names import assign_names
+        doi = lambda i: nodes[i].get("doi") or f"{nodes[i].get('title')}|{nodes[i]['year']}"
+        name_stats = assign_names(
+            extra["bands"], extra["subbands"],
+            {bi: [doi(i) for i in by_band[b["community"]]]
+             for bi, b in enumerate(extra["bands"]) if b["community"] is not None},
+            {si: [doi(i) for i in members] for si, members in by_sub.items()},
+            prev_meta,
+        )
+        print(f"  names: {name_stats}")
 
     # x は年そのもの。ビューア側で正規化する。
     # 年内は乱数ではなく venue 順に並べる(縦線への潰れ防止 + 学会ごとに束になる)。
@@ -775,6 +885,7 @@ def main() -> None:
         "authors": author_names,
         "related": related,
         "subbands": extra.get("subbands"),
+        "partition_base": extra.get("partition_base"),
         "node_count": len(nodes),
         "edge_count": int(len(edges)),
         "year_min": int(years.min()),

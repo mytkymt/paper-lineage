@@ -132,6 +132,33 @@ uv run python -m paperlineage.layout --mode community
 
 Every stage is deterministic (fixed seeds) and reports everything it drops.
 
+## Keeping it current
+
+A weekly GitHub Action (`.github/workflows/update-corpus.yml`) re-fetches the venue
+lists and rebuilds the map once enough has arrived — 300 new papers, or anything new
+after eight weeks — and never more often than every three weeks, since each rebuild
+commits about 30 MB. Nobody reviews it, so the build has to clear a gate first
+(`verify_build.py`): paper and citation counts within bounds of the last build, no
+venue suddenly thinner, new DOIs from the publisher that venue normally uses, no
+unnamed or duplicate fields. A build that fails is not pushed and an issue is opened;
+the live map stays as it was.
+
+Three things keep an unattended rebuild recognisable afterwards. The fields do not
+move: a routine update keeps the previous partition and places each new paper in the
+band most of its citations point into, because re-running Louvain reshuffled about a
+quarter of the fields for a 0.2% change in papers. A full re-clustering happens only
+when the corpus has grown 15% since the last one (or with `layout --recluster`), and
+then names follow the *papers*, not the keywords — each new cluster takes the name of
+the previous cluster it overlaps most, with a keyword-built name as the last resort.
+And recent papers whose reference lists were empty when first fetched are fetched
+again each time: OpenAlex fills those in months late, and about a fifth of the current
+year's papers start out with none.
+
+```bash
+uv run python -m paperlineage.update --check   # fetch and report, do not rebuild
+uv run python -m paperlineage.update --force   # rebuild now
+```
+
 **Want this map for your own field?** The venue list is the only HCI-specific
 part — see [docs/build-your-own.md](docs/build-your-own.md).
 

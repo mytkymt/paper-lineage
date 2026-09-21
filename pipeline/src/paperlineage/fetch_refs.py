@@ -6,7 +6,8 @@ S2 のコーパス(data/corpus/*.jsonl)から DOI を集め、OpenAlex に 50 �
 出力: data/openalex/works.jsonl (1行1論文、必要なフィールドだけに削ったもの)
       data/openalex/_done_dois.txt (取得済み DOI。再実行時はスキップ)
 
-  uv run python -m paperlineage.fetch_refs
+  uv run python -m paperlineage.fetch_refs            # 新しい DOI だけ
+  uv run python -m paperlineage.fetch_refs --refresh  # + 参照が空の直近論文を引き直す
 """
 
 from __future__ import annotations
@@ -78,7 +79,42 @@ def slim(work: dict) -> dict:
     }
 
 
-def main() -> None:
+def stale_recent_dois(corpus: dict[str, dict], years_back: int = 1) -> list[str]:
+    """刊行が直近(今年と前年)で、参照リストが空のまま保存されている DOI。"""
+    import datetime
+
+    if not WORKS_PATH.exists():
+        return []
+    floor = datetime.date.today().year - years_back
+    latest: dict[str, dict] = {}
+    for line in WORKS_PATH.open():
+        w = json.loads(line)
+        if w.get("doi"):
+            latest[w["doi"]] = w          # 後勝ち
+    return sorted(
+        d for d, w in latest.items()
+        if d in corpus and isinstance(w.get("year"), int) and w["year"] >= floor and not w.get("refs")
+    )
+
+
+def compact() -> None:
+    """works.jsonl を後勝ちで畳む(引き直しの追記で同じ論文が重なるため)。"""
+    if not WORKS_PATH.exists():
+        return
+    latest: dict[str, str] = {}
+    total = 0
+    for line in WORKS_PATH.open():
+        total += 1
+        w = json.loads(line)
+        latest[w.get("id") or w.get("doi") or str(total)] = line
+    if total > len(latest) * 1.02:        # 2% 以上だぶついたら書き直す
+        tmp = WORKS_PATH.with_suffix(".jsonl.tmp")
+        tmp.write_text("".join(latest.values()))
+        tmp.replace(WORKS_PATH)
+        print(f"  works.jsonl を畳みました: {total:,} → {len(latest):,} 行")
+
+
+def main(refresh: bool = False) -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     corpus = load_corpus_dois()
     done: set[str] = set()
@@ -87,6 +123,17 @@ def main() -> None:
 
     todo = [d for d in corpus if d not in done]
     print(f"corpus DOIs: {len(corpus)}  already fetched: {len(done)}  todo: {len(todo)}")
+
+    # OpenAlex は新しい論文の参照リストを数か月遅れで埋める(実測: 刊行年の論文の
+    # 約2割が空)。一度取ったきりにすると、その論文は地図の上でずっと孤立したままに
+    # なるので、直近2年ぶんで参照が空のものは毎回引き直す。works.jsonl は後勝ちで
+    # 読まれるので、追記するだけで置き換わる。
+    if refresh:
+        stale = stale_recent_dois(corpus)
+        todo_set = set(todo)
+        extra = [d for d in stale if d not in todo_set]
+        print(f"  参照が空の直近論文を引き直し: {len(extra):,}")
+        todo += extra
 
     found = 0
     recovered = 0   # フィルタ検索から漏れて単体取得で拾えた分
@@ -140,8 +187,12 @@ def main() -> None:
 
     if recovered:
         print(f"  filter 検索から漏れて単体取得で回収: {recovered:,}")
+    if refresh:
+        compact()
     print(f"\nwrote {WORKS_PATH}")
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    main(refresh="--refresh" in sys.argv[1:])

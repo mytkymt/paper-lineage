@@ -1,0 +1,27 @@
+{
+ "date": "2026-09-22",
+ "counts": {
+  "chi": 15438,
+  "pacmhci": 3727,
+  "uist": 3260,
+  "dis": 3184,
+  "assets": 2198,
+  "iui": 2110,
+  "cscw": 2019,
+  "tei": 1996,
+  "imwut": 1861,
+  "ubicomp": 1710,
+  "chiplay": 1240,
+  "mobilehci": 936,
+  "tochi": 780,
+  "hri": 4501,
+  "ieeevr": 2620,
+  "ismar": 1213,
+  "siggraph": 9508,
+  "tog": 5020,
+  "ijhcs": 2798,
+  "toh": 1172
+ },
+ "core_papers": 36264,
+ "all_papers": 44232
+}

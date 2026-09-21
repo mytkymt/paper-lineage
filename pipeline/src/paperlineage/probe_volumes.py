@@ -24,9 +24,10 @@ from pathlib import Path
 
 from .volumes import EXCLUDE_TITLE
 
-CORPUS_DIR = Path("data/corpus")
+ROOT = Path(__file__).resolve().parents[3]
+CORPUS_DIR = ROOT / "data" / "corpus"
 OUT_PATH = Path(__file__).with_name("excluded_volumes.json")
-AUDIT_PATH = Path("data/acm_volumes.json")   # 全巻の名前(git 管理外・確認用)
+AUDIT_PATH = ROOT / "data" / "acm_volumes.json"   # 全巻の名前(git 管理外・確認用)
 MAILTO = "ymt.mytk@gmail.com"                # Crossref の polite pool
 UA = f"HCI-Research-Trails/1.0 (mailto:{MAILTO})"
 ACM = re.compile(r"^10\.1145/(\d+)\.")
@@ -63,16 +64,22 @@ def container_title(item: tuple[str, str]) -> tuple[str, str]:
 
 def main() -> None:
     rep = representatives()
-    print(f"ACM の巻: {len(rep)} 件。Crossref で巻名を引きます", flush=True)
-    titles: dict[str, str] = {}
+    # 巻名は変わらないので、前に引けた巻は引き直さない(新しい巻と失敗した巻だけ引く)
+    titles: dict[str, str] = json.loads(AUDIT_PATH.read_text()) if AUDIT_PATH.exists() else {}
+    todo = {v: d for v, d in rep.items() if not titles.get(v) or titles[v].startswith("__ERR__")}
+    print(f"ACM の巻: {len(rep)} 件、うち未確認 {len(todo)} 件を Crossref で引きます", flush=True)
     with ThreadPoolExecutor(8) as pool:
-        for i, (vol, title) in enumerate(pool.map(container_title, rep.items()), 1):
+        for i, (vol, title) in enumerate(pool.map(container_title, todo.items()), 1):
             titles[vol] = title
             if i % 150 == 0:
-                print(f"  ...{i}/{len(rep)}", flush=True)
+                print(f"  ...{i}/{len(todo)}", flush=True)
 
-    failed = {v: t for v, t in titles.items() if t.startswith("__ERR__")}
+    failed = {v: t for v, t in titles.items() if v in rep and t.startswith("__ERR__")}
     excluded = {v: t for v, t in titles.items() if EXCLUDE_TITLE.search(t or "")}
+    # 一覧は減らさない: キャッシュを失った状態で Crossref が不調でも、前に確認できた
+    # 併設トラックの巻が黙って地図に戻ってくることがないようにする。
+    if OUT_PATH.exists():
+        excluded = {**json.loads(OUT_PATH.read_text()), **excluded}
     AUDIT_PATH.parent.mkdir(parents=True, exist_ok=True)
     AUDIT_PATH.write_text(json.dumps(titles, ensure_ascii=False, indent=0))
     OUT_PATH.write_text(json.dumps(dict(sorted(excluded.items())), ensure_ascii=False, indent=1))

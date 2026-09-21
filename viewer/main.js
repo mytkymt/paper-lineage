@@ -293,13 +293,18 @@ function applyBandNames(meta, names) {
   };
   const [band5, band3] = mk(names.bands);
   const [sub5, sub3] = mk(names.subbands);
+  // 名前はビルド時に meta.json に焼き込まれる(前回ビルドから所属論文の重なりで
+  // 引き継ぐので、署名がずれても外れない)。ここでの署名照合は、名前を持たない
+  // 古いデータのための後方互換。
   let unnamed = 0;
   for (const o of meta.bands || []) {
+    if (o.name) continue;
     const name = band5.get(sig5(o)) ?? band3.get(sig3(o));
     if (name) o.name = name;
     else if (o.community != null) unnamed++;
   }
   for (const o of meta.subbands || []) {
+    if (o.name) continue;
     const name = sub5.get(sig5(o)) ?? sub3.get(sig3(o))
               ?? band5.get(sig5(o)) ?? band3.get(sig3(o));
     if (name) o.name = name;

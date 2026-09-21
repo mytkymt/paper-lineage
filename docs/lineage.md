@@ -68,6 +68,14 @@ where time runs left to right), and draws the ratio bars
 from those counts. Clicking a row filters the lineage to that sub-field — in
 both directions at once.
 
+Between full clusterings the partition is held still. A routine update assigns each new
+paper — and each older paper whose references have only now been indexed — to the band,
+then the sub-field, that the majority of its citation neighbours belong to (ties go to
+the lower index, so the result does not depend on order). Louvain is re-run from scratch
+once the corpus has grown 15% past the size it had at the last clustering; names then
+carry over by membership overlap (Jaccard ≥ 0.30, one-to-one) rather than by keyword
+signature.
+
 ## Local clusters
 
 The global sub-fields describe the whole map; local clusters re-ask the question

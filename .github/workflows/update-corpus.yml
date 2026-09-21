@@ -1,0 +1,94 @@
+# 週に一度、新しい論文が十分たまっていれば地図を作り直して公開する。人の確認は挟まない。
+# 代わりに verify_build が健全性ゲートになり、落ちたビルドは push されず Issue が立つ。
+#
+# 鍵は要らない: S2 の bulk search は鍵なしでも動く(4秒間隔に落ちるだけ)。リポジトリの
+# Secrets に S2_API_KEY を置けば速くなるが、置かなくても完走する。
+name: Update corpus
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"        # 毎週月曜 03:17 UTC
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Rebuild even if few papers are new"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: update-corpus
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      # 取得データ(git 管理外)は実行をまたいで持ち回す。無くても全部取り直せるが、
+      # OpenAlex の参照取得だけで 40 分ほど余計にかかる。
+      - name: Restore fetched data
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/corpus
+            data/openalex
+            data/acm_volumes.json
+            data/graph/author_orcid_oa.jsonl
+          key: corpus-data-${{ github.run_id }}
+          restore-keys: corpus-data-
+
+      - name: Update
+        id: update
+        working-directory: pipeline
+        env:
+          S2_API_KEY: ${{ secrets.S2_API_KEY }}
+        run: uv run python -m paperlineage.update ${{ inputs.force && '--force' || '' }}
+
+      - name: Save fetched data
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data/corpus
+            data/openalex
+            data/acm_volumes.json
+            data/graph/author_orcid_oa.jsonl
+          key: corpus-data-${{ github.run_id }}
+
+      - name: Publish
+        if: steps.update.outputs.rebuilt == 'true'
+        env:
+          SUMMARY: ${{ steps.update.outputs.summary }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/viz data/viz-ext pipeline/state pipeline/src/paperlineage/excluded_volumes.json
+          git commit -m "Update corpus: $SUMMARY"
+          git push
+
+      - name: Note venues that look under-indexed
+        if: steps.update.outputs.notes != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOTES: ${{ steps.update.outputs.notes }}
+        run: |
+          title="Corpus update: a venue looks under-indexed"
+          if ! gh issue list --state open --search "$title in:title" --json number --jq '.[0].number' | grep -q .; then
+            gh issue create --title "$title" --body "$(printf 'The weekly update found venues whose current-year count is far below the usual. Often this is just indexing lag; if it persists, the venue may have been renamed in Semantic Scholar (add the new name to `aliases` in `venues.py`).\n\n```\n%s\n```' "$NOTES")"
+          fi
+
+      - name: Open an issue if the build was rejected
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Corpus update failed on $(date -u +%F)" \
+            --body "The weekly update did not pass and nothing was published. The live map is unchanged. Log: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
