@@ -85,3 +85,29 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
   the classic and the sensing fields are read outside HCI. Low export (~0.5): E-textiles,
   Digital Fabrication, Printed Electronics, Chronic Care, Gender/Intimacy, Civic Participation,
   Race & Social Justice — HCI-internal conversations.
+
+## 7. External ancestor layer (RQ3) — 2026-09-25
+- Works outside the corpus cited ≥5 times by corpus papers: 62,543. Fetched 47,967 (77%) before
+  the OpenAlex free daily budget ran out; `fetch_external` resumes where it stopped (an
+  `OPENALEX_API_KEY` in the environment lifts the limit). Numbers below are on the 77%.
+- OpenAlex leaves the venue empty for ~40% of these (ACM/IEEE conference papers, books).
+  `fetch_external --containers` fills 15,281 of them from Crossref (ACM: one lookup per volume).
+  Classification order: venue name → Crossref container → DOI prefix/conference token → title
+  words. Result: 27,865 by venue name, 15,179 by container, 2,136 by title, 1,241 unclassified
+  (3%); 1,367 dropped as reference noise (book reviews, paratext, mis-resolved sources) and 179
+  as duplicate OpenAlex records of corpus papers.
+- What the early papers of HCI sub-fields import (share of classified external references,
+  decades 1990s / 2000s / 2010s): social science 19 / 18 / 20%; HCI journals and other HCI
+  venues 15 / 15 / 13%; psychology 11 / 9 / 10%; graphics 8 / 3 / 4%; ML/AI 5 / 6 / 7%;
+  CS general 4 / 5 / 5%; companion tracks (extended abstracts etc.) 2 / 5 / 4%; health 1 / 1 / 3%.
+  In the 1980s graphics was 14% and social science 19%.
+- Per sub-field (top external field of the early papers): GUI Toolkits, Gaze, Data Visualization,
+  Digital Fabrication ← graphics (0.25–0.35); Pointing, Gamification ← psychology (0.20–0.25);
+  Gender & Algorithmic Bias, Gig Work, Search & Recommendation, Chronic Care ← social science
+  (0.27–0.38); Crowdsourcing, Explainable ML ← ML/AI (~0.18). Full table: external_origins.csv.
+- Coverage caveat found on the way: 473 works whose Crossref container is a corpus venue's main
+  proceedings are absent from the Semantic Scholar corpus (8,564 in-corpus citations, 1.4% of
+  external citations; e.g. DiamondTouch UIST 2001, "Beyond Fitts' law" CHI 1997, the ESP game
+  CHI 2004). Report as a limitation; consider backfilling from OpenAlex by venue.
+- Remaining "other" (13%) is a long tail of journals (statistics, vision science, marketing,
+  repositories); OpenAlex `primary_topic` (`fetch_external --topics`) would replace the rules.

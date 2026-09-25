@@ -15,6 +15,8 @@ import httpx
 
 BASE = "https://api.openalex.org"
 MAILTO = os.environ.get("OPENALEX_MAILTO", "ymt.mytk@gmail.com")
+# 無料の API キー(任意)。無いと 1 日の共有予算を使い切ることがある。環境変数からだけ読む。
+API_KEY = os.environ.get("OPENALEX_API_KEY", "")
 
 # OR フィルタ(`a|b|c`)に入れられる値の上限。OpenAlex の仕様。
 OR_LIMIT = 50
@@ -34,6 +36,8 @@ def _throttle() -> None:
 def get(path: str, *, params: dict[str, Any] | None = None, max_retries: int = 6) -> Any:
     params = dict(params or {})
     params["mailto"] = MAILTO
+    if API_KEY:
+        params["api_key"] = API_KEY
     url = f"{BASE}{path}"
     delay = 2.0
     last_err = ""
