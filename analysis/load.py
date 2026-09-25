@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EXT = os.environ.get("PL_DATASET") == "ext"
 GRAPH = ROOT / "data" / ("graph-ext" if EXT else "graph")
 VIZ = ROOT / "data" / ("viz-ext" if EXT else "viz")
-OUT = ROOT / "analysis" / "out" / ("ext" if EXT else "core")
+OUT = ROOT / "analysis" / "results" / ("ext" if EXT else "core")
 
 
 class Graph:

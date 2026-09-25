@@ -1,4 +1,4 @@
-"""RQ1–2: 下位分野の時系列と「生んだ論文」。出力は analysis/out/<core|ext>/。
+"""RQ1–2: 下位分野の時系列と「生んだ論文」。出力は analysis/results/<core|ext>/。
 
   subfield_timeseries.csv  サブ帯 × 年: 論文数、その年に受けた内部引用
   subfield_summary.csv     サブ帯ごと: 誕生年、ピーク、成長、深さ
