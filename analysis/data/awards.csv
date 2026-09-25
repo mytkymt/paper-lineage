@@ -1,0 +1,72 @@
+award,award_year,paper_year,title
+UIST,2023,2010,VizWiz: nearly real-time answers to visual questions
+UIST,2022,2011,OmniTouch: wearable multitouch interaction everywhere
+UIST,2021,2011,KinectFusion: real-time 3D reconstruction and interaction using a moving depth camera
+UIST,2020,2010,Soylent: a word processor with a crowd inside
+UIST,2018,2007,SearchTogether: an interface for collaborative web search
+UIST,2017,2002,Ambient touch: designing tactile interfaces for handheld devices
+UIST,2016,2005,Low-cost multi-touch sensing through frustrated total internal reflection
+UIST,2015,2001,Phidgets: easy development of physical interfaces through physical widgets
+UIST,2014,2004,SHARK2: a large vocabulary shorthand writing system for pen-based computers
+UIST,2013,1995,The world through the computer: computer augmented interaction with real world environments
+UIST,2012,2001,DiamondTouch: a multi-user touch technology
+UIST,2011,2000,Sensing techniques for mobile interaction
+UIST,2010,1993,Windows on the world: 2D windows for 3D augmented reality
+UIST,2009,1997,The metaDESK: models and prototypes for tangible user interfaces
+UIST,2008,1991,SUIT: the Pascal of user interface toolkits
+UIST,2007,1993,SpeechSkimmer: interactively skimming recorded speech
+UIST,2006,1992,The information grid: a framework for information retrieval and retrieval-centered applications
+UIST,2005,1991,Issues in combining marking and direct manipulation techniques
+UIST,2004,1993,Animation: from cartoons to the user interface
+UIST,2003,1991,The DigitalDesk calculator: tangible manipulation on a desk top display
+CSCW,2025,2013,Hollaback!: the role of collective storytelling online in a social movement organization
+CSCW,2024,1992,Faltering from ethnography to design
+CSCW,2022,1988,Patterns of contact and communication in scientific research collaboration
+CSCW,2021,1996,Re-place-ing space: the roles of place and space in collaborative systems
+CSCW,2020,2004,Territoriality in collaborative tabletop workspaces
+CSCW,2019,1994,GroupLens: an open architecture for collaborative filtering of netnews
+CSCW,2018,2000,Interaction and outeraction: instant messaging in action
+CSCW,2017,1998,Mobility in collaboration
+CSCW,2016,1992,Awareness and coordination in shared workspaces
+CSCW,2015,1992,Learning from Notes: organizational issues in groupware implementation
+CSCW,2014,1988,Why CSCW applications fail: problems in the design and evaluation of organizational interfaces
+CSCW,2013,1994,Steps towards an ecology of infrastructure: complex problems in design and access for large-scale collaborative systems
+UbiComp,2024,2014,StudentLife: assessing mental health academic performance and behavioral trends of college students using smartphones
+UbiComp,2023,2013,Instant inkjet circuits: lab-based inkjet printing to support rapid prototyping of UbiComp devices
+UbiComp,2023,2013,MACH: my automated conversation coach
+UbiComp,2022,2012,What next ubicomp?: celebrating an intellectual disappearing act
+UbiComp,2022,2012,StressSense: detecting stress in unconstrained acoustic environments using smartphones
+UbiComp,2021,2011,PreHeat: controlling home heating using occupancy prediction
+UbiComp,2021,2011,Understanding my data myself: supporting self-reflection with ubicomp technologies
+UbiComp,2021,2010,EmotionSense: a mobile phones based adaptive platform for experimental social psychology research
+UbiComp,2019,2009,SwimMaster: a wearable assistant for swimmer
+UbiComp,2019,2009,Recognizing daily activities with RFID-based sensors
+UbiComp,2018,2008,Flowers or a robot army?: encouraging awareness & activity with personal mobile displays
+UbiComp,2018,2008,Pedestrian localisation for indoor environments
+UbiComp,2017,2007,Locating family values: a field trial of the Whereabouts Clock
+UbiComp,2017,2007,At the flick of a switch: detecting and classifying unique electrical events on the residential power line
+UbiComp,2016,2006,SenseCam: a retrospective memory aid
+UbiComp,2015,2005,Learning and recognizing the places we go
+UbiComp,2014,2004,Activity recognition in the home using simple and ubiquitous sensors
+UbiComp,2014,2004,Particle filters for location estimation in ubiquitous computing: a case study
+UbiComp,2013,2003,Inferring high-level behavior from low-level sensors
+UbiComp,2012,2002,The personal server: changing the way we think about ubiquitous computing
+UbiComp,2011,2001,Privacy by design - principles of privacy-aware ubiquitous systems
+TEI,2016,2014,Snake Charmer: physically enabling virtual objects
+TEI,2015,2013,Seven principles to design for embodied sensemaking
+TEI,2014,2012,jamSheets: thin interfaces with tunable stiffness enabled by layer jamming
+TEI,2013,2011,A design space for ephemeral user interfaces
+TEI,2012,2010,Makey Makey: improvising tangible and nature-based user interfaces
+TEI,2011,2009,Handcrafting textile interfaces from a kit-of-no-parts
+TEI,2010,2008,Electronic popables: exploring paper-based computing through an interactive pop-up book
+TEI,2009,2007,Electronics as material: littleBits
+TEI,2008,2006,Are tangibles more fun?: comparing children's enjoyment and engagement using physical graphical and tangible user interfaces
+TEI,2007,2005,reacTIVision: a computer-vision framework for table-based tangible interaction
+MobileHCI,2008,1998,Exploiting context in HCI design for mobile systems
+MobileHCI,2009,1999,Implicit human-computer interaction through context
+MobileHCI,2011,2001,AudioGPS: spatial audio navigation with a minimal attention interface
+MobileHCI,2021,2011,Falling asleep with Angry Birds Facebook and Kindle: a large scale study on mobile application usage
+MobileHCI,2022,2012,Touch behavior with different postures on soft smartphone keyboards
+MobileHCI,2023,2013,What's up with WhatsApp?: comparing mobile instant messaging behaviors with traditional SMS
+IUI,2017,2005,Trust in recommender systems
+IUI,2019,2004,SUPPLE: automatically generating user interfaces
