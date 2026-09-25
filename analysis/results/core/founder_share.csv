@@ -1,82 +1,108 @@
 sub,name,group,papers,birth,founders,y0,y2,y4,y6,y8,y10,y15
-0,Speculative & Critical Design,hci,851,1997,6,0.25,0.67,nan,0.0,nan,0.0,0.03
-1,"Gender, Intimacy & Safety",hci,513,2010,18,1.0,0.62,0.43,0.09,0.05,0.08,0.04
-3,Gig Work & Labor,hci,371,2010,5,0.4,nan,0.11,0.08,0.05,0.0,0.0
-4,Civic Participation,hci,322,2006,2,nan,nan,0.22,0.1,0.0,0.06,0.0
-6,Crisis Informatics,hci,234,2006,7,nan,1.0,0.6,0.5,0.67,0.36,0.05
-7,ICTD & Rural Communities,hci,225,2004,3,nan,nan,0.17,0.3,0.12,0.0,0.0
-9,"Religion, Migration & Digital Life",hci,161,2006,2,nan,nan,0.0,0.67,0.25,0.14,0.0
+1,"Gender, Intimacy & Safety",hci,513,2009,18,nan,0.5,0.5,0.12,0.29,0.14,0.04
+2,Gender & Algorithmic Bias,hci,470,2012,20,0.33,0.44,0.75,0.15,0.31,0.21,nan
+3,Gig Work & Labor,hci,371,2013,34,0.67,0.73,0.54,0.33,0.31,0.19,nan
+4,Civic Participation,hci,322,2010,18,0.44,0.4,0.27,0.39,0.37,0.41,0.03
+5,Infrastructure & Making,hci,275,2010,14,0.0,0.62,0.69,0.39,0.21,0.23,0.07
+6,Crisis Informatics,hci,234,2009,16,nan,0.55,0.71,0.73,0.33,0.42,0.12
+7,ICTD & Rural Communities,hci,225,2007,24,1.0,0.83,0.43,0.31,0.4,0.18,0.11
+8,Race & Social Justice in HCI,hci,172,2017,11,0.6,0.33,0.57,0.3,0.13,nan,nan
+9,"Religion, Migration & Digital Life",hci,161,2014,12,0.5,0.86,0.5,0.33,0.08,0.05,nan
 10,CSCW Foundations,hci,139,1988,7,0.75,0.33,0.36,0.18,0.0,nan,nan
-12,Crowdsourcing & Human Computation,hci,391,2008,24,0.5,0.8,0.79,0.5,0.34,0.33,0.0
+11,Data Work & Crypto Economies,hci,156,2015,23,0.33,0.56,0.64,0.4,0.0,0.12,nan
+12,Crowdsourcing & Human Computation,hci,391,2006,9,0.67,0.5,0.6,0.14,0.23,0.11,0.0
 13,Wikipedia & Open Source,hci,365,2004,19,0.33,0.83,0.64,0.29,0.34,0.3,0.06
-15,Crisis Informatics & Misinformation,hci,216,2009,4,1.0,nan,0.0,0.0,0.0,0.14,0.04
-16,Live Streaming,hci,173,2008,8,nan,nan,0.17,0.0,0.0,0.0,0.0
+14,Moderation & Online Harassment,hci,258,2015,23,nan,0.73,0.61,0.14,0.18,0.23,nan
+15,Crisis Informatics & Misinformation,hci,216,2013,14,0.4,0.75,0.5,0.0,0.0,0.0,nan
+16,Live Streaming,hci,173,2014,24,0.62,0.67,0.56,0.22,0.19,0.31,nan
+17,Crowdfunding & Online Feedback,hci,368,2002,4,nan,0.25,0.38,0.11,0.14,0.05,0.16
 18,Self-tracking & Reflection,hci,427,2011,19,0.75,0.71,0.5,0.17,0.12,0.17,0.12
-19,Chronic Care & Caregiving,hci,374,2009,19,0.33,0.56,0.4,0.44,0.36,0.29,0.17
+19,Chronic Care & Caregiving,hci,374,2008,18,nan,0.8,0.44,0.33,0.38,0.3,0.04
 20,Social Media & Mental Health,hci,343,2011,14,0.0,0.62,0.29,0.3,0.26,0.23,0.0
 21,Behavior Sensing,hci,277,2011,21,0.75,0.25,0.6,0.56,0.4,0.17,0.07
-22,Stress & Mood Technology,hci,201,2010,8,0.33,1.0,0.38,0.14,0.33,0.25,0.0
+22,Stress & Mood Technology,hci,201,2013,21,0.33,0.5,0.14,0.43,0.0,0.28,nan
 23,Persuasive Health & Activity,hci,158,2006,16,0.75,0.6,0.3,0.0,0.0,0.07,0.0
-24,Sleep & Family Routines,hci,120,2003,2,nan,nan,nan,nan,nan,nan,0.0
-25,Parkinson's & Mobility Support,hci,71,2011,6,1.0,nan,0.4,0.0,0.0,0.0,0.0
-26,Smart Home Automation,hci,199,1999,6,nan,nan,0.5,0.0,0.29,0.33,0.0
-27,Youth Online Safety,hci,162,2014,17,nan,0.83,1.0,0.25,0.42,0.45,nan
-28,Usable Security & Phishing,hci,152,2006,6,0.0,nan,nan,0.0,0.0,0.0,0.11
-29,Photo Sharing & Privacy,hci,149,2007,8,nan,0.67,0.4,0.29,0.0,0.12,0.0
+24,Sleep & Family Routines,hci,120,2014,24,0.5,0.71,0.5,0.3,0.12,0.38,nan
+25,Parkinson's & Mobility Support,hci,71,2019,20,0.6,0.5,0.5,0.17,nan,nan,nan
+26,Smart Home Automation,hci,199,2001,17,nan,0.62,0.5,0.43,0.33,0.0,0.33
+27,Youth Online Safety,hci,162,2015,17,0.5,0.6,0.44,0.41,0.27,0.3,nan
+28,Usable Security & Phishing,hci,152,2014,17,0.5,0.4,0.57,0.2,0.29,0.18,nan
+29,Photo Sharing & Privacy,hci,149,2009,15,0.67,0.4,0.86,0.11,0.12,0.0,0.0
 30,Authentication & Passwords,hci,145,2008,15,0.67,0.57,0.8,0.42,0.64,0.11,0.2
-31,Smart-home Privacy,hci,130,2008,5,nan,nan,nan,nan,nan,0.0,0.0
-32,App Permissions & Policy,hci,122,2010,4,nan,nan,nan,0.0,0.1,0.0,0.0
-35,Task Switching at Work,hci,201,1986,2,0.0,0.33,nan,0.0,nan,nan,nan
-36,Notifications & Interruptibility,hci,183,2003,8,0.67,0.5,0.6,0.0,0.0,0.2,0.0
+31,Smart-home Privacy,hci,130,2017,14,nan,0.5,0.19,0.0,0.0,nan,nan
+32,App Permissions & Policy,hci,122,2015,15,1.0,0.5,nan,0.18,0.0,0.0,nan
+33,Deceptive Advertising Patterns,hci,120,2019,28,nan,0.69,0.69,0.43,nan,nan,nan
+34,Location Sharing & Privacy,hci,134,2003,7,nan,0.33,0.0,0.2,0.0,0.0,0.0
+35,Task Switching at Work,hci,201,2002,14,nan,1.0,0.5,0.36,0.15,0.29,0.0
+36,Notifications & Interruptibility,hci,183,2001,8,nan,0.67,0.5,0.6,0.0,0.0,0.0
+37,Social Network Sites at Work,hci,156,2006,20,nan,0.57,0.64,0.36,0.31,0.5,nan
+38,Instant Messaging,hci,144,1999,11,1.0,nan,0.33,0.0,nan,nan,0.0
 39,Digital Self-control,hci,130,2013,13,0.0,0.38,0.67,0.36,0.18,0.13,nan
-41,Email & Peripheral Displays,hci,331,1986,4,0.25,0.33,nan,0.0,0.0,nan,0.0
-43,Automated Driving,hci,136,2009,8,nan,1.0,0.75,0.0,0.07,0.12,0.1
-44,Dementia & Ageing Care,hci,134,2008,6,0.0,nan,0.4,0.0,0.0,0.0,0.0
-45,Autonomous Vehicle Communication,hci,291,1982,6,0.43,nan,0.19,0.2,0.0,0.25,0.06
-46,Memory & Reminiscence,hci,319,2002,5,0.0,0.2,0.38,0.06,0.0,0.0,0.0
-47,Sustainable HCI,hci,293,2008,42,0.67,0.57,0.83,0.29,0.19,0.16,0.0
-49,Bio-materials & Sustainable Making,hci,167,2010,4,0.25,nan,nan,nan,0.0,0.0,0.03
+40,Smartphone Usage Logging,hci,120,2007,5,0.33,0.33,0.33,0.0,0.2,0.0,nan
+41,Email & Peripheral Displays,hci,331,1985,5,nan,nan,nan,nan,nan,nan,0.06
+42,Older Adults & Technology,hci,208,2007,8,0.0,0.25,0.5,0.0,0.0,0.0,0.0
+43,Automated Driving,hci,136,2015,26,1.0,0.71,0.62,0.0,0.0,0.08,nan
+44,Dementia & Ageing Care,hci,134,2016,29,1.0,1.0,0.62,0.44,0.07,0.27,nan
+45,Autonomous Vehicle Communication,hci,291,1981,4,0.33,0.4,0.0,nan,0.0,0.0,0.0
+47,Sustainable HCI,hci,293,2007,30,nan,0.67,0.75,0.24,0.17,0.13,0.1
+48,Multispecies & Urban Nature,hci,192,2016,21,0.25,0.71,0.5,0.27,0.2,0.19,nan
+49,Bio-materials & Sustainable Making,hci,167,2019,29,0.33,0.8,0.57,0.31,nan,nan,nan
 50,Playful Food Experiences,hci,144,2010,21,0.33,0.5,0.86,0.43,0.0,0.07,0.0
-52,Explainable Machine Learning,hci,1000,2005,16,nan,0.5,0.7,0.25,nan,0.2,0.08
-54,Voice & Conversational Agents,hci,759,1996,4,0.4,0.0,0.14,0.5,nan,0.0,0.0
-55,GUI Toolkits & Web Interfaces,hci,752,1985,14,0.67,nan,0.5,0.27,0.15,0.26,0.14
-57,Search & Recommendation,hci,395,1992,7,0.25,nan,0.62,0.31,0.25,0.0,0.07
-58,Video Interfaces & Editing,hci,372,1988,3,nan,0.6,0.17,nan,0.0,0.25,0.0
-62,Usability Methods & Personas,hci,195,1983,2,0.33,nan,nan,0.2,0.0,nan,nan
-63,Clinical Information Work,hci,251,1986,4,0.5,0.5,0.5,0.0,0.0,0.0,0.0
-65,Movement & Somaesthetics,hci,340,2004,4,0.33,nan,nan,0.0,0.0,0.0,0.09
-66,Exergames & Bodily Play,hci,257,2004,3,nan,nan,0.5,0.17,0.08,0.0,0.18
+51,"Materials, Death & Legacy",hci,267,2002,3,0.67,nan,nan,nan,0.0,0.0,0.0
+52,Explainable Machine Learning,hci,1000,2003,4,nan,nan,0.17,0.0,0.0,nan,0.0
+54,Voice & Conversational Agents,hci,759,1994,2,nan,0.4,0.0,0.0,0.25,nan,0.0
+55,GUI Toolkits & Web Interfaces,hci,752,1981,5,nan,0.2,0.5,nan,0.0,0.0,0.0
+56,Data Visualization,hci,416,2009,17,1.0,0.75,0.73,0.21,0.47,0.16,0.11
+57,Search & Recommendation,hci,395,1993,8,nan,0.44,0.4,0.5,0.17,0.17,0.0
+58,Video Interfaces & Editing,hci,372,1985,3,nan,nan,nan,0.0,nan,0.0,0.0
+59,Programming & Notebooks,hci,360,2001,10,0.33,0.75,nan,nan,0.33,0.12,0.09
+62,Usability Methods & Personas,hci,195,1986,3,0.67,0.33,0.2,0.38,0.67,0.0,nan
+63,Clinical Information Work,hci,251,1985,4,nan,nan,0.67,0.2,0.0,0.33,0.0
+64,Gamification & Engagement,hci,457,2011,48,nan,0.36,0.64,0.55,0.42,0.38,0.11
+65,Movement & Somaesthetics,hci,340,2008,7,nan,0.3,0.5,0.27,0.12,0.0,0.12
 67,Esports & Player Communities,hci,245,2006,12,nan,0.43,0.33,0.18,0.0,0.0,0.0
-68,Location-based Museum Play,hci,158,2000,28,0.25,0.57,0.67,0.71,0.0,nan,0.18
-69,VR Meditation & Breathing,hci,155,2011,5,nan,nan,0.4,0.06,0.09,0.0,0.0
-70,Brain-Computer Interfaces,hci,123,2006,8,nan,0.67,0.0,0.2,0.3,0.12,0.2
-71,Rehabilitation Games,hci,120,2010,15,0.0,0.5,0.8,0.38,0.5,0.14,0.29
-73,Visual Accessibility,hci,399,2000,2,nan,nan,nan,0.0,0.0,0.0,0.0
-74,Neurodivergence & Autism,hci,378,2005,7,0.25,nan,0.4,0.25,0.11,0.11,0.06
-75,Web Accessibility,hci,319,1994,10,0.71,0.88,0.6,0.22,0.22,nan,0.08
+68,Location-based Museum Play,hci,158,1998,15,nan,0.25,0.43,0.33,0.57,0.0,0.18
+69,VR Meditation & Breathing,hci,155,2014,24,0.4,0.67,0.4,0.29,0.27,0.0,nan
+70,Brain-Computer Interfaces,hci,123,2009,13,0.67,0.29,0.33,0.14,0.0,0.0,0.17
+71,Rehabilitation Games,hci,120,2011,18,0.5,0.71,0.62,0.5,0.8,0.33,0.29
+72,Playful Experience & Drones,hci,335,2004,5,nan,0.6,0.2,0.0,0.06,0.0,0.0
+73,Visual Accessibility,hci,399,2006,11,0.6,0.33,0.4,0.67,0.33,0.4,0.15
+74,Neurodivergence & Autism,hci,378,2004,4,nan,0.4,0.25,0.5,0.25,0.14,0.04
+75,Web Accessibility,hci,319,1992,7,nan,0.71,0.88,0.1,0.0,0.0,0.0
 76,Deaf & Sign Language Tech,hci,311,2005,9,nan,nan,0.6,0.43,0.33,0.23,0.1
 77,Non-visual Navigation,hci,286,2003,6,nan,0.5,nan,0.0,0.0,0.0,0.0
-78,Tactile Graphics,hci,235,2003,4,nan,0.33,nan,nan,0.0,0.0,0.0
-80,DIY Assistive Technology,hci,153,2007,4,nan,nan,0.33,0.0,0.0,0.0,0.0
+78,Tactile Graphics,hci,235,2008,8,0.0,0.56,0.4,0.0,0.0,0.07,0.0
+80,DIY Assistive Technology,hci,153,2013,12,0.25,0.57,0.75,0.4,0.33,0.08,nan
+81,Accessible Games & VR,hci,143,2007,4,nan,0.67,nan,0.0,0.0,0.0,0.0
 82,AAC & Communication Disabilities,hci,223,2000,5,0.67,0.75,nan,0.0,0.0,0.0,0.0
 83,Real-time Groupware,hci,285,1986,15,0.58,0.31,0.12,0.0,0.0,0.0,nan
-84,Gaze in Video Communication,hci,254,1991,7,0.67,nan,0.75,nan,0.33,nan,0.09
-87,Public & Ambient Displays,hci,222,2002,7,0.0,0.4,nan,0.0,0.0,0.06,0.0
+84,Gaze in Video Communication,hci,254,1990,4,nan,0.67,nan,0.0,0.0,0.12,0.0
+85,Family Video Communication,hci,253,2004,7,nan,0.25,nan,0.0,0.0,0.0,0.0
+86,Augmented Reality Collaboration,hci,231,2013,16,nan,0.33,0.25,0.06,0.0,0.0,nan
+87,Public & Ambient Displays,hci,222,2000,7,nan,0.33,0.3,nan,0.0,0.0,0.0
 88,Distributed Team Awareness,hci,215,1988,7,nan,0.25,0.67,0.0,0.18,0.12,0.0
-92,RF & Radar Sensing,hci,235,2015,40,nan,0.83,0.5,0.39,0.39,0.23,nan
-94,Indoor Localization,hci,170,2004,11,nan,0.5,0.4,0.2,0.08,0.0,0.0
-95,Urban Mobility Data,hci,161,2007,4,nan,nan,0.38,0.14,0.0,0.0,0.0
-96,Acoustic Health Sensing,hci,244,2012,3,0.33,0.25,0.43,0.05,0.0,0.0,nan
-97,Tangible Interaction,hci,884,1997,27,0.45,0.67,0.4,0.0,0.17,0.19,0.0
-98,VR Haptics,hci,755,2007,7,nan,0.33,0.55,0.09,0.14,0.09,0.07
-99,Deformable & Soft Displays,hci,386,2005,8,nan,nan,0.75,0.38,0.44,0.33,0.16
-101,E-textiles & Weaving,hci,355,2010,2,0.44,0.17,0.0,0.0,0.04,0.04,0.0
-102,Printed Electronics,hci,318,2003,3,nan,nan,nan,0.0,nan,0.1,0.04
+89,Social VR & Presence,hci,184,2017,23,0.4,0.67,0.43,0.18,0.11,nan,nan
+90,Tabletop Collaboration,hci,152,1999,6,nan,0.25,0.4,nan,0.4,0.0,0.0
+91,Surgical AR & Video Guidance,hci,154,2011,4,0.67,0.25,0.0,0.09,0.14,0.0,0.0
+92,RF & Radar Sensing,hci,235,2016,58,0.83,0.75,0.63,0.47,0.48,0.38,nan
+93,Wearable Activity Recognition,hci,212,2011,9,nan,0.4,0.5,0.43,0.21,0.25,0.0
+94,Indoor Localization,hci,170,2002,7,nan,nan,0.5,0.2,0.2,0.08,0.0
+95,Urban Mobility Data,hci,161,2009,13,nan,0.5,0.57,0.17,0.0,0.11,0.12
+96,Acoustic Health Sensing,hci,244,2015,22,0.33,0.38,0.33,0.21,0.09,0.02,nan
+97,Tangible Interaction,hci,884,1995,20,1.0,0.64,0.5,0.2,0.0,0.17,0.04
+98,VR Haptics,hci,755,2002,2,nan,0.0,nan,0.0,0.14,0.0,0.0
+99,Deformable & Soft Displays,hci,386,2004,2,nan,0.0,0.12,0.25,0.08,0.0,0.0
+100,Digital Fabrication,hci,378,2011,26,nan,0.88,0.58,0.17,0.36,0.42,0.17
+101,E-textiles & Weaving,hci,355,2009,6,nan,nan,0.0,0.0,0.0,0.0,0.0
+102,Printed Electronics,hci,318,2007,4,nan,0.29,nan,0.1,0.06,0.0,0.0
 103,Data Physicalization,hci,123,2013,28,0.5,0.78,0.73,0.8,0.56,0.5,nan
-105,Hand Input & Gesture Sensing,hci,880,2003,4,0.0,nan,0.25,0.0,0.0,0.0,0.0
+104,Electrical Muscle Stimulation,hci,258,2008,5,nan,0.22,0.25,0.0,0.08,0.06,0.0
+105,Hand Input & Gesture Sensing,hci,880,2001,4,nan,0.4,nan,0.0,0.0,0.0,0.0
 106,Touch & Multi-touch Input,hci,536,1994,13,0.33,0.5,0.5,0.45,0.17,0.2,0.05
-107,Pointing & Target Selection,hci,421,1991,2,0.25,nan,nan,0.33,nan,0.2,0.0
-108,Gaze & Eye Tracking,hci,415,1989,5,0.0,0.67,nan,0.0,nan,0.0,0.0
-110,Fisheye & Scrolling Techniques,hci,314,1989,6,0.33,0.62,0.6,0.09,0.0,0.0,0.0
+107,Pointing & Target Selection,hci,421,1990,2,0.0,0.2,nan,0.0,0.25,0.0,0.0
+108,Gaze & Eye Tracking,hci,415,1988,5,nan,0.67,1.0,0.33,0.0,0.0,nan
+109,Text Entry,hci,392,1996,3,nan,0.2,0.6,0.0,0.0,0.0,0.12
+110,Fisheye & Scrolling Techniques,hci,314,1988,3,nan,0.25,0.12,0.17,0.0,0.0,0.11
 111,Cross-device & Large Displays,hci,280,1998,10,nan,nan,0.29,0.0,0.0,0.09,0.0
-113,Mixed Reality Systems,hci,229,2001,2,nan,nan,nan,nan,nan,0.25,0.0
+113,Mixed Reality Systems,hci,229,2014,24,0.67,0.3,0.67,0.17,0.12,0.1,nan
+114,Menus & Command Selection,hci,188,1994,5,0.67,nan,0.25,nan,0.0,0.0,0.0

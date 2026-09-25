@@ -98,10 +98,11 @@ for s in range(S):
     for a, w in zip(g.cited[m], g.spc[m]): spc_out[int(a)] += w
     size = len(members)
     cum = np.cumsum(np.bincount(ys - ys.min()))
-    birth = int(ys.min() + np.searchsorted(cum, max(5, 0.02 * size)))     # 5本 or 2% に達した年
+    first_reach = int(ys.min() + np.searchsorted(cum, max(5, 0.02 * size)))     # 旧定義: 5本 or 2% に達した年
+    birth = g.birth(members)                                                     # 立ち上がりの年(load.birth_year)
     peak = int(np.bincount(ys - ys.min()).argmax() + ys.min())
     q1, q3 = np.percentile(ys, [25, 75])
-    summary.append([s, g.sub_name[s], g.band_name[int(g.sub_band[s])], size, int(ys.min()), birth, peak,
+    summary.append([s, g.sub_name[s], g.band_name[int(g.sub_band[s])], size, int(ys.min()), birth, first_reach, peak,
                     int(np.median(ys)), int(q1), int(q3), round(float(depth[members].mean()), 2),
                     int(depth[members].max())])
     # 候補: 各指標の上位5
@@ -117,7 +118,7 @@ for s in range(S):
 
 with (load.OUT / "subfield_summary.csv").open("w", newline="") as f:
     w = csv.writer(f)
-    w.writerow(["sub", "name", "band", "papers", "first_year", "birth_year", "peak_year", "median_year", "q1_year", "q3_year", "mean_depth", "max_depth"])
+    w.writerow(["sub", "name", "band", "papers", "first_year", "birth_year", "first_reach_year", "peak_year", "median_year", "q1_year", "q3_year", "mean_depth", "max_depth"])
     w.writerows(summary)
 with (load.OUT / "founders.csv").open("w", newline="") as f:
     w = csv.writer(f)

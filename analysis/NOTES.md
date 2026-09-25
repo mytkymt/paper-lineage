@@ -4,11 +4,16 @@ Corpus: 13-venue core, 36,264 papers, 372,218 in-corpus citations (extended: 20 
 All numbers below are from `analysis/results/core/` unless marked *ext*.
 
 ## 1. Sub-field births (RQ1)
-- 116 sub-fields (Louvain sub-bands). Birth = year the sub-field reached 5 papers or 2% of its
-  eventual size. Distribution: 1980s 16, 1990s 21, 2000s 57, 2010s 22 (2015+: 1).
-- Newest: RF & Radar Sensing (2015), Youth Online Safety (2014), Deceptive Advertising Patterns
-  (2014), Digital Self-control (2013), Data Physicalization (2013), Moderation & Online Harassment
-  (2012).
+- 116 sub-fields (Louvain sub-bands). Birth (revised 2026-09-25) = first year whose 3-year window
+  holds ≥3T papers and whose next 3-year window also does; T = 0.5% of that year's corpus, floored
+  at 2 and capped at 5 (so T=2 around 1990, 5 from 2010). The 3-year window absorbs the gap years
+  of biennial CSCW; the "next window too" condition removes one-off bursts. The earlier rule
+  (5 papers or 2% of eventual size) was pulled up to 10–20 years too early by old papers that
+  Louvain attaches to a later community (e.g. CAD papers in Digital Fabrication: 2004 → 2011).
+  Distribution: 1980s 12, 1990s 17, 2000s 47, 2010s 40 (2015+: 15). `first_reach_year` in
+  subfield_summary.csv keeps the old value.
+- Newest: Deceptive Advertising Patterns, Bio-materials & Sustainable Making, Parkinson's &
+  Mobility Support (2019); Race & Social Justice, Smart-home Privacy, Social VR & Presence (2017).
 - Fading (share of papers in the last 5 years < 8%): Real-time Groupware (peak 1992), Fisheye &
   Scrolling (2008), Tabletop Collaboration (2009), Social Network Sites at Work (2011),
   Location-based Museum Play (2013), Smartphone Usage Logging (2016).
@@ -66,9 +71,11 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
 
 ## 5. Schools and fields (C4 candidate) — 2026-09-25
 - Founding window = 5 years from birth; founders = authors with ≥2 papers in it. Founders'
-  share of the sub-field's papers by years since birth (median over 49 core sub-fields):
-  y1 0.50, y2 0.56, y3 0.50, y4 0.43, **y5 0.25, y6 0.14, y8 0.05, y10 0.09, y15 0.00**.
+  share of the sub-field's papers by years since birth (median over ~100 core sub-fields, revised
+  births): y0–y4 0.50, **y5 0.25, y6 0.20, y8 0.12, y10 0.08, y15 0.00**.
   Years 0–4 are partly circular (founders are defined there); the drop after year 4 is not.
+  On its own this is a descriptive, expected result; it matters as the axis along which
+  sub-fields differ (section 8), not as a headline.
 - Founder papers (top-3 per sub-field, 238): 10 citations from papers sharing no author arrive
   after a median 3 years (IQR 2–5); only 15% of a founder paper's first 20 citations are
   self-citations. HCI fields are communal almost from birth — the "school" phase is about five
@@ -111,3 +118,28 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
   CHI 2004). Report as a limitation; consider backfilling from OpenAlex by venue.
 - Remaining "other" (13%) is a long tail of journals (statistics, vision science, marketing,
   repositories); OpenAlex `primary_topic` (`fetch_external --topics`) would replace the rules.
+
+
+## 8. Modes of origin: emergent vs. built (candidate C4) — 2026-09-25
+- Three concentration measures on the founding window (birth to birth+4), 113 core sub-fields:
+  *flag concentration* = share of later in-sub citations to founding-window papers that go to
+  one paper (median 0.18, IQR 0.12–0.27); *group concentration* = share of founding papers by
+  the largest co-author component (median 0.20, IQR 0.15–0.29); *external trigger* = share of
+  founding papers citing the same external work. A "flag paper" is declared only when flag
+  concentration ≥0.25 and ≥2× the runner-up: 19 sub-fields (Gaze 0.70, Computers are social
+  actors 0.59, Interactive machine learning 0.43, VizWiz 0.38, Tangible bits 0.30, ...).
+  Whether flag papers are agenda papers or artefacts must be checked by reading them.
+- The two axes are independent (ρ = −0.15). Four modes, examples:
+  one group + flag (Explainable ML, Voice agents, Gaze, Visual Accessibility);
+  one group, no flag (Wikipedia & Open Source 0.63 one group, Digital Fabrication 0.41,
+  Sustainable HCI 0.36, Gamification 0.39);
+  many groups + flag (Feminist HCI, Pointing/Fitts, Text Entry, Hand Input);
+  many groups, no flag (GUI Toolkits, Touch, Self-tracking, Gig Work, Social Media & Mental Health).
+- Rank correlations (no test yet): group concentration × eventual size −0.28; flag concentration
+  × size +0.28; flag concentration × founders' share at year 6 −0.39 (a flag paper brings
+  outsiders in rather than closing the field); export share weakly related (+0.24 with flag).
+- Digital Fabrication: born 2011 (not 2004); founding window 2011–15 has 49 papers in 21 groups,
+  largest (HPI) 0.41, no flag paper (WirePrint 0.06; Interactive fabrication, FreeD, MixFab share).
+  Tangible: born 1995, 61 founding papers, 39 groups, largest 0.20, flag Tangible bits 0.30.
+- Next: permutation test for the correlations; read the 19 flag papers and label agenda vs.
+  artefact vs. study; compare modes on longevity and award density.

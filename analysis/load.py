@@ -61,6 +61,10 @@ class Graph:
         self.in_start, self.in_idx = _csr(self.citing, self.cited, self.n)     # citing -> cited(上流)
         # トポロジカル順: (year, id) 全順序で DAG なので年順で十分
         self.topo = np.argsort(self.year, kind="stable")
+        self.corpus_by_year = {int(y): int(c) for y, c in zip(*np.unique(self.year, return_counts=True))}
+
+    def birth(self, members: np.ndarray) -> int:
+        return birth_year(self.year[members], self.corpus_by_year)
 
     def downstream(self, i: int) -> list[int]:
         return self.out_idx[self.out_start[i]:self.out_start[i + 1]].tolist()
@@ -80,3 +84,28 @@ def _csr(a: np.ndarray, b: np.ndarray, n: int):
 def load() -> Graph:
     OUT.mkdir(parents=True, exist_ok=True)
     return Graph()
+
+
+def birth_year(years: np.ndarray, corpus_by_year: dict[int, int]) -> int:
+    """立ち上がりの年: 3 年窓の本数が 3T 以上で、次の 3 年窓も 3T 以上になる最初の年。
+
+    T はその年のコーパス規模の 0.5%(下限 2、上限 5)。1990 年ごろはコーパスが年 120 本
+    なので T=2、2010 年以降は T=5。年ごとの本数で見ると隔年開催(2010 年までの CSCW)の
+    空白年で切れるので 3 年窓の合計で見る。「次の窓も」の条件で一過性の山を除く。
+    以前の「5 本または 2% に達した年」は、後年の帯に混ざった古い論文を拾って誕生が
+    10 年早く出ることがあった。どの窓も条件を満たさない小さな帯は、最初の窓だけで判定する。
+    """
+    years = np.asarray(years); y0 = int(years.min())
+    counts = np.bincount(years - y0)
+    padded = np.concatenate([counts, np.zeros(4, dtype=counts.dtype)])
+    def T(y: int) -> int:
+        return int(max(2, min(5, np.ceil(0.005 * corpus_by_year.get(y, 0)))))
+    for k in range(len(counts)):
+        y = y0 + k
+        if counts[k] and padded[k:k + 3].sum() >= 3 * T(y) and padded[k + 1:k + 4].sum() >= 3 * T(y + 1):
+            return y
+    for k in range(len(counts)):
+        y = y0 + k
+        if counts[k] and padded[k:k + 3].sum() >= 3 * T(y):
+            return y
+    return y0
