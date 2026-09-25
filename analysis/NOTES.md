@@ -63,3 +63,25 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
 - Lineage depth grows with year by construction; do not present raw depth as accumulation.
 - 2026 reference lists are ~20% incomplete (indexing lag); cut the last year from time series.
 - CD index is corpus-internal (75% of references are outside); report it as secondary.
+
+## 5. Schools and fields (C4 candidate) — 2026-09-25
+- Founding window = 5 years from birth; founders = authors with ≥2 papers in it. Founders'
+  share of the sub-field's papers by years since birth (median over 49 core sub-fields):
+  y1 0.50, y2 0.56, y3 0.50, y4 0.43, **y5 0.25, y6 0.14, y8 0.05, y10 0.09, y15 0.00**.
+  Years 0–4 are partly circular (founders are defined there); the drop after year 4 is not.
+- Founder papers (top-3 per sub-field, 238): 10 citations from papers sharing no author arrive
+  after a median 3 years (IQR 2–5); only 15% of a founder paper's first 20 citations are
+  self-citations. HCI fields are communal almost from birth — the "school" phase is about five
+  years and never dominates.
+- The year-based take-off measure floors at the founding window (median 5 = the first year
+  checked); report the curve, not the year.
+
+## 6. Import / export typology (RQ3)
+- Export share = 1 − in-corpus citations / OpenAlex cited_by_count, papers ≤2020 with ≥5 cites.
+  Median 0.75 (IQR 0.66–0.82): three quarters of the citations HCI papers receive come from
+  outside the 13 venues. Import (early external reference share) and export correlate ρ=0.46.
+- High export (~0.9): Autonomous Vehicle Communication, Urban Mobility, Indoor Localization,
+  Usability Methods, Search & Recommendation, Fisheye/Navigation, Groupware, CSCW Foundations —
+  the classic and the sensing fields are read outside HCI. Low export (~0.5): E-textiles,
+  Digital Fabrication, Printed Electronics, Chronic Care, Gender/Intimacy, Civic Participation,
+  Race & Social Justice — HCI-internal conversations.

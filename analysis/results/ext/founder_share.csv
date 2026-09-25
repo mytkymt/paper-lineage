@@ -1,0 +1,93 @@
+sub,name,group,papers,birth,founders,y0,y2,y4,y6,y8,y10,y15
+0,Activity Recognition & Sensing,hci,1012,2008,13,0.4,0.5,0.31,0.17,0.14,0.03,0.04
+2,Hand Sensing & Input,hci,676,2005,13,0.33,0.38,0.55,0.3,0.13,0.1,0.08
+3,Gaze in VR,hci,604,1989,4,nan,nan,nan,nan,0.67,0.0,0.0
+4,Pointing & Target Selection,hci,552,1988,3,0.5,0.0,0.25,0.0,0.14,0.2,0.0
+5,Information Navigation,hci,436,1986,2,nan,nan,0.2,0.06,0.11,0.05,0.07
+6,Text Entry,hci,394,1997,2,nan,0.33,0.25,0.17,0.0,0.0,0.0
+8,Performance Modelling & Latency,hci,309,1986,7,0.45,nan,0.5,0.56,0.0,0.38,0.1
+9,Telepresence & Remote Collaboration,hci,607,1994,11,0.25,0.62,0.56,0.25,0.0,0.3,0.0
+10,AR Authoring & Prototyping,hci,454,2004,3,nan,0.0,0.25,0.0,0.08,0.07,0.0
+12,VR Locomotion,vr/ar,432,1996,4,0.33,0.25,nan,nan,0.0,0.0,0.0
+13,Groupware & Tabletops,hci,395,1990,4,0.0,0.3,nan,0.0,0.12,0.0,0.0
+14,Immersive Mixed Reality,hci,393,2000,5,nan,nan,nan,nan,0.0,0.0,0.0
+15,Projection & Spatial AR,hci,191,1998,5,0.33,nan,0.25,0.75,0.0,0.0,0.0
+17,AR Training & Guidance,hci,180,2007,2,nan,nan,nan,0.0,0.0,0.0,0.0
+19,In-car & Video AR,hci,134,2005,3,0.67,nan,0.25,nan,0.0,nan,0.0
+21,AR Depth Perception,hci,202,1993,5,nan,nan,0.33,nan,0.0,0.0,0.0
+22,Vibrotactile Feedback,hci,272,2004,6,0.0,0.33,0.57,0.2,0.0,0.17,0.0
+23,Thermal & Olfactory Displays,hci,222,2006,7,0.25,nan,0.8,0.0,0.0,0.0,0.0
+26,Wearable Fingertip Haptics,haptics,169,2009,9,0.43,0.29,0.33,0.43,0.0,0.08,0.0
+27,Tactile Texture Rendering,hci,163,2010,15,0.67,0.6,0.8,0.25,0.5,0.17,0.17
+28,Mid-air Ultrasound Haptics,hci,145,2009,6,nan,0.33,0.6,nan,0.5,0.5,0.27
+29,Electrical Muscle Stimulation,hci,128,2011,8,nan,nan,0.67,0.11,0.17,0.57,0.17
+31,Tangibles for Learning,hci,703,1998,28,0.44,0.56,0.47,0.4,0.1,0.23,0.03
+32,Shape-changing Interfaces,hci,525,2004,6,0.67,nan,0.3,0.11,0.17,0.0,0.0
+33,Printed & Paper Electronics,hci,500,2004,6,0.4,0.5,0.14,0.0,0.0,0.0,0.03
+34,Textiles & Cloth Simulation,hci,423,2000,2,nan,nan,nan,0.0,0.25,0.0,0.0
+36,Computational Fabrication,graphics,329,2007,9,0.33,nan,0.6,0.09,0.06,0.11,0.0
+37,Sustainable Materials,hci,260,2006,2,0.0,0.4,0.0,0.0,0.0,0.0,0.0
+38,Data Physicalization,hci,248,2000,3,nan,0.67,0.25,0.33,0.0,0.06,0.0
+46,UI Toolkits & Constraints,hci,138,1986,9,0.8,0.2,0.27,0.17,0.44,0.5,0.67
+47,UI Software Tools,hci,130,1981,7,0.4,0.22,0.5,nan,0.07,0.0,nan
+48,Real-time Groupware,hci,409,1983,3,0.0,0.0,nan,0.0,0.0,0.0,0.0
+50,Autism & Neurodiversity,hci,418,2005,8,0.33,nan,0.38,0.2,0.1,0.05,0.06
+51,Web Accessibility,hci,390,1994,10,0.62,0.71,0.58,0.3,0.38,nan,0.08
+52,Non-visual Navigation,hci,386,2003,4,nan,nan,0.2,0.0,0.0,0.0,0.0
+53,Deaf & Sign Language,hci,325,2002,5,0.0,nan,0.38,0.0,0.0,0.0,0.0
+54,Visual Accessibility,hci,310,2006,5,0.75,nan,0.6,nan,0.5,0.29,0.12
+56,AAC & Aphasia,hci,146,2003,4,nan,0.33,nan,0.0,0.0,0.0,0.0
+57,Assistive Music & Audio,hci,127,2008,3,0.25,nan,0.0,nan,0.0,0.0,0.0
+59,Low-vision Accessibility,hci,255,2002,4,0.67,nan,0.29,nan,0.2,0.0,0.0
+61,Player Experience & Immersion,hci,200,2010,2,nan,0.25,0.23,0.25,0.07,0.08,0.05
+62,Rehabilitation Exergames,hci,164,2010,22,0.0,0.67,0.8,0.38,0.22,0.08,0.4
+63,Multiplayer & Location-based Games,hci,146,2006,8,nan,0.33,0.17,0.22,0.11,0.0,0.0
+65,Human-Robot Interaction,robotics,370,2006,25,0.78,0.8,0.33,0.33,0.23,0.0,0.1
+66,Social Robots in the Field,robotics,351,2006,34,0.71,0.64,nan,0.4,0.53,0.25,0.09
+68,Automated Driving Interfaces,hci,260,2010,9,0.67,0.25,0.2,0.11,0.07,0.07,0.0
+69,Virtual Agents & Social Effects,hci,229,1992,4,0.0,0.6,0.75,0.4,0.14,nan,0.0
+72,Robot Presence & Embodiment,hci,214,1994,2,nan,nan,nan,0.0,nan,0.0,0.0
+74,Crowdsourcing & Peer Feedback,hci,623,2004,2,nan,0.25,0.0,0.0,0.0,0.0,0.0
+75,"LLMs, Writing & Prompting",hci,552,2004,3,0.67,nan,nan,0.0,0.0,nan,0.0
+77,Creativity Support & Generative Tools,hci,531,2000,6,0.17,0.25,0.4,0.0,0.0,0.0,0.11
+78,Data Visualization,hci,486,1992,5,0.33,0.75,nan,0.0,0.33,0.0,0.0
+79,Video Interfaces & Editing,hci,412,1986,7,0.71,0.5,0.5,0.0,0.25,0.25,0.0
+83,Interactive Machine Learning,hci,163,2003,2,nan,0.5,0.33,0.0,0.0,0.0,0.0
+85,Awareness & Workplace Chat,hci,330,1986,6,0.14,0.44,0.33,0.33,0.08,0.0,0.08
+87,Physiological & Brain Sensing,hci,229,2004,5,0.67,nan,0.67,0.0,0.0,0.0,0.0
+90,Notifications & Interruptibility,hci,185,2003,8,0.4,0.5,0.5,0.0,0.33,0.0,0.0
+91,Mobile Sensing for Mental Health,hci,172,2011,18,1.0,0.33,0.5,0.2,0.27,0.08,0.0
+92,Collaborative Filtering & Browsing,hci,158,1993,3,nan,0.33,0.29,nan,0.0,0.0,0.0
+93,Smartphone Use & Wellbeing,hci,126,2014,11,nan,0.43,0.29,0.25,0.14,0.06,nan
+94,Experience Sampling,hci,124,2003,2,0.67,0.33,0.25,0.0,0.0,0.0,0.0
+95,Ambient Displays & Language Learning,hci,174,1994,9,nan,nan,0.33,nan,nan,0.0,nan
+96,Data Privacy & Permissions,hci,168,2005,9,1.0,nan,nan,nan,0.0,0.0,0.0
+97,Authentication & Passwords,hci,164,2007,6,0.0,0.0,0.5,0.1,0.13,0.12,0.08
+98,Smart-home Privacy,hci,154,2008,5,nan,nan,0.2,nan,0.0,0.0,0.0
+99,Phishing & Security Behaviour,hci,132,2003,2,0.0,nan,nan,0.0,0.0,0.0,0.0
+101,Design Research & Art,hci,490,2000,3,nan,0.67,0.0,0.29,0.11,0.0,0.14
+103,HCI Research Practice,hci,332,1985,7,0.67,nan,0.75,0.67,nan,0.0,0.0
+105,Memory & Reminiscence,hci,294,2001,5,nan,nan,0.0,0.0,0.0,0.0,0.0
+106,Museums & Cultural Heritage,hci,288,2000,22,nan,0.57,0.6,0.36,0.0,0.0,0.33
+107,Bodily Play & Exertion,hci,288,2002,7,nan,0.0,0.75,0.25,0.17,0.08,0.06
+110,Biofeedback & Mindfulness,hci,231,2004,3,0.0,0.33,0.67,0.0,nan,0.14,0.0
+112,Animal-Computer Interaction,hci,64,2011,10,0.67,nan,0.83,0.0,nan,nan,0.2
+113,Personal Informatics,hci,583,2008,24,0.43,0.25,0.44,0.14,0.12,0.03,0.02
+114,Older Adults & Dementia Care,hci,383,2006,6,0.5,0.25,0.3,0.0,0.08,0.0,0.0
+115,Chronic Care & Caregiving,hci,374,2006,10,0.33,0.5,0.57,0.2,0.4,0.24,0.15
+116,Mental Health Interventions,hci,227,2011,14,0.6,nan,0.5,0.17,0.25,0.0,0.0
+117,Women's Health & Menstrual Tracking,hci,168,2012,4,nan,nan,0.5,0.17,0.25,0.08,nan
+118,Family Health Informatics,hci,157,2003,4,nan,nan,nan,nan,nan,nan,0.0
+119,Hospital Work & Records,hci,124,1996,4,0.5,nan,nan,0.33,nan,0.2,0.2
+120,Stroke Rehabilitation & Eating,hci,105,2005,12,0.33,0.75,nan,nan,0.0,0.0,0.0
+121,Social Media & Privacy,hci,822,2007,50,0.43,0.78,0.63,0.28,0.19,0.14,0.08
+122,Sustainable HCI,hci,685,2007,41,0.5,0.67,0.52,0.21,0.12,0.12,0.06
+123,Content Moderation,hci,605,2010,7,0.33,0.38,0.71,0.0,0.12,0.14,0.03
+124,Open Collaboration Online,hci,556,2000,13,0.2,0.5,0.17,0.46,0.03,0.08,0.03
+125,Participatory & Community Design,hci,554,2006,6,nan,0.83,0.46,0.17,0.13,0.08,0.03
+126,Misinformation & News,hci,528,2009,26,1.0,0.5,0.38,0.39,0.28,0.29,0.08
+127,Feminist HCI & Global Contexts,hci,472,2007,26,0.83,0.75,0.42,0.31,0.36,0.13,0.0
+128,Youth & Online Media,hci,287,2005,2,nan,0.33,nan,0.0,0.0,0.0,0.0
+131,Live Streaming,hci,186,2008,6,nan,nan,0.0,0.0,0.0,0.0,0.0
+132,Trans & Gender Representation,hci,122,2015,10,nan,0.4,0.44,0.27,0.0,0.12,nan
+133,Cryptocurrency & Trust,hci,76,2012,4,0.33,0.33,0.0,0.17,0.0,0.0,nan
