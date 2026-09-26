@@ -94,15 +94,17 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
   Race & Social Justice — HCI-internal conversations.
 
 ## 7. External ancestor layer (RQ3) — 2026-09-25
-- Works outside the corpus cited ≥5 times by corpus papers: 62,543. Fetched 47,967 (77%) before
-  the OpenAlex free daily budget ran out; `fetch_external` resumes where it stopped (an
-  `OPENALEX_API_KEY` in the environment lifts the limit). Numbers below are on the 77%.
+- Works outside the corpus cited ≥5 times by corpus papers: 62,543 ids, 59,308 records returned
+  (the rest are merged or deleted OpenAlex ids). Fetched over two days because of the OpenAlex free
+  daily budget; `fetch_external` resumes where it stopped (an `OPENALEX_API_KEY` in the
+  environment lifts the limit). Records fetched on the second day carry `primary_topic`.
 - OpenAlex leaves the venue empty for ~40% of these (ACM/IEEE conference papers, books).
-  `fetch_external --containers` fills 15,281 of them from Crossref (ACM: one lookup per volume).
-  Classification order: venue name → Crossref container → DOI prefix/conference token → title
-  words. Result: 27,865 by venue name, 15,179 by container, 2,136 by title, 1,241 unclassified
-  (3%); 1,367 dropped as reference noise (book reviews, paratext, mis-resolved sources) and 179
-  as duplicate OpenAlex records of corpus papers.
+  `fetch_external --containers` fills 18,599 of them from Crossref (ACM: one lookup per volume).
+  Classification order: OpenAlex primary_topic (where fetched) → venue name → Crossref container
+  → DOI prefix/conference token → title words. Result: 10,994 by topic, 27,868 by venue name,
+  15,182 by container, 2,136 by title, 1,242 unclassified (2%); 1,693 dropped as reference noise
+  (book reviews, paratext, mis-resolved sources) and 193 as duplicate OpenAlex records of corpus
+  papers. The decade shares below moved by at most one point when the last 23% arrived.
 - What the early papers of HCI sub-fields import (share of classified external references,
   decades 1990s / 2000s / 2010s): social science 19 / 18 / 20%; HCI journals and other HCI
   venues 15 / 15 / 13%; psychology 11 / 9 / 10%; graphics 8 / 3 / 4%; ML/AI 5 / 6 / 7%;
@@ -112,10 +114,20 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
   Digital Fabrication ← graphics (0.25–0.35); Pointing, Gamification ← psychology (0.20–0.25);
   Gender & Algorithmic Bias, Gig Work, Search & Recommendation, Chronic Care ← social science
   (0.27–0.38); Crowdsourcing, Explainable ML ← ML/AI (~0.18). Full table: external_origins.csv.
-- Coverage caveat found on the way: 473 works whose Crossref container is a corpus venue's main
-  proceedings are absent from the Semantic Scholar corpus (8,564 in-corpus citations, 1.4% of
-  external citations; e.g. DiamondTouch UIST 2001, "Beyond Fitts' law" CHI 1997, the ESP game
-  CHI 2004). Report as a limitation; consider backfilling from OpenAlex by venue.
+- Coverage caveats found on the way: TOCHI is nearly absent from the Semantic Scholar corpus for
+  2004–2013 (174 TOCHI works cited ≥5 times sit in the external layer), CHI 1994 is half missing
+  (19 works), and a few hundred other main-track works are absent (DiamondTouch UIST 2001, "Beyond
+  Fitts' law" CHI 1997, the ESP game CHI 2004). CHI's yearly counts otherwise match the actual
+  proceedings. Backfill TOCHI and CHI 1994 before the paper; report the rest as a limitation.
+- Venue boundary check (core papers' 1.5M references): 24.9% land in the corpus, 7.2% in
+  HCI-labelled venues outside it, 25.0% in other fields, 42.9% in works cited fewer than 5 times
+  (not fetched). Of references to HCI-labelled venues, the corpus holds 77.5%; the rest go to CHI
+  Extended Abstracts (excluded on purpose), interactions, Human-Computer Interaction, Personal and
+  Ubiquitous Computing, TOCHI (the gap above), the CSCW journal, Computers in Human Behavior, IDC,
+  IJHCI, Interacting with Computers, Presence, TACCESS, IEEE Pervasive, BIT and AutomotiveUI.
+  The core set is "SIGCHI-run venues with full coverage in the source" but that rule is not applied
+  in full (IDC, AutomotiveUI, C&C, ETRA, VRST, ISS, EICS, GROUP are missing); decide, then show the
+  main results on CHI-only / core / full-SIGCHI / extended sets.
 - Remaining "other" (13%) is a long tail of journals (statistics, vision science, marketing,
   repositories); OpenAlex `primary_topic` (`fetch_external --topics`) would replace the rules.
 
