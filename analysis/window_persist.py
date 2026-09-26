@@ -50,7 +50,7 @@ def run(label, mask):
         print(f"  {label:9} {w0[0]}-{w0[1]}→{w1[0]}-{w1[1]}  共語: 全クラスタ {cw_all}/{len(cw1)}  motor {cw_p}/{len(m1)}   引用: {cc_p}/{len(cc1)}", flush=True)
     return rows
 out = []
-for label, mask in [("CHI", np.array([v == "chi" for v in g.venue])), ("13 venues", np.ones(g.n, bool))]:
+for label, mask in [("CHI", np.array([v == "chi" for v in g.venue])), ("core venues", np.ones(g.n, bool))]:
     print(f"== {label} ==")
     out += run(label, mask)
 with (load.OUT / "window_persistence.csv").open("w", newline="") as f:

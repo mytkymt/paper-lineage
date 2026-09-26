@@ -80,7 +80,7 @@ def run(label: str, mask: np.ndarray):
     return rows, per_win
 
 allrows = []
-for label, mask in [("CHI", np.array([v == "chi" for v in g.venue])), ("13 venues", np.ones(g.n, bool))]:
+for label, mask in [("CHI", np.array([v == "chi" for v in g.venue])), ("core venues", np.ones(g.n, bool))]:
     rows, per_win = run(label, mask)
     allrows += rows
     print(f"\n== {label}: motor themes の顔ぶれ ==")

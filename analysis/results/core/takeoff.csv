@@ -1,108 +1,129 @@
 sub,name,band,papers,birth,founding_papers,founders,founder_share_in_founding,founder_share_all,takeoff_year,years_to_takeoff,share_last5
-1,"Gender, Intimacy & Safety","Work, Community & Society",513,2009,31,18,0.645,0.127,2014,5,0.554
-2,Gender & Algorithmic Bias,"Work, Community & Society",470,2012,42,20,0.595,0.215,2017,5,0.57
-3,Gig Work & Labor,"Work, Community & Society",371,2013,64,34,0.609,0.264,2018,5,0.531
-4,Civic Participation,"Work, Community & Society",322,2010,44,18,0.409,0.252,2015,5,0.354
-5,Infrastructure & Making,"Work, Community & Society",275,2010,39,14,0.59,0.258,2016,6,0.338
-6,Crisis Informatics,"Work, Community & Society",234,2009,34,16,0.676,0.359,2017,8,0.338
-7,ICTD & Rural Communities,"Work, Community & Society",225,2007,32,24,0.719,0.209,2013,6,0.302
-8,Race & Social Justice in HCI,"Work, Community & Society",172,2017,38,11,0.421,0.262,2022,5,0.657
-9,"Religion, Migration & Digital Life","Work, Community & Society",161,2014,26,12,0.538,0.199,2019,5,0.534
-10,CSCW Foundations,"Work, Community & Society",139,1988,32,7,0.5,0.158,1994,6,0.122
-11,Data Work & Crypto Economies,"Work, Community & Society",156,2015,46,23,0.587,0.282,2020,5,0.442
-12,Crowdsourcing & Human Computation,Online Communities & Crowds,391,2006,20,9,0.55,0.09,2011,5,0.153
-13,Wikipedia & Open Source,Online Communities & Crowds,365,2004,27,19,0.704,0.219,2010,6,0.173
-14,Moderation & Online Harassment,Online Communities & Crowds,258,2015,44,23,0.705,0.318,2020,5,0.655
-15,Crisis Informatics & Misinformation,Online Communities & Crowds,216,2013,24,14,0.625,0.083,2018,5,0.583
-16,Live Streaming,Online Communities & Crowds,173,2014,43,24,0.558,0.301,2019,5,0.387
-17,Crowdfunding & Online Feedback,Online Communities & Crowds,368,2002,16,4,0.25,0.106,2008,6,0.155
-18,Self-tracking & Reflection,Health & Wellbeing,427,2011,51,19,0.471,0.171,2016,5,0.482
-19,Chronic Care & Caregiving,Health & Wellbeing,374,2008,38,18,0.579,0.225,2013,5,0.385
-20,Social Media & Mental Health,Health & Wellbeing,343,2011,47,14,0.447,0.239,2017,6,0.379
-21,Behavior Sensing,Health & Wellbeing,277,2011,34,21,0.5,0.26,2016,5,0.44
-22,Stress & Mood Technology,Health & Wellbeing,201,2013,33,21,0.424,0.194,2018,5,0.532
-23,Persuasive Health & Activity,Health & Wellbeing,158,2006,25,16,0.56,0.127,2011,5,0.158
-24,Sleep & Family Routines,Health & Wellbeing,120,2014,30,24,0.633,0.333,2020,6,0.433
-25,Parkinson's & Mobility Support,Health & Wellbeing,71,2019,30,20,0.533,0.366,2024,5,0.423
-26,Smart Home Automation,"Privacy, Security & Smart Homes",199,2001,30,17,0.567,0.191,2006,5,0.196
-27,Youth Online Safety,"Privacy, Security & Smart Homes",162,2015,39,17,0.667,0.426,2020,5,0.568
-28,Usable Security & Phishing,"Privacy, Security & Smart Homes",152,2014,30,17,0.5,0.217,2019,5,0.414
-29,Photo Sharing & Privacy,"Privacy, Security & Smart Homes",149,2009,27,15,0.556,0.168,2014,5,0.322
-30,Authentication & Passwords,"Privacy, Security & Smart Homes",145,2008,24,15,0.667,0.359,2014,6,0.179
-31,Smart-home Privacy,"Privacy, Security & Smart Homes",130,2017,47,14,0.34,0.169,2022,5,0.538
-32,App Permissions & Policy,"Privacy, Security & Smart Homes",122,2015,29,15,0.621,0.189,2021,6,0.525
-33,Deceptive Advertising Patterns,"Privacy, Security & Smart Homes",120,2019,45,28,0.667,0.425,2024,5,0.725
-34,Location Sharing & Privacy,"Privacy, Security & Smart Homes",134,2003,16,7,0.25,0.052,2008,5,0.097
-35,Task Switching at Work,Mobile Life & Attention,201,2002,20,14,0.65,0.249,2007,5,0.204
-36,Notifications & Interruptibility,Mobile Life & Attention,183,2001,18,8,0.611,0.104,2008,7,0.224
-37,Social Network Sites at Work,Mobile Life & Attention,156,2006,37,20,0.595,0.295,2011,5,0.071
-38,Instant Messaging,Mobile Life & Attention,144,1999,21,11,0.714,0.118,2004,5,0.104
-39,Digital Self-control,Mobile Life & Attention,130,2013,26,13,0.385,0.215,2018,5,0.523
-40,Smartphone Usage Logging,Mobile Life & Attention,120,2007,22,5,0.364,0.083,2012,5,0.05
-41,Email & Peripheral Displays,Mobile Life & Attention,331,1985,16,5,0.375,0.024,1998,13,0.124
-42,Older Adults & Technology,"Ageing, Care & Automation",208,2007,21,8,0.429,0.053,2012,5,0.394
-43,Automated Driving,"Ageing, Care & Automation",136,2015,36,26,0.75,0.279,2020,5,0.368
-44,Dementia & Ageing Care,"Ageing, Care & Automation",134,2016,40,29,0.75,0.388,2021,5,0.478
-45,Autonomous Vehicle Communication,"Ageing, Care & Automation",291,1981,26,4,0.308,0.027,1986,5,0.141
-47,Sustainable HCI,Sustainability & Everyday Living,293,2007,50,30,0.62,0.229,2013,6,0.253
-48,Multispecies & Urban Nature,Sustainability & Everyday Living,192,2016,40,21,0.575,0.292,2021,5,0.599
-49,Bio-materials & Sustainable Making,Sustainability & Everyday Living,167,2019,50,29,0.66,0.449,2025,6,0.707
-50,Playful Food Experiences,Sustainability & Everyday Living,144,2010,27,21,0.593,0.188,2015,5,0.396
-51,"Materials, Death & Legacy",Sustainability & Everyday Living,267,2002,12,3,0.333,0.019,2007,5,0.296
-52,Explainable Machine Learning,"AI, Data & Intelligent Interfaces",1000,2003,15,4,0.2,0.005,2008,5,0.652
-54,Voice & Conversational Agents,"AI, Data & Intelligent Interfaces",759,1994,15,2,0.2,0.008,2000,6,0.516
-55,GUI Toolkits & Web Interfaces,"AI, Data & Intelligent Interfaces",752,1981,19,5,0.368,0.012,1986,5,0.142
-56,Data Visualization,"AI, Data & Intelligent Interfaces",416,2009,31,17,0.581,0.219,2015,6,0.423
-57,Search & Recommendation,"AI, Data & Intelligent Interfaces",395,1993,28,8,0.464,0.081,1998,5,0.182
-58,Video Interfaces & Editing,"AI, Data & Intelligent Interfaces",372,1985,11,3,0.545,0.019,1990,5,0.22
-59,Programming & Notebooks,"AI, Data & Intelligent Interfaces",360,2001,17,10,0.647,0.1,2008,7,0.467
-62,Usability Methods & Personas,"AI, Data & Intelligent Interfaces",195,1986,16,3,0.375,0.067,1991,5,0.272
-63,Clinical Information Work,"AI, Data & Intelligent Interfaces",251,1985,13,4,0.538,0.048,1991,6,0.155
-64,Gamification & Engagement,Games & Play,457,2011,93,48,0.624,0.453,2016,5,0.284
-65,Movement & Somaesthetics,Games & Play,340,2008,24,7,0.333,0.144,2013,5,0.45
-67,Esports & Player Communities,Games & Play,245,2006,18,12,0.556,0.061,2012,6,0.396
-68,Location-based Museum Play,Games & Play,158,1998,17,15,0.412,0.165,2003,5,0.076
-69,VR Meditation & Breathing,Games & Play,155,2014,45,24,0.511,0.271,2019,5,0.439
-70,Brain-Computer Interfaces,Games & Play,123,2009,25,13,0.36,0.154,2014,5,0.26
-71,Rehabilitation Games,Games & Play,120,2011,38,18,0.658,0.458,2020,9,0.275
-72,Playful Experience & Drones,Games & Play,335,2004,18,5,0.333,0.039,2010,6,0.307
-73,Visual Accessibility,Accessibility & Assistive Tech,399,2006,28,11,0.464,0.185,2013,7,0.446
-74,Neurodivergence & Autism,Accessibility & Assistive Tech,378,2004,14,4,0.357,0.098,2009,5,0.466
-75,Web Accessibility,Accessibility & Assistive Tech,319,1992,19,7,0.684,0.044,1998,6,0.241
-76,Deaf & Sign Language Tech,Accessibility & Assistive Tech,311,2005,20,9,0.6,0.19,2011,6,0.466
-77,Non-visual Navigation,Accessibility & Assistive Tech,286,2003,9,6,0.444,0.014,2008,5,0.336
-78,Tactile Graphics,Accessibility & Assistive Tech,235,2008,22,8,0.5,0.064,2013,5,0.391
-80,DIY Assistive Technology,Accessibility & Assistive Tech,153,2013,31,12,0.516,0.216,2018,5,0.451
-81,Accessible Games & VR,Accessibility & Assistive Tech,143,2007,16,4,0.5,0.091,2013,6,0.42
-82,AAC & Communication Disabilities,Accessibility & Assistive Tech,223,2000,10,5,0.7,0.045,2005,5,0.242
-83,Real-time Groupware,Remote & Mixed-Reality Collaboration,285,1986,46,15,0.348,0.056,1991,5,0.049
-84,Gaze in Video Communication,Remote & Mixed-Reality Collaboration,254,1990,12,4,0.667,0.106,1996,6,0.209
-85,Family Video Communication,Remote & Mixed-Reality Collaboration,253,2004,11,7,0.364,0.024,2010,6,0.281
-86,Augmented Reality Collaboration,Remote & Mixed-Reality Collaboration,231,2013,28,16,0.464,0.13,2018,5,0.489
-87,Public & Ambient Displays,Remote & Mixed-Reality Collaboration,222,2000,19,7,0.316,0.032,2008,8,0.108
-88,Distributed Team Awareness,Remote & Mixed-Reality Collaboration,215,1988,18,7,0.556,0.074,1994,6,0.093
-89,Social VR & Presence,Remote & Mixed-Reality Collaboration,184,2017,43,23,0.512,0.245,2022,5,0.696
-90,Tabletop Collaboration,Remote & Mixed-Reality Collaboration,152,1999,14,6,0.571,0.178,2004,5,0.079
-91,Surgical AR & Video Guidance,Remote & Mixed-Reality Collaboration,154,2011,21,4,0.286,0.104,2016,5,0.312
-92,RF & Radar Sensing,Activity Sensing & Recognition,235,2016,65,58,0.708,0.485,2021,5,0.604
-93,Wearable Activity Recognition,Activity Sensing & Recognition,212,2011,30,9,0.433,0.165,2016,5,0.472
-94,Indoor Localization,Activity Sensing & Recognition,170,2002,14,7,0.5,0.071,2008,6,0.165
-95,Urban Mobility Data,Activity Sensing & Recognition,161,2009,31,13,0.484,0.193,2014,5,0.143
-96,Acoustic Health Sensing,Activity Sensing & Recognition,244,2015,46,22,0.435,0.156,2020,5,0.574
-97,Tangible Interaction,"Tangible, VR & Fabrication",884,1995,49,20,0.571,0.088,2000,5,0.139
-98,VR Haptics,"Tangible, VR & Fabrication",755,2002,8,2,0.25,0.007,2009,7,0.453
-99,Deformable & Soft Displays,"Tangible, VR & Fabrication",386,2004,15,2,0.267,0.052,2009,5,0.332
-100,Digital Fabrication,"Tangible, VR & Fabrication",378,2011,49,26,0.653,0.354,2016,5,0.434
-101,E-textiles & Weaving,"Tangible, VR & Fabrication",355,2009,25,6,0.28,0.034,2014,5,0.456
-102,Printed Electronics,"Tangible, VR & Fabrication",318,2007,26,4,0.269,0.063,2012,5,0.289
-103,Data Physicalization,"Tangible, VR & Fabrication",123,2013,39,28,0.718,0.48,2020,7,0.472
-104,Electrical Muscle Stimulation,"Tangible, VR & Fabrication",258,2008,25,5,0.28,0.035,2013,5,0.364
-105,Hand Input & Gesture Sensing,Input & Interaction Techniques,880,2001,12,4,0.333,0.006,2006,5,0.358
-106,Touch & Multi-touch Input,Input & Interaction Techniques,536,1994,23,13,0.565,0.121,2000,6,0.108
-107,Pointing & Target Selection,Input & Interaction Techniques,421,1990,15,2,0.133,0.021,2000,10,0.247
-108,Gaze & Eye Tracking,Input & Interaction Techniques,415,1988,18,5,0.5,0.029,1996,8,0.34
-109,Text Entry,Input & Interaction Techniques,392,1996,17,3,0.353,0.041,2002,6,0.214
-110,Fisheye & Scrolling Techniques,Input & Interaction Techniques,314,1988,25,3,0.32,0.051,1993,5,0.054
-111,Cross-device & Large Displays,Input & Interaction Techniques,280,1998,20,10,0.5,0.046,2003,5,0.104
-113,Mixed Reality Systems,Input & Interaction Techniques,229,2014,38,24,0.526,0.188,2019,5,0.498
-114,Menus & Command Selection,Input & Interaction Techniques,188,1994,14,5,0.357,0.053,1999,5,0.08
+0,3D Pointing & VR Interaction,Input & Interaction Techniques,675,1992,22,4,0.227,0.01,1997,5,0.249
+1,RF & Radar Sensing,Input & Interaction Techniques,656,2013,57,40,0.649,0.21,2018,5,0.559
+2,Wearable Activity Recognition,Input & Interaction Techniques,535,2003,27,14,0.667,0.142,2008,5,0.329
+3,Pointing & Target Selection,Input & Interaction Techniques,523,1992,11,2,0.364,0.01,1999,7,0.256
+4,Hand Input & Gesture Sensing,Input & Interaction Techniques,501,1997,11,4,0.364,0.02,2006,9,0.275
+5,Fisheye & Scrolling Techniques,Input & Interaction Techniques,463,1986,20,2,0.15,0.022,1991,5,0.05
+6,Gesture Elicitation & Recognition,Input & Interaction Techniques,444,1998,14,5,0.571,0.036,2004,6,0.14
+7,Pen & Sketch Input,Input & Interaction Techniques,414,1990,16,2,0.188,0.019,1997,7,0.077
+8,Text Entry,Input & Interaction Techniques,399,1997,19,5,0.368,0.045,2003,6,0.231
+9,Touch & Multi-touch Input,Input & Interaction Techniques,308,2001,16,2,0.125,0.029,2006,5,0.13
+11,VR Haptics,"Tangible, VR & Fabrication",684,2008,30,7,0.3,0.02,2013,5,0.437
+12,Deformable & Soft Displays,"Tangible, VR & Fabrication",679,2002,13,4,0.385,0.066,2007,5,0.3
+13,Tangible Interaction,"Tangible, VR & Fabrication",674,1995,36,14,0.528,0.082,2000,5,0.108
+14,Printed Electronics,"Tangible, VR & Fabrication",518,2007,34,12,0.529,0.129,2012,5,0.297
+15,Digital Fabrication,"Tangible, VR & Fabrication",513,2010,34,18,0.559,0.172,2015,5,0.472
+16,E-textiles & Weaving,"Tangible, VR & Fabrication",477,2005,32,12,0.438,0.08,2010,5,0.363
+17,Tactile & Thermal Feedback,"Tangible, VR & Fabrication",344,2003,19,10,0.526,0.131,2008,5,0.218
+19,Physical Prototyping Toolkits,"Tangible, VR & Fabrication",198,2001,13,3,0.308,0.035,2007,6,0.141
+20,Making & Makerspaces,"Tangible, VR & Fabrication",152,2011,40,14,0.575,0.237,2016,5,0.184
+21,Data Physicalization & Bio-materials,"Tangible, VR & Fabrication",320,2011,39,16,0.359,0.078,2016,5,0.525
+22,Gaze-based Interaction,"Gaze, Eye Tracking & Multimodal Sensing",351,1998,20,7,0.5,0.074,2004,6,0.345
+23,Eye Tracker Quality & Gaze Estimation,"Gaze, Eye Tracking & Multimodal Sensing",260,2006,34,17,0.647,0.204,2012,6,0.3
+24,Scanpaths & Visual Search,"Gaze, Eye Tracking & Multimodal Sensing",255,2002,25,10,0.4,0.063,2008,6,0.384
+25,Pupillometry & Cognitive Load,"Gaze, Eye Tracking & Multimodal Sensing",245,2008,39,21,0.513,0.163,2013,5,0.327
+26,Gaze in Conversation & Groups,"Gaze, Eye Tracking & Multimodal Sensing",218,2002,24,10,0.583,0.188,2007,5,0.22
+27,Authentication & Passwords,"Gaze, Eye Tracking & Multimodal Sensing",200,2009,32,17,0.688,0.27,2014,5,0.3
+28,Affect Recognition,"Gaze, Eye Tracking & Multimodal Sensing",180,2011,48,33,0.583,0.283,2016,5,0.117
+29,Multimodal Sentiment & Speaking,"Gaze, Eye Tracking & Multimodal Sensing",163,2011,47,28,0.745,0.423,2017,6,0.184
+30,Fixation & Saccade Analysis,"Gaze, Eye Tracking & Multimodal Sensing",153,2016,38,24,0.474,0.333,2022,6,0.549
+31,Gaze Calibration & Datasets,"Gaze, Eye Tracking & Multimodal Sensing",140,2002,11,6,0.455,0.036,2012,10,0.186
+32,Reading & Implicit Interest,"Gaze, Eye Tracking & Multimodal Sensing",307,2000,23,5,0.174,0.016,2006,6,0.296
+33,Remote Collaboration & Telepresence,"Collaboration, Displays & Mixed Reality",653,1990,11,4,0.545,0.057,1995,5,0.274
+34,CSCW Foundations,"Collaboration, Displays & Mixed Reality",564,1985,56,21,0.554,0.096,1990,5,0.041
+35,Cross-device & Large Displays,"Collaboration, Displays & Mixed Reality",467,1995,16,2,0.312,0.032,2001,6,0.073
+36,UI Toolkits & Automatic Generation,"Collaboration, Displays & Mixed Reality",378,1981,22,4,0.227,0.016,1986,5,0.013
+38,Tabletop Collaboration,"Collaboration, Displays & Mixed Reality",294,2001,24,10,0.5,0.126,2006,5,0.051
+39,Public & Ambient Displays,"Collaboration, Displays & Mixed Reality",288,2000,27,11,0.444,0.069,2005,5,0.073
+40,Real-time Groupware,"Collaboration, Displays & Mixed Reality",289,1986,18,4,0.333,0.021,1992,6,0.045
+41,Social VR & Presence,"Collaboration, Displays & Mixed Reality",240,2015,40,22,0.475,0.208,2020,5,0.571
+42,Mixed Reality Rooms & Video,"Collaboration, Displays & Mixed Reality",197,2014,65,27,0.508,0.254,2019,5,0.264
+43,Live Streaming,"Collaboration, Displays & Mixed Reality",168,2011,34,12,0.353,0.083,2016,5,0.292
+45,Distributed Cognition & Emergency Coordination,"Collaboration, Displays & Mixed Reality",97,2002,15,8,0.533,0.093,2008,6,0.082
+46,Driver Distraction & Take-over,Automotive & Automated Driving,165,2009,40,21,0.475,0.2,2014,5,0.115
+47,In-Car Interfaces,Automotive & Automated Driving,140,2009,39,25,0.667,0.329,2015,6,0.207
+48,Automated Driving,Automotive & Automated Driving,128,2015,39,28,0.769,0.43,2020,5,0.344
+49,Car Navigation & Driver UIs,Automotive & Automated Driving,122,2008,43,17,0.465,0.311,2013,5,0.066
+50,Autonomous Vehicles & Pedestrians,Automotive & Automated Driving,482,2002,15,6,0.533,0.029,2010,8,0.363
+51,Cognitive Modeling & Mixed Small Topics,Mixed Small Communities,672,1982,37,8,0.351,0.064,1988,6,0.198
+52,Non-visual Navigation,Accessibility & Assistive Tech,152,2014,36,18,0.611,0.382,2019,5,0.441
+53,Accessibility Research Practice,Accessibility & Assistive Tech,152,2015,35,13,0.543,0.27,2020,5,0.5
+54,Visual Accessibility,Accessibility & Assistive Tech,126,2017,39,17,0.615,0.437,2022,5,0.571
+55,Disability Studies in HCI,Accessibility & Assistive Tech,551,2005,28,2,0.143,0.016,2010,5,0.441
+56,Esports & Player Communities,Games & Play,144,2010,25,12,0.4,0.118,2015,5,0.347
+57,Player Experience & Immersion,Games & Play,132,2012,45,15,0.556,0.455,2018,6,0.205
+58,Gamification & Engagement,Games & Play,692,2004,29,5,0.276,0.016,2009,5,0.324
+59,Social Robots in the Field,"Robots, Agents & Human-AI Interaction",1732,2002,63,34,0.667,0.182,2007,5,0.344
+60,Generative AI & Writing,"Robots, Agents & Human-AI Interaction",1160,1999,15,3,0.333,0.005,2004,5,0.721
+61,Voice & Conversational Agents,"Robots, Agents & Human-AI Interaction",1098,1998,21,4,0.19,0.009,2004,6,0.608
+62,End-user Programming & UI Design Tools,"Robots, Agents & Human-AI Interaction",619,1989,18,3,0.333,0.016,1997,8,0.247
+63,Robots & Agents in Education,"Robots, Agents & Human-AI Interaction",475,2001,12,6,0.667,0.021,2011,10,0.585
+64,Video Interfaces & Editing,"Robots, Agents & Human-AI Interaction",427,1985,18,3,0.444,0.03,1991,6,0.227
+65,Meeting Support & Group Displays,"Robots, Agents & Human-AI Interaction",183,2009,29,4,0.207,0.038,2016,7,0.503
+66,Usability Methods & Personas,"Robots, Agents & Human-AI Interaction",158,1990,15,6,0.733,0.082,2000,10,0.278
+67,Multimodal Speech Interfaces,"Robots, Agents & Human-AI Interaction",122,1995,9,5,0.778,0.123,2003,8,0.082
+68,Natural Language Interfaces & Human-AI Teams,"Robots, Agents & Human-AI Interaction",316,2007,25,4,0.12,0.013,2012,5,0.582
+69,Urban Mobility Data,Mobile Life & Attention,221,2010,53,20,0.472,0.24,2015,5,0.095
+71,Notifications & Interruptibility,Mobile Life & Attention,195,2002,27,17,0.667,0.138,2007,5,0.221
+72,Instant Messaging,Mobile Life & Attention,173,1997,15,5,0.6,0.058,2002,5,0.104
+73,Digital Self-control,Mobile Life & Attention,122,2016,32,19,0.562,0.311,2021,5,0.582
+74,Location Sharing & Privacy,Mobile Life & Attention,120,2001,19,9,0.474,0.183,2006,5,0.05
+75,Task Switching at Work,Mobile Life & Attention,121,2014,30,14,0.6,0.347,2020,6,0.298
+76,Mobile Information Needs & Translation,Mobile Life & Attention,275,2000,19,9,0.526,0.055,2006,6,0.153
+77,Recommender Explanations & User-centric Evaluation,Recommender Systems,318,2005,28,9,0.571,0.126,2010,5,0.327
+78,Sequential & Session-based Recommendation,Recommender Systems,244,2011,31,15,0.677,0.139,2016,5,0.553
+79,Neural Session Recommendation,Recommender Systems,226,2009,28,19,0.821,0.195,2014,5,0.341
+80,"Diversity, Novelty & Bias in Recommendation",Recommender Systems,219,2007,23,3,0.217,0.046,2013,6,0.479
+81,Collaborative Filtering & Trust,Recommender Systems,211,2001,16,10,0.5,0.062,2007,6,0.09
+82,Knowledge-aware & LLM Recommendation,Recommender Systems,189,2011,34,19,0.529,0.159,2016,5,0.593
+83,Industrial Recommendation & CTR Prediction,Recommender Systems,178,2016,47,21,0.362,0.169,2021,5,0.59
+84,Web Search & Navigation,Recommender Systems,173,1993,21,7,0.571,0.173,1998,5,0.04
+85,Context-aware & Cold-start Recommendation,Recommender Systems,151,2007,30,9,0.467,0.113,2012,5,0.132
+86,News Recommendation & Offline Evaluation,Recommender Systems,136,2013,22,11,0.5,0.14,2018,5,0.368
+88,Co-design with Children,Children & Learning,334,1996,14,9,0.357,0.066,2003,7,0.177
+89,Tangibles for Learning,Children & Learning,300,2005,47,14,0.383,0.177,2010,5,0.183
+90,Autistic Children & Technology,Children & Learning,243,2007,23,13,0.696,0.107,2012,5,0.362
+91,Youth Online Safety,Children & Learning,225,2014,48,23,0.708,0.378,2019,5,0.547
+92,Children's Agency & Research Ethics,Children & Learning,213,2006,23,2,0.217,0.023,2012,6,0.46
+93,AI Literacy & K-12,Children & Learning,167,2017,39,25,0.718,0.389,2022,5,0.713
+94,Children's Play & Learning Environments,Children & Learning,427,1996,7,5,0.571,0.019,2004,8,0.234
+95,Usable Security & Phishing,"Privacy, Security & Smart Homes",141,2015,34,28,0.647,0.312,2020,5,0.461
+96,Smart-home Privacy,"Privacy, Security & Smart Homes",134,2017,43,15,0.349,0.187,2022,5,0.567
+97,Deceptive Advertising Patterns,"Privacy, Security & Smart Homes",124,2019,50,28,0.56,0.379,2024,5,0.742
+98,Ubicomp Privacy & Home Automation,"Privacy, Security & Smart Homes",313,2003,15,3,0.267,0.016,2011,8,0.39
+99,Movement & Somaesthetics,Design Research & Critical HCI,647,2002,17,4,0.294,0.073,2007,5,0.515
+100,Bodily Play & Spectator Experience,Design Research & Critical HCI,571,1998,22,19,0.591,0.112,2004,6,0.187
+101,Speculative & Critical Design,Design Research & Critical HCI,563,1999,22,6,0.364,0.021,2004,5,0.325
+102,Sustainable HCI,Design Research & Critical HCI,510,2005,33,10,0.455,0.114,2010,5,0.318
+105,Interpretation & Critique in Design Research,Design Research & Critical HCI,340,2005,21,11,0.619,0.094,2010,5,0.312
+106,More-than-human Design,Design Research & Critical HCI,306,2010,37,14,0.541,0.15,2015,5,0.533
+107,VR Meditation & Breathing,Design Research & Critical HCI,225,2014,54,38,0.556,0.253,2019,5,0.462
+108,Playful Food Experiences,Design Research & Critical HCI,174,2010,35,20,0.457,0.167,2015,5,0.374
+109,Calendars & Scheduling,Design Research & Critical HCI,40,2001,9,4,0.444,0.1,,,0.125
+110,Self-tracking & Reflection,Health & Wellbeing,519,2007,39,20,0.462,0.073,2012,5,0.41
+111,Chronic Care & Caregiving,Health & Wellbeing,336,2007,33,20,0.636,0.259,2012,5,0.387
+112,Behavior Sensing,Health & Wellbeing,329,2010,40,26,0.6,0.228,2015,5,0.447
+113,Stress & Mood Technology,Health & Wellbeing,299,2011,39,21,0.487,0.171,2016,5,0.495
+114,Aging & Dementia Care,Health & Wellbeing,287,2010,46,28,0.587,0.289,2015,5,0.362
+115,Personal Informatics Models,Health & Wellbeing,264,2013,46,30,0.522,0.273,2018,5,0.439
+116,Clinical Information Work,Health & Wellbeing,141,2001,15,3,0.533,0.163,2006,5,0.17
+117,"Sleep, ADHD & Lifelogging",Health & Wellbeing,213,2011,36,22,0.528,0.174,2016,5,0.39
+118,Crowdsourcing & Human Computation,"Crowds, Data & Human-AI Decisions",423,2007,40,10,0.325,0.149,2012,5,0.161
+119,Explainable Machine Learning,"Crowds, Data & Human-AI Decisions",415,2016,64,34,0.438,0.154,2021,5,0.675
+120,Data Visualization,"Crowds, Data & Human-AI Decisions",399,2010,40,18,0.6,0.233,2015,5,0.451
+121,Fairness & Clinical AI,"Crowds, Data & Human-AI Decisions",299,2016,48,14,0.458,0.191,2021,5,0.706
+122,Data Work & Infrastructure,"Crowds, Data & Human-AI Decisions",293,2010,40,20,0.575,0.215,2015,5,0.457
+123,Interactive Machine Learning,"Crowds, Data & Human-AI Decisions",173,2014,35,14,0.343,0.127,2019,5,0.306
+124,Peer & Crowd Feedback,"Crowds, Data & Human-AI Decisions",126,2013,45,25,0.756,0.46,2019,6,0.151
+126,Social Media & Mental Health,"Work, Community & Society",689,2006,36,12,0.5,0.073,2011,5,0.325
+127,ICTD & Rural Communities,"Work, Community & Society",591,2006,41,24,0.732,0.115,2011,5,0.318
+128,Wikipedia & Open Source,"Work, Community & Society",567,2001,14,8,0.571,0.099,2007,6,0.175
+129,Crisis Informatics,"Work, Community & Society",534,2008,52,22,0.654,0.221,2013,5,0.457
+130,Gender & Algorithmic Bias,"Work, Community & Society",437,2014,68,30,0.529,0.247,2019,5,0.606
+131,Civic Participation,"Work, Community & Society",409,2009,34,15,0.353,0.139,2014,5,0.484
+132,Moderation & Online Harassment,"Work, Community & Society",340,2014,43,21,0.674,0.229,2019,5,0.635
+133,Gig Work & Labor,"Work, Community & Society",336,2012,41,16,0.561,0.22,2017,5,0.5
+134,"Gender, Intimacy & Safety","Work, Community & Society",328,2014,41,19,0.537,0.241,2019,5,0.619
+135,Enterprise Social Media & Crowdfunding,"Work, Community & Society",230,2005,52,25,0.596,0.326,2010,5,0.065
+136,"Refugees, Hackathons & Crypto","Work, Community & Society",140,2016,43,25,0.581,0.35,2021,5,0.514

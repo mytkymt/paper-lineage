@@ -1,116 +1,137 @@
 sub,name,band,papers,import_share,export_share,type,founder_share_y0_4
-0,Speculative & Critical Design,"Work, Community & Society",851,0.861,0.667,"imported, grown inside",
-1,"Gender, Intimacy & Safety","Work, Community & Society",513,0.82,0.566,"inward (home-grown, kept inside)",0.5
-2,Gender & Algorithmic Bias,"Work, Community & Society",470,0.882,0.625,"imported, grown inside",0.44
-3,Gig Work & Labor,"Work, Community & Society",371,0.832,0.615,"inward (home-grown, kept inside)",0.67
-4,Civic Participation,"Work, Community & Society",322,0.822,0.574,"inward (home-grown, kept inside)",0.4
-5,Infrastructure & Making,"Work, Community & Society",275,0.852,0.604,"inward (home-grown, kept inside)",0.62
-6,Crisis Informatics,"Work, Community & Society",234,0.882,0.73,"imported, grown inside",0.63
-7,ICTD & Rural Communities,"Work, Community & Society",225,0.892,0.667,"imported, grown inside",0.83
-8,Race & Social Justice in HCI,"Work, Community & Society",172,0.867,0.579,"imported, grown inside",0.57
-9,"Religion, Migration & Digital Life","Work, Community & Society",161,0.82,0.607,"inward (home-grown, kept inside)",0.5
-10,CSCW Foundations,"Work, Community & Society",139,0.908,0.903,"bridge (import high, export high)",0.36
-11,Data Work & Crypto Economies,"Work, Community & Society",156,0.823,0.694,"inward (home-grown, kept inside)",0.56
-12,Crowdsourcing & Human Computation,Online Communities & Crowds,391,0.868,0.725,"imported, grown inside",0.6
-13,Wikipedia & Open Source,Online Communities & Crowds,365,0.824,0.778,"home-grown, exported",0.64
-14,Moderation & Online Harassment,Online Communities & Crowds,258,0.837,0.595,"inward (home-grown, kept inside)",0.67
-15,Crisis Informatics & Misinformation,Online Communities & Crowds,216,0.883,0.814,"bridge (import high, export high)",0.5
-16,Live Streaming,Online Communities & Crowds,173,0.849,0.705,"inward (home-grown, kept inside)",0.62
-17,Crowdfunding & Online Feedback,Online Communities & Crowds,368,0.919,0.789,"bridge (import high, export high)",0.32
-18,Self-tracking & Reflection,Health & Wellbeing,427,0.744,0.579,"inward (home-grown, kept inside)",0.71
-19,Chronic Care & Caregiving,Health & Wellbeing,374,0.834,0.554,"inward (home-grown, kept inside)",0.62
-20,Social Media & Mental Health,Health & Wellbeing,343,0.872,0.65,"imported, grown inside",0.29
-21,Behavior Sensing,Health & Wellbeing,277,0.926,0.824,"bridge (import high, export high)",0.6
-22,Stress & Mood Technology,Health & Wellbeing,201,0.878,0.674,"imported, grown inside",0.33
-23,Persuasive Health & Activity,Health & Wellbeing,158,0.824,0.775,"home-grown, exported",0.6
-24,Sleep & Family Routines,Health & Wellbeing,120,0.808,0.59,"inward (home-grown, kept inside)",0.5
-25,Parkinson's & Mobility Support,Health & Wellbeing,71,0.885,0.75,"bridge (import high, export high)",0.5
-26,Smart Home Automation,"Privacy, Security & Smart Homes",199,0.872,0.811,"bridge (import high, export high)",0.56
-27,Youth Online Safety,"Privacy, Security & Smart Homes",162,0.868,0.667,"imported, grown inside",0.5
-28,Usable Security & Phishing,"Privacy, Security & Smart Homes",152,0.875,0.861,"bridge (import high, export high)",0.5
-29,Photo Sharing & Privacy,"Privacy, Security & Smart Homes",149,0.834,0.712,"inward (home-grown, kept inside)",0.67
-30,Authentication & Passwords,"Privacy, Security & Smart Homes",145,0.882,0.857,"bridge (import high, export high)",0.67
-31,Smart-home Privacy,"Privacy, Security & Smart Homes",130,0.823,0.658,"inward (home-grown, kept inside)",0.34
-32,App Permissions & Policy,"Privacy, Security & Smart Homes",122,0.844,0.818,"home-grown, exported",0.75
-34,Location Sharing & Privacy,"Privacy, Security & Smart Homes",134,0.82,0.854,"home-grown, exported",0.17
-35,Task Switching at Work,Mobile Life & Attention,201,0.755,0.793,"home-grown, exported",0.75
-36,Notifications & Interruptibility,Mobile Life & Attention,183,0.792,0.737,"inward (home-grown, kept inside)",0.58
-37,Social Network Sites at Work,Mobile Life & Attention,156,0.892,0.857,"bridge (import high, export high)",0.6
-38,Instant Messaging,Mobile Life & Attention,144,0.823,0.818,"home-grown, exported",0.67
-39,Digital Self-control,Mobile Life & Attention,130,0.743,0.646,"inward (home-grown, kept inside)",0.38
-40,Smartphone Usage Logging,Mobile Life & Attention,120,0.804,0.867,"home-grown, exported",0.33
-41,Email & Peripheral Displays,Mobile Life & Attention,331,0.911,0.857,"bridge (import high, export high)",
-42,Older Adults & Technology,"Ageing, Care & Automation",208,0.855,0.722,"imported, grown inside",0.25
-43,Automated Driving,"Ageing, Care & Automation",136,0.933,0.868,"bridge (import high, export high)",0.71
-44,Dementia & Ageing Care,"Ageing, Care & Automation",134,0.859,0.592,"imported, grown inside",1.0
-45,Autonomous Vehicle Communication,"Ageing, Care & Automation",291,0.923,0.929,"bridge (import high, export high)",0.33
-46,Memory & Reminiscence,Sustainability & Everyday Living,319,0.811,0.667,"inward (home-grown, kept inside)",
-47,Sustainable HCI,Sustainability & Everyday Living,293,0.867,0.733,"imported, grown inside",0.71
-48,Multispecies & Urban Nature,Sustainability & Everyday Living,192,0.803,0.67,"inward (home-grown, kept inside)",0.5
-49,Bio-materials & Sustainable Making,Sustainability & Everyday Living,167,0.82,0.632,"inward (home-grown, kept inside)",0.57
-50,Playful Food Experiences,Sustainability & Everyday Living,144,0.855,0.623,"imported, grown inside",0.5
-51,"Materials, Death & Legacy",Sustainability & Everyday Living,267,0.832,0.64,"inward (home-grown, kept inside)",0.67
-52,Explainable Machine Learning,"AI, Data & Intelligent Interfaces",1000,0.814,0.784,"home-grown, exported",0.17
-53,Generative AI & Writing,"AI, Data & Intelligent Interfaces",994,0.878,0.714,"imported, grown inside",
-54,Voice & Conversational Agents,"AI, Data & Intelligent Interfaces",759,0.918,0.819,"bridge (import high, export high)",0.2
-55,GUI Toolkits & Web Interfaces,"AI, Data & Intelligent Interfaces",752,0.892,0.867,"bridge (import high, export high)",0.35
-56,Data Visualization,"AI, Data & Intelligent Interfaces",416,0.878,0.842,"bridge (import high, export high)",0.75
-57,Search & Recommendation,"AI, Data & Intelligent Interfaces",395,0.838,0.91,"home-grown, exported",0.42
-58,Video Interfaces & Editing,"AI, Data & Intelligent Interfaces",372,0.86,0.778,"bridge (import high, export high)",
-59,Programming & Notebooks,"AI, Data & Intelligent Interfaces",360,0.918,0.779,"bridge (import high, export high)",0.54
-60,Prototyping & Authoring Tools,"AI, Data & Intelligent Interfaces",292,0.867,0.815,"bridge (import high, export high)",
-61,Meeting Capture & Reading,"AI, Data & Intelligent Interfaces",253,0.867,0.827,"bridge (import high, export high)",
-62,Usability Methods & Personas,"AI, Data & Intelligent Interfaces",195,0.89,0.913,"bridge (import high, export high)",0.33
-63,Clinical Information Work,"AI, Data & Intelligent Interfaces",251,0.885,0.842,"bridge (import high, export high)",0.67
-64,Gamification & Engagement,Games & Play,457,0.921,0.762,"bridge (import high, export high)",0.5
-65,Movement & Somaesthetics,Games & Play,340,0.819,0.652,"inward (home-grown, kept inside)",0.4
-66,Exergames & Bodily Play,Games & Play,257,0.845,0.667,"inward (home-grown, kept inside)",
-67,Esports & Player Communities,Games & Play,245,0.81,0.735,"inward (home-grown, kept inside)",0.38
-68,Location-based Museum Play,Games & Play,158,0.866,0.848,"bridge (import high, export high)",0.34
-69,VR Meditation & Breathing,Games & Play,155,0.834,0.651,"inward (home-grown, kept inside)",0.4
-70,Brain-Computer Interfaces,Games & Play,123,0.943,0.837,"bridge (import high, export high)",0.33
-71,Rehabilitation Games,Games & Play,120,0.864,0.723,"imported, grown inside",0.62
-72,Playful Experience & Drones,Games & Play,335,0.882,0.787,"bridge (import high, export high)",0.4
-73,Visual Accessibility,Accessibility & Assistive Tech,399,0.83,0.649,"inward (home-grown, kept inside)",0.4
-74,Neurodivergence & Autism,Accessibility & Assistive Tech,378,0.868,0.714,"imported, grown inside",0.33
-75,Web Accessibility,Accessibility & Assistive Tech,319,0.837,0.828,"home-grown, exported",0.79
-76,Deaf & Sign Language Tech,Accessibility & Assistive Tech,311,0.895,0.667,"imported, grown inside",0.6
-77,Non-visual Navigation,Accessibility & Assistive Tech,286,0.889,0.746,"imported, grown inside",0.5
-78,Tactile Graphics,Accessibility & Assistive Tech,235,0.888,0.693,"imported, grown inside",0.4
-79,Blind & Low-vision Access,Accessibility & Assistive Tech,232,0.884,0.686,"imported, grown inside",
-80,DIY Assistive Technology,Accessibility & Assistive Tech,153,0.834,0.596,"inward (home-grown, kept inside)",0.57
-81,Accessible Games & VR,Accessibility & Assistive Tech,143,0.824,0.719,"inward (home-grown, kept inside)",0.67
-82,AAC & Communication Disabilities,Accessibility & Assistive Tech,223,0.9,0.771,"bridge (import high, export high)",0.71
-83,Real-time Groupware,Remote & Mixed-Reality Collaboration,285,0.954,0.904,"bridge (import high, export high)",0.31
-84,Gaze in Video Communication,Remote & Mixed-Reality Collaboration,254,0.798,0.801,"home-grown, exported",0.67
-85,Family Video Communication,Remote & Mixed-Reality Collaboration,253,0.795,0.66,"inward (home-grown, kept inside)",0.25
-86,Augmented Reality Collaboration,Remote & Mixed-Reality Collaboration,231,0.785,0.757,"home-grown, exported",0.29
-87,Public & Ambient Displays,Remote & Mixed-Reality Collaboration,222,0.72,0.778,"home-grown, exported",0.32
-88,Distributed Team Awareness,Remote & Mixed-Reality Collaboration,215,0.845,0.87,"home-grown, exported",0.46
-89,Social VR & Presence,Remote & Mixed-Reality Collaboration,184,0.887,0.78,"bridge (import high, export high)",0.43
-90,Tabletop Collaboration,Remote & Mixed-Reality Collaboration,152,0.706,0.818,"home-grown, exported",0.33
-91,Surgical AR & Video Guidance,Remote & Mixed-Reality Collaboration,154,0.879,0.833,"bridge (import high, export high)",0.25
-92,RF & Radar Sensing,Activity Sensing & Recognition,235,0.893,0.879,"bridge (import high, export high)",0.75
-93,Wearable Activity Recognition,Activity Sensing & Recognition,212,0.92,0.894,"bridge (import high, export high)",0.45
-94,Indoor Localization,Activity Sensing & Recognition,170,0.86,0.914,"bridge (import high, export high)",0.5
-95,Urban Mobility Data,Activity Sensing & Recognition,161,0.893,0.915,"bridge (import high, export high)",0.53
-96,Acoustic Health Sensing,Activity Sensing & Recognition,244,0.919,0.824,"bridge (import high, export high)",0.33
-97,Tangible Interaction,"Tangible, VR & Fabrication",884,0.765,0.785,"home-grown, exported",0.64
-98,VR Haptics,"Tangible, VR & Fabrication",755,0.816,0.706,"inward (home-grown, kept inside)",0.0
-99,Deformable & Soft Displays,"Tangible, VR & Fabrication",386,0.698,0.581,"inward (home-grown, kept inside)",0.06
-100,Digital Fabrication,"Tangible, VR & Fabrication",378,0.707,0.489,"inward (home-grown, kept inside)",0.73
-101,E-textiles & Weaving,"Tangible, VR & Fabrication",355,0.848,0.483,"inward (home-grown, kept inside)",0.0
-102,Printed Electronics,"Tangible, VR & Fabrication",318,0.709,0.5,"inward (home-grown, kept inside)",0.29
-103,Data Physicalization,"Tangible, VR & Fabrication",123,0.779,0.647,"inward (home-grown, kept inside)",0.73
-104,Electrical Muscle Stimulation,"Tangible, VR & Fabrication",258,0.906,0.755,"bridge (import high, export high)",0.23
-105,Hand Input & Gesture Sensing,Input & Interaction Techniques,880,0.756,0.647,"inward (home-grown, kept inside)",0.4
-106,Touch & Multi-touch Input,Input & Interaction Techniques,536,0.757,0.7,"inward (home-grown, kept inside)",0.5
-107,Pointing & Target Selection,Input & Interaction Techniques,421,0.834,0.705,"inward (home-grown, kept inside)",0.1
-108,Gaze & Eye Tracking,Input & Interaction Techniques,415,0.835,0.842,"home-grown, exported",0.83
-109,Text Entry,Input & Interaction Techniques,392,0.863,0.704,"imported, grown inside",0.4
-110,Fisheye & Scrolling Techniques,Input & Interaction Techniques,314,0.867,0.908,"bridge (import high, export high)",0.18
-111,Cross-device & Large Displays,Input & Interaction Techniques,280,0.722,0.771,"home-grown, exported",0.29
-112,Gesture Elicitation & Recognition,Input & Interaction Techniques,249,0.806,0.761,"home-grown, exported",
-113,Mixed Reality Systems,Input & Interaction Techniques,229,0.806,0.813,"home-grown, exported",0.67
-114,Menus & Command Selection,Input & Interaction Techniques,188,0.866,0.766,"bridge (import high, export high)",0.46
-115,Multimodal Speech Input,Input & Interaction Techniques,66,0.876,0.875,"bridge (import high, export high)",
+0,3D Pointing & VR Interaction,Input & Interaction Techniques,675,0.848,0.795,"home-grown, exported",0.22
+1,RF & Radar Sensing,Input & Interaction Techniques,656,0.863,0.818,"home-grown, exported",0.62
+2,Wearable Activity Recognition,Input & Interaction Techniques,535,0.896,0.896,"bridge (import high, export high)",0.8
+3,Pointing & Target Selection,Input & Interaction Techniques,523,0.855,0.75,"inward (home-grown, kept inside)",0.33
+4,Hand Input & Gesture Sensing,Input & Interaction Techniques,501,0.817,0.642,"inward (home-grown, kept inside)",0.67
+5,Fisheye & Scrolling Techniques,Input & Interaction Techniques,463,0.87,0.881,"bridge (import high, export high)",0.2
+6,Gesture Elicitation & Recognition,Input & Interaction Techniques,444,0.765,0.676,"inward (home-grown, kept inside)",0.58
+7,Pen & Sketch Input,Input & Interaction Techniques,414,0.803,0.727,"inward (home-grown, kept inside)",0.17
+8,Text Entry,Input & Interaction Techniques,399,0.825,0.667,"inward (home-grown, kept inside)",0.5
+9,Touch & Multi-touch Input,Input & Interaction Techniques,308,0.697,0.579,"inward (home-grown, kept inside)",0.1
+11,VR Haptics,"Tangible, VR & Fabrication",684,0.887,0.687,"imported, grown inside",0.5
+12,Deformable & Soft Displays,"Tangible, VR & Fabrication",679,0.764,0.593,"inward (home-grown, kept inside)",0.7
+13,Tangible Interaction,"Tangible, VR & Fabrication",674,0.734,0.743,"inward (home-grown, kept inside)",0.64
+14,Printed Electronics,"Tangible, VR & Fabrication",518,0.77,0.545,"inward (home-grown, kept inside)",0.51
+15,Digital Fabrication,"Tangible, VR & Fabrication",513,0.666,0.455,"inward (home-grown, kept inside)",0.57
+16,E-textiles & Weaving,"Tangible, VR & Fabrication",477,0.863,0.574,"inward (home-grown, kept inside)",0.5
+17,Tactile & Thermal Feedback,"Tangible, VR & Fabrication",344,0.821,0.743,"inward (home-grown, kept inside)",0.75
+18,VR Locomotion & Presence,"Tangible, VR & Fabrication",286,0.952,0.838,"bridge (import high, export high)",
+19,Physical Prototyping Toolkits,"Tangible, VR & Fabrication",198,0.761,0.7,"inward (home-grown, kept inside)",0.33
+20,Making & Makerspaces,"Tangible, VR & Fabrication",152,0.845,0.609,"inward (home-grown, kept inside)",0.5
+21,Data Physicalization & Bio-materials,"Tangible, VR & Fabrication",320,0.806,0.688,"inward (home-grown, kept inside)",0.33
+22,Gaze-based Interaction,"Gaze, Eye Tracking & Multimodal Sensing",351,0.74,0.759,"inward (home-grown, kept inside)",0.38
+23,Eye Tracker Quality & Gaze Estimation,"Gaze, Eye Tracking & Multimodal Sensing",260,0.851,0.85,"home-grown, exported",0.71
+24,Scanpaths & Visual Search,"Gaze, Eye Tracking & Multimodal Sensing",255,0.871,0.867,"bridge (import high, export high)",0.45
+25,Pupillometry & Cognitive Load,"Gaze, Eye Tracking & Multimodal Sensing",245,0.897,0.84,"bridge (import high, export high)",0.57
+26,Gaze in Conversation & Groups,"Gaze, Eye Tracking & Multimodal Sensing",218,0.918,0.872,"bridge (import high, export high)",0.52
+27,Authentication & Passwords,"Gaze, Eye Tracking & Multimodal Sensing",200,0.906,0.843,"bridge (import high, export high)",0.6
+28,Affect Recognition,"Gaze, Eye Tracking & Multimodal Sensing",180,0.954,0.929,"bridge (import high, export high)",0.64
+29,Multimodal Sentiment & Speaking,"Gaze, Eye Tracking & Multimodal Sensing",163,0.952,0.896,"bridge (import high, export high)",0.8
+30,Fixation & Saccade Analysis,"Gaze, Eye Tracking & Multimodal Sensing",153,0.919,0.868,"bridge (import high, export high)",0.44
+31,Gaze Calibration & Datasets,"Gaze, Eye Tracking & Multimodal Sensing",140,0.868,0.725,"imported, grown inside",0.5
+32,Reading & Implicit Interest,"Gaze, Eye Tracking & Multimodal Sensing",307,0.922,0.871,"bridge (import high, export high)",0.12
+33,Remote Collaboration & Telepresence,"Collaboration, Displays & Mixed Reality",653,0.785,0.789,"home-grown, exported",0.6
+34,CSCW Foundations,"Collaboration, Displays & Mixed Reality",564,0.911,0.897,"bridge (import high, export high)",0.89
+35,Cross-device & Large Displays,"Collaboration, Displays & Mixed Reality",467,0.782,0.762,"home-grown, exported",0.33
+36,UI Toolkits & Automatic Generation,"Collaboration, Displays & Mixed Reality",378,0.915,0.878,"bridge (import high, export high)",0.14
+37,AR Authoring & Assembly,"Collaboration, Displays & Mixed Reality",349,0.848,0.759,"inward (home-grown, kept inside)",
+38,Tabletop Collaboration,"Collaboration, Displays & Mixed Reality",294,0.726,0.764,"home-grown, exported",0.33
+39,Public & Ambient Displays,"Collaboration, Displays & Mixed Reality",288,0.723,0.757,"inward (home-grown, kept inside)",0.43
+40,Real-time Groupware,"Collaboration, Displays & Mixed Reality",289,0.892,0.885,"bridge (import high, export high)",0.25
+41,Social VR & Presence,"Collaboration, Displays & Mixed Reality",240,0.89,0.795,"bridge (import high, export high)",0.57
+42,Mixed Reality Rooms & Video,"Collaboration, Displays & Mixed Reality",197,0.945,0.8,"bridge (import high, export high)",0.5
+43,Live Streaming,"Collaboration, Displays & Mixed Reality",168,0.809,0.714,"inward (home-grown, kept inside)",0.2
+44,Meeting Capture & Reading,"Collaboration, Displays & Mixed Reality",158,0.874,0.833,"bridge (import high, export high)",
+45,Distributed Cognition & Emergency Coordination,"Collaboration, Displays & Mixed Reality",97,0.935,0.848,"bridge (import high, export high)",0.5
+46,Driver Distraction & Take-over,Automotive & Automated Driving,165,0.937,0.778,"bridge (import high, export high)",0.57
+47,In-Car Interfaces,Automotive & Automated Driving,140,0.858,0.728,"inward (home-grown, kept inside)",0.62
+48,Automated Driving,Automotive & Automated Driving,128,0.896,0.791,"bridge (import high, export high)",0.73
+49,Car Navigation & Driver UIs,Automotive & Automated Driving,122,0.943,0.8,"bridge (import high, export high)",0.36
+50,Autonomous Vehicles & Pedestrians,Automotive & Automated Driving,482,0.869,0.819,"bridge (import high, export high)",0.34
+51,Cognitive Modeling & Mixed Small Topics,Mixed Small Communities,672,0.885,0.933,"bridge (import high, export high)",0.33
+52,Non-visual Navigation,Accessibility & Assistive Tech,152,0.896,0.776,"bridge (import high, export high)",0.6
+53,Accessibility Research Practice,Accessibility & Assistive Tech,152,0.875,0.667,"imported, grown inside",0.25
+54,Visual Accessibility,Accessibility & Assistive Tech,126,0.747,0.727,"inward (home-grown, kept inside)",0.75
+55,Disability Studies in HCI,Accessibility & Assistive Tech,551,0.909,0.778,"bridge (import high, export high)",0.0
+56,Esports & Player Communities,Games & Play,144,0.798,0.654,"inward (home-grown, kept inside)",0.33
+57,Player Experience & Immersion,Games & Play,132,0.921,0.75,"imported, grown inside",0.53
+58,Gamification & Engagement,Games & Play,692,0.913,0.8,"bridge (import high, export high)",0.29
+59,Social Robots in the Field,"Robots, Agents & Human-AI Interaction",1732,0.933,0.875,"bridge (import high, export high)",0.67
+60,Generative AI & Writing,"Robots, Agents & Human-AI Interaction",1160,0.899,0.692,"imported, grown inside",0.67
+61,Voice & Conversational Agents,"Robots, Agents & Human-AI Interaction",1098,0.901,0.75,"imported, grown inside",0.12
+62,End-user Programming & UI Design Tools,"Robots, Agents & Human-AI Interaction",619,0.871,0.765,"bridge (import high, export high)",0.25
+63,Robots & Agents in Education,"Robots, Agents & Human-AI Interaction",475,0.917,0.846,"bridge (import high, export high)",0.75
+64,Video Interfaces & Editing,"Robots, Agents & Human-AI Interaction",427,0.868,0.75,"imported, grown inside",0.42
+65,Meeting Support & Group Displays,"Robots, Agents & Human-AI Interaction",183,0.921,0.783,"bridge (import high, export high)",0.33
+66,Usability Methods & Personas,"Robots, Agents & Human-AI Interaction",158,0.782,0.919,"home-grown, exported",0.62
+67,Multimodal Speech Interfaces,"Robots, Agents & Human-AI Interaction",122,0.906,0.898,"bridge (import high, export high)",0.67
+68,Natural Language Interfaces & Human-AI Teams,"Robots, Agents & Human-AI Interaction",316,0.922,0.84,"bridge (import high, export high)",0.2
+69,Urban Mobility Data,Mobile Life & Attention,221,0.908,0.907,"bridge (import high, export high)",0.44
+70,Email & Web Revisitation,Mobile Life & Attention,221,0.866,0.837,"home-grown, exported",
+71,Notifications & Interruptibility,Mobile Life & Attention,195,0.793,0.731,"inward (home-grown, kept inside)",0.64
+72,Instant Messaging,Mobile Life & Attention,173,0.766,0.803,"home-grown, exported",0.67
+73,Digital Self-control,Mobile Life & Attention,122,0.732,0.629,"inward (home-grown, kept inside)",0.44
+74,Location Sharing & Privacy,Mobile Life & Attention,120,0.834,0.875,"home-grown, exported",0.5
+75,Task Switching at Work,Mobile Life & Attention,121,0.797,0.75,"inward (home-grown, kept inside)",0.67
+76,Mobile Information Needs & Translation,Mobile Life & Attention,275,0.891,0.8,"bridge (import high, export high)",0.6
+77,Recommender Explanations & User-centric Evaluation,Recommender Systems,318,0.873,0.848,"bridge (import high, export high)",0.67
+78,Sequential & Session-based Recommendation,Recommender Systems,244,0.875,0.923,"bridge (import high, export high)",0.62
+79,Neural Session Recommendation,Recommender Systems,226,0.968,0.912,"bridge (import high, export high)",1.0
+80,"Diversity, Novelty & Bias in Recommendation",Recommender Systems,219,0.927,0.911,"bridge (import high, export high)",0.26
+81,Collaborative Filtering & Trust,Recommender Systems,211,0.909,0.955,"bridge (import high, export high)",0.38
+82,Knowledge-aware & LLM Recommendation,Recommender Systems,189,0.877,0.947,"bridge (import high, export high)",0.5
+83,Industrial Recommendation & CTR Prediction,Recommender Systems,178,0.931,0.955,"bridge (import high, export high)",0.35
+84,Web Search & Navigation,Recommender Systems,173,0.857,0.905,"home-grown, exported",0.47
+85,Context-aware & Cold-start Recommendation,Recommender Systems,151,0.943,0.937,"bridge (import high, export high)",0.44
+86,News Recommendation & Offline Evaluation,Recommender Systems,136,0.905,0.914,"bridge (import high, export high)",0.57
+87,Social Tagging & Group Recommendation,Recommender Systems,411,0.91,0.927,"bridge (import high, export high)",
+88,Co-design with Children,Children & Learning,334,0.882,0.75,"imported, grown inside",0.33
+89,Tangibles for Learning,Children & Learning,300,0.821,0.75,"inward (home-grown, kept inside)",0.38
+90,Autistic Children & Technology,Children & Learning,243,0.882,0.813,"bridge (import high, export high)",0.67
+91,Youth Online Safety,Children & Learning,225,0.884,0.623,"imported, grown inside",0.8
+92,Children's Agency & Research Ethics,Children & Learning,213,0.904,0.714,"imported, grown inside",0.23
+93,AI Literacy & K-12,Children & Learning,167,0.858,0.688,"inward (home-grown, kept inside)",0.8
+94,Children's Play & Learning Environments,Children & Learning,427,0.863,0.727,"inward (home-grown, kept inside)",0.67
+95,Usable Security & Phishing,"Privacy, Security & Smart Homes",141,0.855,0.84,"home-grown, exported",0.71
+96,Smart-home Privacy,"Privacy, Security & Smart Homes",134,0.805,0.65,"inward (home-grown, kept inside)",0.27
+97,Deceptive Advertising Patterns,"Privacy, Security & Smart Homes",124,0.842,0.78,"home-grown, exported",0.7
+98,Ubicomp Privacy & Home Automation,"Privacy, Security & Smart Homes",313,0.867,0.821,"home-grown, exported",0.33
+99,Movement & Somaesthetics,Design Research & Critical HCI,647,0.87,0.644,"imported, grown inside",0.2
+100,Bodily Play & Spectator Experience,Design Research & Critical HCI,571,0.767,0.713,"inward (home-grown, kept inside)",0.52
+101,Speculative & Critical Design,Design Research & Critical HCI,563,0.857,0.682,"inward (home-grown, kept inside)",0.33
+102,Sustainable HCI,Design Research & Critical HCI,510,0.848,0.673,"inward (home-grown, kept inside)",0.46
+103,Family Video Communication,Design Research & Critical HCI,429,0.858,0.687,"inward (home-grown, kept inside)",
+104,Memory & Reminiscence,Design Research & Critical HCI,358,0.802,0.625,"inward (home-grown, kept inside)",
+105,Interpretation & Critique in Design Research,Design Research & Critical HCI,340,0.796,0.5,"inward (home-grown, kept inside)",0.25
+106,More-than-human Design,Design Research & Critical HCI,306,0.847,0.684,"inward (home-grown, kept inside)",0.62
+107,VR Meditation & Breathing,Design Research & Critical HCI,225,0.875,0.639,"imported, grown inside",0.57
+108,Playful Food Experiences,Design Research & Critical HCI,174,0.883,0.628,"imported, grown inside",0.5
+109,Calendars & Scheduling,Design Research & Critical HCI,40,0.779,0.726,"inward (home-grown, kept inside)",0.67
+110,Self-tracking & Reflection,Health & Wellbeing,519,0.823,0.665,"inward (home-grown, kept inside)",0.39
+111,Chronic Care & Caregiving,Health & Wellbeing,336,0.807,0.569,"inward (home-grown, kept inside)",0.42
+112,Behavior Sensing,Health & Wellbeing,329,0.93,0.846,"bridge (import high, export high)",0.66
+113,Stress & Mood Technology,Health & Wellbeing,299,0.87,0.647,"imported, grown inside",0.6
+114,Aging & Dementia Care,Health & Wellbeing,287,0.871,0.7,"imported, grown inside",0.7
+115,Personal Informatics Models,Health & Wellbeing,264,0.756,0.523,"inward (home-grown, kept inside)",0.5
+116,Clinical Information Work,Health & Wellbeing,141,0.903,0.746,"imported, grown inside",0.42
+117,"Sleep, ADHD & Lifelogging",Health & Wellbeing,213,0.882,0.8,"bridge (import high, export high)",0.5
+118,Crowdsourcing & Human Computation,"Crowds, Data & Human-AI Decisions",423,0.862,0.719,"inward (home-grown, kept inside)",0.19
+119,Explainable Machine Learning,"Crowds, Data & Human-AI Decisions",415,0.772,0.777,"home-grown, exported",0.46
+120,Data Visualization,"Crowds, Data & Human-AI Decisions",399,0.916,0.846,"bridge (import high, export high)",0.5
+121,Fairness & Clinical AI,"Crowds, Data & Human-AI Decisions",299,0.832,0.695,"inward (home-grown, kept inside)",0.42
+122,Data Work & Infrastructure,"Crowds, Data & Human-AI Decisions",293,0.885,0.632,"imported, grown inside",0.62
+123,Interactive Machine Learning,"Crowds, Data & Human-AI Decisions",173,0.861,0.787,"home-grown, exported",0.4
+124,Peer & Crowd Feedback,"Crowds, Data & Human-AI Decisions",126,0.904,0.6,"imported, grown inside",0.75
+125,Computational Notebooks,"Crowds, Data & Human-AI Decisions",159,0.871,0.824,"bridge (import high, export high)",
+126,Social Media & Mental Health,"Work, Community & Society",689,0.84,0.704,"inward (home-grown, kept inside)",0.52
+127,ICTD & Rural Communities,"Work, Community & Society",591,0.86,0.593,"inward (home-grown, kept inside)",0.74
+128,Wikipedia & Open Source,"Work, Community & Society",567,0.835,0.778,"home-grown, exported",0.5
+129,Crisis Informatics,"Work, Community & Society",534,0.874,0.774,"bridge (import high, export high)",0.75
+130,Gender & Algorithmic Bias,"Work, Community & Society",437,0.801,0.708,"inward (home-grown, kept inside)",0.36
+131,Civic Participation,"Work, Community & Society",409,0.825,0.533,"inward (home-grown, kept inside)",0.17
+132,Moderation & Online Harassment,"Work, Community & Society",340,0.834,0.591,"inward (home-grown, kept inside)",0.5
+133,Gig Work & Labor,"Work, Community & Society",336,0.888,0.629,"imported, grown inside",0.54
+134,"Gender, Intimacy & Safety","Work, Community & Society",328,0.813,0.56,"inward (home-grown, kept inside)",0.5
+135,Enterprise Social Media & Crowdfunding,"Work, Community & Society",230,0.834,0.842,"home-grown, exported",0.58
+136,"Refugees, Hackathons & Crypto","Work, Community & Society",140,0.848,0.667,"inward (home-grown, kept inside)",0.58

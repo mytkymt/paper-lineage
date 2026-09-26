@@ -1,322 +1,385 @@
 sub,name,year,founder_paper,citers,citers_outside,years_to_10_outside,self_share_first20
-1,"Gender, Intimacy & Safety",2010,Feminist HCI,451,438,3,0.25
-1,"Gender, Intimacy & Safety",2010,Postcolonial computing,274,265,3,0.15
-1,"Gender, Intimacy & Safety",2018,Design Within a Patriarchal Society,104,90,2,0.15
-2,Gender & Algorithmic Bias,2015,"Disclosure, Stress, and Support During Gender Transition on Facebook",129,100,2,0.25
-2,Gender & Algorithmic Bias,2018,Safe Spaces and Safe Places,131,122,2,0.1
-2,Gender & Algorithmic Bias,2018,The Misgendering Machines,107,104,2,0.05
-3,Gig Work & Labor,2013,Turkopticon,272,265,2,0.05
-3,Gig Work & Labor,2015,Working with Machines,154,140,2,0.15
-3,Gig Work & Labor,2016,Standing Out from the Crowd,117,117,1,0.0
-4,Civic Participation,2015,Data-in-Place,101,98,1,0.1
-4,Civic Participation,2015,Strangers at the Gate,131,118,3,0.15
-4,Civic Participation,2014,PosterVote,52,35,2,0.4
-5,Infrastructure & Making,2006,The human infrastructure of cyberinfrastructure,120,109,7,0.3
-5,Infrastructure & Making,2014,Emerging sites of HCI innovation,93,87,2,0.15
-5,Infrastructure & Making,2015,"Hacking Culture, Not Devices",92,83,2,0.15
-6,Crisis Informatics,2011,"""Voluntweeters""",105,82,3,0.35
-6,Crisis Informatics,2010,Microblogging during two natural hazards events,92,80,2,0.15
-6,Crisis Informatics,2007,Citizen communications in crisis,58,51,6,0.25
-7,ICTD & Rural Communities,2010,Avaaj Otalo,86,84,3,0.1
-7,ICTD & Rural Communities,2010,Mobile-izing health workers in rural India,53,51,7,0.1
-7,ICTD & Rural Communities,2012,"""Yours is better!""",97,88,5,0.3
-8,Race & Social Justice in HCI,2019,Deconstructing Community-Based Collaborative Design,249,226,2,0.2
-8,Race & Social Justice in HCI,2020,Critical Race Theory for HCI,195,181,1,0.0
-8,Race & Social Justice in HCI,2016,Social Justice-Oriented Interaction Design,227,209,2,0.2
-9,"Religion, Migration & Digital Life",2006,Technology in spiritual formation,39,34,12,0.25
-9,"Religion, Migration & Digital Life",2006,"No More SMS from Jesus: Ubicomp, Religion and Techno-spiritual Practic",54,54,5,0.0
-9,"Religion, Migration & Digital Life",2007,Sabbath day home automation,92,91,2,0.05
-10,CSCW Foundations,1988,Why CSCW applications fail: problems in the design and evaluationof or,148,148,3,0.0
-10,CSCW Foundations,1992,Faltering from ethnography to design,58,55,5,0.15
-10,CSCW Foundations,1992,Ethnographically-informed systems design for air traffic control,50,46,6,0.2
-11,Data Work & Crypto Economies,2014,Money talks,46,46,3,0.0
-11,Data Work & Crypto Economies,2017,A Design Perspective on Data,48,48,3,0.0
-11,Data Work & Crypto Economies,2018,Making Sense of Blockchain Applications,35,26,3,0.35
-12,Crowdsourcing & Human Computation,2010,Soylent,168,140,2,0.35
-12,Crowdsourcing & Human Computation,2008,Crowdsourcing user studies with Mechanical Turk,212,192,3,0.25
-12,Crowdsourcing & Human Computation,2011,CrowdForge,103,94,3,0.25
-13,Wikipedia & Open Source,2007,SuggestBot,66,57,4,0.1
-13,Wikipedia & Open Source,2007,"He says, she says",90,80,4,0.3
-13,Wikipedia & Open Source,2008,Harnessing the wisdom of crowds in wikipedia,87,72,4,0.35
-14,Moderation & Online Harassment,2019,Human-Machine Collaboration for Content Regulation,118,106,1,0.15
-14,Moderation & Online Harassment,2017,Shaping Pro and Anti-Social Behavior on Twitch Through Moderation and ,116,101,2,0.3
-14,Moderation & Online Harassment,2004,Slash(dot) and burn,126,122,6,0.05
-15,Crisis Informatics & Misinformation,2018,Falling for Fake News,37,37,3,0.0
-15,Crisis Informatics & Misinformation,2009,NewsCube,44,40,7,0.15
-15,Crisis Informatics & Misinformation,2018,To Label or Not to Label,22,19,5,0.15
-16,Live Streaming,2014,Streaming on twitch,125,123,3,0.1
-16,Live Streaming,2016,Meerkat and Periscope,53,50,3,0.15
-16,Live Streaming,2017,"What Makes Live Events Engaging on Facebook Live, Periscope, and Snapc",48,47,2,0.05
-17,Crowdfunding & Online Feedback,2008,Predictors of answer quality in online Q&amp;A sites,45,44,4,0.05
-17,Crowdfunding & Online Feedback,2010,"What do people ask their social networks, and why?",82,68,3,0.2
-17,Crowdfunding & Online Feedback,2006,Effects of machine translation on collaborative work,25,20,9,0.15
-18,Self-tracking & Reflection,2010,A stage-based model of personal informatics systems,349,346,3,0.05
-18,Self-tracking & Reflection,2015,A lived informatics model of personal informatics,248,201,2,0.5
-18,Self-tracking & Reflection,2014,Personal tracking as lived informatics,254,251,1,0.05
-19,Chronic Care & Caregiving,2008,MAHI,156,148,3,0.15
-19,Chronic Care & Caregiving,2016,Boundary Negotiating Artifacts in Personal Informatics,110,95,1,0.2
-19,Chronic Care & Caregiving,2013,Caring for caregivers,103,95,4,0.1
-20,Social Media & Mental Health,2017,"Sensitive Self-disclosures, Responses, and Social Support on Instagram",146,128,1,0.25
-20,Social Media & Mental Health,2016,Understanding Social Media Disclosures of Sexual Abuse Through the Len,154,113,2,0.5
-20,Social Media & Mental Health,2011,"It's not that i don't have problems, i'm just not putting them on face",124,115,2,0.0
-21,Behavior Sensing,2014,StudentLife,130,111,3,0.25
-21,Behavior Sensing,2015,Trajectories of depression,71,67,3,0.1
-21,Behavior Sensing,2018,Tracking Depression Dynamics in College Students Using Mobile Phone an,57,48,2,0.2
-22,Stress & Mood Technology,2012,Engagement with online mental health interventions,50,41,5,0.15
-22,Stress & Mood Technology,2016,EmotionCheck,48,44,4,0.15
-22,Stress & Mood Technology,2010,Mind the body!,45,39,8,0.2
-23,Persuasive Health & Activity,2006,Fish’n’Steps: Encouraging Physical Activity with an Interactive Comput,179,174,2,0.1
-23,Persuasive Health & Activity,2006,Design requirements for technologies that encourage physical activity,157,150,2,0.2
-23,Persuasive Health & Activity,2008,Activity sensing in the wild,215,196,3,0.3
-24,Sleep & Family Routines,2015,Snack Buddy,58,57,4,0.05
-24,Sleep & Family Routines,2012,Lullaby,73,61,3,0.35
-24,Sleep & Family Routines,2011,Opportunities for computing technologies to support healthy sleep beha,37,30,7,0.3
-25,Parkinson's & Mobility Support,2011,Motivating mobility,34,30,6,0.15
-25,Parkinson's & Mobility Support,2015,Designing for and with People with Parkinson's,15,11,10,0.27
-25,Parkinson's & Mobility Support,2016,Motivating Stroke Rehabilitation Through Music,9,9,,0.0
-26,Smart Home Automation,2006,Principles of Smart Home Control,68,55,5,0.45
-26,Smart Home Automation,2002,Unremarkable computing,91,87,3,0.05
-26,Smart Home Automation,2008,More than meets the eye,36,28,7,0.35
-27,Youth Online Safety,2017,Parental Control vs. Teen Self-Regulation,66,44,4,0.4
-27,Youth Online Safety,2018,Safety vs. Surveillance,55,40,3,0.3
-27,Youth Online Safety,2016,Dear Diary,49,25,6,0.5
-28,Usable Security & Phishing,2006,Why phishing works,40,40,5,0.0
-28,Usable Security & Phishing,2008,You've been warned,47,41,6,0.2
-28,Usable Security & Phishing,2006,Do security toolbars actually prevent phishing attacks?,24,24,5,0.0
-29,Photo Sharing & Privacy,2003,"Unpacking ""privacy"" for a networked world",195,194,2,0.0
-29,Photo Sharing & Privacy,2014,Privacy behaviors of lifeloggers using wearable cameras,66,55,3,0.2
-29,Photo Sharing & Privacy,2011,We're in it together,83,82,4,0.0
-30,Authentication & Passwords,2013,Patterns in the wild,30,23,4,0.35
-30,Authentication & Passwords,2012,Touch me once and i know it's you!,39,29,5,0.5
-30,Authentication & Passwords,2009,Can i borrow your phone?,37,37,5,0.0
-31,Smart-home Privacy,2018,"Alexa, Are You Listening?",114,111,2,0.0
-31,Smart-home Privacy,2018,User Perceptions of Smart Home IoT Privacy,71,71,3,0.0
-31,Smart-home Privacy,2019,Privacy Perceptions and Designs of Bystanders in Smart Homes,62,58,2,0.05
-32,App Permissions & Policy,2012,Expectation and purpose,69,58,4,0.25
-32,App Permissions & Policy,2010,Standardizing privacy notices,42,38,10,0.1
-32,App Permissions & Policy,2004,Privacy policies as decision-making tools,41,41,12,0.0
-33,Deceptive Advertising Patterns,2018,The Dark (Patterns) Side of UX Design,162,141,2,0.3
-33,Deceptive Advertising Patterns,2019,Dark Patterns at Scale,94,86,2,0.15
-33,Deceptive Advertising Patterns,2020,Dark Patterns after the GDPR: Scraping Consent Pop-ups and Demonstrati,71,70,1,0.0
-34,Location Sharing & Privacy,2005,Location disclosure to social relations,107,103,3,0.15
-34,Location Sharing & Privacy,2005,"Control, Deception, and Communication: Evaluating the Deployment of a ",30,28,5,0.1
-34,Location Sharing & Privacy,2008,From awareness to repartee: sharing location within social groups,33,30,3,0.1
-35,Task Switching at Work,2004,A diary study of task switching and interruptions,142,130,2,0.1
-35,Task Switching at Work,2004,"""Constant, constant, multi-tasking craziness""",115,101,3,0.1
-35,Task Switching at Work,2005,No task left behind?,77,69,3,0.1
-36,Notifications & Interruptibility,2004,"If not now, when?",101,97,6,0.2
-36,Notifications & Interruptibility,2005,Using context-aware computing to reduce the perceived burden of interr,76,75,7,0.0
-36,Notifications & Interruptibility,2003,Predicting human interruptibility with sensors,64,57,2,0.3
-37,Social Network Sites at Work,2008,Motivations for social networking at work,57,44,3,0.3
-37,Social Network Sites at Work,2009,Predicting tie strength with social media,83,75,2,0.05
-37,Social Network Sites at Work,2008,"Looking at, looking up or keeping up with people?",89,86,2,0.1
-38,Instant Messaging,2000,Interaction and outeraction,128,124,2,0.2
-38,Instant Messaging,2002,"The character, functions, and styles of instant messaging in the workp",49,49,2,0.0
-38,Instant Messaging,1999,Socially translucent systems,54,49,3,0.05
-39,Digital Self-control,2015,NUGU,67,51,4,0.35
-39,Digital Self-control,2016,MyTime,68,61,3,0.2
-39,Digital Self-control,2016,Lock n' LoL,59,47,3,0.3
-40,Smartphone Usage Logging,2008,A diary study of mobile information needs,45,43,5,0.1
-40,Smartphone Usage Logging,2006,A large scale study of wireless search behavior,14,13,7,0.07
-40,Smartphone Usage Logging,2002,Voice-mail diary studies for naturalistic data capture under mobile co,34,34,7,0.0
-41,Email & Peripheral Displays,1996,Email overload,107,93,7,0.35
-41,Email & Peripheral Displays,2003,Taking email to task,62,60,2,0.05
-41,Email & Peripheral Displays,1988,More than just a communication system: diversity in the use of electro,23,20,16,0.15
-42,Older Adults & Technology,2014,Never too old,83,79,3,0.1
-42,Older Adults & Technology,2013,Older adults as digital content producers,59,48,4,0.2
-42,Older Adults & Technology,2012,Engaging older people using participatory design,63,62,5,0.05
-43,Automated Driving,2017,SupportingTrust in Autonomous Driving,27,26,4,0.05
-43,Automated Driving,2014,Evaluating multimodal driver displays under varying situational urgenc,18,14,8,0.22
-43,Automated Driving,2017,Priming Drivers before Handover in Semi-Autonomous Cars,11,9,,0.18
-44,Dementia & Ageing Care,2017,A Critical Lens on Dementia and Design in HCI,83,70,2,0.15
-44,Dementia & Ageing Care,2017,The Value of Experience-Centred Design Approaches in Dementia Research,40,32,3,0.35
-44,Dementia & Ageing Care,2012,"Empathy, participatory design and people with dementia",72,67,5,0.2
-45,Autonomous Vehicle Communication,1982,Analogy considered harmful,15,14,31,0.07
-45,Autonomous Vehicle Communication,1989,Skilled financial planning: the cost of translating ideas into action,8,8,,0.0
-45,Autonomous Vehicle Communication,1989,Programmable user models for predictive evaluation of interface design,8,4,,0.5
-47,Sustainable HCI,2010,Mapping the landscape of sustainable HCI,261,256,2,0.0
-47,Sustainable HCI,2010,The design of eco-feedback technology,148,144,2,0.05
-47,Sustainable HCI,2007,Sustainable interaction design,239,231,2,0.1
-48,Multispecies & Urban Nature,2018,Design for Collaborative Survival,134,131,2,0.1
-48,Multispecies & Urban Nature,2017,Designing for Cohabitation,91,83,3,0.35
-48,Multispecies & Urban Nature,2019,Entanglement HCI The Next Wave?,167,165,2,0.0
-49,Bio-materials & Sustainable Making,2019,Myco-accessories,66,58,3,0.15
-49,Bio-materials & Sustainable Making,2015,bioLogic,119,87,3,0.35
-49,Bio-materials & Sustainable Making,2021,"Unmaking: Enabling and Celebrating the Creative Material of Failure, D",77,73,2,0.1
-50,Playful Food Experiences,2008,Celebratory technology,121,121,4,0.0
-50,Playful Food Experiences,2012,Telematic dinner party,43,38,8,0.1
-50,Playful Food Experiences,2016,Digital Gastronomy,28,25,5,0.15
-51,"Materials, Death & Legacy",2012,Technology heirlooms?,82,60,4,0.45
-51,"Materials, Death & Legacy",2007,Computational composites,119,117,5,0.05
-51,"Materials, Death & Legacy",2011,"""We will never forget you [online]""",45,28,5,0.25
-52,Explainable Machine Learning,2019,Guidelines for Human-AI Interaction,442,435,1,0.0
-52,Explainable Machine Learning,2019,Designing Theory-Driven User-Centric Explainable AI,181,172,1,0.05
-52,Explainable Machine Learning,2019,"""Hello AI"": Uncovering the Onboarding Needs of Medical Practitioners f",163,159,2,0.1
-54,Voice & Conversational Agents,2016,"""Like Having a Really Bad PA""",240,240,2,0.0
-54,Voice & Conversational Agents,2018,Voice Interfaces in Everyday Life,173,166,1,0.05
-54,Voice & Conversational Agents,1994,Computers are social actors,164,163,9,0.0
-55,GUI Toolkits & Web Interfaces,1988,Building user interfaces by direct manipulation,31,31,2,0.0
-55,GUI Toolkits & Web Interfaces,1991,EAGER,46,44,3,0.1
-55,GUI Toolkits & Web Interfaces,1989,Creating graphical interactive application objects by demonstration,25,13,5,0.5
-56,Data Visualization,2015,DataTone,67,64,4,0.15
-56,Data Visualization,2010,Useful junk?,56,56,6,0.0
-56,Data Visualization,2016,Eviza,54,43,4,0.15
-57,Search & Recommendation,2003,Faceted metadata for image search and browsing,58,57,5,0.05
-57,Search & Recommendation,1995,Information foraging in information access environments,37,33,16,0.2
-57,Search & Recommendation,1995,Social information filtering,42,41,3,0.0
-58,Video Interfaces & Editing,2008,Video browsing by direct manipulation,51,45,4,0.2
-58,Video Interfaces & Editing,2005,Stencils-based tutorials,52,51,5,0.05
-58,Video Interfaces & Editing,2002,Simplifying video editing using metadata,25,25,14,0.0
-59,Programming & Notebooks,2011,Wrangler,88,84,6,0.1
-59,Programming & Notebooks,1999,Principles of mixed-initiative user interfaces,317,313,4,0.05
-59,Programming & Notebooks,2004,Designing the whyline,57,52,6,0.2
-62,Usability Methods & Personas,1990,Heuristic evaluation of user interfaces,116,112,10,0.2
-62,Usability Methods & Personas,1991,User interface evaluation in the real world,27,26,6,0.05
-62,Usability Methods & Personas,1990,Testing a walkthrough methodology for theory-based design of walk-up-a,30,24,16,0.3
-63,Clinical Information Work,1996,Documents and professional practice,52,50,10,0.1
-63,Clinical Information Work,1997,"Direct manipulation for comprehensible, predictable and controllable u",27,27,11,0.0
-63,Clinical Information Work,1989,Design environments for constructive and argumentative design,10,7,,0.3
-64,Gamification & Engagement,2016,"Negative Emotion, Positive Experience?",63,45,4,0.45
-64,Gamification & Engagement,2014,A systematic review of quantitative studies on the enjoyment of digita,49,38,3,0.25
-64,Gamification & Engagement,2016,Fostering Intrinsic Motivation through Avatar Identification in Digita,57,42,2,0.35
-65,Movement & Somaesthetics,2016,Somaesthetic Appreciation Design,145,128,1,0.05
-65,Movement & Somaesthetics,2017,Embodied Design Ideation Methods,99,93,2,0.05
-65,Movement & Somaesthetics,2016,Embodied Sketching,80,50,3,0.4
-67,Esports & Player Communities,2006,Strangers and friends,84,81,3,0.05
-67,Esports & Player Communities,2006,"""Alone together?""",66,63,4,0.15
-67,Esports & Player Communities,2015,Exploring Cyberbullying and Other Toxic Behavior in Team Competition O,49,49,5,0.0
-68,Location-based Museum Play,2000,Developing a context-aware electronic tourist guide,51,51,2,0.0
-68,Location-based Museum Play,2002,Sotto voce,35,34,4,0.05
-68,Location-based Museum Play,2002,Revisiting the visit:,27,26,7,0.05
-69,VR Meditation & Breathing,2017,Inner Garden,54,51,2,0.15
-69,VR Meditation & Breathing,2016,RelaWorld,31,30,4,0.05
-69,VR Meditation & Breathing,2017,Life Tree,52,40,3,0.1
-70,Brain-Computer Interfaces,2006,Using a low-cost electroencephalograph for task classification in HCI ,22,17,8,0.25
-70,Brain-Computer Interfaces,2009,Brain measurement for usability testing and adaptive interfaces,23,14,7,0.4
-70,Brain-Computer Interfaces,2009,Using fNIRS brain sensing in realistic HCI settings,19,10,16,0.47
-71,Rehabilitation Games,2010,Towards customizable games for stroke rehabilitation,43,42,4,0.05
-71,Rehabilitation Games,2011,Target assistance for subtly balancing competitive play,37,25,6,0.4
-71,Rehabilitation Games,2013,Designing action-based exergames for children with cerebral palsy,37,27,3,0.25
-72,Playful Experience & Drones,2011,Old wine in new bottles or novel challenges,58,47,3,0.25
-72,Playful Experience & Drones,2004,Understanding experience in interactive systems,69,66,8,0.15
-72,Playful Experience & Drones,2013,Vibrobelt,18,18,7,0.0
-73,Visual Accessibility,2010,VizWiz,245,206,3,0.55
-73,Visual Accessibility,2011,Supporting blind photography,88,78,5,0.4
-73,Visual Accessibility,2008,Slide rule,98,75,4,0.35
-74,Neurodivergence & Autism,2010,Disability studies as a source of critical inquiry for the field of as,143,132,6,0.15
-74,Neurodivergence & Autism,2010,Social use of computer-mediated communication by adults on the autism ,51,50,6,0.05
-74,Neurodivergence & Autism,2016,Would You Be Mine,47,37,4,0.25
-75,Web Accessibility,1998,User interface of a Home Page Reader,24,19,8,0.25
-75,Web Accessibility,2005,Is your web page accessible?,33,29,5,0.1
-75,Web Accessibility,2006,Remote usability evaluations With disabled people,26,26,3,0.0
-76,Deaf & Sign Language Tech,2015,Head-Mounted Display Visualizations to Support Sound Awareness for the,47,31,6,0.45
-76,Deaf & Sign Language Tech,2009,ClassInFocus,31,29,9,0.1
-76,Deaf & Sign Language Tech,2016,Improving Real-Time Captioning Experiences for Deaf and Hard of Hearin,28,27,5,0.05
-77,Non-visual Navigation,2013,"""Pray before you step out""",60,55,5,0.15
-77,Non-visual Navigation,2012,The user as a sensor,40,36,4,0.2
-77,Non-visual Navigation,2015,ForeSee,51,38,4,0.35
-78,Tactile Graphics,2012,VizTouch,51,49,5,0.1
-78,Tactile Graphics,2015,Toward 3D-Printed Movable Tactile Pictures for Children with Visual Im,36,31,4,0.25
-78,Tactile Graphics,2005,Automating tactile graphics translation,29,27,11,0.1
-80,DIY Assistive Technology,2011,Empowering individuals with do-it-yourself assistive technology,114,107,5,0.15
-80,DIY Assistive Technology,2015,Sharing is Caring,100,86,2,0.2
-80,DIY Assistive Technology,2014,A study of the challenges related to DIY assistive technology in the c,40,38,3,0.1
-81,Accessible Games & VR,2010,Vi-bowling,31,30,9,0.05
-81,Accessible Games & VR,2008,Blind hero,35,33,10,0.1
-81,Accessible Games & VR,2008,PowerUp,20,20,12,0.0
-82,AAC & Communication Disabilities,2004,The participatory design of a sound and image enhanced daily planner f,42,35,5,0.25
-82,AAC & Communication Disabilities,2006,Participatory design with proxies,31,25,11,0.3
-82,AAC & Communication Disabilities,2007,The design and field evaluation of PhotoTalk,18,18,10,0.0
-83,Real-time Groupware,1992,Awareness and coordination in shared workspaces,271,266,4,0.1
-83,Real-time Groupware,1990,Rendezvous: an architecture for synchronous multi-user applications,35,31,2,0.15
-83,Real-time Groupware,1990,MMConf: an infrastructure for building shared multimedia applications,28,28,2,0.0
-84,Gaze in Video Communication,1992,ClearBoard,89,85,6,0.1
-84,Gaze in Video Communication,1992,Using spatial cues to improve videoconferencing,44,43,11,0.05
-84,Gaze in Video Communication,1991,VideoWhiteboard,51,50,11,0.05
-85,Family Video Communication,2010,Making love in the network closet,83,80,2,0.15
-85,Family Video Communication,2010,Home video communication,52,51,3,0.0
-85,Family Video Communication,2010,Sharing conversation and sharing life,55,32,4,0.5
-86,Augmented Reality Collaboration,2016,Holoportation,95,90,3,0.0
-86,Augmented Reality Collaboration,2019,Loki,76,67,2,0.2
-86,Augmented Reality Collaboration,2018,Mini-Me,72,64,3,0.2
-87,Public & Ambient Displays,2004,Interactive public ambient displays,126,119,6,0.15
-87,Public & Ambient Displays,2008,"It's Mine, Don't Touch!",91,86,3,0.05
-87,Public & Ambient Displays,2010,Designing urban media façades,46,41,4,0.1
-88,Distributed Team Awareness,1992,Portholes,120,116,4,0.1
-88,Distributed Team Awareness,1988,Design of a multi-media vehicle for social browsing,42,41,4,0.05
-88,Distributed Team Awareness,1991,Experiences in the use of a media space,48,43,5,0.25
-89,Social VR & Presence,2021,"Body, Avatar, and Me",90,75,2,0.35
-89,Social VR & Presence,2019,Shaping Pro-Social Interaction in VR,76,72,2,0.05
-89,Social VR & Presence,2020,Falling Asleep Together: What Makes Activities in Social Virtual Reali,56,47,4,0.35
-90,Tabletop Collaboration,2004,Territoriality in collaborative tabletop workspaces,144,141,3,0.05
-90,Tabletop Collaboration,2006,Collaborative coupling over tabletop displays,76,74,7,0.05
-90,Tabletop Collaboration,2004,Exploring the effects of group size and table size on interactions wit,39,34,6,0.2
-91,Surgical AR & Video Guidance,2003,Comparative effectiveness of augmented reality in object assembly,39,39,16,0.0
-91,Surgical AR & Video Guidance,2013,Imaging the body,18,10,13,0.44
-91,Surgical AR & Video Guidance,2011,Exploring the potential for touchless interaction in image-guided inte,15,14,9,0.07
-92,RF & Radar Sensing,2016,Human respiration detection with commodity wifi devices,56,26,3,0.4
-92,RF & Radar Sensing,2019,FarSense,51,23,5,0.8
-92,RF & Radar Sensing,2016,Gait recognition using wifi signals,57,50,2,0.15
-93,Wearable Activity Recognition,2017,Ensembles of Deep LSTM Learners for Activity Recognition using Wearabl,48,38,3,0.3
-93,Wearable Activity Recognition,2012,USC-HAD,19,19,10,0.0
-93,Wearable Activity Recognition,2008,Discovery of activity patterns using topic models,22,22,7,0.0
-94,Indoor Localization,2012,A reliable and accurate indoor localization method using phone inertia,24,24,3,0.0
-94,Indoor Localization,2005,Accurate GSM Indoor Localization,21,17,10,0.2
-94,Indoor Localization,2006,PowerLine Positioning: A Practical Sub-Room-Level Indoor Location Syst,18,10,17,0.44
-95,Urban Mobility Data,2008,Understanding mobility based on GPS data,21,20,6,0.05
-95,Urban Mobility Data,2006,Predestination: Inferring Destinations from Partial Trajectories,30,27,4,0.1
-95,Urban Mobility Data,2011,Urban computing with taxicabs,14,12,9,0.14
-96,Acoustic Health Sensing,2018,C-FMCW Based Contactless Respiration Detection Using Acoustic Signal,54,48,3,0.15
-96,Acoustic Health Sensing,2012,SpiroSmart,33,28,8,0.2
-96,Acoustic Health Sensing,2020,TouchID,45,45,2,0.0
-97,Tangible Interaction,1997,Tangible bits,571,529,1,0.2
-97,Tangible Interaction,1995,Bricks,183,164,3,0.35
-97,Tangible Interaction,2006,Getting a grip on tangible interaction,247,243,2,0.0
-98,VR Haptics,2016,Haptic Retargeting,149,137,2,0.15
-98,VR Haptics,2016,NormalTouch and TextureTouch,89,78,2,0.15
-98,VR Haptics,2017,Sparse Haptic Proxy,96,78,2,0.2
-99,Deformable & Soft Displays,2012,Shape-changing interfaces,207,187,1,0.2
-99,Deformable & Soft Displays,2013,PneUI,202,155,3,0.4
-99,Deformable & Soft Displays,2013,inFORM,236,212,3,0.25
-100,Digital Fabrication,2010,Interactive fabrication,95,94,4,0.0
-100,Digital Fabrication,2014,WirePrint,89,71,2,0.3
-100,Digital Fabrication,2013,FreeD,89,86,3,0.15
-101,E-textiles & Weaving,2016,Project Jacquard,149,147,1,0.05
-101,E-textiles & Weaving,2016,"""I don't Want to Wear a Screen""",151,131,2,0.35
-101,E-textiles & Weaving,2008,The LilyPad Arduino,151,141,4,0.3
-102,Printed Electronics,2013,Instant inkjet circuits,119,94,2,0.2
-102,Printed Electronics,2001,Phidgets,156,145,4,0.2
-102,Printed Electronics,2012,Midas,94,89,2,0.1
-103,Data Physicalization,2015,Opportunities and Challenges for Data Physicalization,185,168,2,0.25
-103,Data Physicalization,2013,Evaluating the efficiency of physical visualizations,59,53,3,0.25
-103,Data Physicalization,2015,Exploring Interactions with Physically Dynamic Bar Charts,64,53,2,0.25
-104,Electrical Muscle Stimulation,2011,PossessedHand,61,60,6,0.0
-104,Electrical Muscle Stimulation,2015,Cruise Control for Pedestrians,60,52,2,0.2
-104,Electrical Muscle Stimulation,2015,Affordance++,57,43,2,0.1
-105,Hand Input & Gesture Sensing,2010,Skinput,207,183,1,0.25
-105,Hand Input & Gesture Sensing,2012,Digits,151,141,2,0.1
-105,Hand Input & Gesture Sensing,2011,OmniTouch,169,146,2,0.2
-106,Touch & Multi-touch Input,2004,Pressure widgets,93,86,4,0.25
-106,Touch & Multi-touch Input,2002,SmartSkin,153,151,2,0.05
-106,Touch & Multi-touch Input,2005,Low-cost multi-touch sensing through frustrated total internal reflect,120,118,3,0.1
-107,Pointing & Target Selection,2005,The bubble cursor,120,112,2,0.2
-107,Pointing & Target Selection,2007,Shift,160,140,2,0.25
-107,Pointing & Target Selection,2002,More than dotting the i's --- foundations for crossing-based interface,109,101,3,0.2
-108,Gaze & Eye Tracking,1990,What you look at is what you get: eye movement-based interaction techn,111,110,16,0.05
-108,Gaze & Eye Tracking,1999,Manual and gaze input cascaded (MAGIC) pointing,122,120,5,0.1
-108,Gaze & Eye Tracking,2000,Evaluation of eye gaze interaction,52,51,13,0.05
-109,Text Entry,2004,SHARK <sup>2</sup>,140,117,8,0.4
-109,Text Entry,2003,Metrics for text entry research,100,98,5,0.0
-109,Text Entry,2002,Language modeling for soft keyboards,79,79,12,0.0
-110,Fisheye & Scrolling Techniques,1986,Generalized fisheye views,89,86,9,0.1
-110,Fisheye & Scrolling Techniques,1991,The perspective wall,70,61,3,0.3
-110,Fisheye & Scrolling Techniques,1994,Pad++,87,82,3,0.15
-111,Cross-device & Large Displays,1997,Pick-and-drop,109,104,4,0.2
-111,Cross-device & Large Displays,2001,Partitioning digital worlds,68,67,3,0.05
-111,Cross-device & Large Displays,1999,i-LAND,84,83,2,0.05
-113,Mixed Reality Systems,2017,Experimental Evaluation of Sketching on Surfaces in VR,51,43,3,0.25
-113,Mixed Reality Systems,2001,View management for virtual and augmented reality,37,36,12,0.05
-113,Mixed Reality Systems,2016,SnapToReality,45,44,4,0.0
-114,Menus & Command Selection,1994,User learning and performance with marking menus,79,78,9,0.05
-114,Menus & Command Selection,1994,Split menus,42,42,13,0.0
-114,Menus & Command Selection,1988,An empirical comparison of pie vs. linear menus,58,57,12,0.05
+0,3D Pointing & VR Interaction,1996,The go-go interaction technique,149,147,8,0.1
+0,3D Pointing & VR Interaction,2005,"Distant freehand pointing and clicking on very large, high resolution ",99,82,6,0.25
+0,3D Pointing & VR Interaction,1994,A survey of design issues in spatial input,64,59,8,0.15
+1,RF & Radar Sensing,2016,Gait recognition using wifi signals,58,51,2,0.15
+1,RF & Radar Sensing,2016,Human respiration detection with commodity wifi devices,56,26,3,0.4
+1,RF & Radar Sensing,2016,FingerIO,99,97,1,0.1
+2,Wearable Activity Recognition,2012,Introducing a New Benchmarked Dataset for Activity Monitoring,52,49,7,0.15
+2,Wearable Activity Recognition,2010,ElectriSense,49,41,4,0.35
+2,Wearable Activity Recognition,2008,Discovery of activity patterns using topic models,28,25,6,0.15
+3,Pointing & Target Selection,2005,The bubble cursor,130,121,3,0.2
+3,Pointing & Target Selection,1992,Extending Fitts' law to two-dimensional tasks,96,93,10,0.05
+3,Pointing & Target Selection,2004,Semantic pointing,81,78,2,0.05
+4,Hand Input & Gesture Sensing,2010,Skinput,219,194,1,0.2
+4,Hand Input & Gesture Sensing,2009,Enabling always-available input with muscle-computer interfaces,123,115,3,0.25
+4,Hand Input & Gesture Sensing,2012,Digits,156,146,2,0.1
+5,Fisheye & Scrolling Techniques,1986,Generalized fisheye views,103,100,9,0.1
+5,Fisheye & Scrolling Techniques,1991,The perspective wall,75,66,3,0.3
+5,Fisheye & Scrolling Techniques,1994,Pad++,93,88,3,0.15
+6,Gesture Elicitation & Recognition,2009,User-defined gestures for surface computing,362,346,1,0.1
+6,Gesture Elicitation & Recognition,2007,"Gestures without libraries, toolkits or training: a $1 recognizer for ",210,188,2,0.05
+6,Gesture Elicitation & Recognition,2008,OctoPocus,114,108,3,0.1
+7,Pen & Sketch Input,1998,Beyond paper,76,75,4,0.05
+7,Pen & Sketch Input,1997,A comparison of reading paper and on-line documents,74,68,5,0.2
+7,Pen & Sketch Input,2005,Experimental analysis of mode switching techniques in pen-based user i,71,54,3,0.35
+8,Text Entry,2004,SHARK <sup>2</sup>,152,127,7,0.45
+8,Text Entry,2003,Metrics for text entry research,107,105,5,0.0
+8,Text Entry,2002,Language modeling for soft keyboards,81,81,12,0.0
+9,Touch & Multi-touch Input,2010,The generalized perceived input point model and how to double touch ac,131,113,1,0.2
+9,Touch & Multi-touch Input,2011,TapSense,95,84,3,0.3
+9,Touch & Multi-touch Input,2009,Back-of-device interaction allows creating very small touch devices,116,113,2,0.15
+11,VR Haptics,2016,Haptic Retargeting,164,151,1,0.15
+11,VR Haptics,2015,Impacto,103,85,2,0.1
+11,VR Haptics,2017,Providing Haptics to Walls &amp; Heavy Objects in Virtual Reality by M,104,84,1,0.15
+12,Deformable & Soft Displays,2013,inFORM,246,223,2,0.2
+12,Deformable & Soft Displays,2012,Shape-changing interfaces,223,202,1,0.2
+12,Deformable & Soft Displays,2013,PneUI,206,158,3,0.4
+13,Tangible Interaction,1997,Tangible bits,687,643,1,0.15
+13,Tangible Interaction,1995,Bricks,212,192,3,0.35
+13,Tangible Interaction,2007,The reacTable,126,123,3,0.0
+14,Printed Electronics,2013,Instant inkjet circuits,129,103,2,0.2
+14,Printed Electronics,2012,Midas,97,91,2,0.1
+14,Printed Electronics,2014,PrintScreen,96,76,2,0.3
+15,Digital Fabrication,2010,Interactive fabrication,110,108,4,0.0
+15,Digital Fabrication,2014,WirePrint,95,76,2,0.3
+15,Digital Fabrication,2013,FreeD,104,101,2,0.15
+16,E-textiles & Weaving,2008,The LilyPad Arduino,199,186,2,0.3
+16,E-textiles & Weaving,2010,Handcrafting textile interfaces from a kit-of-no-parts,117,114,4,0.15
+16,E-textiles & Weaving,2010,LilyPad in the wild,97,87,3,0.25
+17,Tactile & Thermal Feedback,2011,Some like it hot,49,41,6,0.3
+17,Tactile & Thermal Feedback,2010,TeslaTouch,106,99,2,0.15
+17,Tactile & Thermal Feedback,2010,BuzzWear,47,46,5,0.0
+19,Physical Prototyping Toolkits,2001,Phidgets,175,164,3,0.1
+19,Physical Prototyping Toolkits,2006,"Reflective physical prototyping through integrated design, test, and a",115,103,2,0.1
+19,Physical Prototyping Toolkits,2009,Electronics as material,112,111,6,0.05
+20,Making & Makerspaces,2013,Democratizing technology,134,132,1,0.0
+20,Making & Makerspaces,2014,Emerging sites of HCI innovation,94,88,2,0.15
+20,Making & Makerspaces,2009,Learning from IKEA hacking,63,55,5,0.25
+21,Data Physicalization & Bio-materials,2015,Opportunities and Challenges for Data Physicalization,201,184,2,0.25
+21,Data Physicalization & Bio-materials,2015,bioLogic,125,92,3,0.35
+21,Data Physicalization & Bio-materials,2013,Evaluating the efficiency of physical visualizations,61,55,4,0.25
+22,Gaze-based Interaction,1990,What you look at is what you get: eye movement-based interaction techn,155,154,15,0.05
+22,Gaze-based Interaction,1999,Manual and gaze input cascaded (MAGIC) pointing,181,176,3,0.1
+22,Gaze-based Interaction,2000,Evaluation of eye gaze interaction,87,86,6,0.05
+23,Eye Tracker Quality & Gaze Estimation,2012,Robust real-time pupil tracking in highly off-axis images,27,21,6,0.3
+23,Eye Tracker Quality & Gaze Estimation,2006,openEyes,24,24,4,0.0
+23,Eye Tracker Quality & Gaze Estimation,2010,Homography normalization for robust gaze estimation in uncalibrated se,15,11,12,0.27
+24,Scanpaths & Visual Search,2006,eyePatterns,21,20,10,0.05
+24,Scanpaths & Visual Search,2010,"A vector-based, multidimensional scanpath similarity measure",25,25,8,0.0
+24,Scanpaths & Visual Search,2002,Visual attention to repeated internet images,17,17,8,0.0
+25,Pupillometry & Cognitive Load,2008,Feasibility and pragmatics of classifying working memory load with an ,28,25,6,0.15
+25,Pupillometry & Cognitive Load,2009,Brain measurement for usability testing and adaptive interfaces,24,15,7,0.4
+25,Pupillometry & Cognitive Load,2013,Using fNIRS brain sensing to evaluate information visualization interf,21,17,5,0.2
+26,Gaze in Conversation & Groups,2005,A probabilistic inference of multiparty-conversation structure based o,17,12,13,0.29
+26,Gaze in Conversation & Groups,2012,"Linking speaking and looking behavior patterns with group composition,",15,13,7,0.13
+26,Gaze in Conversation & Groups,2001,Eye gaze patterns in conversations,55,50,4,0.15
+27,Authentication & Passwords,2012,Touch me once and i know it's you!,41,31,4,0.5
+27,Authentication & Passwords,2013,Patterns in the wild,32,25,4,0.35
+27,Authentication & Passwords,2012,Increasing the security of gaze-based cued-recall graphical passwords ,26,16,7,0.45
+28,Affect Recognition,2015,Video and Image based Emotion Recognition Challenges in the Wild,27,23,0,0.1
+28,Affect Recognition,2014,Emotion Recognition In The Wild Challenge 2014,25,22,1,0.1
+28,Affect Recognition,2013,Combining modality specific deep neural networks for emotion recogniti,29,28,2,0.05
+29,Multimodal Sentiment & Speaking,2013,MACH,65,61,2,0.1
+29,Multimodal Sentiment & Speaking,2015,Rhema,44,41,2,0.15
+29,Multimodal Sentiment & Speaking,2015,Augmenting Social Interactions,39,34,2,0.25
+30,Fixation & Saccade Analysis,2000,Identifying fixations and saccades in eye-tracking protocols,165,162,9,0.15
+30,Fixation & Saccade Analysis,2014,Entropy-based statistical analysis of eye movement transitions,8,6,,0.25
+30,Fixation & Saccade Analysis,2008,The incomplete fixation measure,7,3,,0.57
+31,Gaze Calibration & Datasets,2009,Motion-pointing,23,22,7,0.05
+31,Gaze Calibration & Datasets,2012,Gaze input for mobile devices by dwell and gestures,20,19,9,0.05
+31,Gaze Calibration & Datasets,2012,Gaze gestures or dwell-based interaction?,24,23,7,0.05
+32,Reading & Implicit Interest,2012,A robust realtime reading-skimming classifier,13,12,12,0.08
+32,Reading & Implicit Interest,2012,"User see, user point",36,35,5,0.05
+32,Reading & Implicit Interest,2008,"Personalized online document, image and video recommendation via commo",14,12,13,0.14
+33,Remote Collaboration & Telepresence,2000,Coordination of communication,98,89,9,0.45
+33,Remote Collaboration & Telepresence,1992,ClearBoard,113,109,6,0.1
+33,Remote Collaboration & Telepresence,2003,Effects of head-mounted and scene-oriented video systems on remote col,60,54,12,0.3
+34,CSCW Foundations,1992,Portholes,147,142,4,0.1
+34,CSCW Foundations,1992,Awareness and coordination in shared workspaces,313,305,4,0.1
+34,CSCW Foundations,1988,Why CSCW applications fail: problems in the design and evaluationof or,172,172,3,0.0
+35,Cross-device & Large Displays,1997,Pick-and-drop,135,130,4,0.2
+35,Cross-device & Large Displays,1999,i-LAND,121,120,2,0.05
+35,Cross-device & Large Displays,1999,Augmented surfaces,147,145,2,0.1
+36,UI Toolkits & Automatic Generation,1988,Building user interfaces by direct manipulation,31,31,2,0.0
+36,UI Toolkits & Automatic Generation,1989,Creating graphical interactive application objects by demonstration,25,13,5,0.5
+36,UI Toolkits & Automatic Generation,1990,Druid: a system for demonstrational rapid user interface development,17,16,5,0.06
+38,Tabletop Collaboration,2004,Territoriality in collaborative tabletop workspaces,192,189,3,0.05
+38,Tabletop Collaboration,1999,Single display groupware,83,81,4,0.1
+38,Tabletop Collaboration,2006,Collaborative coupling over tabletop displays,101,97,4,0.15
+39,Public & Ambient Displays,2008,"It's Mine, Don't Touch!",124,116,2,0.05
+39,Public & Ambient Displays,2004,Interactive public ambient displays,161,154,5,0.15
+39,Public & Ambient Displays,2001,The notification collage,66,58,3,0.05
+40,Real-time Groupware,1994,Real time groupware as a distributed system,64,62,3,0.05
+40,Real-time Groupware,1996,"Building real-time groupware with GroupKit, a groupware toolkit",51,41,2,0.3
+40,Real-time Groupware,1990,Rendezvous: an architecture for synchronous multi-user applications,37,33,2,0.15
+41,Social VR & Presence,2019,Shaping Pro-Social Interaction in VR,79,75,2,0.05
+41,Social VR & Presence,2019,Harassment in Social Virtual Reality,88,88,2,0.0
+41,Social VR & Presence,2018,Communication Behavior in Embodied Virtual Reality,59,58,2,0.05
+42,Mixed Reality Rooms & Video,2014,RoomAlive,87,76,2,0.25
+42,Mixed Reality Rooms & Video,2016,Augmenting the Field-of-View of Head-Mounted Displays with Sparse Peri,33,33,2,0.0
+42,Mixed Reality Rooms & Video,2016,SwiVRChair,30,23,3,0.3
+43,Live Streaming,2014,Streaming on twitch,131,127,3,0.15
+43,Live Streaming,2016,Meerkat and Periscope,60,54,2,0.3
+43,Live Streaming,2011,Starcraft from the stands,51,50,6,0.05
+45,Distributed Cognition & Emergency Coordination,2000,Distributed cognition,161,157,7,0.1
+45,Distributed Cognition & Emergency Coordination,2003,Mobile computing in the retail arena,15,15,8,0.0
+45,Distributed Cognition & Emergency Coordination,1983,Getting into a system,7,7,,0.0
+46,Driver Distraction & Take-over,2009,Focus on driving,17,12,11,0.29
+46,Driver Distraction & Take-over,2013,Evaluating multimodal driver displays of varying urgency,22,13,9,0.45
+46,Driver Distraction & Take-over,2007,iPod distraction,9,7,,0.22
+47,In-Car Interfaces,2013,Free-hand pointing for identification and interaction with distant obj,26,24,7,0.1
+47,In-Car Interfaces,2011,Gestural interaction on the steering wheel,38,35,3,0.15
+47,In-Car Interfaces,2013,Driver queries using wheel-constrained finger pointing and 3-D head-up,18,18,9,0.0
+48,Automated Driving,2016,Towards Cooperative Driving,26,21,4,0.25
+48,Automated Driving,2013,Presenting system uncertainty in automotive UIs for supporting trust c,37,37,5,0.0
+48,Automated Driving,2017,SupportingTrust in Autonomous Driving,37,36,3,0.0
+49,Car Navigation & Driver UIs,2010,Where should i turn,23,23,5,0.0
+49,Car Navigation & Driver UIs,2008,In-car gps navigation,34,33,4,0.05
+49,Car Navigation & Driver UIs,2009,Design space for driver-based automotive user interfaces,38,33,7,0.25
+50,Autonomous Vehicles & Pedestrians,2014,Towards Autonomous Cars,39,36,4,0.15
+50,Autonomous Vehicles & Pedestrians,2015,Gesture Bike,22,21,5,0.05
+50,Autonomous Vehicles & Pedestrians,2012,Predicting information technology usage in the car,21,16,11,0.25
+51,Cognitive Modeling & Mixed Small Topics,1996,The GOMS family of user interface analysis techniques,46,39,11,0.35
+51,Cognitive Modeling & Mixed Small Topics,1996,Using GOMS for user interface design and evaluation,25,17,19,0.4
+51,Cognitive Modeling & Mixed Small Topics,1995,GLEAN,16,13,12,0.19
+52,Non-visual Navigation,2016,NavCog,38,29,5,0.35
+52,Non-visual Navigation,2012,The user as a sensor,26,24,6,0.1
+52,Non-visual Navigation,2016,"Finding a store, searching for a product",34,22,4,0.35
+53,Accessibility Research Practice,2015,Collaborative Accessibility,83,74,3,0.15
+53,Accessibility Research Practice,2017,Enabling Collaboration in Learning Computer Programing Inclusive of Ch,39,38,2,0.05
+53,Accessibility Research Practice,2018,Accessibility in Action,36,26,4,0.2
+54,Visual Accessibility,2010,VizWiz,181,155,3,0.45
+54,Visual Accessibility,2017,Automatic Alt-text,56,54,2,0.1
+54,Visual Accessibility,2016,How Blind People Interact with Visual Content on Social Networking Ser,38,34,3,0.15
+55,Disability Studies in HCI,2011,In the shadow of misperception,132,129,4,0.0
+55,Disability Studies in HCI,2015,Head-Mounted Display Visualizations to Support Sound Awareness for the,38,25,7,0.4
+55,Disability Studies in HCI,2016,MapSense,43,36,3,0.15
+56,Esports & Player Communities,2006,Strangers and friends,88,85,3,0.05
+56,Esports & Player Communities,2006,"""Alone together?""",66,63,4,0.15
+56,Esports & Player Communities,2014,Playing with strangers,27,20,7,0.3
+57,Player Experience & Immersion,2013,Control your game-self,34,22,5,0.5
+57,Player Experience & Immersion,2015,How Self-Esteem Shapes our Interactions with Play Technologies,18,9,,0.5
+57,Player Experience & Immersion,2015,Manipulating Leaderboards to Induce Player Experience,19,9,,0.53
+58,Gamification & Engagement,2014,A systematic review of quantitative studies on the enjoyment of digita,50,39,3,0.25
+58,Gamification & Engagement,2015,Emotional and Functional Challenge in Core and Avant-garde Games,31,29,5,0.1
+58,Gamification & Engagement,2011,Old wine in new bottles or novel challenges,66,55,3,0.15
+59,Social Robots in the Field,2009,Footing in human-robot conversations,66,57,3,0.15
+59,Social Robots in the Field,2008,Robots in organizations,60,46,4,0.25
+59,Social Robots in the Field,2006,Service robots in the domestic environment,89,84,3,0.1
+60,Generative AI & Writing,2014,Quantifying the Creativity Support of Digital Tools through the Creati,206,204,5,0.0
+60,Generative AI & Writing,2019,Mapping the Landscape of Creativity Support Tools in HCI,178,175,1,0.1
+60,Generative AI & Writing,2019,Guidelines for Human-AI Interaction,469,461,1,0.0
+61,Voice & Conversational Agents,2016,"""Like Having a Really Bad PA""",312,312,2,0.0
+61,Voice & Conversational Agents,2018,Voice Interfaces in Everyday Life,232,218,1,0.05
+61,Voice & Conversational Agents,1994,Computers are social actors,233,231,9,0.05
+62,End-user Programming & UI Design Tools,2008,CoScripter,72,66,2,0.25
+62,End-user Programming & UI Design Tools,2005,Automation and customization of rendered web pages,60,54,3,0.3
+62,End-user Programming & UI Design Tools,2007,Koala,44,37,2,0.3
+63,Robots & Agents in Education,2015,Can Children Catch Curiosity from a Social Robot?,30,21,6,0.35
+63,Robots & Agents in Education,2015,The Robot Who Tried Too Hard,30,25,5,0.2
+63,Robots & Agents in Education,2010,Expressive robots in education,38,37,6,0.05
+64,Video Interfaces & Editing,2005,Stencils-based tutorials,55,52,6,0.1
+64,Video Interfaces & Editing,2008,Video browsing by direct manipulation,53,47,4,0.2
+64,Video Interfaces & Editing,1996,A field study of exploratory learning strategies,30,30,20,0.0
+65,Meeting Support & Group Displays,2004,Influencing group participation with a shared display,44,44,6,0.0
+65,Meeting Support & Group Displays,2008,Meeting mediator,59,55,6,0.15
+65,Meeting Support & Group Displays,2009,Visualizing real-time language-based feedback on teamwork behavior in ,33,31,8,0.1
+66,Usability Methods & Personas,1990,Heuristic evaluation of user interfaces,137,133,10,0.2
+66,Usability Methods & Personas,1991,User interface evaluation in the real world,32,31,6,0.05
+66,Usability Methods & Personas,1990,Testing a walkthrough methodology for theory-based design of walk-up-a,30,24,18,0.3
+67,Multimodal Speech Interfaces,1999,Mutual disambiguation of recognition errors in a multimodel architectu,44,42,5,0.1
+67,Multimodal Speech Interfaces,1997,Integration and synchronization of input modes during multimodal human,37,34,7,0.15
+67,Multimodal Speech Interfaces,1996,Multimodal interfaces for dynamic interactive maps,18,17,9,0.06
+68,Natural Language Interfaces & Human-AI Teams,2015,DataTone,70,67,4,0.15
+68,Natural Language Interfaces & Human-AI Teams,2016,Eviza,58,47,4,0.15
+68,Natural Language Interfaces & Human-AI Teams,2013,Costs and benefits of structured information foraging,27,13,11,0.65
+69,Urban Mobility Data,2012,Understanding and prediction of mobile application usage for smart pho,46,44,3,0.05
+69,Urban Mobility Data,2008,Understanding mobility based on GPS data,21,20,6,0.05
+69,Urban Mobility Data,2006,Predestination: Inferring Destinations from Partial Trajectories,30,27,5,0.1
+71,Notifications & Interruptibility,2004,"If not now, when?",117,111,5,0.3
+71,Notifications & Interruptibility,2005,Using context-aware computing to reduce the perceived burden of interr,80,79,6,0.0
+71,Notifications & Interruptibility,2003,Predicting human interruptibility with sensors,74,65,1,0.3
+72,Instant Messaging,2000,Interaction and outeraction,152,146,2,0.15
+72,Instant Messaging,2002,"The character, functions, and styles of instant messaging in the workp",62,61,2,0.0
+72,Instant Messaging,1999,Socially translucent systems,61,55,3,0.1
+73,Digital Self-control,2015,NUGU,71,55,3,0.35
+73,Digital Self-control,2016,MyTime,70,63,3,0.2
+73,Digital Self-control,2016,Lock n' LoL,60,48,3,0.3
+74,Location Sharing & Privacy,2005,Location disclosure to social relations,113,109,3,0.15
+74,Location Sharing & Privacy,2005,"Control, Deception, and Communication: Evaluating the Deployment of a ",31,29,5,0.1
+74,Location Sharing & Privacy,2005,Who gets to know what when,30,27,5,0.1
+75,Task Switching at Work,2004,A diary study of task switching and interruptions,157,144,2,0.1
+75,Task Switching at Work,2004,"""Constant, constant, multi-tasking craziness""",126,111,2,0.1
+75,Task Switching at Work,2008,The cost of interrupted work,102,90,6,0.25
+76,Mobile Information Needs & Translation,2011,MicroMandarin,35,34,6,0.05
+76,Mobile Information Needs & Translation,2006,Effects of machine translation on collaborative work,28,23,9,0.15
+76,Mobile Information Needs & Translation,2009,Difficulties in establishing common ground in multiparty groups using ,22,17,6,0.2
+77,Recommender Explanations & User-centric Evaluation,2000,Explaining collaborative filtering recommendations,175,172,7,0.1
+77,Recommender Explanations & User-centric Evaluation,2011,A user-centric evaluation framework for recommender systems,116,112,2,0.0
+77,Recommender Explanations & User-centric Evaluation,2012,TasteWeights,67,60,4,0.25
+78,Sequential & Session-based Recommendation,2010,Performance of recommender algorithms on top-n recommendation tasks,100,91,2,0.1
+78,Sequential & Session-based Recommendation,2019,Are we really making much progress? A worrying analysis of recent neur,57,57,1,0.0
+78,Sequential & Session-based Recommendation,2017,Personalizing Session-based Recommendations with Hierarchical Recurren,24,24,3,0.0
+79,Neural Session Recommendation,2012,Context-aware music recommendation based on latenttopic sequential pat,30,20,6,0.2
+79,Neural Session Recommendation,2016,Meta-Prod2Vec,21,19,2,0.1
+79,Neural Session Recommendation,2016,Parallel Recurrent Neural Network Architectures for Feature-rich Sessi,22,19,5,0.15
+80,"Diversity, Novelty & Bias in Recommendation",2011,Rank and relevance in novelty and diversity metrics for recommender sy,71,67,3,0.2
+80,"Diversity, Novelty & Bias in Recommendation",2010,Beyond accuracy,55,53,6,0.0
+80,"Diversity, Novelty & Bias in Recommendation",2008,Avoiding monotony,32,29,6,0.15
+81,Collaborative Filtering & Trust,2003,Is seeing believing?,82,73,8,0.25
+81,Collaborative Filtering & Trust,1995,Social information filtering,69,68,3,0.0
+81,Collaborative Filtering & Trust,2007,Trust-aware recommender systems,30,30,5,0.0
+82,Knowledge-aware & LLM Recommendation,2011,Precision-oriented evaluation of recommender systems,28,20,10,0.4
+82,Knowledge-aware & LLM Recommendation,2011,MyMediaLite,39,38,3,0.05
+82,Knowledge-aware & LLM Recommendation,2011,Second workshop on information heterogeneity and fusion in recommender,15,15,10,0.0
+83,Industrial Recommendation & CTR Prediction,2016,Deep Neural Networks for YouTube Recommendations,149,149,1,0.0
+83,Industrial Recommendation & CTR Prediction,2010,The YouTube video recommendation system,39,39,8,0.0
+83,Industrial Recommendation & CTR Prediction,2016,Field-aware Factorization Machines for CTR Prediction,20,19,4,0.05
+84,Web Search & Navigation,1995,Information foraging in information access environments,43,39,14,0.2
+84,Web Search & Navigation,1992,Edit wear and read wear,106,102,6,0.2
+84,Web Search & Navigation,2000,The scent of a site,21,17,11,0.2
+85,Context-aware & Cold-start Recommendation,2010,Multiverse recommendation,39,36,4,0.15
+85,Context-aware & Cold-start Recommendation,2011,Matrix factorization techniques for context aware recommendation,20,18,5,0.1
+85,Context-aware & Cold-start Recommendation,2010,Context-Aware Recommender Systems,26,25,6,0.05
+86,News Recommendation & Offline Evaluation,2014,Offline and online evaluation of news recommender systems at swissinfo,32,31,5,0.05
+86,News Recommendation & Offline Evaluation,2010,Personalized news recommendation based on click behavior,37,37,5,0.0
+86,News Recommendation & Offline Evaluation,2016,Contrasting Offline and Online Results when Evaluating Recommendation ,14,14,7,0.0
+88,Co-design with Children,1999,Cooperative inquiry,243,220,5,0.3
+88,Co-design with Children,2004,Mixing ideas,75,65,8,0.2
+88,Co-design with Children,1997,Designing for or designing with? Informant design for interactive lear,62,61,9,0.0
+89,Tangibles for Learning,2007,Do tangible interfaces enhance learning?,130,128,2,0.1
+89,Tangibles for Learning,2005,Extending tangible interfaces for education,104,103,3,0.0
+89,Tangibles for Learning,2009,Comparing the use of tangible and graphical programming languages for ,56,53,4,0.0
+90,Autistic Children & Technology,2009,Collaborative Puzzle Game,24,23,8,0.05
+90,Autistic Children & Technology,2013,Evaluation of tablet apps to encourage social interaction in children ,31,28,4,0.05
+90,Autistic Children & Technology,2014,Diversity for design,39,36,7,0.15
+91,Youth Online Safety,2017,Parental Control vs. Teen Self-Regulation,85,58,3,0.55
+91,Youth Online Safety,2017,'No Telling Passcodes Out Because They're Private',59,51,3,0.15
+91,Youth Online Safety,2018,Safety vs. Surveillance,65,48,3,0.3
+92,Children's Agency & Research Ethics,2011,Examining values,51,48,2,0.05
+92,Children's Agency & Research Ethics,2008,Designing with and for children with special needs,28,27,5,0.0
+92,Children's Agency & Research Ethics,2014,Applying the CHECk tool to participatory design sessions with children,13,10,12,0.23
+93,AI Literacy & K-12,2020,What is AI Literacy? Competencies and Design Considerations,183,173,1,0.1
+93,AI Literacy & K-12,2019,Youth Learning Machine Learning through Building Models of Athletic Mo,43,40,2,0.05
+93,AI Literacy & K-12,2019,Can Children Understand Machine Learning Concepts?,41,40,2,0.05
+94,Children's Play & Learning Environments,2012,Interaction and recognition challenges in interpreting children's touc,34,20,5,0.45
+94,Children's Play & Learning Environments,2004,Ambient wood,72,66,3,0.1
+94,Children's Play & Learning Environments,2008,Playing with the sound maker,39,32,6,0.25
+95,Usable Security & Phishing,2006,Why phishing works,41,41,5,0.0
+95,Usable Security & Phishing,2008,You've been warned,48,42,6,0.2
+95,Usable Security & Phishing,2006,Do security toolbars actually prevent phishing attacks?,25,25,5,0.0
+96,Smart-home Privacy,2018,"Alexa, Are You Listening?",130,127,2,0.0
+96,Smart-home Privacy,2018,User Perceptions of Smart Home IoT Privacy,73,73,3,0.0
+96,Smart-home Privacy,2019,Privacy Perceptions and Designs of Bystanders in Smart Homes,64,60,2,0.05
+97,Deceptive Advertising Patterns,2018,The Dark (Patterns) Side of UX Design,172,151,2,0.3
+97,Deceptive Advertising Patterns,2019,Dark Patterns at Scale,103,95,2,0.15
+97,Deceptive Advertising Patterns,2020,UI Dark Patterns and Where to Find Them,65,65,2,0.0
+98,Ubicomp Privacy & Home Automation,2012,Expectation and purpose,69,58,4,0.25
+98,Ubicomp Privacy & Home Automation,2014,Practical trigger-action programming in the smart home,66,60,3,0.05
+98,Ubicomp Privacy & Home Automation,2014,In situ with bystanders of augmented reality glasses,82,82,3,0.0
+99,Movement & Somaesthetics,2007,Research through design as a method for interaction design research in,704,684,3,0.3
+99,Movement & Somaesthetics,2012,What should we expect from research through design?,421,416,2,0.05
+99,Movement & Somaesthetics,2003,Ambiguity as a resource for design,478,450,3,0.35
+100,Bodily Play & Spectator Experience,2005,Designing the spectator experience,141,124,3,0.2
+100,Bodily Play & Spectator Experience,2011,Designing sports,100,66,3,0.5
+100,Bodily Play & Spectator Experience,2009,From interaction to trajectories,96,79,4,0.2
+101,Speculative & Critical Design,2014,Research through design fiction,153,146,2,0.2
+101,Speculative & Critical Design,2006,Implications for design,222,219,2,0.05
+101,Speculative & Critical Design,2013,"What is ""critical"" about critical design?",153,147,2,0.2
+102,Sustainable HCI,2010,Mapping the landscape of sustainable HCI,278,273,1,0.0
+102,Sustainable HCI,2007,Sustainable interaction design,257,248,2,0.1
+102,Sustainable HCI,2010,The design of eco-feedback technology,163,159,1,0.0
+105,Interpretation & Critique in Design Research,2006,Staying open to interpretation,210,198,2,0.25
+105,Interpretation & Critique in Design Research,2012,The logic of annotated portfolios,95,95,4,0.0
+105,Interpretation & Critique in Design Research,2005,Making by making strange,178,173,2,0.15
+106,More-than-human Design,2017,Designing for Cohabitation,99,91,3,0.3
+106,More-than-human Design,2004,Infotropism,36,35,17,0.05
+106,More-than-human Design,2017,Kinecting with Orangutans,23,19,6,0.2
+107,VR Meditation & Breathing,2017,Inner Garden,58,55,2,0.15
+107,VR Meditation & Breathing,2017,Life Tree,54,42,3,0.1
+107,VR Meditation & Breathing,2016,Biosignals as Social Cues,65,53,3,0.25
+108,Playful Food Experiences,2008,Celebratory technology,126,126,4,0.0
+108,Playful Food Experiences,2011,CoDine,35,34,9,0.05
+108,Playful Food Experiences,2012,Telematic dinner party,43,38,8,0.1
+109,Calendars & Scheduling,1999,"Social, individual and technological issues for groupware calendar sys",52,49,5,0.15
+109,Calendars & Scheduling,2001,Dealing with mobility,34,28,8,0.15
+109,Calendars & Scheduling,1990,A visual calendar for scheduling group meetings,12,12,26,0.0
+110,Self-tracking & Reflection,2006,Fish’n’Steps: Encouraging Physical Activity with an Interactive Comput,195,190,2,0.1
+110,Self-tracking & Reflection,2006,Design requirements for technologies that encourage physical activity,167,160,2,0.2
+110,Self-tracking & Reflection,2008,Activity sensing in the wild,227,208,2,0.3
+111,Chronic Care & Caregiving,2013,Caring for caregivers,103,95,4,0.1
+111,Chronic Care & Caregiving,2011,Improving communication and social support for caregivers of high-risk,39,36,5,0.1
+111,Chronic Care & Caregiving,2013,Understanding the conflicting demands of family caregivers caring for ,45,44,6,0.05
+112,Behavior Sensing,2014,StudentLife,134,115,3,0.25
+112,Behavior Sensing,2015,Trajectories of depression,74,70,3,0.1
+112,Behavior Sensing,2018,Tracking Depression Dynamics in College Students Using Mobile Phone an,60,50,2,0.2
+113,Stress & Mood Technology,2012,Engagement with online mental health interventions,52,43,4,0.1
+113,Stress & Mood Technology,2018,"“Suddenly, we got to become therapists for each other”",75,73,2,0.05
+113,Stress & Mood Technology,2018,Pocket Skills,47,46,2,0.05
+114,Aging & Dementia Care,2015,An Age-Old Problem,118,116,2,0.0
+114,Aging & Dementia Care,2013,Older adults as digital content producers,60,48,4,0.25
+114,Aging & Dementia Care,2014,Never too old,86,81,2,0.15
+115,Personal Informatics Models,2010,A stage-based model of personal informatics systems,356,352,3,0.1
+115,Personal Informatics Models,2015,A lived informatics model of personal informatics,249,202,2,0.5
+115,Personal Informatics Models,2014,Personal tracking as lived informatics,258,255,1,0.05
+116,Clinical Information Work,2002,A finger on the pulse,77,73,4,0.05
+116,Clinical Information Work,1996,Documents and professional practice,63,61,9,0.1
+116,Clinical Information Work,2002,The parameters of common information spaces:,34,31,6,0.1
+117,"Sleep, ADHD & Lifelogging",2012,Lullaby,75,63,3,0.3
+117,"Sleep, ADHD & Lifelogging",2011,Opportunities for computing technologies to support healthy sleep beha,37,30,7,0.3
+117,"Sleep, ADHD & Lifelogging",2012,ShutEye,39,35,4,0.15
+118,Crowdsourcing & Human Computation,2010,Soylent,171,143,2,0.35
+118,Crowdsourcing & Human Computation,2008,Crowdsourcing user studies with Mechanical Turk,236,216,2,0.25
+118,Crowdsourcing & Human Computation,2011,CrowdForge,108,99,2,0.25
+119,Explainable Machine Learning,2021,To Trust or to Think,221,213,1,0.1
+119,Explainable Machine Learning,2019,Designing Theory-Driven User-Centric Explainable AI,193,184,1,0.05
+119,Explainable Machine Learning,2019,Understanding the Effect of Accuracy on Trust in Machine Learning Mode,133,118,1,0.05
+120,Data Visualization,2010,Useful junk?,55,55,6,0.0
+120,Data Visualization,2010,Crowdsourcing graphical perception,111,107,2,0.15
+120,Data Visualization,2016,When (ish) is My Bus?,54,37,3,0.35
+121,Fairness & Clinical AI,2019,Improving Fairness in Machine Learning Systems,130,115,2,0.1
+121,Fairness & Clinical AI,2019,Unremarkable AI,120,112,2,0.05
+121,Fairness & Clinical AI,2020,"Re-examining Whether, Why, and How Human-AI Interaction Is Uniquely Di",219,207,1,0.0
+122,Data Work & Infrastructure,2011,Homebrew databases,68,53,5,0.35
+122,Data Work & Infrastructure,2015,The Politics of Measurement and Action,72,71,3,0.0
+122,Data Work & Infrastructure,2006,The human infrastructure of cyberinfrastructure,130,118,4,0.2
+123,Interactive Machine Learning,2003,Interactive machine learning,120,120,7,0.0
+123,Interactive Machine Learning,2015,ModelTracker,58,53,4,0.1
+123,Interactive Machine Learning,2008,CueFlik,56,51,7,0.25
+124,Peer & Crowd Feedback,2006,Getting the right design and the design right,68,68,5,0.0
+124,Peer & Crowd Feedback,2013,Peer and self assessment in massive online classes,42,33,4,0.25
+124,Peer & Crowd Feedback,2012,What do you think?,11,11,13,0.0
+126,Social Media & Mental Health,2003,"Unpacking ""privacy"" for a networked world",215,213,2,0.05
+126,Social Media & Mental Health,2014,"""You can't block people offline""",73,70,2,0.0
+126,Social Media & Mental Health,2011,We're in it together,86,85,4,0.0
+127,ICTD & Rural Communities,2010,Postcolonial computing,279,270,3,0.15
+127,ICTD & Rural Communities,2010,Intermediated technology use in developing communities,118,110,4,0.2
+127,ICTD & Rural Communities,2010,Avaaj Otalo,98,96,3,0.1
+128,Wikipedia & Open Source,2005,Becoming Wikipedian,143,132,3,0.0
+128,Wikipedia & Open Source,2009,"Wikipedians are born, not made",69,59,4,0.2
+128,Wikipedia & Open Source,2007,SuggestBot,72,60,3,0.25
+129,Crisis Informatics,2010,Microblogging during two natural hazards events,98,85,2,0.15
+129,Crisis Informatics,2011,"""Voluntweeters""",107,84,3,0.35
+129,Crisis Informatics,2012,(How) will the revolution be retweeted?,68,57,3,0.2
+130,Gender & Algorithmic Bias,2015,"""I always assumed that I wasn't really that close to [her]""",146,131,2,0.15
+130,Gender & Algorithmic Bias,2017,"""Algorithms ruin everything""",93,86,3,0.1
+130,Gender & Algorithmic Bias,2018,Safe Spaces and Safe Places,133,125,2,0.1
+131,Civic Participation,2016,Social Justice-Oriented Interaction Design,230,212,2,0.2
+131,Civic Participation,2015,Strangers at the Gate,132,119,3,0.15
+131,Civic Participation,2011,The relationship of action research to human-computer interaction,161,154,3,0.15
+132,Moderation & Online Harassment,2019,Human-Machine Collaboration for Content Regulation,118,106,1,0.15
+132,Moderation & Online Harassment,2017,Shaping Pro and Anti-Social Behavior on Twitch Through Moderation and ,116,101,2,0.3
+132,Moderation & Online Harassment,2004,Slash(dot) and burn,137,131,4,0.15
+133,Gig Work & Labor,2013,Turkopticon,278,270,2,0.05
+133,Gig Work & Labor,2015,Working with Machines,157,142,2,0.15
+133,Gig Work & Labor,2016,Standing Out from the Crowd,117,117,1,0.0
+134,"Gender, Intimacy & Safety",2010,Feminist HCI,479,466,3,0.2
+134,"Gender, Intimacy & Safety",2017,Examining Menstrual Tracking to Inform the Design of Personal Informat,124,108,1,0.05
+134,"Gender, Intimacy & Safety",2016,HCI and Intimate Care as an Agenda for Change in Women's Health,79,69,3,0.25
+135,Enterprise Social Media & Crowdfunding,2008,Motivations for social networking at work,69,53,2,0.25
+135,Enterprise Social Media & Crowdfunding,2006,Dogear,44,39,2,0.15
+135,Enterprise Social Media & Crowdfunding,2000,Expertise recommender,52,44,8,0.35
+136,"Refugees, Hackathons & Crypto",2016,Syrian Refugees and Digital Health in Lebanon,59,47,4,0.4
+136,"Refugees, Hackathons & Crypto",2016,Designing for Transient Use,36,35,4,0.05
+136,"Refugees, Hackathons & Crypto",2018,In a New Land,30,17,4,0.5

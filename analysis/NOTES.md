@@ -155,3 +155,43 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
   Tangible: born 1995, 61 founding papers, 39 groups, largest 0.20, flag Tangible bits 0.30.
 - Next: permutation test for the correlations; read the 19 flag papers and label agenda vs.
   artefact vs. study; compare modes on longevity and award density.
+
+## 9. Corpus v2 (2026-09-26): every SIGCHI-sponsored venue
+- The core now follows one rule: conferences ACM SIGCHI sponsors or co-sponsors plus SIGCHI's
+  journals, companion tracks excluded. 17 venues added (IDC, C&C, AutomotiveUI, ETRA, VRST, ISS,
+  EICS, GROUP, ICMI, UMAP, RecSys, IMX, ISWC, COMPASS, CUI, SCF, HRI); ASSETS moved to the linked
+  layer; TOCHI 2004–2013 recovered via its second Semantic Scholar name. Core 53,909 papers,
+  450,037 citations, 17 fields, 137 sub-fields; 7,620 papers (14%) have no in-corpus citation
+  link (RecSys, UMAP, ICMI and ETRA connect weakly to the rest). All numbers above sections 1–8
+  were computed on the 13-venue corpus; this section records what moved.
+- Stable: co-word motor themes still almost never persist (CHI 0/1, 0/3, 0/4, 0/3, 1/2; core
+  1/3, 0/3, 0/3, 0/2, 1/1, 0/2) while per-window citation clusters do (CHI 8/12, 13/17, 15/25,
+  6/18, 15/23; core 10/16, 15/20, 18/26, 21/28, 13/23, 14/24). Founders' share y0–4 0.50, y5
+  0.22, y6 0.20, y8 0.13, y10 0.05. Awards: 53/71 identified, 34/39 above the same-year
+  same-sub-field median. Export median 0.76 (IQR 0.69–0.84), ρ(import, export) 0.56; the
+  recommender sub-fields are the most exported (0.92–0.95).
+- Moved: early external references now show more ML/AI (2000s 11%, 2010s 13%, was 6–7%) because
+  RecSys, UMAP and ICMI import it; social science 17–20% and psychology 11–12% unchanged. The
+  origin-mode correlation between group concentration and eventual size fell to −0.05 (was
+  −0.28); flag concentration × founders' share at y6 stays at −0.42.
+- Waves (title+abstract keywords, abstracts for 31,170 of 53,909 papers; cohesion = lift over
+  same-year non-wave papers; founding-window references ≥60):
+  LLMs 2022: 17.5% of 2025 papers, 60 sub-fields, lift 14, newcomers 0.54 vs 0.49.
+  VR 2016: 9.6% (2019), 27 sub-fields, lift 35, newcomers 0.62 vs 0.50 (VRST now in the core).
+  WWW 1994: 7.4% (1998), lift 11, newcomers 0.74 vs 0.66, 7% of peak after ten years.
+  Smartphones 2008: 6.8% (2020), lift 39 but self-reference 0.01 (the word arrives late).
+  Social media 2007: 5.9% (2022), lift 44, newcomers 0.50 vs 0.61.
+  Deep learning 2015: 5.8% (2023), 19 sub-fields, lift 33, newcomers 0.65 vs 0.49.
+  Voice assistants 2016: 4.3%, lift 129 (the most self-contained wave).
+  MTurk 2008: 3.1%, self-reference 0.30, lift 66, newcomers 0.37 vs 0.60.
+  Personal fabrication 2012: 3.8% (2022), lift 43, still at its peak after ten years.
+  Kinect 2011: 1.0% (2012), lift 22. Tabletop 2005: 3.6% (2010), newcomers 0.32 vs 0.61.
+  Two shapes persist across corpora: platform waves (WWW, smartphones, LLMs) are large, spread
+  across many sub-fields, bring newcomers and dissolve into everything; instrument waves (MTurk,
+  voice, Kinect, tabletop) stay small, cohesive and incumbent-led.
+- Trigger bursts now recover "Attention Is All You Need" (burst 2019) and Latent Diffusion (2023)
+  besides Kinect pose recognition (2011), D3 (2012), ImageNet (2015), GloVe/word2vec (2016–17),
+  BERT (2019). GPT-3 itself is barely visible: OpenAlex rarely resolves references to arXiv.
+- To do for the paper: venue-set robustness (CHI-only / old core 13 / core 29 / all 36), the
+  citation-rewiring null model for cluster persistence, wave definitions that do not depend on
+  when a word became common (smartphones), and a decision on the 14% isolated papers.

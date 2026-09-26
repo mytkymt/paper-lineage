@@ -1,63 +1,63 @@
 award,award_year,paper_year,title,venue,sub_name,sub_size,in_sub_cites,rank_in_sub,rank_in_early_quartile
-UIST,2023,2010,VizWiz,uist,Visual Accessibility,399,107,1,1
-UIST,2022,2011,OmniTouch,uist,Hand Input & Gesture Sensing,880,98,3,3
-UIST,2021,2011,KinectFusion,uist,Augmented Reality Collaboration,231,19,16,16
-UIST,2020,2010,Soylent,uist,Crowdsourcing & Human Computation,391,91,1,1
-UIST,2018,2007,SearchTogether,uist,Search & Recommendation,395,32,1,
-UIST,2017,2002,Ambient touch,uist,VR Haptics,755,17,82,60
-UIST,2016,2005,Low-cost multi-touch sensing through frustrated total intern,uist,Touch & Multi-touch Input,536,53,3,3
-UIST,2015,2001,Phidgets,uist,Printed Electronics,318,58,2,2
+UIST,2023,2010,VizWiz,uist,Visual Accessibility,126,44,1,1
+UIST,2022,2011,OmniTouch,uist,Hand Input & Gesture Sensing,501,81,4,4
+UIST,2021,2011,KinectFusion,uist,AR Authoring & Assembly,349,13,25,12
+UIST,2020,2010,Soylent,uist,Crowdsourcing & Human Computation,423,92,1,1
+UIST,2018,2007,SearchTogether,uist,Tabletop Collaboration,294,18,14,14
+UIST,2017,2002,Ambient touch,uist,Tactile & Thermal Feedback,344,21,7,6
+UIST,2016,2005,Low-cost multi-touch sensing through frustrated total intern,uist,Touch & Multi-touch Input,308,35,6,5
+UIST,2015,2001,Phidgets,uist,Physical Prototyping Toolkits,198,67,1,1
 UIST,2014,2004,SHARK2: a large vocabulary shorthand writing system for pen-,,,,,,
-UIST,2013,1995,The world through the computer,uist,Tangible Interaction,884,9,100,65
+UIST,2013,1995,The world through the computer,uist,Tangible Interaction,674,13,38,32
 UIST,2012,2001,DiamondTouch: a multi-user touch technology,,,,,,
-UIST,2011,2000,Sensing techniques for mobile interaction,uist,Touch & Multi-touch Input,536,37,7,5
-UIST,2010,1993,Windows on the world,uist,Mixed Reality Systems,229,17,15,5
-UIST,2009,1997,The metaDESK,uist,Tangible Interaction,884,46,8,8
+UIST,2011,2000,Sensing techniques for mobile interaction,uist,Touch & Multi-touch Input,308,31,10,8
+UIST,2010,1993,Windows on the world,uist,3D Pointing & VR Interaction,675,20,23,14
+UIST,2009,1997,The metaDESK,uist,Tangible Interaction,674,51,4,4
 UIST,2008,1991,SUIT: the Pascal of user interface toolkits,,,,,,
-UIST,2007,1993,SpeechSkimmer,uist,Meeting Capture & Reading,253,7,37,21
-UIST,2006,1992,The information grid,uist,Fisheye & Scrolling Techniques,314,1,153,57
-UIST,2005,1991,Issues in combining marking and direct manipulation techniqu,uist,Menus & Command Selection,188,14,19,9
-UIST,2004,1993,Animation: from cartoons to the user interface,uist,GUI Toolkits & Web Interfaces,752,17,29,4
-UIST,2003,1991,The DigitalDesk calculator,uist,Tangible Interaction,884,23,31,26
-CSCW,2025,2013,Hollaback!,cscw,"Gender, Intimacy & Safety",513,33,18,17
-CSCW,2024,1992,Faltering from ethnography to design,cscw,CSCW Foundations,139,17,2,2
-CSCW,2022,1988,Patterns of contact and communication in scientific research,cscw,Distributed Team Awareness,215,21,4,4
-CSCW,2021,1996,Re-place-ing space,cscw,Civic Participation,322,30,12,11
-CSCW,2020,2004,Territoriality in collaborative tabletop workspaces,cscw,Tabletop Collaboration,152,49,1,1
+UIST,2007,1993,SpeechSkimmer,uist,Meeting Capture & Reading,158,8,13,7
+UIST,2006,1992,The information grid,uist,Fisheye & Scrolling Techniques,463,1,205,79
+UIST,2005,1991,Issues in combining marking and direct manipulation techniqu,uist,Gesture Elicitation & Recognition,444,16,43,31
+UIST,2004,1993,Animation: from cartoons to the user interface,uist,Fisheye & Scrolling Techniques,463,22,15,9
+UIST,2003,1991,The DigitalDesk calculator,uist,Tangible Interaction,674,23,23,20
+CSCW,2025,2013,Hollaback!,cscw,Crisis Informatics,534,20,33,18
+CSCW,2024,1992,Faltering from ethnography to design,cscw,CSCW Foundations,564,23,8,8
+CSCW,2022,1988,Patterns of contact and communication in scientific research,cscw,CSCW Foundations,564,32,4,4
+CSCW,2021,1996,Re-place-ing space,cscw,Family Video Communication,429,21,28,11
+CSCW,2020,2004,Territoriality in collaborative tabletop workspaces,cscw,Tabletop Collaboration,294,69,1,1
 CSCW,2019,1994,GroupLens: an open architecture for collaborative filtering ,,,,,,
-CSCW,2018,2000,Interaction and outeraction,cscw,Instant Messaging,144,36,1,1
-CSCW,2017,1998,Mobility in collaboration,cscw,Augmented Reality Collaboration,231,9,43,29
-CSCW,2016,1992,Awareness and coordination in shared workspaces,cscw,Real-time Groupware,285,43,1,1
-CSCW,2015,1992,Learning from Notes,cscw,CSCW Foundations,139,8,5,4
-CSCW,2014,1988,Why CSCW applications fail: problems in the design and evalu,cscw,CSCW Foundations,139,19,1,1
-CSCW,2013,1994,Steps towards an ecology of infrastructure,cscw,Infrastructure & Making,275,20,15,15
-UbiComp,2024,2014,StudentLife,ubicomp,Behavior Sensing,277,76,1,1
-UbiComp,2023,2013,Instant inkjet circuits,ubicomp,Printed Electronics,318,78,1,1
-UbiComp,2023,2013,MACH: my automated conversation coach,,,,,,
-UbiComp,2022,2012,"What next, ubicomp?",ubicomp,Indoor Localization,170,0,116,34
-UbiComp,2022,2012,StressSense,ubicomp,Behavior Sensing,277,23,8,6
-UbiComp,2021,2011,PreHeat,ubicomp,Sustainable HCI,293,23,17,13
+CSCW,2018,2000,Interaction and outeraction,cscw,Instant Messaging,173,65,1,1
+CSCW,2017,1998,Mobility in collaboration,cscw,Cross-device & Large Displays,467,13,57,21
+CSCW,2016,1992,Awareness and coordination in shared workspaces,cscw,CSCW Foundations,564,54,2,2
+CSCW,2015,1992,Learning from Notes,cscw,CSCW Foundations,564,24,7,7
+CSCW,2014,1988,Why CSCW applications fail: problems in the design and evalu,cscw,CSCW Foundations,564,39,3,3
+CSCW,2013,1994,Steps towards an ecology of infrastructure,cscw,Data Work & Infrastructure,293,16,27,9
+UbiComp,2024,2014,StudentLife,ubicomp,Behavior Sensing,329,86,1,1
+UbiComp,2023,2013,Instant inkjet circuits,ubicomp,Printed Electronics,518,83,1,1
+UbiComp,2023,2013,My automated conversation helper (MACH),icmi,Multimodal Sentiment & Speaking,163,1,63,38
+UbiComp,2022,2012,"What next, ubicomp?",ubicomp,Location Sharing & Privacy,120,2,39,
+UbiComp,2022,2012,StressSense,ubicomp,Behavior Sensing,329,32,4,4
+UbiComp,2021,2011,PreHeat,ubicomp,Sustainable HCI,510,26,24,20
 UbiComp,2021,2011,Understanding my data myself: supporting self-reflection wit,,,,,,
-UbiComp,2021,2010,EmotionSense,ubicomp,Smartphone Usage Logging,120,6,20,7
-UbiComp,2019,2009,SwimMaster,ubicomp,Exergames & Bodily Play,257,6,65,27
-UbiComp,2019,2009,Recognizing daily activities with RFID-based sensors,ubicomp,Hand Input & Gesture Sensing,880,18,111,70
-UbiComp,2018,2008,Flowers or a robot army?,ubicomp,Persuasive Health & Activity,158,22,5,5
-UbiComp,2018,2008,Pedestrian localisation for indoor environments,ubicomp,Indoor Localization,170,10,5,5
-UbiComp,2017,2007,Locating Family Values: A Field Trial of the Whereabouts Clo,ubicomp,Smart Home Automation,199,6,42,19
-UbiComp,2017,2007,At the Flick of a Switch: Detecting and Classifying Unique E,ubicomp,Indoor Localization,170,1,79,25
-UbiComp,2016,2006,SenseCam: A Retrospective Memory Aid,ubicomp,Memory & Reminiscence,319,24,13,7
-UbiComp,2015,2005,Learning and Recognizing the Places We Go,ubicomp,Indoor Localization,170,8,8,7
+UbiComp,2021,2010,EmotionSense,ubicomp,Behavior Sensing,329,17,15,11
+UbiComp,2019,2009,SwimMaster,ubicomp,Bodily Play & Spectator Experience,571,8,81,37
+UbiComp,2019,2009,Recognizing daily activities with RFID-based sensors,ubicomp,Wearable Activity Recognition,535,11,43,14
+UbiComp,2018,2008,Flowers or a robot army?,ubicomp,Self-tracking & Reflection,519,48,10,8
+UbiComp,2018,2008,Pedestrian localisation for indoor environments,ubicomp,Wearable Activity Recognition,535,12,32,10
+UbiComp,2017,2007,Locating Family Values: A Field Trial of the Whereabouts Clo,ubicomp,Family Video Communication,429,6,92,38
+UbiComp,2017,2007,At the Flick of a Switch: Detecting and Classifying Unique E,ubicomp,Wearable Activity Recognition,535,3,157,45
+UbiComp,2016,2006,SenseCam: A Retrospective Memory Aid,ubicomp,"Sleep, ADHD & Lifelogging",213,19,5,4
+UbiComp,2015,2005,Learning and Recognizing the Places We Go,ubicomp,Location Sharing & Privacy,120,9,13,5
 UbiComp,2014,2004,Activity recognition in the home using simple and ubiquitous,,,,,,
-UbiComp,2014,2004,Particle Filters for Location Estimation in Ubiquitous Compu,ubicomp,Indoor Localization,170,5,16,10
-UbiComp,2013,2003,Inferring High-Level Behavior from Low-Level Sensors,ubicomp,Urban Mobility Data,161,10,6,4
-UbiComp,2012,2002,The Personal Server: Changing the Way We Think about Ubiquit,ubicomp,Indoor Localization,170,3,34,15
-UbiComp,2011,2001,Privacy by Design — Principles of Privacy-Aware Ubiquitous S,ubicomp,App Permissions & Policy,122,5,33,17
+UbiComp,2014,2004,Particle Filters for Location Estimation in Ubiquitous Compu,ubicomp,Wearable Activity Recognition,535,5,108,32
+UbiComp,2013,2003,Inferring High-Level Behavior from Low-Level Sensors,ubicomp,Family Video Communication,429,5,103,43
+UbiComp,2012,2002,The Personal Server: Changing the Way We Think about Ubiquit,ubicomp,Cross-device & Large Displays,467,2,215,73
+UbiComp,2011,2001,Privacy by Design — Principles of Privacy-Aware Ubiquitous S,ubicomp,Ubicomp Privacy & Home Automation,313,6,57,23
 TEI,2016,2014,Snake Charmer: physically enabling virtual objects,,,,,,
-TEI,2015,2013,Seven Principles to Design for Embodied Sensemaking,tei,Tangible Interaction,884,8,112,
+TEI,2015,2013,Seven Principles to Design for Embodied Sensemaking,tei,Bodily Play & Spectator Experience,571,8,81,
 TEI,2014,2012,jamSheets: thin interfaces with tunable stiffness enabled by,,,,,,
-TEI,2013,2011,A design space for ephemeral user interfaces,tei,Playful Food Experiences,144,13,18,7
+TEI,2013,2011,A design space for ephemeral user interfaces,tei,Data Physicalization & Bio-materials,320,17,25,9
 TEI,2012,2010,Makey Makey: improvising tangible and nature-based user inte,,,,,,
-TEI,2011,2009,Handcrafting textile interfaces from a kit-of-no-parts,tei,E-textiles & Weaving,355,52,5,5
+TEI,2011,2009,Handcrafting textile interfaces from a kit-of-no-parts,tei,E-textiles & Weaving,477,60,4,2
 TEI,2010,2008,Electronic popables: exploring paper-based computing through,,,,,,
 TEI,2009,2007,Electronics as material: littleBits,,,,,,
 TEI,2008,2006,Are tangibles more fun?: comparing children's enjoyment and ,,,,,,
@@ -67,6 +67,6 @@ MobileHCI,2009,1999,Implicit human-computer interaction through context,,,,,,
 MobileHCI,2011,2001,AudioGPS: spatial audio navigation with a minimal attention ,,,,,,
 MobileHCI,2021,2011,Falling asleep with Angry Birds Facebook and Kindle: a large,,,,,,
 MobileHCI,2022,2012,Touch behavior with different postures on soft smartphone ke,,,,,,
-MobileHCI,2023,2013,What's up with whatsapp?,mobilehci,Instant Messaging,144,25,2,
-IUI,2017,2005,Trust in recommender systems,iui,Search & Recommendation,395,7,61,
-IUI,2019,2004,SUPPLE,iui,GUI Toolkits & Web Interfaces,752,32,6,
+MobileHCI,2023,2013,What's up with whatsapp?,mobilehci,Instant Messaging,173,24,4,
+IUI,2017,2005,Trust in recommender systems,iui,Collaborative Filtering & Trust,211,10,8,7
+IUI,2019,2004,SUPPLE,iui,Pointing & Target Selection,523,26,24,16

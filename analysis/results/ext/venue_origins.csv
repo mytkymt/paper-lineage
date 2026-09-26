@@ -1,135 +1,165 @@
 sub,name,band,papers,hci_member_share,early_refs,from_hci,from_graphics,from_robotics,from_vrar,from_haptics,from_ijhcs
-0,Activity Recognition & Sensing,Sensing & Input Techniques,1012,0.98,222,0.977,0.014,0.009,0.0,0.0,0.0
-1,Touch & Multi-touch Input,Sensing & Input Techniques,723,0.86,286,0.857,0.133,0.0,0.0,0.0,0.01
-2,Hand Sensing & Input,Sensing & Input Techniques,676,0.84,240,0.942,0.054,0.0,0.0,0.0,0.004
-3,Gaze in VR,Sensing & Input Techniques,604,0.74,212,0.679,0.321,0.0,0.0,0.0,0.0
-4,Pointing & Target Selection,Sensing & Input Techniques,552,0.79,93,0.753,0.172,0.0,0.0,0.0,0.075
-5,Information Navigation,Sensing & Input Techniques,436,0.73,67,0.493,0.507,0.0,0.0,0.0,0.0
-6,Text Entry,Sensing & Input Techniques,394,0.91,114,0.965,0.026,0.0,0.0,0.0,0.009
-7,Gesture Elicitation & Recognition,Sensing & Input Techniques,341,0.85,171,0.848,0.152,0.0,0.0,0.0,0.0
-8,Performance Modelling & Latency,Sensing & Input Techniques,309,0.77,28,1.0,0.0,0.0,0.0,0.0,0.0
-9,Telepresence & Remote Collaboration,"AR, VR & Immersive Displays",607,0.68,237,0.928,0.034,0.0,0.0,0.0,0.038
-10,AR Authoring & Prototyping,"AR, VR & Immersive Displays",454,0.66,114,0.658,0.298,0.009,0.018,0.0,0.018
-11,Avatars & Presence,"AR, VR & Immersive Displays",450,0.5,71,0.606,0.225,0.0,0.085,0.0,0.085
-12,VR Locomotion,"AR, VR & Immersive Displays",432,0.31,90,0.644,0.267,0.0,0.0,0.0,0.089
-13,Groupware & Tabletops,"AR, VR & Immersive Displays",395,0.88,155,0.935,0.065,0.0,0.0,0.0,0.0
-14,Immersive Mixed Reality,"AR, VR & Immersive Displays",393,0.58,176,0.761,0.182,0.0,0.023,0.0,0.034
-15,Projection & Spatial AR,"AR, VR & Immersive Displays",191,0.48,40,0.375,0.625,0.0,0.0,0.0,0.0
-16,Asymmetric Mixed Reality,"AR, VR & Immersive Displays",189,0.61,52,0.712,0.192,0.0,0.058,0.0,0.038
-17,AR Training & Guidance,"AR, VR & Immersive Displays",180,0.41,37,0.649,0.297,0.0,0.054,0.0,0.0
-18,Public & Ambient Displays,"AR, VR & Immersive Displays",176,0.91,70,0.943,0.057,0.0,0.0,0.0,0.0
-19,In-car & Video AR,"AR, VR & Immersive Displays",134,0.44,40,0.6,0.2,0.0,0.1,0.0,0.1
-20,Near-eye & Foveated Displays,"AR, VR & Immersive Displays",126,0.17,33,0.121,0.848,0.0,0.03,0.0,0.0
-21,AR Depth Perception,"AR, VR & Immersive Displays",202,0.46,47,0.213,0.787,0.0,0.0,0.0,0.0
-22,Vibrotactile Feedback,Haptics & Touch Feedback,272,0.5,74,0.851,0.081,0.0,0.0,0.0,0.068
-23,Thermal & Olfactory Displays,Haptics & Touch Feedback,222,0.57,22,0.227,0.409,0.0,0.364,0.0,0.0
-24,Force Feedback Devices,Haptics & Touch Feedback,190,0.58,25,0.44,0.12,0.0,0.08,0.32,0.04
-25,Haptic Redirection in VR,Haptics & Touch Feedback,189,0.52,25,0.56,0.32,0.0,0.04,0.04,0.04
-26,Wearable Fingertip Haptics,Haptics & Touch Feedback,169,0.2,12,0.25,0.167,0.0,0.083,0.5,0.0
-27,Tactile Texture Rendering,Haptics & Touch Feedback,163,0.44,29,0.517,0.103,0.0,0.034,0.276,0.069
-28,Mid-air Ultrasound Haptics,Haptics & Touch Feedback,145,0.45,49,0.633,0.245,0.0,0.02,0.102,0.0
-29,Electrical Muscle Stimulation,Haptics & Touch Feedback,128,0.8,80,0.762,0.15,0.013,0.0,0.037,0.037
-30,Surface Haptics,Haptics & Touch Feedback,227,0.3,66,0.652,0.303,0.0,0.0,0.0,0.045
-31,Tangibles for Learning,Tangible Interaction & Fabrication,703,0.88,275,0.88,0.109,0.0,0.0,0.0,0.011
-32,Shape-changing Interfaces,Tangible Interaction & Fabrication,525,0.87,202,0.837,0.134,0.02,0.0,0.0,0.01
-33,Printed & Paper Electronics,Tangible Interaction & Fabrication,500,0.91,163,0.859,0.135,0.0,0.006,0.0,0.0
-34,Textiles & Cloth Simulation,Tangible Interaction & Fabrication,423,0.83,72,0.597,0.403,0.0,0.0,0.0,0.0
-35,Digital Fabrication,Tangible Interaction & Fabrication,353,0.94,151,0.742,0.245,0.0,0.013,0.0,0.0
-36,Computational Fabrication,Tangible Interaction & Fabrication,329,0.26,117,0.077,0.923,0.0,0.0,0.0,0.0
-37,Sustainable Materials,Tangible Interaction & Fabrication,260,0.93,25,0.76,0.24,0.0,0.0,0.0,0.0
-38,Data Physicalization,Tangible Interaction & Fabrication,248,0.91,143,0.951,0.042,0.0,0.0,0.0,0.007
-39,Neural Rendering & Reconstruction,"Graphics, Animation & Modelling",181,0.08,35,0.029,0.971,0.0,0.0,0.0,0.0
-40,Texture & Image Synthesis,"Graphics, Animation & Modelling",164,0.1,34,0.0,1.0,0.0,0.0,0.0,0.0
-41,Animation Principles,"Graphics, Animation & Modelling",143,0.51,35,0.429,0.571,0.0,0.0,0.0,0.0
-42,Sketch-based Modelling,"Graphics, Animation & Modelling",129,0.33,83,0.458,0.542,0.0,0.0,0.0,0.0
-43,Motion Synthesis & Control,"Graphics, Animation & Modelling",127,0.17,45,0.067,0.933,0.0,0.0,0.0,0.0
-44,Procedural Shape Modelling,"Graphics, Animation & Modelling",124,0.06,46,0.087,0.913,0.0,0.0,0.0,0.0
-45,Image & Facial Synthesis,"Graphics, Animation & Modelling",486,0.15,58,0.052,0.948,0.0,0.0,0.0,0.0
-46,UI Toolkits & Constraints,UI Toolkits & Groupware,138,0.91,52,0.404,0.596,0.0,0.0,0.0,0.0
-47,UI Software Tools,UI Toolkits & Groupware,130,0.8,18,0.111,0.889,0.0,0.0,0.0,0.0
-48,Real-time Groupware,UI Toolkits & Groupware,409,0.86,31,0.613,0.387,0.0,0.0,0.0,0.0
-49,Semantic Media & Documentation,Miscellaneous,83,0.87,10,0.9,0.0,0.0,0.0,0.0,0.1
-50,Autism & Neurodiversity,Accessibility & Assistive Tech,418,0.89,107,0.907,0.028,0.019,0.0,0.0,0.047
-51,Web Accessibility,Accessibility & Assistive Tech,390,0.95,63,0.952,0.048,0.0,0.0,0.0,0.0
-52,Non-visual Navigation,Accessibility & Assistive Tech,386,0.92,63,0.841,0.016,0.063,0.0,0.016,0.063
-53,Deaf & Sign Language,Accessibility & Assistive Tech,325,0.95,52,0.904,0.058,0.0,0.0,0.0,0.038
-54,Visual Accessibility,Accessibility & Assistive Tech,310,1.0,121,0.992,0.008,0.0,0.0,0.0,0.0
-55,Non-visual Touch Interfaces,Accessibility & Assistive Tech,288,0.93,54,0.944,0.0,0.0,0.0,0.0,0.056
-56,AAC & Aphasia,Accessibility & Assistive Tech,146,0.97,39,1.0,0.0,0.0,0.0,0.0,0.0
-57,Assistive Music & Audio,Accessibility & Assistive Tech,127,0.98,50,0.98,0.0,0.0,0.0,0.0,0.02
-58,Blind Access to VR,Accessibility & Assistive Tech,120,0.93,47,0.936,0.0,0.0,0.0,0.0,0.064
-59,Low-vision Accessibility,Accessibility & Assistive Tech,255,0.95,17,1.0,0.0,0.0,0.0,0.0,0.0
-60,Visual Aesthetics & UX,Gamification & Engagement,210,0.58,21,0.857,0.0,0.0,0.0,0.0,0.143
-61,Player Experience & Immersion,Gamification & Engagement,200,0.84,38,0.658,0.026,0.0,0.0,0.0,0.316
-62,Rehabilitation Exergames,Gamification & Engagement,164,0.89,42,0.952,0.0,0.0,0.024,0.0,0.024
-63,Multiplayer & Location-based Games,Gamification & Engagement,146,0.95,88,0.966,0.011,0.0,0.0,0.0,0.023
-64,Gamification & Usability,Gamification & Engagement,624,0.85,107,1.0,0.0,0.0,0.0,0.0,0.0
-65,Human-Robot Interaction,Robots & Conversational Agents,370,0.25,87,0.563,0.023,0.345,0.0,0.0,0.069
-66,Social Robots in the Field,Robots & Conversational Agents,351,0.21,40,0.675,0.025,0.275,0.0,0.0,0.025
-67,Voice Assistants for Older Adults,Robots & Conversational Agents,310,0.88,43,0.814,0.047,0.0,0.0,0.0,0.14
-68,Automated Driving Interfaces,Robots & Conversational Agents,260,0.86,64,0.875,0.0,0.0,0.0,0.0,0.125
-69,Virtual Agents & Social Effects,Robots & Conversational Agents,229,0.42,36,0.778,0.139,0.0,0.0,0.0,0.083
-70,Chatbot Companions,Robots & Conversational Agents,219,0.84,66,0.818,0.0,0.121,0.0,0.0,0.061
-71,Drones & Flying Robots,Robots & Conversational Agents,130,0.45,22,0.364,0.227,0.318,0.0,0.0,0.091
-72,Robot Presence & Embodiment,Robots & Conversational Agents,214,0.48,29,0.862,0.034,0.0,0.0,0.0,0.103
-73,Human-AI Trust & Explanation,"AI, Data & Intelligent Interfaces",1120,0.84,366,0.735,0.003,0.128,0.0,0.0,0.134
-74,Crowdsourcing & Peer Feedback,"AI, Data & Intelligent Interfaces",623,0.96,150,0.88,0.067,0.0,0.0,0.0,0.053
-75,"LLMs, Writing & Prompting","AI, Data & Intelligent Interfaces",552,0.95,107,0.85,0.028,0.084,0.0,0.0,0.037
-76,Search & Recommendation,"AI, Data & Intelligent Interfaces",536,0.9,101,0.98,0.01,0.0,0.0,0.0,0.01
-77,Creativity Support & Generative Tools,"AI, Data & Intelligent Interfaces",531,0.81,151,0.821,0.066,0.0,0.0,0.0,0.113
-78,Data Visualization,"AI, Data & Intelligent Interfaces",486,0.94,110,0.764,0.218,0.0,0.0,0.0,0.018
-79,Video Interfaces & Editing,"AI, Data & Intelligent Interfaces",412,0.92,58,0.948,0.052,0.0,0.0,0.0,0.0
-80,GUI Datasets & Automation,"AI, Data & Intelligent Interfaces",371,0.91,73,0.836,0.164,0.0,0.0,0.0,0.0
-81,Programming & Notebooks,"AI, Data & Intelligent Interfaces",359,0.94,57,0.86,0.0,0.0,0.0,0.0,0.14
-82,Meetings & Multilingual Communication,"AI, Data & Intelligent Interfaces",295,0.92,47,0.979,0.021,0.0,0.0,0.0,0.0
-83,Interactive Machine Learning,"AI, Data & Intelligent Interfaces",163,0.95,72,0.944,0.028,0.0,0.014,0.0,0.014
-84,AI-generated Personas,"AI, Data & Intelligent Interfaces",67,0.73,43,0.674,0.0,0.0,0.0,0.0,0.326
-85,Awareness & Workplace Chat,Mobile Life & Sensing,330,0.88,52,0.981,0.019,0.0,0.0,0.0,0.0
-86,Urban Mobility Prediction,Mobile Life & Sensing,262,0.97,51,0.941,0.059,0.0,0.0,0.0,0.0
-87,Physiological & Brain Sensing,Mobile Life & Sensing,229,0.85,35,0.743,0.029,0.0,0.0,0.0,0.229
-88,Email & Web Revisitation,Mobile Life & Sensing,210,0.91,52,0.808,0.135,0.0,0.0,0.0,0.058
-89,Interruptions & Multitasking,Mobile Life & Sensing,203,0.84,74,0.959,0.014,0.0,0.0,0.0,0.027
-90,Notifications & Interruptibility,Mobile Life & Sensing,185,0.91,95,0.895,0.0,0.0,0.0,0.0,0.105
-91,Mobile Sensing for Mental Health,Mobile Life & Sensing,172,0.99,35,0.914,0.0,0.0,0.0,0.0,0.086
-92,Collaborative Filtering & Browsing,Mobile Life & Sensing,158,0.82,54,1.0,0.0,0.0,0.0,0.0,0.0
-93,Smartphone Use & Wellbeing,Mobile Life & Sensing,126,0.92,211,0.995,0.0,0.0,0.0,0.0,0.005
-94,Experience Sampling,Mobile Life & Sensing,124,0.91,67,0.97,0.0,0.0,0.0,0.0,0.03
-95,Ambient Displays & Language Learning,Mobile Life & Sensing,174,0.97,32,0.969,0.0,0.0,0.0,0.0,0.031
-96,Data Privacy & Permissions,Privacy & Security,168,0.89,54,0.907,0.0,0.0,0.0,0.0,0.093
-97,Authentication & Passwords,Privacy & Security,164,0.88,36,0.778,0.028,0.0,0.0,0.0,0.194
-98,Smart-home Privacy,Privacy & Security,154,0.91,85,0.859,0.0,0.106,0.0,0.0,0.035
-99,Phishing & Security Behaviour,Privacy & Security,132,0.88,35,0.857,0.0,0.0,0.0,0.0,0.143
-100,Dark Patterns,Privacy & Security,353,0.9,85,0.953,0.0,0.0,0.0,0.0,0.047
-101,Design Research & Art,Design Research & Practice,490,0.92,175,0.966,0.006,0.0,0.0,0.0,0.029
-102,"Body, Movement & Soma Design",Design Research & Practice,353,0.88,78,0.692,0.154,0.0,0.0,0.0,0.154
-103,HCI Research Practice,Design Research & Practice,332,0.9,41,1.0,0.0,0.0,0.0,0.0,0.0
-104,Design Fiction & Ethics,Design Research & Practice,292,0.95,112,0.929,0.009,0.0,0.0,0.0,0.062
-105,Memory & Reminiscence,Design Research & Practice,294,0.92,118,0.975,0.025,0.0,0.0,0.0,0.0
-106,Museums & Cultural Heritage,Design Research & Practice,288,0.93,55,0.964,0.036,0.0,0.0,0.0,0.0
-107,Bodily Play & Exertion,Design Research & Practice,288,0.84,57,0.842,0.123,0.0,0.0,0.0,0.035
-108,More-than-Human Design,Design Research & Practice,286,0.97,70,0.986,0.014,0.0,0.0,0.0,0.0
-109,Family Communication at Home,Design Research & Practice,234,0.93,63,1.0,0.0,0.0,0.0,0.0,0.0
-110,Biofeedback & Mindfulness,Design Research & Practice,231,0.85,79,0.886,0.038,0.013,0.0,0.0,0.063
-111,Human-Food Interaction,Design Research & Practice,144,0.83,64,0.859,0.016,0.0,0.0,0.0,0.125
-112,Animal-Computer Interaction,Design Research & Practice,64,0.88,82,0.951,0.024,0.0,0.0,0.0,0.024
-113,Personal Informatics,"Health, Care & Ageing",583,0.95,218,0.977,0.014,0.005,0.0,0.0,0.005
-114,Older Adults & Dementia Care,"Health, Care & Ageing",383,0.91,117,0.915,0.017,0.0,0.0,0.0,0.068
-115,Chronic Care & Caregiving,"Health, Care & Ageing",374,0.98,119,1.0,0.0,0.0,0.0,0.0,0.0
-116,Mental Health Interventions,"Health, Care & Ageing",227,0.91,94,0.915,0.011,0.0,0.0,0.0,0.074
-117,Women's Health & Menstrual Tracking,"Health, Care & Ageing",168,0.96,172,0.971,0.012,0.0,0.0,0.0,0.017
-118,Family Health Informatics,"Health, Care & Ageing",157,0.97,79,0.962,0.0,0.0,0.0,0.0,0.038
-119,Hospital Work & Records,"Health, Care & Ageing",124,0.99,49,1.0,0.0,0.0,0.0,0.0,0.0
-120,Stroke Rehabilitation & Eating,"Health, Care & Ageing",105,0.97,38,0.947,0.026,0.026,0.0,0.0,0.0
-121,Social Media & Privacy,Social Media & Online Communities,822,0.98,335,0.973,0.0,0.0,0.0,0.0,0.027
-122,Sustainable HCI,Social Media & Online Communities,685,0.95,267,0.978,0.0,0.0,0.0,0.0,0.022
-123,Content Moderation,Social Media & Online Communities,605,0.98,274,0.989,0.0,0.0,0.0,0.0,0.011
-124,Open Collaboration Online,Social Media & Online Communities,556,0.96,206,0.917,0.005,0.0,0.0,0.0,0.078
-125,Participatory & Community Design,Social Media & Online Communities,554,0.97,211,0.948,0.005,0.0,0.0,0.0,0.047
-126,Misinformation & News,Social Media & Online Communities,528,0.98,190,0.979,0.005,0.0,0.0,0.0,0.016
-127,Feminist HCI & Global Contexts,Social Media & Online Communities,472,0.99,136,0.985,0.0,0.0,0.0,0.0,0.015
-128,Youth & Online Media,Social Media & Online Communities,287,0.91,82,0.951,0.0,0.0,0.012,0.0,0.037
-129,Makerspaces & Hackathons,Social Media & Online Communities,253,0.95,68,0.868,0.015,0.029,0.0,0.0,0.088
-130,Gig Work & Labour,Social Media & Online Communities,247,0.99,96,0.979,0.0,0.01,0.0,0.0,0.01
-131,Live Streaming,Social Media & Online Communities,186,0.96,60,1.0,0.0,0.0,0.0,0.0,0.0
-132,Trans & Gender Representation,Social Media & Online Communities,122,0.98,85,0.988,0.0,0.012,0.0,0.0,0.0
-133,Cryptocurrency & Trust,Social Media & Online Communities,76,0.96,98,0.98,0.0,0.0,0.0,0.0,0.02
+0,Participatory & Community Design,Social Media & Online Communities,856,0.88,349,0.903,0.003,0.0,0.0,0.0,0.037
+1,Social Media & Privacy,Social Media & Online Communities,620,0.91,229,0.838,0.0,0.004,0.0,0.0,0.022
+2,Wikipedia & Open Source,Social Media & Online Communities,557,0.85,224,0.853,0.004,0.0,0.0,0.0,0.009
+3,Misinformation & News,Social Media & Online Communities,482,0.88,174,0.931,0.0,0.0,0.0,0.0,0.034
+4,Content Moderation,Social Media & Online Communities,465,0.93,197,0.924,0.005,0.0,0.0,0.0,0.015
+5,Gig Work & Labour,Social Media & Online Communities,382,0.93,165,0.903,0.006,0.006,0.0,0.0,0.024
+6,Civic Data & Communities,Social Media & Online Communities,381,0.9,179,0.927,0.0,0.0,0.0,0.0,0.006
+7,"Infrastructure, Hackathons & Crypto",Social Media & Online Communities,237,0.84,39,1.0,0.0,0.0,0.0,0.0,0.0
+8,Refugees & Migration,Social Media & Online Communities,147,0.86,88,0.886,0.011,0.0,0.0,0.0,0.045
+9,Political Talk & Team Formation,Social Media & Online Communities,133,0.86,45,0.844,0.0,0.0,0.0,0.0,0.0
+10,Crowdfunding & Social Tagging,Social Media & Online Communities,146,0.79,65,0.892,0.062,0.0,0.0,0.0,0.015
+11,Health & Wellbeing,"Health, Care & Ageing",485,0.85,187,0.872,0.0,0.0,0.0,0.0,0.043
+12,Personal Informatics,"Health, Care & Ageing",465,0.91,248,0.964,0.004,0.004,0.0,0.0,0.008
+13,Older Adults & Dementia Care,"Health, Care & Ageing",393,0.85,146,0.945,0.007,0.0,0.0,0.0,0.034
+14,Persuasive Health & Activity,"Health, Care & Ageing",273,0.73,96,0.844,0.0,0.01,0.0,0.0,0.073
+15,Chronic Care & Caregiving,"Health, Care & Ageing",265,0.95,112,0.946,0.0,0.0,0.0,0.0,0.0
+16,Mindfulness & Biofeedback,"Health, Care & Ageing",256,0.8,87,0.92,0.023,0.0,0.0,0.0,0.034
+17,Family Health Informatics,"Health, Care & Ageing",236,0.72,102,0.902,0.0,0.0,0.0,0.0,0.02
+18,Hospital Work & Records,"Health, Care & Ageing",198,0.77,47,0.979,0.0,0.0,0.0,0.0,0.0
+19,Rehabilitation & Mobility Support,"Health, Care & Ageing",119,0.93,45,0.933,0.0,0.0,0.0,0.0,0.0
+20,Autism & Neurodiversity,Accessibility & Assistive Tech,512,0.69,118,0.78,0.0,0.0,0.008,0.0,0.034
+21,Web Accessibility,Accessibility & Assistive Tech,398,0.9,92,0.957,0.033,0.0,0.0,0.0,0.011
+22,Deaf & Sign Language,Accessibility & Assistive Tech,364,0.83,73,0.658,0.205,0.0,0.0,0.0,0.014
+23,Non-visual Navigation,Accessibility & Assistive Tech,332,0.9,69,0.899,0.0,0.029,0.0,0.0,0.058
+24,"ICTD, Mobile Money & Women",Accessibility & Assistive Tech,305,0.74,86,0.953,0.0,0.0,0.0,0.0,0.0
+25,Visual Accessibility,Accessibility & Assistive Tech,295,0.97,80,0.975,0.013,0.0,0.0,0.0,0.0
+26,Non-visual Touch Interfaces,Accessibility & Assistive Tech,280,0.88,49,0.939,0.0,0.0,0.0,0.0,0.061
+27,Women's Health & Menstrual Tracking,Accessibility & Assistive Tech,234,0.9,122,0.91,0.016,0.0,0.0,0.0,0.008
+28,Blind Access to VR,Accessibility & Assistive Tech,139,0.81,42,0.905,0.024,0.0,0.0,0.0,0.048
+29,AAC & Aphasia,Accessibility & Assistive Tech,132,0.89,40,0.95,0.0,0.0,0.0,0.0,0.0
+30,Low-vision Accessibility,Accessibility & Assistive Tech,130,0.82,33,0.939,0.03,0.0,0.0,0.0,0.03
+31,Assistive Technology & Dyslexia,Accessibility & Assistive Tech,164,0.85,26,1.0,0.0,0.0,0.0,0.0,0.0
+32,Location Sharing & Privacy,Privacy & Security,145,0.85,107,0.944,0.0,0.0,0.0,0.0,0.028
+33,Smart-home Privacy,Privacy & Security,140,0.84,114,0.93,0.0,0.035,0.0,0.0,0.026
+34,Dark Patterns,Privacy & Security,125,0.78,79,0.962,0.0,0.0,0.0,0.0,0.013
+35,Usable Security & Phishing,Privacy & Security,661,0.85,119,0.983,0.0,0.0,0.0,0.0,0.017
+36,Design Research & Art,Design Research & Practice,627,0.82,227,0.938,0.026,0.0,0.0,0.0,0.0
+37,Bodily Play & Spectator Experience,Design Research & Practice,556,0.75,195,0.897,0.077,0.0,0.0,0.0,0.005
+38,"Body, Movement & Soma Design",Design Research & Practice,551,0.8,158,0.741,0.082,0.006,0.0,0.0,0.139
+39,Memory & Reminiscence,Design Research & Practice,472,0.86,182,0.962,0.011,0.0,0.0,0.0,0.027
+40,More-than-human Design,Design Research & Practice,403,0.82,67,0.761,0.075,0.0,0.0,0.0,0.015
+41,Sustainable HCI,Design Research & Practice,397,0.84,143,0.86,0.0,0.0,0.0,0.0,0.028
+42,Human-Food Interaction,Design Research & Practice,197,0.7,22,0.773,0.091,0.0,0.0,0.0,0.045
+43,Materials & Craft in HCI,Design Research & Practice,129,0.85,72,0.861,0.014,0.028,0.0,0.0,0.028
+44,Data Physicalization,Design Research & Practice,125,0.72,106,0.783,0.085,0.0,0.0,0.0,0.028
+45,Smart Home Automation,Design Research & Practice,218,0.83,75,0.933,0.013,0.0,0.0,0.0,0.04
+46,Co-design with Children,"Children, Learning & Youth",459,0.22,62,0.903,0.0,0.0,0.0,0.0,0.048
+47,Youth & Online Media,"Children, Learning & Youth",230,0.65,63,0.825,0.0,0.016,0.0,0.0,0.032
+48,AI Literacy & K-12,"Children, Learning & Youth",200,0.26,38,0.368,0.053,0.053,0.026,0.0,0.026
+49,Family & Intergenerational Communication,"Children, Learning & Youth",176,0.56,66,0.788,0.0,0.0,0.0,0.0,0.061
+50,Children's Reading & Storytelling Agents,"Children, Learning & Youth",135,0.34,37,0.459,0.027,0.0,0.0,0.0,0.054
+51,Personas & Child-centred Design,"Children, Learning & Youth",261,0.35,28,0.321,0.0,0.0,0.0,0.0,0.071
+52,Child-Robot Interaction,Robots & Conversational Agents,686,0.19,106,0.349,0.0,0.547,0.0,0.0,0.104
+53,Voice Assistants for Older Adults,Robots & Conversational Agents,543,0.51,132,0.826,0.008,0.015,0.0,0.0,0.106
+54,Robot Programming,Robots & Conversational Agents,398,0.15,40,0.3,0.125,0.375,0.0,0.0,0.1
+55,Nonverbal & Public-speaking Analysis,Robots & Conversational Agents,387,0.21,74,0.257,0.027,0.0,0.0,0.0,0.014
+56,Robot Programming (robot),Robots & Conversational Agents,381,0.15,78,0.41,0.013,0.372,0.0,0.0,0.051
+57,Chatbot Companions,Robots & Conversational Agents,388,0.64,79,0.759,0.0,0.051,0.0,0.0,0.089
+58,Human-Robot Interaction,Robots & Conversational Agents,319,0.27,50,0.4,0.14,0.36,0.0,0.0,0.06
+59,Child-Robot Interaction (robot),Robots & Conversational Agents,275,0.12,48,0.396,0.0,0.396,0.0,0.0,0.188
+60,Virtual Agents & Social Effects,Robots & Conversational Agents,262,0.38,51,0.627,0.294,0.0,0.0,0.0,0.078
+61,Multilingual & Multimodal Communication,Robots & Conversational Agents,279,0.48,34,1.0,0.0,0.0,0.0,0.0,0.0
+62,"LLMs, Writing & Prompting",Human-AI Interaction & Data,1133,0.71,348,0.54,0.31,0.0,0.0,0.0,0.046
+63,Human-AI Trust & Explanation,Human-AI Interaction & Data,813,0.81,320,0.825,0.0,0.0,0.0,0.0,0.159
+64,Crowdsourcing & Peer Feedback,Human-AI Interaction & Data,814,0.68,177,0.847,0.028,0.0,0.0,0.0,0.028
+65,Data Visualization,Human-AI Interaction & Data,560,0.88,95,0.705,0.263,0.0,0.0,0.0,0.032
+66,Algorithmic Fairness & Auditing,Human-AI Interaction & Data,556,0.89,222,0.932,0.018,0.0,0.0,0.0,0.036
+67,Adaptive Help & Software Learnability,Human-AI Interaction & Data,554,0.8,85,0.906,0.094,0.0,0.0,0.0,0.0
+68,Programming & Notebooks,Human-AI Interaction & Data,399,0.88,54,0.889,0.056,0.0,0.0,0.0,0.056
+69,GUI Optimization & Color,Human-AI Interaction & Data,376,0.7,93,0.731,0.215,0.0,0.0,0.0,0.032
+70,Video Interfaces & Editing,Human-AI Interaction & Data,293,0.8,55,1.0,0.0,0.0,0.0,0.0,0.0
+71,Scientific Search & Sensemaking,Human-AI Interaction & Data,168,0.88,61,0.934,0.0,0.0,0.0,0.0,0.066
+72,Mobile Sensing for Mental Health,Human-AI Interaction & Data,127,0.83,72,0.972,0.0,0.0,0.0,0.0,0.028
+73,Language Tools & Deployment,Human-AI Interaction & Data,33,0.64,47,0.979,0.0,0.0,0.0,0.0,0.0
+74,Recommender Evaluation & Music,Recommender Systems,257,0.38,40,0.9,0.0,0.0,0.0,0.0,0.025
+75,News & Session-based Recommendation,Recommender Systems,203,0.06,15,0.533,0.0,0.0,0.0,0.0,0.0
+76,"Diversity, Novelty & Bias in Recommendation",Recommender Systems,193,0.05,44,0.295,0.0,0.0,0.0,0.0,0.0
+77,Deep Learning for Recommendation,Recommender Systems,190,0.02,43,0.116,0.0,0.0,0.0,0.0,0.0
+78,Sequential Recommendation & Evaluation,Recommender Systems,183,0.01,35,0.086,0.0,0.0,0.0,0.0,0.0
+79,Factorization & Context-aware Recommendation,Recommender Systems,176,0.06,22,0.182,0.0,0.0,0.0,0.0,0.0
+80,Knowledge-aware & LLM Recommendation,Recommender Systems,173,0.04,40,0.3,0.0,0.0,0.0,0.0,0.0
+81,Collaborative Filtering & Trust,Recommender Systems,170,0.31,39,0.974,0.0,0.0,0.0,0.0,0.026
+82,Collaborative Filtering Methods,Recommender Systems,138,0.03,28,0.429,0.0,0.0,0.0,0.0,0.0
+83,Recommender Explanations & Critiquing,Recommender Systems,136,0.33,31,0.968,0.0,0.0,0.0,0.0,0.032
+84,Social Tagging & Group Recommendation,Recommender Systems,542,0.07,85,0.6,0.0,0.0,0.0,0.0,0.0
+85,Visual Aesthetics & UX,Gamification & Engagement,272,0.49,37,0.892,0.0,0.0,0.0,0.0,0.108
+86,Player Experience & Immersion,Gamification & Engagement,187,0.75,42,0.5,0.071,0.024,0.0,0.0,0.238
+87,Multiplayer & Location-based Games,Gamification & Engagement,152,0.92,106,0.953,0.009,0.0,0.0,0.0,0.019
+88,Gamification Elements & User Types,Gamification & Engagement,119,0.58,44,0.955,0.0,0.023,0.0,0.0,0.023
+89,Video Game Players & Communities,Gamification & Engagement,602,0.82,101,0.891,0.05,0.0,0.0,0.0,0.02
+90,Automated Driving,Mobile Life & Sensing,682,0.33,109,0.661,0.028,0.0,0.0,0.009,0.183
+91,Email & Web Revisitation,Mobile Life & Sensing,338,0.83,56,0.929,0.071,0.0,0.0,0.0,0.0
+92,Instant Messaging,Mobile Life & Sensing,335,0.8,55,1.0,0.0,0.0,0.0,0.0,0.0
+93,Notifications & Interruptibility,Mobile Life & Sensing,319,0.85,139,0.856,0.007,0.0,0.0,0.0,0.065
+94,Urban Mobility Prediction,Mobile Life & Sensing,286,0.93,58,0.931,0.034,0.0,0.0,0.0,0.0
+95,Pupillometry & Cognitive Load,Mobile Life & Sensing,258,0.52,50,0.72,0.02,0.0,0.0,0.0,0.16
+96,Enterprise Social Networks,Mobile Life & Sensing,214,0.65,42,0.929,0.0,0.0,0.0,0.0,0.024
+97,Physiological & Brain Sensing,Mobile Life & Sensing,188,0.53,41,0.634,0.073,0.0,0.0,0.0,0.195
+98,Interruptions & Multitasking,Mobile Life & Sensing,179,0.8,86,0.872,0.012,0.0,0.0,0.0,0.058
+99,Vehicle-Pedestrian Communication,Mobile Life & Sensing,178,0.5,38,0.763,0.0,0.0,0.0,0.0,0.0
+100,Smartphone Use & Wellbeing,Mobile Life & Sensing,149,0.88,141,0.979,0.0,0.0,0.0,0.0,0.007
+101,Mobile Language Learning,Mobile Life & Sensing,138,0.82,47,0.957,0.0,0.0,0.0,0.0,0.0
+102,Eye Movements & Cognition,Mobile Life & Sensing,63,0.62,47,0.957,0.043,0.0,0.0,0.0,0.0
+103,Affect Recognition,Affect & Multimodal Recognition,608,0.12,55,0.491,0.0,0.0,0.0,0.0,0.491
+104,RF & Wi-Fi Sensing,Activity Sensing & Wearables,199,0.98,89,0.888,0.101,0.0,0.0,0.0,0.0
+105,Wearable Activity Recognition,Activity Sensing & Wearables,148,0.91,67,0.701,0.0,0.0,0.0,0.0,0.0
+106,Activity & Ambient Sensing,Activity Sensing & Wearables,578,0.83,102,0.657,0.0,0.0,0.0,0.0,0.0
+107,Real-time Rendering & Meshes,"Graphics, Animation & Modelling",281,0.02,53,0.0,1.0,0.0,0.0,0.0,0.0
+108,Character Animation & Motion Control,"Graphics, Animation & Modelling",268,0.06,82,0.037,0.963,0.0,0.0,0.0,0.0
+109,Sketch-based Modelling,"Graphics, Animation & Modelling",256,0.2,56,0.232,0.75,0.0,0.0,0.0,0.0
+110,Reflectance & Illumination,"Graphics, Animation & Modelling",235,0.03,50,0.0,1.0,0.0,0.0,0.0,0.0
+111,Near-eye & Foveated Displays,"Graphics, Animation & Modelling",209,0.1,47,0.064,0.872,0.0,0.0,0.0,0.0
+112,Texture & Image Synthesis,"Graphics, Animation & Modelling",199,0.12,41,0.0,1.0,0.0,0.0,0.0,0.0
+113,Procedural Shape Modelling,"Graphics, Animation & Modelling",185,0.05,69,0.014,0.986,0.0,0.0,0.0,0.0
+114,Facial Animation & Capture,"Graphics, Animation & Modelling",177,0.05,61,0.0,1.0,0.0,0.0,0.0,0.0
+115,Image-based Rendering & Light Fields,"Graphics, Animation & Modelling",171,0.04,73,0.014,0.986,0.0,0.0,0.0,0.0
+116,3D Reconstruction & Motion Capture,"Graphics, Animation & Modelling",171,0.15,41,0.0,1.0,0.0,0.0,0.0,0.0
+117,Gesture Generation & Simulation,"Graphics, Animation & Modelling",368,0.06,53,0.019,0.981,0.0,0.0,0.0,0.0
+118,Public & Ambient Displays,3D Pointing & VR Interaction,962,0.6,373,0.882,0.086,0.0,0.0,0.0,0.016
+119,Telepresence & Remote Collaboration,3D Pointing & VR Interaction,780,0.56,359,0.85,0.081,0.0,0.0,0.0,0.031
+120,Real-time Groupware,3D Pointing & VR Interaction,704,0.68,140,0.914,0.086,0.0,0.0,0.0,0.0
+121,VR Locomotion,3D Pointing & VR Interaction,598,0.23,227,0.652,0.211,0.0,0.026,0.0,0.066
+122,AR Authoring & Prototyping,3D Pointing & VR Interaction,515,0.58,117,0.607,0.376,0.0,0.0,0.0,0.009
+123,VR Presence & Avatars,3D Pointing & VR Interaction,463,0.27,73,0.274,0.301,0.0,0.068,0.0,0.096
+124,Avatars & Social VR,3D Pointing & VR Interaction,420,0.48,100,0.66,0.1,0.01,0.12,0.0,0.03
+125,Immersive Mixed Reality,3D Pointing & VR Interaction,369,0.4,73,0.548,0.288,0.0,0.027,0.0,0.0
+126,Asymmetric Mixed Reality,3D Pointing & VR Interaction,283,0.43,60,0.417,0.483,0.0,0.05,0.0,0.0
+127,AR Depth Perception,3D Pointing & VR Interaction,217,0.31,54,0.222,0.759,0.0,0.0,0.0,0.019
+128,In-car & Video AR,3D Pointing & VR Interaction,180,0.34,27,0.407,0.222,0.0,0.0,0.0,0.037
+129,Neural Scene Reconstruction,3D Pointing & VR Interaction,63,0.13,46,0.413,0.0,0.0,0.087,0.0,0.0
+130,Haptics & Touch Feedback (haptic),Haptics & Touch Feedback,365,0.25,139,0.662,0.144,0.0,0.0,0.0,0.115
+131,Force Feedback Devices,Haptics & Touch Feedback,336,0.4,48,0.25,0.083,0.0,0.021,0.479,0.021
+132,Vibrotactile Feedback,Haptics & Touch Feedback,315,0.47,88,0.739,0.068,0.0,0.0,0.0,0.045
+133,Affective & Social Touch,Haptics & Touch Feedback,194,0.47,50,0.72,0.12,0.04,0.0,0.02,0.04
+134,Haptic Redirection in VR,Haptics & Touch Feedback,192,0.38,46,0.5,0.217,0.0,0.065,0.0,0.13
+135,Mid-air Ultrasound Haptics,Haptics & Touch Feedback,190,0.42,75,0.627,0.173,0.0,0.027,0.12,0.013
+136,Electrical Muscle Stimulation,Haptics & Touch Feedback,151,0.72,20,0.7,0.1,0.0,0.0,0.0,0.0
+137,Thermal & Olfactory Displays,Haptics & Touch Feedback,147,0.5,35,0.257,0.457,0.0,0.057,0.029,0.0
+138,Tactile Texture Rendering,Haptics & Touch Feedback,127,0.43,52,0.596,0.192,0.0,0.077,0.038,0.019
+139,Haptic Rendering & Olfaction,Haptics & Touch Feedback,251,0.29,57,0.596,0.386,0.0,0.0,0.0,0.0
+140,Tangibles for Learning,Tangible Interaction & Fabrication,1361,0.54,575,0.854,0.132,0.0,0.0,0.0,0.007
+141,Shape-changing Interfaces,Tangible Interaction & Fabrication,656,0.78,156,0.75,0.16,0.026,0.006,0.0,0.006
+142,Textiles & Cloth Simulation,Tangible Interaction & Fabrication,567,0.79,73,0.521,0.041,0.0,0.0,0.0,0.0
+143,Tangible & Tabletop Sensing,Tangible Interaction & Fabrication,424,0.6,131,0.809,0.13,0.0,0.0,0.0,0.0
+144,Digital Fabrication,Tangible Interaction & Fabrication,383,0.74,132,0.705,0.25,0.0,0.008,0.0,0.0
+145,"Knitting, Cloth & Printed Objects",Tangible Interaction & Fabrication,356,0.51,106,0.094,0.877,0.0,0.0,0.0,0.0
+146,Computational Fabrication,Tangible Interaction & Fabrication,335,0.1,157,0.083,0.911,0.0,0.0,0.0,0.0
+147,Paper Circuits & Electronics Prototyping,Tangible Interaction & Fabrication,232,0.75,157,0.917,0.032,0.0,0.006,0.0,0.006
+148,Deformable Surfaces & Projection Mapping,Tangible Interaction & Fabrication,149,0.54,63,0.921,0.079,0.0,0.0,0.0,0.0
+149,Battery-free & Wireless Devices,Tangible Interaction & Fabrication,113,0.79,30,0.4,0.533,0.0,0.0,0.0,0.0
+150,Gaze-based Interaction,Sensing & Input Techniques,1357,0.36,505,0.671,0.137,0.0,0.0,0.0,0.016
+151,Hand Sensing & Input,Sensing & Input Techniques,1000,0.8,324,0.827,0.043,0.0,0.006,0.0,0.012
+152,Task Models & UI Engineering,Sensing & Input Techniques,625,0.63,87,0.368,0.632,0.0,0.0,0.0,0.0
+153,Information Navigation,Sensing & Input Techniques,618,0.63,111,0.604,0.396,0.0,0.0,0.0,0.0
+154,Pointing & Target Selection,Sensing & Input Techniques,583,0.7,202,0.901,0.025,0.0,0.0,0.0,0.074
+155,Gesture Elicitation & Recognition,Sensing & Input Techniques,460,0.54,123,0.813,0.13,0.0,0.0,0.0,0.033
+156,Text Entry,Sensing & Input Techniques,459,0.8,133,0.94,0.023,0.0,0.0,0.0,0.023
+157,Pen & Bimanual Input,Sensing & Input Techniques,370,0.74,108,0.87,0.13,0.0,0.0,0.0,0.0
+158,Touch & Multi-touch Input,Sensing & Input Techniques,352,0.74,181,0.901,0.066,0.0,0.0,0.0,0.017
+159,Scanpaths & Visual Search,Sensing & Input Techniques,225,0.11,35,0.4,0.057,0.0,0.0,0.0,0.114
+160,Menus & Command Selection,Sensing & Input Techniques,199,0.72,22,0.909,0.091,0.0,0.0,0.0,0.0
+161,Authentication & Biometrics,Sensing & Input Techniques,177,0.59,56,0.75,0.018,0.0,0.0,0.0,0.161
+162,Multimodal Fusion Architectures,Sensing & Input Techniques,149,0.28,29,0.793,0.172,0.0,0.0,0.0,0.0
+163,Latency & Input Quality,Sensing & Input Techniques,146,0.66,49,0.857,0.143,0.0,0.0,0.0,0.0

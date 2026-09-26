@@ -1,581 +1,681 @@
 sub,sub_name,rank,year,venue,title,doi,in_sub_cites,in_sub_share,spc_out,cited_by,cd5,on_main_path,q1_year
-0,Speculative & Critical Design,1,2007,chi,Research through design as a method for interaction design research in HCI,10.1145/1240624.1240704,128,0.15,2190.5,2246,0.19230769230769232,False,2014
-0,Speculative & Critical Design,2,2012,chi,What should we expect from research through design?,10.1145/2207676.2208538,112,0.132,2765.5,1094,-0.10909090909090909,False,2014
-0,Speculative & Critical Design,3,2014,chi,Research through design fiction,10.1145/2556288.2557098,87,0.102,2618.0,414,0.05825242718446602,False,2014
-0,Speculative & Critical Design,4,2006,chi,Implications for design,10.1145/1124772.1124855,63,0.074,1312.9,835,0.16129032258064516,False,2014
-0,Speculative & Critical Design,5,2003,chi,Technology probes,10.1145/642611.642616,62,0.073,1329.4,1425,0.11688311688311688,False,2014
-1,"Gender, Intimacy & Safety",1,2010,chi,Feminist HCI,10.1145/1753326.1753521,146,0.285,3366.9,1098,0.072,False,2019
-1,"Gender, Intimacy & Safety",2,2010,chi,Postcolonial computing,10.1145/1753326.1753522,67,0.131,1538.7,763,0.7837837837837838,False,2019
-1,"Gender, Intimacy & Safety",3,2018,chi,Design Within a Patriarchal Society,10.1145/3173574.3174110,64,0.125,1967.2,198,-0.05345911949685535,False,2019
-1,"Gender, Intimacy & Safety",4,2011,chi,Towards a feminist HCI methodology,10.1145/1978942.1979041,60,0.117,1538.1,502,-0.013636363636363636,False,2019
-1,"Gender, Intimacy & Safety",5,2018,chi,“A Stalker's Paradise”,10.1145/3173574.3174241,54,0.105,1541.2,291,-0.085,False,2019
-2,Gender & Algorithmic Bias,1,2015,cscw,"Disclosure, Stress, and Support During Gender Transition on Facebook",10.1145/2675133.2675152,70,0.149,2053.8,215,0.08374384236453201,False,2019
-2,Gender & Algorithmic Bias,2,2018,pacmhci,Safe Spaces and Safe Places,10.1145/3274424,70,0.149,2280.8,236,-0.08957952468007313,False,2019
-2,Gender & Algorithmic Bias,3,2018,pacmhci,The Misgendering Machines,10.1145/3274357,58,0.123,1863.9,501,-0.03761061946902655,False,2019
-2,Gender & Algorithmic Bias,4,2015,chi,"""I always assumed that I wasn't really that close to [her]""",10.1145/2702123.2702556,57,0.121,1662.0,607,0.45132743362831856,False,2019
-2,Gender & Algorithmic Bias,5,2017,chi,"""Algorithms ruin everything""",10.1145/3025453.3025659,53,0.113,1416.9,273,-0.14285714285714285,False,2019
-3,Gig Work & Labor,1,2013,chi,Turkopticon,10.1145/2470654.2470742,111,0.299,3117.7,799,0.17153284671532848,False,2018
-3,Gig Work & Labor,2,2015,chi,Working with Machines,10.1145/2702123.2702548,91,0.245,2598.9,757,0.021505376344086023,False,2018
-3,Gig Work & Labor,3,2016,cscw,Standing Out from the Crowd,10.1145/2818048.2820026,77,0.208,2362.6,225,-0.08843537414965986,False,2018
-3,Gig Work & Labor,4,2015,chi,The Promise of the Sharing Economy among Disadvantaged Communities,10.1145/2702123.2702189,50,0.135,1602.0,329,0.03125,False,2018
-3,Gig Work & Labor,5,2015,chi,We Are Dynamo,10.1145/2702123.2702508,47,0.127,1350.9,276,-0.09473684210526316,False,2018
-4,Civic Participation,1,2015,chi,Data-in-Place,10.1145/2702123.2702558,46,0.143,1435.3,152,0.05660377358490566,False,2016
-4,Civic Participation,2,2015,cscw,Strangers at the Gate,10.1145/2675133.2675147,42,0.13,1171.1,252,0.01020408163265306,False,2016
-4,Civic Participation,3,2014,dis,PosterVote,10.1145/2598510.2598523,41,0.127,1260.8,107,-0.043859649122807015,False,2016
-4,Civic Participation,4,2015,cscw,Illegitimate Civic Participation,10.1145/2675133.2675156,41,0.127,1237.8,118,0.0,False,2016
-4,Civic Participation,5,2015,cscw,Planning with Crowdsourced Data,10.1145/2675133.2675212,39,0.121,1155.0,122,0.23809523809523808,False,2016
-5,Infrastructure & Making,1,2006,cscw,The human infrastructure of cyberinfrastructure,10.1145/1180875.1180950,53,0.193,1169.3,354,0.3888888888888889,False,2016
-5,Infrastructure & Making,2,2014,chi,Emerging sites of HCI innovation,10.1145/2556288.2557132,39,0.142,1267.8,286,-0.06296296296296296,False,2016
-5,Infrastructure & Making,3,2015,cscw,"Hacking Culture, Not Devices",10.1145/2675133.2675223,36,0.131,1083.5,202,-0.036585365853658534,False,2016
-5,Infrastructure & Making,4,2016,chi,Reconstituting the Utopian Vision of Making,10.1145/2858036.2858506,36,0.131,1196.9,196,-0.057815845824411134,False,2016
-5,Infrastructure & Making,5,2014,cscw,Designing for repair?,10.1145/2531602.2531692,34,0.124,1013.3,203,-0.05555555555555555,False,2016
-6,Crisis Informatics,1,2011,chi,"""Voluntweeters""",10.1145/1978942.1979102,64,0.274,1578.8,537,0.01694915254237288,False,2015
-6,Crisis Informatics,2,2010,chi,Microblogging during two natural hazards events,10.1145/1753326.1753486,53,0.226,1286.8,1419,-0.037383177570093455,False,2015
-6,Crisis Informatics,3,2007,chi,Citizen communications in crisis,10.1145/1240624.1240736,44,0.188,1079.4,491,0.5909090909090909,False,2015
-6,Crisis Informatics,4,2012,cscw,(How) will the revolution be retweeted?,10.1145/2145204.2145212,40,0.171,1033.1,416,0.0375,False,2015
-6,Crisis Informatics,5,2008,cscw,Finding community through information and communication technology in disaster response,10.1145/1460563.1460584,30,0.128,681.8,331,0.05128205128205128,False,2015
-7,ICTD & Rural Communities,1,2010,chi,Avaaj Otalo,10.1145/1753326.1753434,42,0.187,930.9,386,0.5555555555555556,False,2013
-7,ICTD & Rural Communities,2,2010,chi,Mobile-izing health workers in rural India,10.1145/1753326.1753610,24,0.107,269.3,199,0.2857142857142857,False,2013
-7,ICTD & Rural Communities,3,2012,chi,"""Yours is better!""",10.1145/2207676.2208589,17,0.076,489.6,269,0.19718309859154928,False,2013
-7,ICTD & Rural Communities,4,2013,chi,Job opportunities through entertainment,10.1145/2470654.2481389,17,0.076,430.5,64,-0.075,False,2013
-7,ICTD & Rural Communities,5,2010,chi,Where there's a will there's a way,10.1145/1753326.1753436,16,0.071,416.3,122,1.0,False,2013
-8,Race & Social Justice in HCI,1,2019,pacmhci,Deconstructing Community-Based Collaborative Design,10.1145/3359318,51,0.297,1773.8,584,-0.06504065040650407,False,2020
-8,Race & Social Justice in HCI,2,2020,chi,Critical Race Theory for HCI,10.1145/3313831.3376392,47,0.273,1591.6,388,-0.05310734463276836,False,2020
-8,Race & Social Justice in HCI,3,2016,dis,Social Justice-Oriented Interaction Design,10.1145/2901790.2901861,32,0.186,942.5,389,-0.0778061224489796,False,2020
-8,Race & Social Justice in HCI,4,2019,chi,Who Gets to Future?,10.1145/3290605.3300791,23,0.134,769.8,88,-0.028523489932885907,False,2020
-8,Race & Social Justice in HCI,5,2020,pacmhci,A Seat at the Table,10.1145/3415188,19,0.11,673.7,48,-0.019662921348314606,False,2020
-9,"Religion, Migration & Digital Life",1,2006,cscw,Technology in spiritual formation,10.1145/1180875.1180908,27,0.168,513.9,94,0.3684210526315789,False,2018
-9,"Religion, Migration & Digital Life",2,2006,ubicomp,"No More SMS from Jesus: Ubicomp, Religion and Techno-spiritual Practices",10.1007/11853565_9,25,0.155,467.8,181,0.0,False,2018
-9,"Religion, Migration & Digital Life",3,2007,chi,Sabbath day home automation,10.1145/1240624.1240710,23,0.143,566.7,198,-0.05084745762711865,False,2018
-9,"Religion, Migration & Digital Life",4,2016,chi,Designing for Transient Use,10.1145/2858036.2858230,22,0.137,502.2,85,0.03482587064676617,False,2018
-9,"Religion, Migration & Digital Life",5,2016,chi,Syrian Refugees and Digital Health in Lebanon,10.1145/2858036.2858331,22,0.137,547.8,157,0.013333333333333334,False,2018
-10,CSCW Foundations,1,1988,cscw,Why CSCW applications fail: problems in the design and evaluationof organizational interfa,10.1145/62266.62273,19,0.137,455.9,968,0.7272727272727273,False,1993
-10,CSCW Foundations,2,1992,cscw,Faltering from ethnography to design,10.1145/143457.143469,17,0.122,369.2,440,1.0,False,1993
-10,CSCW Foundations,3,1992,cscw,Ethnographically-informed systems design for air traffic control,10.1145/143457.143470,17,0.122,324.5,416,-0.19047619047619047,False,1993
-10,CSCW Foundations,4,1992,cscw,Learning from Notes,10.1145/143457.143549,8,0.058,186.3,763,0.18181818181818182,False,1993
-10,CSCW Foundations,5,1988,cscw,Computer support for cooperative design (invited paper),10.1145/62266.62296,7,0.05,246.5,81,1.0,False,1993
-11,Data Work & Crypto Economies,1,2014,chi,Money talks,10.1145/2556288.2556975,25,0.16,670.3,123,0.0392156862745098,False,2018
-11,Data Work & Crypto Economies,2,2017,chi,A Design Perspective on Data,10.1145/3025453.3025837,23,0.147,723.5,116,-0.007481296758104738,False,2018
-11,Data Work & Crypto Economies,3,2018,chi,Making Sense of Blockchain Applications,10.1145/3173574.3174032,23,0.147,750.4,124,-0.024464831804281346,False,2018
-11,Data Work & Crypto Economies,4,2017,cscw,Data Vision,10.1145/2998181.2998331,22,0.141,618.6,95,0.013888888888888888,False,2018
-11,Data Work & Crypto Economies,5,2017,chi,Design for Trust,10.1145/3025453.3025886,22,0.141,519.3,127,0.16981132075471697,False,2018
-12,Crowdsourcing & Human Computation,1,2010,uist,Soylent,10.1145/1866029.1866078,91,0.233,2772.5,706,-0.07555555555555556,False,2014
-12,Crowdsourcing & Human Computation,2,2008,chi,Crowdsourcing user studies with Mechanical Turk,10.1145/1357054.1357127,74,0.189,1934.8,1970,0.6075949367088608,False,2014
-12,Crowdsourcing & Human Computation,3,2011,uist,CrowdForge,10.1145/2047196.2047202,69,0.176,2020.0,307,-0.06451612903225806,False,2014
-12,Crowdsourcing & Human Computation,4,2012,cscw,Shepherding the crowd yields better work,10.1145/2145204.2145355,62,0.159,1784.2,337,-0.03007518796992481,False,2014
-12,Crowdsourcing & Human Computation,5,2014,cscw,Being a turker,10.1145/2531602.2531663,49,0.125,1560.7,281,-0.1837837837837838,False,2014
-13,Wikipedia & Open Source,1,2007,iui,SuggestBot,10.1145/1216295.1216309,50,0.137,1316.8,246,0.0375,False,2012
-13,Wikipedia & Open Source,2,2007,chi,"He says, she says",10.1145/1240624.1240698,46,0.126,1247.1,573,0.08139534883720931,False,2012
-13,Wikipedia & Open Source,3,2008,cscw,Harnessing the wisdom of crowds in wikipedia,10.1145/1460563.1460572,40,0.11,1031.5,680,0.14814814814814814,False,2012
-13,Wikipedia & Open Source,4,2010,cscw,Socialization tactics in wikipedia and their effects,10.1145/1718918.1718940,36,0.099,953.1,165,0.40476190476190477,False,2012
-13,Wikipedia & Open Source,5,2012,cscw,Social coding in GitHub,10.1145/2145204.2145396,35,0.096,714.1,984,0.09774436090225563,False,2012
-14,Moderation & Online Harassment,1,2019,tochi,Human-Machine Collaboration for Content Regulation,10.1145/3338243,82,0.318,2693.4,286,-0.13150684931506848,False,2020
-14,Moderation & Online Harassment,2,2017,cscw,Shaping Pro and Anti-Social Behavior on Twitch Through Moderation and Example-Setting,10.1145/2998181.2998277,71,0.275,1583.3,240,0.1015625,False,2020
-14,Moderation & Online Harassment,3,2004,chi,Slash(dot) and burn,10.1145/985692.985761,65,0.252,894.1,405,0.2727272727272727,False,2020
-14,Moderation & Online Harassment,4,2019,pacmhci,Does Transparency in Moderation Really Matter?,10.1145/3359252,65,0.252,2181.4,202,-0.11016949152542373,False,2020
-14,Moderation & Online Harassment,5,2017,pacmhci,You Can't Stay Here,10.1145/3134666,64,0.248,1840.3,378,-0.04878048780487805,False,2020
-15,Crisis Informatics & Misinformation,1,2018,chi,Falling for Fake News,10.1145/3173574.3173950,24,0.111,99.9,177,1.0,False,2019
-15,Crisis Informatics & Misinformation,2,2009,chi,NewsCube,10.1145/1518701.1518772,23,0.106,534.0,207,0.3225806451612903,False,2019
-15,Crisis Informatics & Misinformation,3,2018,pacmhci,To Label or Not to Label,10.1145/3274324,17,0.079,505.5,71,0.0,False,2019
-15,Crisis Informatics & Misinformation,4,2018,pacmhci,Linguistic Signals under Misinformation and Fact-Checking,10.1145/3274351,17,0.079,513.4,127,0.007782101167315175,False,2019
-15,Crisis Informatics & Misinformation,5,2010,chi,Opinion space,10.1145/1753326.1753502,16,0.074,336.0,163,0.4,False,2019
-16,Live Streaming,1,2014,chi,Streaming on twitch,10.1145/2556288.2557048,81,0.468,1960.4,659,0.1297709923664122,False,2017
-16,Live Streaming,2,2016,chi,Meerkat and Periscope,10.1145/2858036.2858374,42,0.243,1242.7,188,-0.16352201257861634,False,2017
-16,Live Streaming,3,2017,chi,"What Makes Live Events Engaging on Facebook Live, Periscope, and Snapchat",10.1145/3025453.3025642,37,0.214,1104.8,219,-0.0931174089068826,False,2017
-16,Live Streaming,4,2017,chi,Expanding Video Game Live-Streams with Enhanced Communication Channels,10.1145/3025453.3025708,34,0.197,835.9,78,-0.16981132075471697,False,2017
-16,Live Streaming,5,2017,chi,The Game of Performing Play,10.1145/3025453.3025854,32,0.185,775.7,90,-0.2619047619047619,False,2017
-17,Crowdfunding & Online Feedback,1,2008,chi,Predictors of answer quality in online Q&amp;A sites,10.1145/1357054.1357191,28,0.076,584.3,415,0.5555555555555556,False,2012
-17,Crowdfunding & Online Feedback,2,2010,chi,"What do people ask their social networks, and why?",10.1145/1753326.1753587,28,0.076,858.8,602,-0.017341040462427744,False,2012
-17,Crowdfunding & Online Feedback,3,2006,cscw,Effects of machine translation on collaborative work,10.1145/1180875.1180955,22,0.06,390.5,123,-0.09523809523809523,False,2012
-17,Crowdfunding & Online Feedback,4,2006,chi,Getting the right design and the design right,10.1145/1124772.1124960,21,0.057,340.1,208,0.8,False,2012
-17,Crowdfunding & Online Feedback,5,2011,chi,Design lessons from the fastest q&amp;a site in the west,10.1145/1978942.1979366,21,0.057,626.5,555,-0.05785123966942149,False,2012
-18,Self-tracking & Reflection,1,2010,chi,A stage-based model of personal informatics systems,10.1145/1753326.1753409,192,0.45,4865.5,1123,-0.00641025641025641,False,2018
-18,Self-tracking & Reflection,2,2015,ubicomp,A lived informatics model of personal informatics,10.1145/2750858.2804250,154,0.361,4369.8,503,-0.14823529411764705,False,2018
-18,Self-tracking & Reflection,3,2014,chi,Personal tracking as lived informatics,10.1145/2556288.2557039,141,0.33,3695.6,659,-0.14893617021276595,False,2018
-18,Self-tracking & Reflection,4,2014,chi,Understanding quantified-selfers' practices in collecting and exploring personal data,10.1145/2556288.2557372,116,0.272,3150.4,774,-0.12142857142857143,False,2018
-18,Self-tracking & Reflection,5,2014,dis,Reviewing reflection,10.1145/2598510.2598598,75,0.176,2075.2,264,-0.027896995708154508,False,2018
-19,Chronic Care & Caregiving,1,2008,chi,MAHI,10.1145/1357054.1357131,69,0.184,1720.5,358,-0.02247191011235955,False,2016
-19,Chronic Care & Caregiving,2,2016,cscw,Boundary Negotiating Artifacts in Personal Informatics,10.1145/2818048.2819926,58,0.155,1715.2,234,-0.07880434782608696,False,2016
-19,Chronic Care & Caregiving,3,2013,cscw,Caring for caregivers,10.1145/2441776.2441789,55,0.147,1296.4,172,-0.06315789473684211,False,2016
-19,Chronic Care & Caregiving,4,2016,cscw,Partners in Care,10.1145/2818048.2819983,51,0.136,1433.1,121,-0.0898876404494382,False,2016
-19,Chronic Care & Caregiving,5,2016,cscw,Designing for Those who are Overlooked,10.1145/2818048.2819999,31,0.083,899.1,135,-0.05714285714285714,False,2016
-20,Social Media & Mental Health,1,2017,cscw,"Sensitive Self-disclosures, Responses, and Social Support on Instagram",10.1145/2998181.2998243,73,0.213,2264.4,331,-0.1881918819188192,False,2017
-20,Social Media & Mental Health,2,2016,chi,Understanding Social Media Disclosures of Sexual Abuse Through the Lenses of Support Seeki,10.1145/2858036.2858096,55,0.16,1704.5,382,-0.024752475247524754,False,2017
-20,Social Media & Mental Health,3,2011,cscw,"It's not that i don't have problems, i'm just not putting them on facebook",10.1145/1958824.1958876,52,0.152,1332.7,415,-0.06832298136645963,False,2017
-20,Social Media & Mental Health,4,2017,cscw,Design Opportunities for Mental Health Peer Support Technologies,10.1145/2998181.2998349,49,0.143,1441.7,147,-0.030973451327433628,False,2017
-20,Social Media & Mental Health,5,2016,cscw,Quantifying and Predicting Mental Illness Severity in Online Pro-Eating Disorder Communiti,10.1145/2818048.2819973,47,0.137,1346.8,192,-0.056338028169014086,False,2017
-21,Behavior Sensing,1,2014,ubicomp,StudentLife,10.1145/2632048.2632054,76,0.274,1622.7,1130,0.01098901098901099,False,2018
-21,Behavior Sensing,2,2015,ubicomp,Trajectories of depression,10.1145/2750858.2805845,47,0.17,1057.5,505,-0.11428571428571428,False,2018
-21,Behavior Sensing,3,2018,imwut,Tracking Depression Dynamics in College Students Using Mobile Phone and Wearable Sensing,10.1145/3191775,39,0.141,992.5,353,-0.2631578947368421,False,2018
-21,Behavior Sensing,4,2016,ubicomp,CrossCheck,10.1145/2971648.2971740,31,0.112,810.9,273,-0.07575757575757576,False,2018
-21,Behavior Sensing,5,2017,imwut,Predicting Symptom Trajectories of Schizophrenia using Mobile Sensing,10.1145/3130976,24,0.087,620.5,106,-0.09774436090225563,False,2018
-22,Stress & Mood Technology,1,2012,chi,Engagement with online mental health interventions,10.1145/2207676.2208602,26,0.129,711.6,213,-0.06870229007633588,False,2018
-22,Stress & Mood Technology,2,2016,ubicomp,EmotionCheck,10.1145/2971648.2971752,20,0.1,529.9,166,-0.012195121951219513,False,2018
-22,Stress & Mood Technology,3,2010,dis,Mind the body!,10.1145/1858171.1858182,19,0.095,409.3,133,0.02054794520547945,False,2018
-22,Stress & Mood Technology,4,2017,chi,Self-tracking for Mental Wellness,10.1145/3025453.3025750,19,0.095,591.4,186,-0.06299212598425197,False,2018
-22,Stress & Mood Technology,5,2018,chi,Pocket Skills,10.1145/3173574.3173972,19,0.095,578.4,168,0.0,False,2018
-23,Persuasive Health & Activity,1,2006,ubicomp,Fish’n’Steps: Encouraging Physical Activity with an Interactive Computer Game,10.1007/11853565_16,57,0.361,809.5,850,1.0,False,2011
-23,Persuasive Health & Activity,2,2006,chi,Design requirements for technologies that encourage physical activity,10.1145/1124772.1124840,45,0.285,1311.2,800,0.39285714285714285,False,2011
-23,Persuasive Health & Activity,3,2008,chi,Activity sensing in the wild,10.1145/1357054.1357335,36,0.228,1023.8,1128,0.06382978723404255,False,2011
-23,Persuasive Health & Activity,4,2011,chi,How to evaluate technologies for health behavior change in HCI research,10.1145/1978942.1979396,25,0.158,739.1,418,-0.025,False,2011
-23,Persuasive Health & Activity,5,2008,ubicomp,Flowers or a robot army?,10.1145/1409635.1409644,22,0.139,585.2,400,0.03333333333333333,False,2011
-24,Sleep & Family Routines,1,2015,cscw,Snack Buddy,10.1145/2675133.2675180,26,0.217,653.5,92,-0.016216216216216217,False,2015
-24,Sleep & Family Routines,2,2012,ubicomp,Lullaby,10.1145/2370216.2370253,25,0.208,681.2,219,-0.16058394160583941,False,2015
-24,Sleep & Family Routines,3,2011,chi,Opportunities for computing technologies to support healthy sleep behaviors,10.1145/1978942.1979395,24,0.2,627.0,116,0.014705882352941176,False,2015
-24,Sleep & Family Routines,4,2015,cscw,Spaceship Launch,10.1145/2675133.2675159,24,0.2,619.6,91,-0.0199203187250996,False,2015
-24,Sleep & Family Routines,5,2012,chi,ShutEye,10.1145/2207676.2208600,21,0.175,618.6,125,-0.04371584699453552,False,2015
-25,Parkinson's & Mobility Support,1,2011,chi,Motivating mobility,10.1145/1978942.1979397,10,0.141,232.8,114,0.0821917808219178,False,2016
-25,Parkinson's & Mobility Support,2,2015,chi,Designing for and with People with Parkinson's,10.1145/2702123.2702310,7,0.099,174.4,45,-0.023809523809523808,False,2016
-25,Parkinson's & Mobility Support,3,2016,chi,Motivating Stroke Rehabilitation Through Music,10.1145/2858036.2858376,4,0.056,99.3,32,0.041666666666666664,False,2016
-25,Parkinson's & Mobility Support,4,2010,iui,Intelligent food planning,10.1145/1719970.1720021,3,0.042,34.1,227,1.0,False,2016
-25,Parkinson's & Mobility Support,5,2010,assets,Stroke therapy through motion-based games,10.1145/1878803.1878842,3,0.042,34.6,37,1.0,False,2016
-26,Smart Home Automation,1,2006,ubicomp,Principles of Smart Home Control,10.1007/11853565_2,30,0.151,843.8,362,-0.1323529411764706,False,2008
-26,Smart Home Automation,2,2002,chi,Unremarkable computing,10.1145/503376.503448,27,0.136,734.9,369,0.6190476190476191,False,2008
-26,Smart Home Automation,3,2008,dis,More than meets the eye,10.1145/1394445.1394494,21,0.106,656.1,106,-0.03896103896103896,False,2008
-26,Smart Home Automation,4,1999,tochi,At home with the technology,10.1145/329693.329698,19,0.095,668.9,258,0.0,False,2008
-26,Smart Home Automation,5,2003,chi,The evolution of buildings and implications for the design of ubiquitous domestic environm,10.1145/642611.642615,16,0.08,561.4,176,-0.04878048780487805,False,2008
-27,Youth Online Safety,1,2017,cscw,Parental Control vs. Teen Self-Regulation,10.1145/2998181.2998352,45,0.278,1309.2,199,-0.13815789473684212,False,2019
-27,Youth Online Safety,2,2018,chi,Safety vs. Surveillance,10.1145/3173574.3173698,34,0.21,1021.9,159,-0.0823045267489712,False,2019
-27,Youth Online Safety,3,2016,chi,Dear Diary,10.1145/2858036.2858317,31,0.191,804.4,117,-0.14893617021276595,False,2019
-27,Youth Online Safety,4,2016,cscw,Not at the Dinner Table,10.1145/2818048.2819940,30,0.185,907.5,281,-0.06372549019607843,False,2019
-27,Youth Online Safety,5,2016,cscw,Managing Expectations,10.1145/2818048.2819928,28,0.173,867.6,141,-0.039735099337748346,False,2019
-28,Usable Security & Phishing,1,2006,chi,Why phishing works,10.1145/1124772.1124861,25,0.164,344.6,1312,-0.1111111111111111,False,2016
-28,Usable Security & Phishing,2,2008,chi,You've been warned,10.1145/1357054.1357219,24,0.158,314.0,611,-0.058823529411764705,False,2016
-28,Usable Security & Phishing,3,2006,chi,Do security toolbars actually prevent phishing attacks?,10.1145/1124772.1124863,20,0.132,295.7,555,0.23076923076923078,False,2016
-28,Usable Security & Phishing,4,2010,chi,Who falls for phish?,10.1145/1753326.1753383,18,0.118,204.7,609,-0.125,False,2016
-28,Usable Security & Phishing,5,2007,chi,Protecting people from phishing,10.1145/1240624.1240760,17,0.112,207.4,280,-0.25,False,2016
-29,Photo Sharing & Privacy,1,2003,chi,"Unpacking ""privacy"" for a networked world",10.1145/642611.642635,40,0.268,1017.6,967,0.423728813559322,False,2014
-29,Photo Sharing & Privacy,2,2014,ubicomp,Privacy behaviors of lifeloggers using wearable cameras,10.1145/2632048.2632079,30,0.201,718.9,194,0.09523809523809523,False,2014
-29,Photo Sharing & Privacy,3,2011,chi,We're in it together,10.1145/1978942.1979420,27,0.181,741.7,249,-0.02531645569620253,False,2014
-29,Photo Sharing & Privacy,4,2012,chi,Fighting for my space,10.1145/2207676.2207761,27,0.181,684.4,154,-0.14084507042253522,False,2014
-29,Photo Sharing & Privacy,5,2014,chi,In situ with bystanders of augmented reality glasses,10.1145/2556288.2557352,27,0.181,671.5,224,0.0423728813559322,False,2014
-30,Authentication & Passwords,1,2013,mobilehci,Patterns in the wild,10.1145/2493190.2493231,23,0.159,575.5,142,0.057692307692307696,False,2013
-30,Authentication & Passwords,2,2012,chi,Touch me once and i know it's you!,10.1145/2207676.2208544,22,0.152,523.4,489,0.2777777777777778,False,2013
-30,Authentication & Passwords,3,2009,chi,Can i borrow your phone?,10.1145/1518701.1518953,17,0.117,204.3,161,1.0,False,2013
-30,Authentication & Passwords,4,2010,chi,The true cost of unusable password policies,10.1145/1753326.1753384,15,0.103,308.2,329,0.05555555555555555,False,2013
-30,Authentication & Passwords,5,2013,chi,Back-of-device authentication on smartphones,10.1145/2470654.2481330,14,0.097,413.8,128,-0.17142857142857143,False,2013
-31,Smart-home Privacy,1,2018,pacmhci,"Alexa, Are You Listening?",10.1145/3274371,51,0.392,1520.2,561,-0.052995391705069124,False,2020
-31,Smart-home Privacy,2,2018,pacmhci,User Perceptions of Smart Home IoT Privacy,10.1145/3274469,44,0.338,1160.0,417,-0.035,False,2020
-31,Smart-home Privacy,3,2019,pacmhci,Privacy Perceptions and Designs of Bystanders in Smart Homes,10.1145/3359161,42,0.323,1295.8,151,-0.08372093023255814,False,2020
-31,Smart-home Privacy,4,2019,chi,Who's In Control?,10.1145/3290605.3300498,36,0.277,1096.7,189,-0.04066985645933014,False,2020
-31,Smart-home Privacy,5,2019,chi,Defending My Castle,10.1145/3290605.3300428,32,0.246,960.1,129,-0.08280254777070063,False,2020
-32,App Permissions & Policy,1,2012,ubicomp,Expectation and purpose,10.1145/2370216.2370290,38,0.311,920.7,453,0.07246376811594203,False,2017
-32,App Permissions & Policy,2,2010,chi,Standardizing privacy notices,10.1145/1753326.1753561,28,0.23,439.5,232,0.4,False,2017
-32,App Permissions & Policy,3,2004,chi,Privacy policies as decision-making tools,10.1145/985692.985752,23,0.189,493.5,400,0.0,False,2017
-32,App Permissions & Policy,4,2013,chi,Privacy as part of the app decision-making process,10.1145/2470654.2466466,23,0.189,562.2,310,-0.2962962962962963,False,2017
-32,App Permissions & Policy,5,2015,chi,"Your Location has been Shared 5,398 Times!",10.1145/2702123.2702210,18,0.148,465.8,318,-0.033707865168539325,False,2017
-33,Deceptive Advertising Patterns,1,2018,chi,The Dark (Patterns) Side of UX Design,10.1145/3173574.3174108,72,0.6,2057.8,803,0.016666666666666666,False,2021
-33,Deceptive Advertising Patterns,2,2019,pacmhci,Dark Patterns at Scale,10.1145/3359183,60,0.5,1733.2,647,-0.23300970873786409,False,2021
-33,Deceptive Advertising Patterns,3,2020,chi,Dark Patterns after the GDPR: Scraping Consent Pop-ups and Demonstrating their Influence,10.1145/3313831.3376321,42,0.35,1227.6,476,-0.04678362573099415,False,2021
-33,Deceptive Advertising Patterns,4,2020,chi,UI Dark Patterns and Where to Find Them,10.1145/3313831.3376600,41,0.342,1172.0,252,-0.14,False,2021
-33,Deceptive Advertising Patterns,5,2021,chi,Dark Patterns and the Legal Requirements of Consent Banners: An Interaction Criticism Pers,10.1145/3411764.3445779,28,0.233,936.5,168,-0.0782608695652174,False,2021
-34,Location Sharing & Privacy,1,2005,chi,Location disclosure to social relations,10.1145/1054972.1054985,54,0.403,1544.2,551,-0.05454545454545454,False,2009
-34,Location Sharing & Privacy,2,2005,ubicomp,"Control, Deception, and Communication: Evaluating the Deployment of a Location-Enhanced Me",10.1007/11551201_13,21,0.157,726.6,102,-0.10666666666666667,False,2009
-34,Location Sharing & Privacy,3,2008,chi,From awareness to repartee: sharing location within social groups,10.1145/1357054.1357134,19,0.142,658.8,185,-0.07216494845360824,False,2009
-34,Location Sharing & Privacy,4,2008,chi,From awareness to repartee,10.1145/1357054.1357134,19,0.142,658.8,141,-0.07216494845360824,False,2009
-34,Location Sharing & Privacy,5,2009,chi,Who's viewed you?,10.1145/1518701.1519005,17,0.127,594.3,165,-0.12222222222222222,False,2009
-35,Task Switching at Work,1,2004,chi,A diary study of task switching and interruptions,10.1145/985692.985715,65,0.323,1631.2,817,0.05555555555555555,False,2008
-35,Task Switching at Work,2,2004,chi,"""Constant, constant, multi-tasking craziness""",10.1145/985692.985707,61,0.303,1542.2,705,-0.10344827586206896,False,2008
-35,Task Switching at Work,3,2005,chi,No task left behind?,10.1145/1054972.1055017,39,0.194,1067.0,489,-0.2261904761904762,False,2008
-35,Task Switching at Work,4,2007,chi,Disruption and recovery of computing tasks,10.1145/1240624.1240730,34,0.169,945.3,294,-0.1506849315068493,False,2008
-35,Task Switching at Work,5,2008,chi,The cost of interrupted work,10.1145/1357054.1357072,33,0.164,743.8,650,0.0196078431372549,False,2008
-36,Notifications & Interruptibility,1,2004,chi,"If not now, when?",10.1145/985692.985727,59,0.322,1275.7,522,0.02127659574468085,False,2012
-36,Notifications & Interruptibility,2,2005,chi,Using context-aware computing to reduce the perceived burden of interruptions from mobile ,10.1145/1054972.1055100,55,0.301,1295.1,363,-0.08823529411764706,False,2012
-36,Notifications & Interruptibility,3,2003,chi,Predicting human interruptibility with sensors,10.1145/642611.642657,43,0.235,1096.4,295,0.06060606060606061,False,2012
-36,Notifications & Interruptibility,4,2008,chi,Effects of intelligent notification management on users and their tasks,10.1145/1357054.1357070,34,0.186,898.5,193,-0.078125,False,2012
-36,Notifications & Interruptibility,5,2004,chi,Examining the robustness of sensor-based statistical models of human interruptibility,10.1145/985692.985719,25,0.137,736.8,134,-0.047619047619047616,False,2012
-37,Social Network Sites at Work,1,2008,cscw,Motivations for social networking at work,10.1145/1460563.1460674,31,0.199,809.1,751,0.08823529411764706,False,2010
-37,Social Network Sites at Work,2,2009,chi,Predicting tie strength with social media,10.1145/1518701.1518736,24,0.154,702.2,1383,0.3561643835616438,False,2010
-37,Social Network Sites at Work,3,2008,chi,"Looking at, looking up or keeping up with people?",10.1145/1357054.1357213,20,0.128,518.9,1396,0.23214285714285715,False,2010
-37,Social Network Sites at Work,4,2006,cscw,A face(book) in the crowd,10.1145/1180875.1180901,19,0.122,522.3,1002,0.6875,False,2010
-37,Social Network Sites at Work,5,2006,chi,Dogear,10.1145/1124772.1124792,13,0.083,348.2,297,0.40625,False,2010
-38,Instant Messaging,1,2000,cscw,Interaction and outeraction,10.1145/358916.358975,36,0.25,953.4,1076,0.18333333333333332,False,2004
-38,Instant Messaging,2,2002,cscw,"The character, functions, and styles of instant messaging in the workplace",10.1145/587078.587081,20,0.139,606.3,369,-0.1111111111111111,False,2004
-38,Instant Messaging,3,1999,chi,Socially translucent systems,10.1145/302979.302997,17,0.118,523.5,334,0.16129032258064516,False,2004
-38,Instant Messaging,4,2002,cscw,Instant messaging in teen life,10.1145/587078.587082,14,0.097,413.5,420,-0.015151515151515152,False,2004
-38,Instant Messaging,5,2003,chi,Wan2tlk?,10.1145/642611.642688,14,0.097,354.7,221,0.0,False,2004
-39,Digital Self-control,1,2015,cscw,NUGU,10.1145/2675133.2675244,51,0.392,1476.7,176,-0.06074766355140187,False,2018
-39,Digital Self-control,2,2016,chi,MyTime,10.1145/2858036.2858403,50,0.385,1444.9,141,-0.05865102639296188,False,2018
-39,Digital Self-control,3,2016,chi,Lock n' LoL,10.1145/2858036.2858568,47,0.362,1394.3,109,-0.09274193548387097,False,2018
-39,Digital Self-control,4,2018,imwut,What Makes Smartphone Use Meaningful or Meaningless?,10.1145/3191754,45,0.346,1384.2,207,-0.08791208791208792,False,2018
-39,Digital Self-control,5,2013,chi,"Limiting, leaving, and (re)lapsing",10.1145/2470654.2466446,32,0.246,948.4,316,0.2184873949579832,False,2018
-40,Smartphone Usage Logging,1,2008,chi,A diary study of mobile information needs,10.1145/1357054.1357125,14,0.117,308.9,331,0.029411764705882353,False,2011
-40,Smartphone Usage Logging,2,2006,chi,A large scale study of wireless search behavior,10.1145/1124772.1124877,10,0.083,145.8,284,1.0,False,2011
-40,Smartphone Usage Logging,3,2002,cscw,Voice-mail diary studies for naturalistic data capture under mobile conditions,10.1145/587078.587092,9,0.075,246.0,258,0.09523809523809523,False,2011
-40,Smartphone Usage Logging,4,2009,iui,Understanding the intent behind mobile information needs,10.1145/1502650.1502686,9,0.075,152.4,205,-0.23529411764705882,False,2011
-40,Smartphone Usage Logging,5,2007,chi,Momento,10.1145/1240624.1240644,7,0.058,224.4,103,-0.013513513513513514,False,2011
-41,Email & Peripheral Displays,1,1996,chi,Email overload,10.1145/238386.238530,58,0.175,1038.4,973,0.36363636363636365,False,2003
-41,Email & Peripheral Displays,2,2003,chi,Taking email to task,10.1145/642611.642672,31,0.094,812.9,367,0.02,False,2003
-41,Email & Peripheral Displays,3,1988,cscw,More than just a communication system: diversity in the use of electronic mail,10.1145/62266.62293,14,0.042,245.7,180,1.0,False,2003
-41,Email & Peripheral Displays,4,1994,cscw,Augmenting the organizational memory,10.1145/192844.193019,13,0.039,318.6,231,0.25,False,2003
-41,Email & Peripheral Displays,5,1996,cscw,Answer Garden 2,10.1145/240080.240203,12,0.036,299.4,293,-0.09090909090909091,False,2003
-42,Older Adults & Technology,1,2014,chi,Never too old,10.1145/2556288.2557184,37,0.178,1038.4,215,-0.03468208092485549,False,2015
-42,Older Adults & Technology,2,2013,chi,Older adults as digital content producers,10.1145/2470654.2470662,36,0.173,1020.8,185,0.05970149253731343,False,2015
-42,Older Adults & Technology,3,2012,chi,Engaging older people using participatory design,10.1145/2207676.2208570,29,0.139,768.9,322,0.012987012987012988,False,2015
-42,Older Adults & Technology,4,2009,chi,Desiring to be in touch in a changing communications landscape,10.1145/1518701.1518962,25,0.12,537.0,179,0.04477611940298507,False,2015
-42,Older Adults & Technology,5,2014,chi,Understanding digital and material social communications for older adults,10.1145/2556288.2557133,20,0.096,550.0,142,-0.17777777777777778,False,2015
-43,Automated Driving,1,2017,iui,SupportingTrust in Autonomous Driving,10.1145/3025171.3025198,18,0.132,108.1,168,0.9444444444444444,False,2017
-43,Automated Driving,2,2014,chi,Evaluating multimodal driver displays under varying situational urgency,10.1145/2556288.2556988,11,0.081,267.9,98,0.75,False,2017
-43,Automated Driving,3,2017,chi,Priming Drivers before Handover in Semi-Autonomous Cars,10.1145/3025453.3025507,10,0.074,264.6,102,0.08333333333333333,False,2017
-43,Automated Driving,4,2016,chi,A Design Space to Support the Development of Windshield Applications for the Car,10.1145/2858036.2858336,9,0.066,261.4,141,0.0975609756097561,False,2017
-43,Automated Driving,5,2014,chi,Partially intelligent automobiles and driving experience at the moment of system transitio,10.1145/2556288.2557370,8,0.059,56.3,30,1.0,False,2017
-44,Dementia & Ageing Care,1,2017,chi,A Critical Lens on Dementia and Design in HCI,10.1145/3025453.3025522,54,0.403,1626.8,199,-0.08888888888888889,False,2017
-44,Dementia & Ageing Care,2,2017,chi,The Value of Experience-Centred Design Approaches in Dementia Research Contexts,10.1145/3025453.3025527,32,0.239,955.3,88,-0.04411764705882353,False,2017
-44,Dementia & Ageing Care,3,2012,chi,"Empathy, participatory design and people with dementia",10.1145/2207676.2207749,30,0.224,726.9,260,0.06818181818181818,False,2017
-44,Dementia & Ageing Care,4,2012,chi,"Enabling self, intimacy and a sense of home in dementia",10.1145/2207676.2208654,30,0.224,828.7,105,0.5384615384615384,False,2017
-44,Dementia & Ageing Care,5,2016,dis,"'I'm a rambler, I'm a gambler, I'm a long way from home'",10.1145/2901790.2901798,29,0.216,857.1,70,-0.04,False,2017
-45,Autonomous Vehicle Communication,1,1982,chi,Analogy considered harmful,10.1145/800049.801816,7,0.024,115.9,262,1.0,False,1992
-45,Autonomous Vehicle Communication,2,1989,chi,Skilled financial planning: the cost of translating ideas into action,10.1145/67449.67474,6,0.021,158.7,43,1.0,False,1992
-45,Autonomous Vehicle Communication,3,1989,chi,Programmable user models for predictive evaluation of interface designs,10.1145/67449.67453,6,0.021,163.4,131,-0.16666666666666666,False,1992
-45,Autonomous Vehicle Communication,4,1985,chi,A quantitative model of the learning and performance of text editing knowledge,10.1145/317456.317494,5,0.017,94.1,48,1.0,False,1992
-45,Autonomous Vehicle Communication,5,1986,chi,The use of scenarios in human-computer interaction research,10.1145/29933.275645,5,0.017,105.7,56,1.0,False,1992
-46,Memory & Reminiscence,1,2008,chi,AutoTopography,10.1145/1357054.1357065,39,0.122,1006.3,168,0.07058823529411765,False,2010
-46,Memory & Reminiscence,2,2002,cscw,Requirements for photoware,10.1145/587078.587102,37,0.116,966.1,378,-0.17647058823529413,False,2010
-46,Memory & Reminiscence,3,2003,chi,Ambiguity as a resource for design,10.1145/642611.642653,35,0.11,741.3,1326,0.30434782608695654,False,2010
-46,Memory & Reminiscence,4,2009,chi,Understanding why we preserve some things and discard others in the context of interaction,10.1145/1518701.1518862,34,0.107,859.9,245,-0.0847457627118644,False,2010
-46,Memory & Reminiscence,5,2006,chi,Understanding photowork,10.1145/1124772.1124885,31,0.097,756.8,341,-0.05714285714285714,False,2010
-47,Sustainable HCI,1,2010,chi,Mapping the landscape of sustainable HCI,10.1145/1753326.1753625,103,0.352,2989.3,775,-0.11904761904761904,False,2013
-47,Sustainable HCI,2,2010,chi,The design of eco-feedback technology,10.1145/1753326.1753629,100,0.341,2840.5,786,-0.017341040462427744,False,2013
-47,Sustainable HCI,3,2007,chi,Sustainable interaction design,10.1145/1240624.1240705,92,0.314,2115.3,755,0.3880597014925373,False,2013
-47,Sustainable HCI,4,2012,chi,Sustainably unpersuaded,10.1145/2207676.2208539,80,0.273,2399.5,474,-0.1553398058252427,False,2013
-47,Sustainable HCI,5,2011,chi,Designing eco-feedback systems for everyday life,10.1145/1978942.1979252,71,0.242,2264.3,314,-0.33858267716535434,False,2013
-48,Multispecies & Urban Nature,1,2018,chi,Design for Collaborative Survival,10.1145/3173574.3173614,64,0.333,2053.8,236,-0.08333333333333333,False,2019
-48,Multispecies & Urban Nature,2,2017,chi,Designing for Cohabitation,10.1145/3025453.3025948,50,0.26,1517.2,186,-0.002583979328165375,False,2019
-48,Multispecies & Urban Nature,3,2019,tochi,Entanglement HCI The Next Wave?,10.1145/3364998,36,0.188,1182.3,530,-0.006756756756756757,False,2019
-48,Multispecies & Urban Nature,4,2019,chi,Symbiotic Encounters,10.1145/3290605.3300547,28,0.146,953.4,111,-0.07047619047619047,False,2019
-48,Multispecies & Urban Nature,5,2017,dis,Morse Things,10.1145/3064663.3064734,24,0.125,704.6,117,-0.03125,False,2019
-49,Bio-materials & Sustainable Making,1,2019,ubicomp,Myco-accessories,10.1145/3341163.3346938,56,0.335,1845.7,113,0.28431372549019607,False,2021
-49,Bio-materials & Sustainable Making,2,2015,chi,bioLogic,10.1145/2702123.2702611,50,0.299,1462.7,251,-0.04712041884816754,False,2021
-49,Bio-materials & Sustainable Making,3,2021,chi,"Unmaking: Enabling and Celebrating the Creative Material of Failure, Destruction, Decay, a",10.1145/3411764.3445529,41,0.246,1460.6,108,-0.12866817155756208,False,2021
-49,Bio-materials & Sustainable Making,4,2020,dis,Introducing the Sustainable Prototyping Life Cycle for Digital Fabrication to Designers,10.1145/3357236.3395510,38,0.228,1317.3,74,-0.1446280991735537,False,2021
-49,Bio-materials & Sustainable Making,5,2020,chi,Unfabricate: Designing Smart Textiles for Disassembly,10.1145/3313831.3376227,36,0.216,1245.0,119,-0.06220095693779904,False,2021
-50,Playful Food Experiences,1,2008,chi,Celebratory technology,10.1145/1357054.1357130,56,0.389,1191.1,285,0.30612244897959184,False,2016
-50,Playful Food Experiences,2,2012,dis,Telematic dinner party,10.1145/2317956.2317964,22,0.153,481.8,97,-0.03571428571428571,False,2016
-50,Playful Food Experiences,3,2016,uist,Digital Gastronomy,10.1145/2984511.2984528,22,0.153,689.7,77,-0.008620689655172414,False,2016
-50,Playful Food Experiences,4,2011,ubicomp,CoDine,10.1145/2030112.2030116,20,0.139,435.2,96,0.08888888888888889,False,2016
-50,Playful Food Experiences,5,2013,tei,LOLL <i>io</i>,10.1145/2460625.2460675,19,0.132,163.0,56,0.3,False,2016
-51,"Materials, Death & Legacy",1,2012,chi,Technology heirlooms?,10.1145/2207676.2207723,37,0.139,926.0,156,-0.10614525139664804,False,2014
-51,"Materials, Death & Legacy",2,2007,chi,Computational composites,10.1145/1240624.1240706,32,0.12,436.3,267,1.0,False,2014
-51,"Materials, Death & Legacy",3,2011,cscw,"""We will never forget you [online]""",10.1145/1958824.1958843,31,0.116,797.3,168,-0.15384615384615385,False,2014
-51,"Materials, Death & Legacy",4,2010,chi,Passing on &amp; putting to rest,10.1145/1753326.1753601,29,0.109,816.1,129,-0.08333333333333333,False,2014
-51,"Materials, Death & Legacy",5,2014,dis,An emergent framework for digital memorials,10.1145/2598510.2598516,27,0.101,725.6,68,-0.09649122807017543,False,2014
-52,Explainable Machine Learning,1,2019,chi,Guidelines for Human-AI Interaction,10.1145/3290605.3300233,142,0.142,4278.8,2028,0.10584958217270195,False,2020
-52,Explainable Machine Learning,2,2019,chi,Designing Theory-Driven User-Centric Explainable AI,10.1145/3290605.3300831,135,0.135,4625.9,859,-0.04699738903394256,False,2020
-52,Explainable Machine Learning,3,2019,pacmhci,"""Hello AI"": Uncovering the Onboarding Needs of Medical Practitioners for Human-AI Collabor",10.1145/3359206,124,0.124,4316.4,583,-0.05730659025787966,False,2020
-52,Explainable Machine Learning,4,2020,chi,Questioning the AI: Informing Design Practices for Explainable AI User Experiences,10.1145/3313831.3376590,116,0.116,4123.0,697,-0.09609292502639916,False,2020
-52,Explainable Machine Learning,5,2020,chi,"Re-examining Whether, Why, and How Human-AI Interaction Is Uniquely Difficult to Design",10.1145/3313831.3376301,111,0.111,3724.8,589,-0.09125117591721543,False,2020
-53,Generative AI & Writing,1,2014,tochi,Quantifying the Creativity Support of Digital Tools through the Creativity Support Index,10.1145/2617588,110,0.111,1849.1,473,0.9166666666666666,False,2021
-53,Generative AI & Writing,2,2019,chi,Mapping the Landscape of Creativity Support Tools in HCI,10.1145/3290605.3300619,84,0.085,2981.9,389,-0.044630404463040445,False,2021
-53,Generative AI & Writing,3,2018,chi,"I Lead, You Help but Only with Enough Details",10.1145/3173574.3174223,78,0.078,2245.2,297,0.03626943005181347,False,2021
-53,Generative AI & Writing,4,2020,chi,Novice-AI Music Co-Creation via AI-Steering Tools for Deep Generative Models,10.1145/3313831.3376739,71,0.071,2469.5,259,-0.07177814029363784,False,2021
-53,Generative AI & Writing,5,2018,iui,Creative Writing with a Machine in the Loop,10.1145/3172944.3172983,70,0.07,1655.3,251,0.029661016949152543,False,2021
-54,Voice & Conversational Agents,1,2016,chi,"""Like Having a Really Bad PA""",10.1145/2858036.2858288,153,0.202,1119.0,1108,0.905982905982906,False,2019
-54,Voice & Conversational Agents,2,2018,chi,Voice Interfaces in Everyday Life,10.1145/3173574.3174214,107,0.141,3369.0,700,-0.06299212598425197,False,2019
-54,Voice & Conversational Agents,3,1994,chi,Computers are social actors,10.1145/191666.191703,92,0.121,525.7,1884,1.0,False,2019
-54,Voice & Conversational Agents,4,2019,chi,What Makes a Good Conversation?,10.1145/3290605.3300705,65,0.086,2037.4,450,-0.10738255033557047,False,2019
-54,Voice & Conversational Agents,5,2017,mobilehci,"""What can i help you with?""",10.1145/3098279.3098539,64,0.084,679.0,352,-0.23717948717948717,False,2019
-55,GUI Toolkits & Web Interfaces,1,1988,uist,Building user interfaces by direct manipulation,10.1145/62402.62428,25,0.033,940.4,172,0.7391304347826086,False,1995
-55,GUI Toolkits & Web Interfaces,2,1991,chi,EAGER,10.1145/108844.108850,25,0.033,486.4,279,0.625,False,1995
-55,GUI Toolkits & Web Interfaces,3,1989,uist,Creating graphical interactive application objects by demonstration,10.1145/73660.73672,22,0.029,830.7,124,-0.12903225806451613,False,1995
-55,GUI Toolkits & Web Interfaces,4,1993,uist,Animation: from cartoons to the user interface,10.1145/168642.168647,17,0.023,486.2,195,-0.03571428571428571,False,1995
-55,GUI Toolkits & Web Interfaces,5,1990,uist,Druid: a system for demonstrational rapid user interface development,10.1145/97924.97943,16,0.021,435.9,57,-0.08,False,1995
-56,Data Visualization,1,2015,uist,DataTone,10.1145/2807442.2807478,42,0.101,986.5,246,0.29411764705882354,False,2017
-56,Data Visualization,2,2010,chi,Useful junk?,10.1145/1753326.1753716,38,0.091,237.2,405,1.0,False,2017
-56,Data Visualization,3,2016,uist,Eviza,10.1145/2984511.2984588,37,0.089,869.5,228,-0.6,False,2017
-56,Data Visualization,4,2015,chi,Understanding Data Videos,10.1145/2702123.2702431,23,0.055,100.2,151,0.043478260869565216,False,2017
-56,Data Visualization,5,2016,chi,When (ish) is My Bus?,10.1145/2858036.2858558,23,0.055,551.2,251,0.3018867924528302,False,2017
-57,Search & Recommendation,1,2003,chi,Faceted metadata for image search and browsing,10.1145/642611.642681,26,0.066,411.6,905,0.6,False,2003
-57,Search & Recommendation,2,1995,chi,Information foraging in information access environments,10.1145/223904.223911,24,0.061,488.0,462,0.4444444444444444,False,2003
-57,Search & Recommendation,3,1995,chi,Social information filtering,10.1145/223904.223931,24,0.061,410.5,2809,1.0,False,2003
-57,Search & Recommendation,4,1992,chi,Edit wear and read wear,10.1145/142750.142751,22,0.056,524.7,505,1.0,False,2003
-57,Search & Recommendation,5,1997,chi,SenseMaker,10.1145/258549.258563,22,0.056,443.6,167,-0.07142857142857142,False,2003
-58,Video Interfaces & Editing,1,2008,chi,Video browsing by direct manipulation,10.1145/1357054.1357096,33,0.089,800.8,206,-0.03278688524590164,False,2008
-58,Video Interfaces & Editing,2,2005,chi,Stencils-based tutorials,10.1145/1054972.1055047,31,0.083,755.3,187,0.041666666666666664,False,2008
-58,Video Interfaces & Editing,3,2002,dis,Simplifying video editing using metadata,10.1145/778712.778737,21,0.056,371.2,78,-0.5,False,2008
-58,Video Interfaces & Editing,4,2005,uist,DocWizards,10.1145/1095034.1095067,20,0.054,419.4,94,0.05555555555555555,False,2008
-58,Video Interfaces & Editing,5,1991,chi,Triggers and barriers to customizing software,10.1145/108844.108867,19,0.051,317.8,360,-0.15384615384615385,False,2008
-59,Programming & Notebooks,1,2011,chi,Wrangler,10.1145/1978942.1979444,48,0.133,1074.2,581,0.20454545454545456,False,2016
-59,Programming & Notebooks,2,1999,chi,Principles of mixed-initiative user interfaces,10.1145/302979.303030,28,0.078,131.5,1432,0.9473684210526315,False,2016
-59,Programming & Notebooks,3,2004,chi,Designing the whyline,10.1145/985692.985712,26,0.072,192.1,355,1.0,False,2016
-59,Programming & Notebooks,4,2009,chi,Two studies of opportunistic programming,10.1145/1518701.1518944,22,0.061,578.0,452,0.015873015873015872,False,2016
-59,Programming & Notebooks,5,2011,uist,Proactive wrangling,10.1145/2047196.2047205,22,0.061,508.9,109,-0.017241379310344827,False,2016
-60,Prototyping & Authoring Tools,1,2004,uist,DART,10.1145/1029632.1029669,30,0.103,617.6,263,0.08163265306122448,False,2008
-60,Prototyping & Authoring Tools,2,2008,chi,K-sketch,10.1145/1357054.1357122,23,0.079,542.6,109,-0.012345679012345678,False,2008
-60,Prototyping & Authoring Tools,3,1995,chi,Interactive sketching for the early stages of user interface design,10.1145/223904.223910,20,0.068,504.6,540,-0.1111111111111111,False,2008
-60,Prototyping & Authoring Tools,4,2007,uist,Evaluating user interface systems research,10.1145/1294211.1294256,15,0.051,241.6,231,0.3055555555555556,False,2008
-60,Prototyping & Authoring Tools,5,1993,iui,Wizard of Oz studies,10.1145/169891.169968,14,0.048,192.4,739,1.0,False,2008
-61,Meeting Capture & Reading,1,1994,chi,FILOCHAT,10.1145/191666.191763,29,0.115,979.0,172,-0.058823529411764705,False,1998
-61,Meeting Capture & Reading,2,1997,chi,Dynomite,10.1145/258549.258700,27,0.107,909.6,157,-0.34210526315789475,False,1998
-61,Meeting Capture & Reading,3,1998,chi,Beyond paper,10.1145/274644.274680,27,0.107,647.4,322,0.027777777777777776,False,1998
-61,Meeting Capture & Reading,4,1997,chi,A comparison of reading paper and on-line documents,10.1145/258549.258787,25,0.099,517.7,576,0.3225806451612903,False,1998
-61,Meeting Capture & Reading,5,1997,chi,“I'll get that off the audio”,10.1145/258549.258704,24,0.095,783.8,152,-0.1875,False,1998
-62,Usability Methods & Personas,1,1990,chi,Heuristic evaluation of user interfaces,10.1145/97243.97281,26,0.133,347.2,3455,1.0,False,1996
-62,Usability Methods & Personas,2,1991,chi,User interface evaluation in the real world,10.1145/108844.108862,17,0.087,381.2,621,-0.5714285714285714,False,1996
-62,Usability Methods & Personas,3,1990,chi,Testing a walkthrough methodology for theory-based design of walk-up-and-use interfaces,10.1145/97243.97279,15,0.077,339.5,561,0.9166666666666666,False,1996
-62,Usability Methods & Personas,4,1992,chi,Finding usability problems through heuristic evaluation,10.1145/142750.142834,14,0.072,192.6,1062,0.13333333333333333,False,1996
-62,Usability Methods & Personas,5,1992,chi,Comparison of empirical testing and walkthrough methods in user interface evaluation,10.1145/142750.142873,13,0.067,286.3,303,-0.1,False,1996
-63,Clinical Information Work,1,1996,cscw,Documents and professional practice,10.1145/240080.240342,18,0.072,354.1,252,-0.045454545454545456,False,1998
-63,Clinical Information Work,2,1997,iui,"Direct manipulation for comprehensible, predictable and controllable user interfaces",10.1145/238218.238281,7,0.028,62.8,276,0.2,False,1998
-63,Clinical Information Work,3,1989,chi,Design environments for constructive and argumentative design,10.1145/67449.67501,6,0.024,111.2,117,1.0,False,1998
-63,Clinical Information Work,4,1997,iui,Evaluating the utility and usability of an adaptive hypermedia system,10.1145/238218.238320,6,0.024,9.4,95,1.0,False,1998
-63,Clinical Information Work,5,1990,chi,End-user modifiability in design environments,10.1145/97243.97272,5,0.02,69.7,141,0.2857142857142857,False,1998
-64,Gamification & Engagement,1,2016,chi,"Negative Emotion, Positive Experience?",10.1145/2858036.2858227,47,0.103,1254.1,179,0.0,False,2016
-64,Gamification & Engagement,2,2014,chi,A systematic review of quantitative studies on the enjoyment of digital entertainment game,10.1145/2556288.2557078,34,0.074,842.1,210,0.11764705882352941,False,2016
-64,Gamification & Engagement,3,2016,chi,Fostering Intrinsic Motivation through Avatar Identification in Digital Games,10.1145/2858036.2858062,31,0.068,844.8,262,-0.0875,False,2016
-64,Gamification & Engagement,4,2015,chiplay,Emotional and Functional Challenge in Core and Avant-garde Games,10.1145/2793107.2793147,30,0.066,172.4,75,1.0,False,2016
-64,Gamification & Engagement,5,2013,chi,Optimizing challenge in an educational game using large-scale design experiments,10.1145/2470654.2470668,25,0.055,234.0,136,0.15,False,2016
-65,Movement & Somaesthetics,1,2016,chi,Somaesthetic Appreciation Design,10.1145/2858036.2858583,58,0.171,1746.7,287,-0.059447983014861996,False,2017
-65,Movement & Somaesthetics,2,2017,chi,Embodied Design Ideation Methods,10.1145/3025453.3025873,56,0.165,1655.8,188,-0.03255813953488372,False,2017
-65,Movement & Somaesthetics,3,2016,chi,Embodied Sketching,10.1145/2858036.2858486,46,0.135,1299.8,156,-0.027472527472527472,False,2017
-65,Movement & Somaesthetics,4,2012,dis,Autobiographical design in HCI research,10.1145/2317956.2318034,31,0.091,751.6,298,0.0049504950495049506,False,2017
-65,Movement & Somaesthetics,5,2013,uist,YouMove,10.1145/2501988.2502045,23,0.068,595.7,314,0.021505376344086023,False,2017
-66,Exergames & Bodily Play,1,2011,chi,Designing sports,10.1145/1978942.1979330,61,0.237,1640.0,280,-0.015337423312883436,False,2014
-66,Exergames & Bodily Play,2,2014,chi,Movement-based game guidelines,10.1145/2556288.2557163,41,0.16,1195.4,169,-0.004651162790697674,False,2014
-66,Exergames & Bodily Play,3,2003,chi,Exertion interfaces,10.1145/642611.642709,39,0.152,771.1,359,0.42857142857142855,False,2014
-66,Exergames & Bodily Play,4,2013,chi,The design space of body games,10.1145/2470654.2466461,34,0.132,899.3,113,-0.11904761904761904,False,2014
-66,Exergames & Bodily Play,5,2012,chi,Uncomfortable interactions,10.1145/2207676.2208347,30,0.117,887.1,293,-0.02727272727272727,False,2014
-67,Esports & Player Communities,1,2006,cscw,Strangers and friends,10.1145/1180875.1180898,44,0.18,1028.7,416,0.10714285714285714,False,2015
-67,Esports & Player Communities,2,2006,chi,"""Alone together?""",10.1145/1124772.1124834,33,0.135,843.9,757,-0.10256410256410256,False,2015
-67,Esports & Player Communities,3,2015,chi,Exploring Cyberbullying and Other Toxic Behavior in Team Competition Online Games,10.1145/2702123.2702529,26,0.106,587.4,263,0.07894736842105263,False,2015
-67,Esports & Player Communities,4,2014,cscw,The identification of deviance and its impact on retention in a multiplayer game,10.1145/2531602.2531724,25,0.102,560.3,140,-0.0196078431372549,False,2015
-67,Esports & Player Communities,5,2014,chiplay,Playing with strangers,10.1145/2658537.2658538,23,0.094,583.6,139,-0.0967741935483871,False,2015
-68,Location-based Museum Play,1,2000,chi,Developing a context-aware electronic tourist guide,10.1145/332040.332047,22,0.139,472.5,962,0.95,False,2006
-68,Location-based Museum Play,2,2002,chi,Sotto voce,10.1145/503376.503454,17,0.108,477.4,211,0.28,False,2006
-68,Location-based Museum Play,3,2002,cscw,Revisiting the visit:,10.1145/587078.587100,17,0.108,383.7,196,-0.014285714285714285,False,2006
-68,Location-based Museum Play,4,2003,chi,Lessons from the lighthouse,10.1145/642611.642711,12,0.076,359.0,176,0.32142857142857145,False,2006
-68,Location-based Museum Play,5,2003,chi,Where on-line meets on the streets,10.1145/642611.642710,8,0.051,246.7,263,0.5217391304347826,False,2006
-69,VR Meditation & Breathing,1,2017,chi,Inner Garden,10.1145/3025453.3025743,31,0.2,932.1,145,-0.05536332179930796,False,2017
-69,VR Meditation & Breathing,2,2016,iui,RelaWorld,10.1145/2856767.2856796,26,0.168,634.3,157,0.14285714285714285,False,2017
-69,VR Meditation & Breathing,3,2017,chiplay,Life Tree,10.1145/3116595.3116621,26,0.168,755.0,149,-0.09649122807017543,False,2017
-69,VR Meditation & Breathing,4,2012,chi,Understanding heart rate sharing,10.1145/2207676.2208526,23,0.148,616.4,112,0.04072398190045249,False,2017
-69,VR Meditation & Breathing,5,2012,dis,<i>Sonic Cradle</i>,10.1145/2317956.2318017,22,0.142,557.0,136,0.10638297872340426,False,2017
-70,Brain-Computer Interfaces,1,2006,uist,Using a low-cost electroencephalograph for task classification in HCI research,10.1145/1166253.1166268,18,0.146,543.1,167,0.4090909090909091,False,2013
-70,Brain-Computer Interfaces,2,2009,chi,Brain measurement for usability testing and adaptive interfaces,10.1145/1518701.1519035,18,0.146,488.6,105,-0.05263157894736842,False,2013
-70,Brain-Computer Interfaces,3,2009,uist,Using fNIRS brain sensing in realistic HCI settings,10.1145/1622176.1622207,17,0.138,455.2,114,-0.42105263157894735,False,2013
-70,Brain-Computer Interfaces,4,2013,chi,Using fNIRS brain sensing to evaluate information visualization interfaces,10.1145/2470654.2470723,17,0.138,467.6,112,-0.14285714285714285,False,2013
-70,Brain-Computer Interfaces,5,2008,chi,Feasibility and pragmatics of classifying working memory load with an electroencephalograp,10.1145/1357054.1357187,16,0.13,402.4,191,-0.21428571428571427,False,2013
-71,Rehabilitation Games,1,2010,chi,Towards customizable games for stroke rehabilitation,10.1145/1753326.1753649,20,0.167,202.6,385,1.0,False,2014
-71,Rehabilitation Games,2,2011,chi,Target assistance for subtly balancing competitive play,10.1145/1978942.1979287,20,0.167,542.1,82,0.1568627450980392,False,2014
-71,Rehabilitation Games,3,2013,chi,Designing action-based exergames for children with cerebral palsy,10.1145/2470654.2466164,19,0.158,412.1,122,0.2962962962962963,False,2014
-71,Rehabilitation Games,4,2014,chi,"Effects of balancing for physical abilities on player performance, experience and self-est",10.1145/2556288.2556963,18,0.15,475.6,127,-0.14666666666666667,False,2014
-71,Rehabilitation Games,5,2014,chiplay,Improving player balancing in racing games,10.1145/2658537.2658701,17,0.142,448.3,74,-0.2727272727272727,False,2014
-72,Playful Experience & Drones,1,2011,chi,Old wine in new bottles or novel challenges,10.1145/1978942.1979336,19,0.057,514.4,647,-0.04838709677419355,False,2014
-72,Playful Experience & Drones,2,2004,dis,Understanding experience in interactive systems,10.1145/1013115.1013152,15,0.045,285.4,913,0.020833333333333332,False,2014
-72,Playful Experience & Drones,3,2013,iui,Vibrobelt,10.1145/2449396.2449450,15,0.045,273.5,61,0.09523809523809523,False,2014
-72,Playful Experience & Drones,4,2004,chi,Ubiquitous computing for firefighters,10.1145/985692.985778,14,0.042,320.3,103,0.22727272727272727,False,2014
-72,Playful Experience & Drones,5,2009,chi,User experience over time,10.1145/1518701.1518814,14,0.042,392.0,549,0.18571428571428572,False,2014
-73,Visual Accessibility,1,2010,uist,VizWiz,10.1145/1866029.1866080,107,0.268,2627.2,588,0.08571428571428572,False,2016
-73,Visual Accessibility,2,2011,assets,Supporting blind photography,10.1145/2049536.2049573,55,0.138,1448.0,167,-0.08695652173913043,False,2016
-73,Visual Accessibility,3,2008,assets,Slide rule,10.1145/1414471.1414487,50,0.125,1221.1,373,0.16666666666666666,False,2016
-73,Visual Accessibility,4,2016,cscw,How Blind People Interact with Visual Content on Social Networking Services,10.1145/2818048.2820013,46,0.115,1463.9,178,-0.04081632653061224,False,2016
-73,Visual Accessibility,5,2016,chi,"""With most of it being pictures now, I rarely use it""",10.1145/2858036.2858116,46,0.115,1466.4,134,-0.07058823529411765,False,2016
-74,Neurodivergence & Autism,1,2010,assets,Disability studies as a source of critical inquiry for the field of assistive technology,10.1145/1878803.1878807,53,0.14,1117.8,376,0.07692307692307693,False,2016
-74,Neurodivergence & Autism,2,2010,cscw,Social use of computer-mediated communication by adults on the autism spectrum,10.1145/1718918.1718991,39,0.103,898.5,183,0.1095890410958904,False,2016
-74,Neurodivergence & Autism,3,2016,assets,Would You Be Mine,10.1145/2982142.2982172,33,0.087,966.6,95,-0.05429864253393665,False,2016
-74,Neurodivergence & Autism,4,2012,chi,MOSOCO,10.1145/2207676.2208649,27,0.071,607.6,205,-0.17647058823529413,False,2016
-74,Neurodivergence & Autism,5,2016,chi,"""Will I always be not social?""",10.1145/2858036.2858038,27,0.071,751.6,130,-0.047058823529411764,False,2016
-75,Web Accessibility,1,1998,assets,User interface of a Home Page Reader,10.1145/274497.274526,20,0.063,340.9,186,1.0,False,2006
-75,Web Accessibility,2,2005,chi,Is your web page accessible?,10.1145/1054972.1054979,19,0.06,216.7,207,0.5789473684210527,False,2006
-75,Web Accessibility,3,2006,chi,Remote usability evaluations With disabled people,10.1145/1124772.1124942,15,0.047,214.1,160,0.6086956521739131,False,2006
-75,Web Accessibility,4,2002,assets,Site-wide annotation,10.1145/638249.638265,14,0.044,203.3,90,0.4,False,2006
-75,Web Accessibility,5,2006,assets,Accommodating color blind computer users,10.1145/1168987.1168996,14,0.044,246.9,99,-1.0,False,2006
-76,Deaf & Sign Language Tech,1,2015,chi,Head-Mounted Display Visualizations to Support Sound Awareness for the Deaf and Hard of He,10.1145/2702123.2702393,35,0.113,647.6,119,0.19047619047619047,False,2016
-76,Deaf & Sign Language Tech,2,2009,assets,ClassInFocus,10.1145/1639642.1639656,28,0.09,683.7,77,0.2,False,2016
-76,Deaf & Sign Language Tech,3,2016,assets,Improving Real-Time Captioning Experiences for Deaf and Hard of Hearing Students,10.1145/2982142.2982164,27,0.087,804.9,81,-0.18,False,2016
-76,Deaf & Sign Language Tech,4,2016,assets,A Personalizable Mobile Sound Detector App Design for Deaf and Hard-of-Hearing Users,10.1145/2982142.2982171,25,0.08,584.4,79,0.03636363636363636,False,2016
-76,Deaf & Sign Language Tech,5,2015,assets,Tracked Speech-To-Text Display,10.1145/2700648.2809843,19,0.061,520.9,34,-0.023809523809523808,False,2016
-77,Non-visual Navigation,1,2013,assets,"""Pray before you step out""",10.1145/2513383.2513449,43,0.15,1048.9,137,-0.037037037037037035,False,2015
-77,Non-visual Navigation,2,2012,chi,The user as a sensor,10.1145/2207676.2207735,34,0.119,767.2,116,0.5882352941176471,False,2015
-77,Non-visual Navigation,3,2015,assets,ForeSee,10.1145/2700648.2809865,30,0.105,623.2,114,0.01904761904761905,False,2015
-77,Non-visual Navigation,4,2014,assets,"""just let the cane hit it""",10.1145/2661334.2661380,27,0.094,652.5,127,0.08163265306122448,False,2015
-77,Non-visual Navigation,5,2014,assets,Headlock,10.1145/2661334.2661344,26,0.091,764.1,66,-0.08108108108108109,False,2015
-78,Tactile Graphics,1,2012,tei,VizTouch,10.1145/2148131.2148160,33,0.14,514.8,106,0.21212121212121213,False,2015
-78,Tactile Graphics,2,2015,chi,Toward 3D-Printed Movable Tactile Pictures for Children with Visual Impairments,10.1145/2702123.2702144,22,0.094,483.6,64,-0.08,False,2015
-78,Tactile Graphics,3,2005,assets,Automating tactile graphics translation,10.1145/1090785.1090814,20,0.085,206.6,124,1.0,False,2015
-78,Tactile Graphics,4,2015,assets,The Tactile Graphics Helper,10.1145/2700648.2809868,20,0.085,589.8,89,-0.041666666666666664,False,2015
-78,Tactile Graphics,5,2012,assets,Learning non-visual graphical information using a touch-based vibro-audio interface,10.1145/2384916.2384935,17,0.072,408.1,128,0.22,False,2015
-79,Blind & Low-vision Access,1,2015,chi,Collaborative Accessibility,10.1145/2702123.2702511,53,0.228,1487.4,153,-0.05925925925925926,False,2016
-79,Blind & Low-vision Access,2,2015,assets,The Invisible Work of Accessibility,10.1145/2700648.2809864,48,0.207,1273.9,154,-0.07017543859649122,False,2016
-79,Blind & Low-vision Access,3,2011,chi,In the shadow of misperception,10.1145/1978942.1979044,39,0.168,764.3,479,0.8571428571428571,False,2016
-79,Blind & Low-vision Access,4,2015,chi,StructJumper,10.1145/2702123.2702589,28,0.121,693.6,84,0.2777777777777778,False,2016
-79,Blind & Low-vision Access,5,2008,chi,Multimodal collaborative handwriting training for visually-impaired people,10.1145/1357054.1357119,10,0.043,117.1,80,0.125,False,2016
-80,DIY Assistive Technology,1,2011,assets,Empowering individuals with do-it-yourself assistive technology,10.1145/2049536.2049541,45,0.294,369.2,296,0.17142857142857143,False,2016
-80,DIY Assistive Technology,2,2015,chi,Sharing is Caring,10.1145/2702123.2702525,42,0.275,1198.5,212,-0.05909090909090909,False,2016
-80,DIY Assistive Technology,3,2014,dis,A study of the challenges related to DIY assistive technology in the context of children w,10.1145/2598510.2598530,26,0.17,640.3,94,-0.18055555555555555,False,2016
-80,DIY Assistive Technology,4,2016,chi,An Intimate Laboratory?,10.1145/2858036.2858564,22,0.144,717.2,55,-0.026737967914438502,False,2016
-80,DIY Assistive Technology,5,2016,chi,Helping Hands,10.1145/2858036.2858340,21,0.137,621.4,75,-0.125,False,2016
-81,Accessible Games & VR,1,2010,assets,Vi-bowling,10.1145/1878803.1878836,24,0.168,364.6,103,0.21428571428571427,False,2015
-81,Accessible Games & VR,2,2008,assets,Blind hero,10.1145/1414471.1414503,21,0.147,391.1,150,0.3125,False,2015
-81,Accessible Games & VR,3,2008,assets,PowerUp,10.1145/1414471.1414504,19,0.133,300.6,57,0.6666666666666666,False,2015
-81,Accessible Games & VR,4,2013,assets,Eyes-free yoga,10.1145/2513383.2513392,14,0.098,353.9,122,0.14285714285714285,False,2015
-81,Accessible Games & VR,5,2007,assets,Finger dance,10.1145/1296843.1296898,11,0.077,115.9,66,1.0,False,2015
-82,AAC & Communication Disabilities,1,2004,chi,The participatory design of a sound and image enhanced daily planner for people with aphas,10.1145/985692.985744,23,0.103,271.2,145,0.9411764705882353,False,2011
-82,AAC & Communication Disabilities,2,2006,chi,Participatory design with proxies,10.1145/1124772.1124797,19,0.085,391.4,105,-0.14285714285714285,False,2011
-82,AAC & Communication Disabilities,3,2007,assets,The design and field evaluation of PhotoTalk,10.1145/1296843.1296876,14,0.063,294.9,45,-0.11764705882352941,False,2011
-82,AAC & Communication Disabilities,4,2006,assets,Helping aphasic people process online information,10.1145/1168987.1169027,11,0.049,69.1,104,1.0,False,2011
-82,AAC & Communication Disabilities,5,2000,assets,An empirical investigation of ways in which some of the problems encountered by some dysle,10.1145/354324.354347,10,0.045,81.8,62,1.0,False,2011
-83,Real-time Groupware,1,1992,cscw,Awareness and coordination in shared workspaces,10.1145/143457.143468,43,0.151,939.2,2508,0.1111111111111111,False,1992
-83,Real-time Groupware,2,1990,cscw,Rendezvous: an architecture for synchronous multi-user applications,10.1145/99332.99364,29,0.102,890.8,194,0.40625,False,1992
-83,Real-time Groupware,3,1990,cscw,MMConf: an infrastructure for building shared multimedia applications,10.1145/99332.99365,24,0.084,834.3,247,-0.034482758620689655,False,1992
-83,Real-time Groupware,4,1990,cscw,Issues in the design of computer support for co-authoring and commenting,10.1145/99332.99354,23,0.081,621.5,264,0.0,False,1992
-83,Real-time Groupware,5,1991,chi,Flexible user interface coupling in a collaborative system,10.1145/108844.108851,18,0.063,630.2,105,-0.07692307692307693,False,1992
-84,Gaze in Video Communication,1,1992,chi,ClearBoard,10.1145/142750.142977,35,0.138,618.5,530,0.08695652173913043,False,2004
-84,Gaze in Video Communication,2,1992,chi,Using spatial cues to improve videoconferencing,10.1145/142750.143070,27,0.106,376.2,190,1.0,False,2004
-84,Gaze in Video Communication,3,1991,chi,VideoWhiteboard,10.1145/108844.108932,26,0.102,538.6,241,0.47058823529411764,False,2004
-84,Gaze in Video Communication,4,1991,chi,Disembodied Conduct,10.1145/108844.108859,26,0.102,511.7,304,1.0,False,2004
-84,Gaze in Video Communication,5,2000,cscw,Coordination of communication,10.1145/358916.358947,26,0.102,519.1,339,-0.07142857142857142,False,2004
-85,Family Video Communication,1,2010,cscw,Making love in the network closet,10.1145/1718918.1718946,47,0.186,1369.2,300,0.027624309392265192,False,2013
-85,Family Video Communication,2,2010,cscw,Home video communication,10.1145/1718918.1718945,40,0.158,1071.5,164,0.030927835051546393,False,2013
-85,Family Video Communication,3,2010,chi,Sharing conversation and sharing life,10.1145/1753326.1753422,37,0.146,838.5,131,0.0,False,2013
-85,Family Video Communication,4,2010,chi,The family window,10.1145/1753326.1753682,36,0.142,823.1,158,-0.041666666666666664,False,2013
-85,Family Video Communication,5,2012,chi,Intimacy in long-distance relationships over video chat,10.1145/2207676.2207785,35,0.138,964.1,210,0.08641975308641975,False,2013
-86,Augmented Reality Collaboration,1,2016,uist,Holoportation,10.1145/2984511.2984517,68,0.294,1969.6,651,0.0,False,2019
-86,Augmented Reality Collaboration,2,2019,uist,Loki,10.1145/3332165.3347872,54,0.234,1756.8,161,-0.08843537414965986,False,2019
-86,Augmented Reality Collaboration,3,2018,chi,Mini-Me,10.1145/3173574.3173620,48,0.208,1438.8,351,-0.11235955056179775,False,2019
-86,Augmented Reality Collaboration,4,2017,chi,ShareVR,10.1145/3025453.3025683,39,0.169,1232.4,300,-0.009230769230769232,False,2019
-86,Augmented Reality Collaboration,5,2016,cscw,Room2Room,10.1145/2818048.2819965,37,0.16,1070.1,215,-0.018518518518518517,False,2019
-87,Public & Ambient Displays,1,2004,uist,Interactive public ambient displays,10.1145/1029632.1029656,56,0.252,1397.0,651,-0.02564102564102564,False,2011
-87,Public & Ambient Displays,2,2008,chi,"It's Mine, Don't Touch!",10.1145/1357054.1357255,54,0.243,1447.7,455,0.0,False,2011
-87,Public & Ambient Displays,3,2010,chi,Designing urban media façades,10.1145/1753326.1753670,34,0.153,730.4,243,0.5333333333333333,False,2011
-87,Public & Ambient Displays,4,2010,chi,Worlds of information,10.1145/1753326.1753669,23,0.104,645.3,136,-0.11627906976744186,False,2011
-87,Public & Ambient Displays,5,2011,chi,Rethinking 'multi-user',10.1145/1978942.1979392,22,0.099,662.5,164,-0.060085836909871244,False,2011
-88,Distributed Team Awareness,1,1992,chi,Portholes,10.1145/142750.142982,41,0.191,1062.6,908,-0.175,False,1997
-88,Distributed Team Awareness,2,1988,cscw,Design of a multi-media vehicle for social browsing,10.1145/62266.62269,23,0.107,788.3,274,0.4444444444444444,False,1997
-88,Distributed Team Awareness,3,1991,chi,Experiences in the use of a media space,10.1145/108844.108888,22,0.102,602.4,306,0.05,False,1997
-88,Distributed Team Awareness,4,1988,cscw,Patterns of contact and communication in scientific research collaboration,10.1145/62266.62267,21,0.098,616.3,586,0.5,False,1997
-88,Distributed Team Awareness,5,1990,cscw,The VideoWindow system in informal communication,10.1145/99332.99335,18,0.084,479.1,311,-0.09523809523809523,False,1997
-89,Social VR & Presence,1,2021,pacmhci,"Body, Avatar, and Me",10.1145/3432938,54,0.293,1836.4,312,-0.051047120418848166,False,2021
-89,Social VR & Presence,2,2019,chi,Shaping Pro-Social Interaction in VR,10.1145/3290605.3300794,52,0.283,1563.5,213,0.08053691275167785,False,2021
-89,Social VR & Presence,3,2020,chiplay,Falling Asleep Together: What Makes Activities in Social Virtual Reality Meaningful to Use,10.1145/3410404.3414266,44,0.239,1436.2,161,-0.04743083003952569,False,2021
-89,Social VR & Presence,4,2019,pacmhci,Harassment in Social Virtual Reality,10.1145/3359202,43,0.234,1357.8,211,0.06439393939393939,False,2021
-89,Social VR & Presence,5,2020,pacmhci,"""Talking without a Voice""",10.1145/3415246,39,0.212,1253.5,233,-0.0022471910112359553,False,2021
-90,Tabletop Collaboration,1,2004,cscw,Territoriality in collaborative tabletop workspaces,10.1145/1031607.1031655,49,0.322,1322.4,616,-0.10112359550561797,False,2006
-90,Tabletop Collaboration,2,2006,chi,Collaborative coupling over tabletop displays,10.1145/1124772.1124950,28,0.184,689.7,289,-0.14583333333333334,False,2006
-90,Tabletop Collaboration,3,2004,cscw,Exploring the effects of group size and table size on interactions with tabletop shared-di,10.1145/1031607.1031654,25,0.164,731.8,175,-0.07407407407407407,False,2006
-90,Tabletop Collaboration,4,1999,chi,Single display groupware,10.1145/302979.303064,24,0.158,770.9,486,-0.029411764705882353,False,2006
-90,Tabletop Collaboration,5,2004,cscw,"Beyond ""social protocols""",10.1145/1031607.1031648,24,0.158,674.8,161,-0.0136986301369863,False,2006
-91,Surgical AR & Video Guidance,1,2003,chi,Comparative effectiveness of augmented reality in object assembly,10.1145/642611.642626,14,0.091,74.8,590,,False,2013
-91,Surgical AR & Video Guidance,2,2013,chi,Imaging the body,10.1145/2470654.2466197,11,0.071,310.7,36,-0.125,False,2013
-91,Surgical AR & Video Guidance,3,2011,chi,Exploring the potential for touchless interaction in image-guided interventional radiology,10.1145/1978942.1979436,9,0.058,94.7,131,1.0,False,2013
-91,Surgical AR & Video Guidance,4,1998,cscw,MusicFX,10.1145/289444.289511,8,0.052,100.2,378,0.1,False,2013
-91,Surgical AR & Video Guidance,5,2012,chi,Interaction proxemics and image use in neurosurgery,10.1145/2207676.2208536,8,0.052,239.1,84,-0.026845637583892617,False,2013
-92,RF & Radar Sensing,1,2016,ubicomp,Human respiration detection with commodity wifi devices,10.1145/2971648.2971744,49,0.209,1259.9,481,-0.03571428571428571,False,2020
-92,RF & Radar Sensing,2,2019,imwut,FarSense,10.1145/3351279,46,0.196,1406.2,424,-0.25,False,2020
-92,RF & Radar Sensing,3,2016,ubicomp,Gait recognition using wifi signals,10.1145/2971648.2971670,43,0.183,200.5,561,1.0,False,2020
-92,RF & Radar Sensing,4,2015,chi,Smart Homes that Monitor Breathing and Heart Rate,10.1145/2702123.2702200,37,0.157,1009.0,895,0.32727272727272727,False,2020
-92,RF & Radar Sensing,5,2016,ubicomp,Dynamic-MUSIC,10.1145/2971648.2971665,31,0.132,768.1,323,0.23333333333333334,False,2020
-93,Wearable Activity Recognition,1,2017,imwut,Ensembles of Deep LSTM Learners for Activity Recognition using Wearables,10.1145/3090076,40,0.189,1103.7,508,0.13953488372093023,False,2018
-93,Wearable Activity Recognition,2,2012,ubicomp,USC-HAD,10.1145/2370216.2370438,18,0.085,62.7,537,1.0,False,2018
-93,Wearable Activity Recognition,3,2008,ubicomp,Discovery of activity patterns using topic models,10.1145/1409635.1409638,15,0.071,275.9,444,0.2,False,2018
-93,Wearable Activity Recognition,4,2018,imwut,AROMA,10.1145/3214277,14,0.066,378.1,133,0.0,False,2018
-93,Wearable Activity Recognition,5,2008,ubicomp,Accurate activity recognition in a home setting,10.1145/1409635.1409637,13,0.061,233.5,869,0.42105263157894735,False,2018
-94,Indoor Localization,1,2012,ubicomp,A reliable and accurate indoor localization method using phone inertial sensors,10.1145/2370216.2370280,14,0.082,127.6,581,0.25,False,2012
-94,Indoor Localization,2,2005,ubicomp,Accurate GSM Indoor Localization,10.1007/11551201_9,12,0.071,139.9,447,0.5384615384615384,False,2012
-94,Indoor Localization,3,2006,ubicomp,PowerLine Positioning: A Practical Sub-Room-Level Indoor Location System for Domestic Use,10.1007/11853565_26,11,0.065,298.2,125,0.1111111111111111,False,2012
-94,Indoor Localization,4,2012,ubicomp,ARIEL,10.1145/2370216.2370282,11,0.065,278.7,174,0.36363636363636365,False,2012
-94,Indoor Localization,5,2003,ubicomp,RightSPOT: A Novel Sense of Location for a Smart Personal Object,10.1007/978-3-540-39653-6_3,10,0.059,210.1,134,1.0,False,2012
-95,Urban Mobility Data,1,2008,ubicomp,Understanding mobility based on GPS data,10.1145/1409635.1409677,16,0.099,372.8,1110,0.10344827586206896,False,2014
-95,Urban Mobility Data,2,2006,ubicomp,Predestination: Inferring Destinations from Partial Trajectories,10.1007/11853565_15,13,0.081,300.4,455,0.7,False,2014
-95,Urban Mobility Data,3,2011,ubicomp,Urban computing with taxicabs,10.1145/2030112.2030126,12,0.075,230.1,525,0.21052631578947367,False,2014
-95,Urban Mobility Data,4,2003,ubicomp,Inferring High-Level Behavior from Low-Level Sensors,10.1007/978-3-540-39653-6_6,10,0.062,150.3,518,1.0,False,2014
-95,Urban Mobility Data,5,2014,ubicomp,Diagnosing New York city's noises with ubiquitous data,10.1145/2632048.2632102,10,0.062,243.0,226,0.19047619047619047,False,2014
-96,Acoustic Health Sensing,1,2018,imwut,C-FMCW Based Contactless Respiration Detection Using Acoustic Signal,10.1145/3161188,28,0.115,706.0,177,0.1111111111111111,False,2020
-96,Acoustic Health Sensing,2,2012,ubicomp,SpiroSmart,10.1145/2370216.2370261,20,0.082,476.5,249,0.3157894736842105,False,2020
-96,Acoustic Health Sensing,3,2020,imwut,TouchID,10.1145/3432192,12,0.049,349.2,120,0.5833333333333334,False,2020
-96,Acoustic Health Sensing,4,2017,imwut,CovertBand,10.1145/3131897,11,0.045,332.7,72,-0.03125,False,2020
-96,Acoustic Health Sensing,5,2018,chi,Seismo,10.1145/3173574.3173999,11,0.045,275.7,104,0.3888888888888889,False,2020
-97,Tangible Interaction,1,1997,chi,Tangible bits,10.1145/258549.258715,237,0.268,4931.5,3809,0.18604651162790697,False,2009
-97,Tangible Interaction,2,1995,chi,Bricks,10.1145/223904.223964,106,0.12,2525.5,972,0.1702127659574468,False,2009
-97,Tangible Interaction,3,2006,chi,Getting a grip on tangible interaction,10.1145/1124772.1124838,99,0.112,2447.8,1077,0.1686746987951807,False,2009
-97,Tangible Interaction,4,2007,tei,The reacTable,10.1145/1226969.1226998,70,0.079,1735.0,606,-0.020833333333333332,False,2009
-97,Tangible Interaction,5,2004,chi,Topobo,10.1145/985692.985774,63,0.071,1385.9,495,-0.15,False,2009
-98,VR Haptics,1,2016,chi,Haptic Retargeting,10.1145/2858036.2858226,109,0.144,2174.0,478,0.16,False,2018
-98,VR Haptics,2,2016,uist,NormalTouch and TextureTouch,10.1145/2984511.2984526,74,0.098,2273.2,286,-0.08150470219435736,False,2018
-98,VR Haptics,3,2017,chi,Sparse Haptic Proxy,10.1145/3025453.3025753,71,0.094,1912.7,233,-0.13930348258706468,False,2018
-98,VR Haptics,4,2018,chi,CLAW,10.1145/3173574.3174228,71,0.094,2141.0,248,-0.2153846153846154,False,2018
-98,VR Haptics,5,2017,uist,Grabity,10.1145/3126594.3126599,69,0.091,2036.5,258,-0.22377622377622378,False,2018
-99,Deformable & Soft Displays,1,2012,chi,Shape-changing interfaces,10.1145/2207676.2207781,111,0.288,2985.1,435,-0.0480225988700565,False,2014
-99,Deformable & Soft Displays,2,2013,uist,PneUI,10.1145/2501988.2502037,105,0.272,3082.1,337,-0.16748768472906403,False,2014
-99,Deformable & Soft Displays,3,2013,uist,inFORM,10.1145/2501988.2502032,100,0.259,2907.5,625,-0.11733333333333333,False,2014
-99,Deformable & Soft Displays,4,2013,chi,Morphees,10.1145/2470654.2470738,77,0.199,2437.2,226,-0.13793103448275862,False,2014
-99,Deformable & Soft Displays,5,2009,chi,Providing dynamically changeable physical buttons on a visual display,10.1145/1518701.1518749,49,0.127,1401.9,213,-0.0472972972972973,False,2014
-100,Digital Fabrication,1,2010,tei,Interactive fabrication,10.1145/1935701.1935716,78,0.206,760.4,216,1.0,False,2016
-100,Digital Fabrication,2,2014,uist,WirePrint,10.1145/2642918.2647359,75,0.198,2514.5,218,-0.12269938650306748,False,2016
-100,Digital Fabrication,3,2013,chi,FreeD,10.1145/2470654.2481361,63,0.167,1608.4,202,0.014925373134328358,False,2016
-100,Digital Fabrication,4,2012,uist,Interactive construction,10.1145/2380116.2380191,55,0.146,1716.6,166,-0.14545454545454545,False,2016
-100,Digital Fabrication,5,2014,chi,MixFab,10.1145/2556288.2557090,51,0.135,1661.2,170,-0.08333333333333333,False,2016
-101,E-textiles & Weaving,1,2016,chi,Project Jacquard,10.1145/2858036.2858176,86,0.242,2824.0,324,-0.02506265664160401,False,2018
-101,E-textiles & Weaving,2,2016,chi,"""I don't Want to Wear a Screen""",10.1145/2858036.2858192,74,0.208,2086.5,230,-0.0472972972972973,False,2018
-101,E-textiles & Weaving,3,2008,chi,The LilyPad Arduino,10.1145/1357054.1357123,73,0.206,1581.1,598,0.2564102564102564,False,2018
-101,E-textiles & Weaving,4,2018,chi,Sketch&amp;Stitch,10.1145/3173574.3173656,53,0.149,1714.7,111,-0.09554140127388536,False,2018
-101,E-textiles & Weaving,5,2010,tei,Handcrafting textile interfaces from a kit-of-no-parts,10.1145/1935701.1935715,52,0.146,1153.5,197,0.09803921568627451,False,2018
-102,Printed Electronics,1,2013,ubicomp,Instant inkjet circuits,10.1145/2493432.2493486,78,0.245,2556.4,333,-0.0273972602739726,False,2015
-102,Printed Electronics,2,2001,uist,Phidgets,10.1145/502348.502388,58,0.182,1250.7,649,0.11428571428571428,False,2015
-102,Printed Electronics,3,2012,uist,Midas,10.1145/2380116.2380189,51,0.16,1667.7,176,-0.017985611510791366,False,2015
-102,Printed Electronics,4,2014,uist,PrintScreen,10.1145/2642918.2647413,47,0.148,1519.1,154,-0.09302325581395349,False,2015
-102,Printed Electronics,5,2015,uist,Foldio,10.1145/2807442.2807494,47,0.148,1603.0,139,-0.11275964391691394,False,2015
-103,Data Physicalization,1,2015,chi,Opportunities and Challenges for Data Physicalization,10.1145/2702123.2702180,69,0.561,2044.2,558,-0.0034782608695652175,False,2017
-103,Data Physicalization,2,2013,chi,Evaluating the efficiency of physical visualizations,10.1145/2470654.2481359,33,0.268,860.3,225,0.026881720430107527,False,2017
-103,Data Physicalization,3,2015,chi,Exploring Interactions with Physically Dynamic Bar Charts,10.1145/2702123.2702604,23,0.187,713.9,148,-0.07563025210084033,False,2017
-103,Data Physicalization,4,2016,chi,Physikit,10.1145/2858036.2858059,19,0.154,578.0,146,0.005405405405405406,False,2017
-103,Data Physicalization,5,2014,dis,Constructive visualization,10.1145/2598510.2598566,17,0.138,290.1,179,0.1568627450980392,False,2017
-104,Electrical Muscle Stimulation,1,2011,chi,PossessedHand,10.1145/1978942.1979018,39,0.151,833.4,227,0.9,False,2016
-104,Electrical Muscle Stimulation,2,2015,chi,Cruise Control for Pedestrians,10.1145/2702123.2702190,35,0.136,1005.2,160,0.2857142857142857,False,2016
-104,Electrical Muscle Stimulation,3,2015,chi,Affordance++,10.1145/2702123.2702128,29,0.112,924.1,135,-0.044444444444444446,False,2016
-104,Electrical Muscle Stimulation,4,2015,chi,Proprioceptive Interaction,10.1145/2702123.2702461,25,0.097,782.8,131,-0.03225806451612903,False,2016
-104,Electrical Muscle Stimulation,5,2016,uist,Muscle-plotter,10.1145/2984511.2984530,25,0.097,782.9,98,-0.14814814814814814,False,2016
-105,Hand Input & Gesture Sensing,1,2010,chi,Skinput,10.1145/1753326.1753394,148,0.168,4010.3,686,0.24161073825503357,False,2016
-105,Hand Input & Gesture Sensing,2,2012,uist,Digits,10.1145/2380116.2380139,107,0.122,3456.1,426,-0.13157894736842105,False,2016
-105,Hand Input & Gesture Sensing,3,2011,uist,OmniTouch,10.1145/2047196.2047255,98,0.111,3061.5,556,-0.128,False,2016
-105,Hand Input & Gesture Sensing,4,2016,uist,ViBand,10.1145/2984511.2984582,98,0.111,3080.2,263,-0.16733067729083664,False,2016
-105,Hand Input & Gesture Sensing,5,2009,uist,Enabling always-available input with muscle-computer interfaces,10.1145/1622176.1622208,91,0.103,2436.9,323,0.18627450980392157,False,2016
-106,Touch & Multi-touch Input,1,2004,chi,Pressure widgets,10.1145/985692.985754,57,0.106,1668.4,312,0.07042253521126761,False,2009
-106,Touch & Multi-touch Input,2,2002,chi,SmartSkin,10.1145/503376.503397,55,0.103,1669.3,633,-0.06976744186046512,False,2009
-106,Touch & Multi-touch Input,3,2005,uist,Low-cost multi-touch sensing through frustrated total internal reflection,10.1145/1095034.1095054,53,0.099,1629.9,1046,-0.10465116279069768,False,2009
-106,Touch & Multi-touch Input,4,1998,chi,"Squeeze me, hold me, tilt me! An exploration of manipulative user interfaces",10.1145/274644.274647,44,0.082,1279.4,319,-0.07476635514018691,False,2009
-106,Touch & Multi-touch Input,5,2000,uist,Sensing techniques for mobile interaction,10.1145/354401.354417,37,0.069,1106.4,531,-0.05042016806722689,False,2009
-107,Pointing & Target Selection,1,2005,chi,The bubble cursor,10.1145/1054972.1055012,62,0.147,1592.4,591,-0.3125,False,2009
-107,Pointing & Target Selection,2,2007,chi,Shift,10.1145/1240624.1240727,52,0.124,1468.4,471,-0.14093959731543623,True,2009
-107,Pointing & Target Selection,3,2002,chi,More than dotting the i's --- foundations for crossing-based interfaces,10.1145/503376.503390,51,0.121,1020.9,369,0.2962962962962963,False,2009
-107,Pointing & Target Selection,4,2004,chi,Semantic pointing,10.1145/985692.985758,47,0.112,1268.1,294,-0.10638297872340426,False,2009
-107,Pointing & Target Selection,5,1992,chi,Extending Fitts' law to two-dimensional tasks,10.1145/142750.142794,40,0.095,635.9,612,0.18181818181818182,False,2009
-108,Gaze & Eye Tracking,1,1990,chi,What you look at is what you get: eye movement-based interaction techniques,10.1145/97243.97246,72,0.173,789.0,702,0.0,False,2012
-108,Gaze & Eye Tracking,2,1999,chi,Manual and gaze input cascaded (MAGIC) pointing,10.1145/302979.303053,66,0.159,965.6,672,0.16666666666666666,False,2012
-108,Gaze & Eye Tracking,3,2000,chi,Evaluation of eye gaze interaction,10.1145/332040.332445,37,0.089,590.8,538,-0.07692307692307693,False,2012
-108,Gaze & Eye Tracking,4,2011,chi,The aligned rank transform for nonparametric factorial analyses using only anova procedure,10.1145/1978942.1978963,35,0.084,663.7,2777,0.234375,False,2012
-108,Gaze & Eye Tracking,5,2012,chi,Look &amp; touch,10.1145/2207676.2208709,35,0.084,839.6,193,-0.16417910447761194,False,2012
-109,Text Entry,1,2004,uist,SHARK <sup>2</sup>,10.1145/1029632.1029640,87,0.222,1723.9,414,-0.10526315789473684,False,2009
-109,Text Entry,2,2003,chi,Metrics for text entry research,10.1145/642611.642632,77,0.196,1077.0,396,0.125,False,2009
-109,Text Entry,3,2002,iui,Language modeling for soft keyboards,10.1145/502716.502753,65,0.166,912.2,162,-0.05,False,2009
-109,Text Entry,4,1999,chi,The design and evaluation of a high-performance soft keyboard,10.1145/302979.302983,62,0.158,1086.4,416,0.20833333333333334,False,2009
-109,Text Entry,5,2003,chi,Shorthand writing on stylus keyboard,10.1145/642611.642630,54,0.138,1087.2,363,-0.10256410256410256,False,2009
-110,Fisheye & Scrolling Techniques,1,1986,chi,Generalized fisheye views,10.1145/22627.22342,51,0.162,1261.3,887,1.0,False,1998
-110,Fisheye & Scrolling Techniques,2,1991,chi,The perspective wall,10.1145/108844.108870,44,0.14,1238.0,702,0.6206896551724138,False,1998
-110,Fisheye & Scrolling Techniques,3,1994,uist,Pad++,10.1145/192426.192435,33,0.105,892.4,637,0.4230769230769231,False,1998
-110,Fisheye & Scrolling Techniques,4,1991,chi,Cone Trees,10.1145/108844.108883,28,0.089,707.1,1160,-0.2972972972972973,False,1998
-110,Fisheye & Scrolling Techniques,5,1993,uist,The document lens,10.1145/168642.168652,28,0.089,876.6,296,0.0,False,1998
-111,Cross-device & Large Displays,1,1997,uist,Pick-and-drop,10.1145/263407.263505,61,0.218,1409.0,607,0.05263157894736842,False,2008
-111,Cross-device & Large Displays,2,2001,chi,Partitioning digital worlds,10.1145/365024.365312,35,0.125,928.1,358,0.0136986301369863,True,2008
-111,Cross-device & Large Displays,3,1999,chi,i-LAND,10.1145/302979.303010,34,0.121,989.9,572,-0.01834862385321101,False,2008
-111,Cross-device & Large Displays,4,2005,uist,"Distant freehand pointing and clicking on very large, high resolution displays",10.1145/1095034.1095041,33,0.118,785.1,426,0.018518518518518517,False,2008
-111,Cross-device & Large Displays,5,2003,uist,Synchronous gestures for multiple persons and computers,10.1145/964696.964713,31,0.111,875.7,261,-0.010309278350515464,False,2008
-112,Gesture Elicitation & Recognition,1,2009,chi,User-defined gestures for surface computing,10.1145/1518701.1518866,111,0.446,2820.0,1293,0.1,False,2012
-112,Gesture Elicitation & Recognition,2,2007,uist,"Gestures without libraries, toolkits or training: a $1 recognizer for user interface proto",10.1145/1294211.1294238,74,0.297,1875.8,815,0.08,False,2012
-112,Gesture Elicitation & Recognition,3,2011,chi,User-defined motion gestures for mobile interaction,10.1145/1978942.1978971,55,0.221,1491.0,423,-0.11594202898550725,False,2012
-112,Gesture Elicitation & Recognition,4,2010,chi,Protractor,10.1145/1753326.1753654,39,0.157,934.1,172,-0.208955223880597,False,2012
-112,Gesture Elicitation & Recognition,5,2012,chi,Gesture coder,10.1145/2207676.2208693,18,0.072,566.7,101,-0.08771929824561403,False,2012
-113,Mixed Reality Systems,1,2017,chi,Experimental Evaluation of Sketching on Surfaces in VR,10.1145/3025453.3025474,26,0.114,749.9,197,0.15384615384615385,False,2017
-113,Mixed Reality Systems,2,2001,uist,View management for virtual and augmented reality,10.1145/502348.502363,23,0.1,335.1,326,0.125,False,2017
-113,Mixed Reality Systems,3,2016,chi,SnapToReality,10.1145/2858036.2858250,22,0.096,487.9,126,0.35714285714285715,False,2017
-113,Mixed Reality Systems,4,2017,uist,ImAxes,10.1145/3126594.3126613,20,0.087,503.0,217,0.12,False,2017
-113,Mixed Reality Systems,5,1993,uist,Windows on the world,10.1145/168642.168657,17,0.074,206.8,287,-0.14285714285714285,False,2017
-114,Menus & Command Selection,1,1994,chi,User learning and performance with marking menus,10.1145/191666.191759,33,0.176,577.2,335,0.08333333333333333,False,2005
-114,Menus & Command Selection,2,1994,tochi,Split menus,10.1145/174630.174632,32,0.17,588.0,296,0.14285714285714285,False,2005
-114,Menus & Command Selection,3,1988,chi,An empirical comparison of pie vs. linear menus,10.1145/57167.57182,26,0.138,489.0,461,0.75,False,2005
-114,Menus & Command Selection,4,2004,uist,Simple vs. compound mark hierarchical marking menus,10.1145/1029632.1029639,25,0.133,504.5,177,-0.075,False,2005
-114,Menus & Command Selection,5,2004,chi,"A comparison of static, adaptive, and adaptable menus",10.1145/985692.985704,24,0.128,454.9,287,-0.24444444444444444,False,2005
-115,Multimodal Speech Input,1,1999,chi,Mutual disambiguation of recognition errors in a multimodel architecture,10.1145/302979.303163,14,0.212,258.7,315,0.0,False,2002
-115,Multimodal Speech Input,2,2001,uist,Voice as sound,10.1145/502348.502372,13,0.197,328.2,154,0.3,False,2002
-115,Multimodal Speech Input,3,1997,chi,Integration and synchronization of input modes during multimodal human-computer interactio,10.1145/258549.258821,12,0.182,224.6,365,0.0,False,2002
-115,Multimodal Speech Input,4,2002,assets,Speech-based cursor control,10.1145/638249.638282,7,0.106,200.2,36,0.08333333333333333,False,2002
-115,Multimodal Speech Input,5,2000,assets,A comparison of voice controlled and mouse controlled web browsing,10.1145/354324.354345,6,0.091,113.3,83,0.2857142857142857,False,2002
+0,3D Pointing & VR Interaction,1,1996,uist,The go-go interaction technique,10.1145/237091.237102,63,0.093,812.0,838,-0.058823529411764705,False,2009
+0,3D Pointing & VR Interaction,2,2005,uist,"Distant freehand pointing and clicking on very large, high resolution displays",10.1145/1095034.1095041,42,0.062,1023.4,426,0.0,False,2009
+0,3D Pointing & VR Interaction,3,1994,uist,A survey of design issues in spatial input,10.1145/192426.192501,32,0.047,685.9,356,-0.045454545454545456,False,2009
+0,3D Pointing & VR Interaction,4,1994,tochi,Integrality and separability of input devices,10.1145/174630.174631,31,0.046,673.1,367,0.6666666666666666,False,2009
+0,3D Pointing & VR Interaction,5,2007,chi,Shallow-depth 3d interaction,10.1145/1240624.1240798,30,0.044,975.5,173,-0.04807692307692308,False,2009
+1,RF & Radar Sensing,1,2016,ubicomp,Gait recognition using wifi signals,10.1145/2971648.2971670,55,0.084,270.0,561,1.0,False,2019
+1,RF & Radar Sensing,2,2016,ubicomp,Human respiration detection with commodity wifi devices,10.1145/2971648.2971744,54,0.082,1430.1,481,-0.03571428571428571,False,2019
+1,RF & Radar Sensing,3,2016,chi,FingerIO,10.1145/2858036.2858580,53,0.081,1640.4,401,-0.05371900826446281,False,2019
+1,RF & Radar Sensing,4,2015,chi,Smart Homes that Monitor Breathing and Heart Rate,10.1145/2702123.2702200,51,0.078,1417.5,895,0.32142857142857145,False,2019
+1,RF & Radar Sensing,5,2019,imwut,FarSense,10.1145/3351279,50,0.076,1576.2,424,-0.248,False,2019
+2,Wearable Activity Recognition,1,2012,iswc,Introducing a New Benchmarked Dataset for Activity Monitoring,10.1109/iswc.2012.13,50,0.093,238.0,1401,1.0,False,2013
+2,Wearable Activity Recognition,2,2010,ubicomp,ElectriSense,10.1145/1864349.1864375,24,0.045,655.4,417,-0.15625,False,2013
+2,Wearable Activity Recognition,3,2008,ubicomp,Discovery of activity patterns using topic models,10.1145/1409635.1409638,21,0.039,395.3,444,0.21621621621621623,False,2013
+2,Wearable Activity Recognition,4,2012,ubicomp,USC-HAD,10.1145/2370216.2370438,18,0.034,72.5,537,1.0,False,2013
+2,Wearable Activity Recognition,5,2013,iswc,On preserving statistical characteristics of accelerometry data using their empirical cumu,10.1145/2493988.2494353,18,0.034,132.4,144,-0.08333333333333333,False,2013
+3,Pointing & Target Selection,1,2005,chi,The bubble cursor,10.1145/1054972.1055012,63,0.12,1615.3,591,-0.2916666666666667,False,2009
+3,Pointing & Target Selection,2,1992,chi,Extending Fitts' law to two-dimensional tasks,10.1145/142750.142794,51,0.098,892.2,612,0.2,False,2009
+3,Pointing & Target Selection,3,2004,chi,Semantic pointing,10.1145/985692.985758,48,0.092,1340.9,294,-0.0847457627118644,False,2009
+3,Pointing & Target Selection,4,2007,chi,A predictive model of menu performance,10.1145/1240624.1240723,48,0.092,1020.3,303,-0.16129032258064516,False,2009
+3,Pointing & Target Selection,5,2002,chi,More than dotting the i's --- foundations for crossing-based interfaces,10.1145/503376.503390,44,0.084,825.1,369,0.22580645161290322,False,2009
+4,Hand Input & Gesture Sensing,1,2010,chi,Skinput,10.1145/1753326.1753394,114,0.228,3210.0,686,0.19393939393939394,False,2013
+4,Hand Input & Gesture Sensing,2,2009,uist,Enabling always-available input with muscle-computer interfaces,10.1145/1622176.1622208,87,0.174,2446.8,323,0.18032786885245902,False,2013
+4,Hand Input & Gesture Sensing,3,2012,uist,Digits,10.1145/2380116.2380139,86,0.172,2874.4,426,-0.1091703056768559,False,2013
+4,Hand Input & Gesture Sensing,4,2011,uist,OmniTouch,10.1145/2047196.2047255,81,0.162,2578.3,556,-0.13793103448275862,False,2013
+4,Hand Input & Gesture Sensing,5,2009,uist,Abracadabra,10.1145/1622176.1622199,59,0.118,1913.8,263,-0.11607142857142858,False,2013
+5,Fisheye & Scrolling Techniques,1,1986,chi,Generalized fisheye views,10.1145/22627.22342,60,0.13,1524.3,887,1.0,False,1996
+5,Fisheye & Scrolling Techniques,2,1991,chi,The perspective wall,10.1145/108844.108870,54,0.117,1498.4,702,0.6071428571428571,False,1996
+5,Fisheye & Scrolling Techniques,3,1994,uist,Pad++,10.1145/192426.192435,43,0.093,1236.6,637,0.41509433962264153,False,1996
+5,Fisheye & Scrolling Techniques,4,1993,uist,The document lens,10.1145/168642.168652,36,0.078,1116.0,296,0.0,False,1996
+5,Fisheye & Scrolling Techniques,5,1991,chi,Cone Trees,10.1145/108844.108883,32,0.069,897.1,1160,-0.2777777777777778,False,1996
+6,Gesture Elicitation & Recognition,1,2009,chi,User-defined gestures for surface computing,10.1145/1518701.1518866,141,0.318,3937.3,1293,0.07037037037037037,False,2012
+6,Gesture Elicitation & Recognition,2,2007,uist,"Gestures without libraries, toolkits or training: a $1 recognizer for user interface proto",10.1145/1294211.1294238,114,0.257,3116.9,815,0.11267605633802817,False,2012
+6,Gesture Elicitation & Recognition,3,2008,uist,OctoPocus,10.1145/1449715.1449724,65,0.146,1832.8,262,-0.05660377358490566,False,2012
+6,Gesture Elicitation & Recognition,4,2009,chi,Using strokes as command shortcuts,10.1145/1518701.1519052,59,0.133,1680.3,153,-0.14285714285714285,False,2012
+6,Gesture Elicitation & Recognition,5,2011,chi,User-defined motion gestures for mobile interaction,10.1145/1978942.1978971,53,0.119,1515.7,423,-0.11191335740072202,False,2012
+7,Pen & Sketch Input,1,1998,chi,Beyond paper,10.1145/274644.274680,47,0.114,1166.3,322,0.0,False,2005
+7,Pen & Sketch Input,2,1997,chi,A comparison of reading paper and on-line documents,10.1145/258549.258787,39,0.094,726.1,576,0.3125,False,2005
+7,Pen & Sketch Input,3,2005,chi,Experimental analysis of mode switching techniques in pen-based user interfaces,10.1145/1054972.1055036,39,0.094,1204.6,175,-0.11458333333333333,False,2005
+7,Pen & Sketch Input,4,2005,chi,Design and analysis of delimiters for selection-action pen gesture phrases in scriboli,10.1145/1054972.1055035,30,0.072,931.3,170,-0.06382978723404255,False,2005
+7,Pen & Sketch Input,5,2003,uist,Multi-finger and whole hand gestural interaction techniques for multi-user tabletop displa,10.1145/964696.964718,29,0.07,977.6,422,-0.15,False,2005
+8,Text Entry,1,2004,uist,SHARK <sup>2</sup>,10.1145/1029632.1029640,83,0.208,1668.8,414,-0.11475409836065574,False,2011
+8,Text Entry,2,2003,chi,Metrics for text entry research,10.1145/642611.642632,75,0.188,1072.5,396,0.16,False,2011
+8,Text Entry,3,2002,iui,Language modeling for soft keyboards,10.1145/502716.502753,68,0.17,996.4,162,-0.037037037037037035,False,2011
+8,Text Entry,4,1999,chi,The design and evaluation of a high-performance soft keyboard,10.1145/302979.302983,64,0.16,1169.6,416,0.20833333333333334,False,2011
+8,Text Entry,5,2003,chi,Shorthand writing on stylus keyboard,10.1145/642611.642630,54,0.135,1146.0,363,-0.13636363636363635,False,2011
+9,Touch & Multi-touch Input,1,2010,chi,The generalized perceived input point model and how to double touch accuracy by extracting,10.1145/1753326.1753413,48,0.156,1593.4,256,-0.14666666666666667,False,2011
+9,Touch & Multi-touch Input,2,2011,uist,TapSense,10.1145/2047196.2047279,41,0.133,1249.7,210,-0.03058103975535168,False,2011
+9,Touch & Multi-touch Input,3,2009,chi,Back-of-device interaction allows creating very small touch devices,10.1145/1518701.1518995,38,0.123,1204.6,303,-0.0749063670411985,True,2011
+9,Touch & Multi-touch Input,4,2007,uist,Lucid touch,10.1145/1294211.1294259,36,0.117,1134.2,280,-0.05333333333333334,True,2011
+9,Touch & Multi-touch Input,5,2005,uist,Low-cost multi-touch sensing through frustrated total internal reflection,10.1145/1095034.1095054,35,0.114,1067.3,1046,-0.05384615384615385,False,2011
+11,VR Haptics,1,2016,chi,Haptic Retargeting,10.1145/2858036.2858226,102,0.149,2930.7,478,0.16447368421052633,False,2018
+11,VR Haptics,2,2015,uist,Impacto,10.1145/2807442.2807443,83,0.121,2461.3,237,0.21176470588235294,False,2018
+11,VR Haptics,3,2017,chi,Providing Haptics to Walls &amp; Heavy Objects in Virtual Reality by Means of Electrical M,10.1145/3025453.3025600,82,0.12,2462.5,294,-0.1623931623931624,False,2018
+11,VR Haptics,4,2016,uist,NormalTouch and TextureTouch,10.1145/2984511.2984526,79,0.115,2508.5,286,-0.06756756756756757,False,2018
+11,VR Haptics,5,2017,uist,Grabity,10.1145/3126594.3126599,76,0.111,2310.7,258,-0.21518987341772153,False,2018
+12,Deformable & Soft Displays,1,2013,uist,inFORM,10.1145/2501988.2502032,143,0.211,4307.8,625,-0.11059907834101383,False,2014
+12,Deformable & Soft Displays,2,2012,chi,Shape-changing interfaces,10.1145/2207676.2207781,135,0.199,3710.2,435,-0.04460093896713615,False,2014
+12,Deformable & Soft Displays,3,2013,uist,PneUI,10.1145/2501988.2502037,124,0.183,3765.1,337,-0.1504424778761062,False,2014
+12,Deformable & Soft Displays,4,2013,chi,Morphees,10.1145/2470654.2470738,92,0.135,2977.9,226,-0.12534059945504086,False,2014
+12,Deformable & Soft Displays,5,2007,tei,Actuation and tangible user interfaces,10.1145/1226969.1227012,65,0.096,1643.0,179,-0.007662835249042145,False,2014
+13,Tangible Interaction,1,1997,chi,Tangible bits,10.1145/258549.258715,199,0.295,4461.4,3809,0.2111111111111111,False,2009
+13,Tangible Interaction,2,1995,chi,Bricks,10.1145/223904.223964,88,0.131,2299.6,972,0.12244897959183673,False,2009
+13,Tangible Interaction,3,2007,tei,The reacTable,10.1145/1226969.1226998,62,0.092,1623.3,606,-0.01937984496124031,False,2009
+13,Tangible Interaction,4,1997,uist,The metaDESK,10.1145/263407.263551,51,0.076,1271.2,535,-0.03636363636363636,False,2009
+13,Tangible Interaction,5,2007,tei,reacTIVision,10.1145/1226969.1226983,51,0.076,1310.9,430,0.14935064935064934,False,2009
+14,Printed Electronics,1,2013,ubicomp,Instant inkjet circuits,10.1145/2493432.2493486,83,0.16,2887.7,333,-0.03067484662576687,False,2015
+14,Printed Electronics,2,2012,uist,Midas,10.1145/2380116.2380189,69,0.133,2315.6,176,-0.012048192771084338,False,2015
+14,Printed Electronics,3,2014,uist,PrintScreen,10.1145/2642918.2647413,68,0.131,2263.8,154,-0.09059233449477352,False,2015
+14,Printed Electronics,4,2015,uist,Capricate,10.1145/2807442.2807503,57,0.11,1931.6,165,-0.12173913043478261,False,2015
+14,Printed Electronics,5,2015,chi,iSkin,10.1145/2702123.2702391,55,0.106,1946.0,363,-0.12852664576802508,False,2015
+15,Digital Fabrication,1,2010,tei,Interactive fabrication,10.1145/1935701.1935716,95,0.185,917.4,216,1.0,False,2017
+15,Digital Fabrication,2,2014,uist,WirePrint,10.1145/2642918.2647359,80,0.156,2733.5,218,-0.10919540229885058,False,2017
+15,Digital Fabrication,3,2013,chi,FreeD,10.1145/2470654.2481361,77,0.15,1959.7,202,0.0,False,2017
+15,Digital Fabrication,4,2012,uist,Interactive construction,10.1145/2380116.2380191,67,0.131,2141.6,166,-0.11961722488038277,False,2017
+15,Digital Fabrication,5,2014,chi,MixFab,10.1145/2556288.2557090,61,0.119,2025.0,170,-0.0764525993883792,False,2017
+16,E-textiles & Weaving,1,2008,chi,The LilyPad Arduino,10.1145/1357054.1357123,95,0.199,2197.6,598,0.3287671232876712,False,2015
+16,E-textiles & Weaving,2,2010,tei,Handcrafting textile interfaces from a kit-of-no-parts,10.1145/1935701.1935715,60,0.126,1398.6,197,0.08,False,2015
+16,E-textiles & Weaving,3,2010,dis,LilyPad in the wild,10.1145/1858171.1858206,45,0.094,1093.5,270,0.07236842105263158,False,2015
+16,E-textiles & Weaving,4,2011,chi,Pinstripe,10.1145/1978942.1979137,41,0.086,982.2,139,0.2857142857142857,False,2015
+16,E-textiles & Weaving,5,2007,chi,Computational composites,10.1145/1240624.1240706,35,0.073,374.7,267,1.0,False,2015
+17,Tactile & Thermal Feedback,1,2011,chi,Some like it hot,10.1145/1978942.1979316,36,0.105,330.3,138,1.0,False,2012
+17,Tactile & Thermal Feedback,2,2010,uist,TeslaTouch,10.1145/1866029.1866074,35,0.102,955.5,643,-0.022222222222222223,False,2012
+17,Tactile & Thermal Feedback,3,2010,chi,BuzzWear,10.1145/1753326.1753392,30,0.087,783.8,138,0.07692307692307693,False,2012
+17,Tactile & Thermal Feedback,4,2008,chi,Investigating the effectiveness of tactile feedback for mobile touchscreens,10.1145/1357054.1357300,26,0.076,711.7,432,0.060240963855421686,False,2012
+17,Tactile & Thermal Feedback,5,2002,dis,ComTouch,10.1145/778712.778755,22,0.064,537.4,274,-0.018867924528301886,False,2012
+18,VR Locomotion & Presence,1,2016,chiplay,Point &amp; Teleport Locomotion Technique for Virtual Reality,10.1145/2967934.2968105,53,0.185,240.5,448,0.4883720930232558,False,2016
+18,VR Locomotion & Presence,2,1995,tochi,Taking steps,10.1145/210079.210084,50,0.175,412.1,708,1.0,False,2016
+18,VR Locomotion & Presence,3,2016,chi,VR-STEP,10.1145/2858036.2858084,24,0.084,692.0,141,-0.012345679012345678,False,2016
+18,VR Locomotion & Presence,4,1997,uist,The omni-directional treadmill,10.1145/263407.263550,22,0.077,261.0,369,1.0,False,2016
+18,VR Locomotion & Presence,5,2009,tochi,The benefits of using a walking interface to navigate virtual environments,10.1145/1502800.1502805,16,0.056,243.5,319,0.16666666666666666,False,2016
+19,Physical Prototyping Toolkits,1,2001,uist,Phidgets,10.1145/502348.502388,67,0.338,1559.1,649,0.10309278350515463,False,2009
+19,Physical Prototyping Toolkits,2,2006,uist,"Reflective physical prototyping through integrated design, test, and analysis",10.1145/1166253.1166300,45,0.227,1248.2,301,-0.125,False,2009
+19,Physical Prototyping Toolkits,3,2009,tei,Electronics as material,10.1145/1517664.1517743,35,0.177,344.1,236,1.0,False,2009
+19,Physical Prototyping Toolkits,4,2004,dis,The calder toolkit,10.1145/1013115.1013139,26,0.131,743.9,101,-0.08235294117647059,False,2009
+19,Physical Prototyping Toolkits,5,2009,tei,Fritzing,10.1145/1517664.1517735,26,0.131,572.5,116,0.05555555555555555,False,2009
+20,Making & Makerspaces,1,2013,chi,Democratizing technology,10.1145/2470654.2481360,55,0.362,1675.9,400,-0.07017543859649122,False,2014
+20,Making & Makerspaces,2,2014,chi,Emerging sites of HCI innovation,10.1145/2556288.2557132,40,0.263,1323.1,286,-0.05309734513274336,False,2014
+20,Making & Makerspaces,3,2009,chi,Learning from IKEA hacking,10.1145/1518701.1518768,23,0.151,727.1,118,0.11702127659574468,False,2014
+20,Making & Makerspaces,4,2014,chi,"""now that's definitely a proper hack""",10.1145/2556288.2557221,21,0.138,636.8,62,-0.02,False,2014
+20,Making & Makerspaces,5,2009,chi,Learning how,10.1145/1518701.1518908,16,0.105,193.0,121,1.0,False,2014
+21,Data Physicalization & Bio-materials,1,2015,chi,Opportunities and Challenges for Data Physicalization,10.1145/2702123.2702180,71,0.222,2115.9,558,0.0,False,2017
+21,Data Physicalization & Bio-materials,2,2015,chi,bioLogic,10.1145/2702123.2702611,32,0.1,1013.3,251,-0.03553299492385787,False,2017
+21,Data Physicalization & Bio-materials,3,2013,chi,Evaluating the efficiency of physical visualizations,10.1145/2470654.2481359,29,0.091,773.2,225,0.01951219512195122,False,2017
+21,Data Physicalization & Bio-materials,4,2014,dis,Constructive visualization,10.1145/2598510.2598566,25,0.078,480.8,179,0.1,False,2017
+21,Data Physicalization & Bio-materials,5,2017,chi,Essence,10.1145/3025453.3026004,23,0.072,659.3,150,0.041666666666666664,False,2017
+22,Gaze-based Interaction,1,1990,chi,What you look at is what you get: eye movement-based interaction techniques,10.1145/97243.97246,94,0.268,901.7,702,0.0,False,2012
+22,Gaze-based Interaction,2,1999,chi,Manual and gaze input cascaded (MAGIC) pointing,10.1145/302979.303053,94,0.268,1309.9,672,0.15384615384615385,False,2012
+22,Gaze-based Interaction,3,2000,chi,Evaluation of eye gaze interaction,10.1145/332040.332445,51,0.145,790.6,538,-0.02702702702702703,False,2012
+22,Gaze-based Interaction,4,2007,chi,EyePoint,10.1145/1240624.1240692,48,0.137,1155.3,217,-0.14285714285714285,False,2012
+22,Gaze-based Interaction,5,2009,chi,Fast gaze typing with an adjustable dwell time,10.1145/1518701.1518758,48,0.137,985.3,256,-0.029411764705882353,False,2012
+23,Eye Tracker Quality & Gaze Estimation,1,2012,etra,Robust real-time pupil tracking in highly off-axis images,10.1145/2168556.2168585,23,0.088,385.6,272,0.5384615384615384,False,2012
+23,Eye Tracker Quality & Gaze Estimation,2,2006,etra,openEyes,10.1145/1117309.1117350,16,0.062,258.4,218,-0.11764705882352941,False,2012
+23,Eye Tracker Quality & Gaze Estimation,3,2010,etra,Homography normalization for robust gaze estimation in uncalibrated setups,10.1145/1743666.1743670,15,0.058,166.2,78,-0.08333333333333333,False,2012
+23,Eye Tracker Quality & Gaze Estimation,4,2004,etra,Building a lightweight eyetracking headgear,10.1145/968363.968386,14,0.054,153.3,140,0.6666666666666666,False,2012
+23,Eye Tracker Quality & Gaze Estimation,5,2012,etra,Eye tracker data quality,10.1145/2168556.2168563,14,0.054,81.1,360,0.17857142857142858,False,2012
+24,Scanpaths & Visual Search,1,2006,etra,eyePatterns,10.1145/1117309.1117360,20,0.078,408.5,119,-0.125,False,2012
+24,Scanpaths & Visual Search,2,2010,etra,"A vector-based, multidimensional scanpath similarity measure",10.1145/1743666.1743718,19,0.075,294.0,172,-0.058823529411764705,False,2012
+24,Scanpaths & Visual Search,3,2002,etra,Visual attention to repeated internet images,10.1145/507072.507081,16,0.063,197.7,124,1.0,False,2012
+24,Scanpaths & Visual Search,4,2010,etra,Visual scanpath representation,10.1145/1743666.1743717,16,0.063,255.5,83,0.0,False,2012
+24,Scanpaths & Visual Search,5,2006,etra,An eye-tracking methodology for characterizing program comprehension processes,10.1145/1117309.1117356,13,0.051,29.4,198,1.0,False,2012
+25,Pupillometry & Cognitive Load,1,2008,chi,Feasibility and pragmatics of classifying working memory load with an electroencephalograp,10.1145/1357054.1357187,19,0.078,491.1,191,-0.13333333333333333,False,2014
+25,Pupillometry & Cognitive Load,2,2009,chi,Brain measurement for usability testing and adaptive interfaces,10.1145/1518701.1519035,19,0.078,549.0,105,-0.05,False,2014
+25,Pupillometry & Cognitive Load,3,2013,chi,Using fNIRS brain sensing to evaluate information visualization interfaces,10.1145/2470654.2470723,19,0.078,548.9,112,-0.1,False,2014
+25,Pupillometry & Cognitive Load,4,2009,uist,Using fNIRS brain sensing in realistic HCI settings,10.1145/1622176.1622207,18,0.073,504.2,114,-0.3333333333333333,False,2014
+25,Pupillometry & Cognitive Load,5,2014,chi,Dynamic difficulty using brain metrics of workload,10.1145/2556288.2557230,18,0.073,498.4,141,0.0,False,2014
+26,Gaze in Conversation & Groups,1,2005,icmi,A probabilistic inference of multiparty-conversation structure based on Markov-switching m,10.1145/1088463.1088497,13,0.06,189.0,103,0.14285714285714285,False,2012
+26,Gaze in Conversation & Groups,2,2012,icmi,"Linking speaking and looking behavior patterns with group composition, perception, and per",10.1145/2388676.2388772,12,0.055,199.9,47,-0.13043478260869565,False,2012
+26,Gaze in Conversation & Groups,3,2001,chi,Eye gaze patterns in conversations,10.1145/365024.365119,11,0.05,202.3,411,0.08108108108108109,False,2012
+26,Gaze in Conversation & Groups,4,2007,icmi,Automatic inference of cross-modal nonverbal interactions in multiparty conversations,10.1145/1322192.1322237,9,0.041,106.3,79,0.0,False,2012
+26,Gaze in Conversation & Groups,5,2006,icmi,Prototyping novel collaborative multimodal systems,10.1145/1180995.1181039,8,0.037,139.1,23,0.0,False,2012
+27,Authentication & Passwords,1,2012,chi,Touch me once and i know it's you!,10.1145/2207676.2208544,28,0.14,677.0,489,0.2894736842105263,False,2014
+27,Authentication & Passwords,2,2013,mobilehci,Patterns in the wild,10.1145/2493190.2493231,24,0.12,614.1,142,0.07272727272727272,False,2014
+27,Authentication & Passwords,3,2012,chi,Increasing the security of gaze-based cued-recall graphical passwords using saliency masks,10.1145/2207676.2208712,18,0.09,189.3,106,-0.13953488372093023,False,2014
+27,Authentication & Passwords,4,2013,chi,Back-of-device authentication on smartphones,10.1145/2470654.2481330,17,0.085,484.4,128,-0.13592233009708737,False,2014
+27,Authentication & Passwords,5,2014,chi,"Now you see me, now you don't",10.1145/2556288.2557097,17,0.085,512.8,117,-0.17391304347826086,False,2014
+28,Affect Recognition,1,2015,icmi,Video and Image based Emotion Recognition Challenges in the Wild,10.1145/2818346.2829994,27,0.15,252.1,313,-0.20833333333333334,False,2015
+28,Affect Recognition,2,2014,icmi,Emotion Recognition In The Wild Challenge 2014,10.1145/2663204.2666275,24,0.133,222.2,220,-0.3333333333333333,False,2015
+28,Affect Recognition,3,2013,icmi,Combining modality specific deep neural networks for emotion recognition in video,10.1145/2522848.2531745,23,0.128,207.9,386,1.0,False,2015
+28,Affect Recognition,4,2013,icmi,Emotion recognition in the wild challenge 2013,10.1145/2522848.2531739,22,0.122,189.3,181,0.7777777777777778,False,2015
+28,Affect Recognition,5,2014,icmi,Combining Multiple Kernel Methods on Riemannian Manifold for Emotion Recognition in the Wi,10.1145/2663204.2666274,21,0.117,203.8,204,-0.39285714285714285,False,2015
+29,Multimodal Sentiment & Speaking,1,2013,ubicomp,MACH,10.1145/2493432.2493502,37,0.227,217.1,289,1.0,False,2015
+29,Multimodal Sentiment & Speaking,2,2015,iui,Rhema,10.1145/2678025.2701386,30,0.184,732.7,113,-0.16326530612244897,False,2015
+29,Multimodal Sentiment & Speaking,3,2015,chi,Augmenting Social Interactions,10.1145/2702123.2702314,25,0.153,677.2,99,0.024793388429752067,False,2015
+29,Multimodal Sentiment & Speaking,4,2015,icmi,"Presentation Trainer, your Public Speaking Multimodal Coach",10.1145/2818346.2830603,22,0.135,565.6,92,-0.12280701754385964,False,2015
+29,Multimodal Sentiment & Speaking,5,2011,icmi,"Please, tell me about yourself",10.1145/2070481.2070528,17,0.104,108.3,97,-0.1,False,2015
+30,Fixation & Saccade Analysis,1,2000,etra,Identifying fixations and saccades in eye-tracking protocols,10.1145/355017.355028,41,0.268,88.2,2218,1.0,False,2018
+30,Fixation & Saccade Analysis,2,2014,etra,Entropy-based statistical analysis of eye movement transitions,10.1145/2578153.2578176,6,0.039,100.1,111,0.008403361344537815,False,2018
+30,Fixation & Saccade Analysis,3,2008,etra,The incomplete fixation measure,10.1145/1344471.1344500,5,0.033,18.4,97,-0.038461538461538464,False,2018
+30,Fixation & Saccade Analysis,4,2010,etra,Qualitative and quantitative scoring and evaluation of the eye movement classification alg,10.1145/1743666.1743682,5,0.033,77.6,60,0.015151515151515152,False,2018
+30,Fixation & Saccade Analysis,5,2018,etra,Cross-subject workload classification using pupil-related measures,10.1145/3204493.3204531,5,0.033,120.0,55,0.20833333333333334,False,2018
+31,Gaze Calibration & Datasets,1,2009,chi,Motion-pointing,10.1145/1518701.1518748,15,0.107,418.5,44,0.010638297872340425,False,2012
+31,Gaze Calibration & Datasets,2,2012,etra,Gaze input for mobile devices by dwell and gestures,10.1145/2168556.2168601,11,0.079,253.2,73,0.22727272727272727,False,2012
+31,Gaze Calibration & Datasets,3,2012,etra,Gaze gestures or dwell-based interaction?,10.1145/2168556.2168602,9,0.064,223.0,82,0.1,False,2012
+31,Gaze Calibration & Datasets,4,2004,etra,"A free-head, simple calibration, gaze tracking system that enables gaze-based interaction",10.1145/968363.968387,8,0.057,128.6,168,0.0,False,2012
+31,Gaze Calibration & Datasets,5,2005,uist,ViewPointer,10.1145/1095034.1095043,8,0.057,200.1,58,-0.011235955056179775,False,2012
+32,Reading & Implicit Interest,1,2012,etra,A robust realtime reading-skimming classifier,10.1145/2168556.2168575,12,0.039,55.8,77,0.6666666666666666,False,2012
+32,Reading & Implicit Interest,2,2012,chi,"User see, user point",10.1145/2207676.2208591,12,0.039,234.9,200,-0.0967741935483871,False,2012
+32,Reading & Implicit Interest,3,2008,recsys,"Personalized online document, image and video recommendation via commodity eye-tracking",10.1145/1454008.1454023,11,0.036,174.0,93,0.09090909090909091,False,2012
+32,Reading & Implicit Interest,4,2009,iui,Behavior-driven visualization recommendation,10.1145/1502650.1502695,11,0.036,252.5,228,0.02702702702702703,False,2012
+32,Reading & Implicit Interest,5,1997,tochi,Managing level of detail through peripheral degradation,10.1145/267135.267137,9,0.029,84.4,84,1.0,False,2012
+33,Remote Collaboration & Telepresence,1,2000,cscw,Coordination of communication,10.1145/358916.358947,58,0.089,982.9,339,-0.17647058823529413,False,2010
+33,Remote Collaboration & Telepresence,2,1992,chi,ClearBoard,10.1145/142750.142977,55,0.084,919.0,530,0.08333333333333333,False,2010
+33,Remote Collaboration & Telepresence,3,2003,chi,Effects of head-mounted and scene-oriented video systems on remote collaboration on physic,10.1145/642611.642701,49,0.075,882.9,218,-0.19230769230769232,False,2010
+33,Remote Collaboration & Telepresence,4,1992,chi,Using spatial cues to improve videoconferencing,10.1145/142750.143070,37,0.057,605.5,190,1.0,False,2010
+33,Remote Collaboration & Telepresence,5,1991,chi,Disembodied Conduct,10.1145/108844.108859,35,0.054,663.0,304,1.0,False,2010
+34,CSCW Foundations,1,1992,chi,Portholes,10.1145/142750.142982,57,0.101,1462.8,908,-0.16279069767441862,False,1994
+34,CSCW Foundations,2,1992,cscw,Awareness and coordination in shared workspaces,10.1145/143457.143468,54,0.096,998.8,2508,0.13953488372093023,False,1994
+34,CSCW Foundations,3,1988,cscw,Why CSCW applications fail: problems in the design and evaluationof organizational interfa,10.1145/62266.62273,39,0.069,1001.3,968,0.7272727272727273,False,1994
+34,CSCW Foundations,4,1988,cscw,Patterns of contact and communication in scientific research collaboration,10.1145/62266.62267,32,0.057,888.5,586,0.5,False,1994
+34,CSCW Foundations,5,1988,cscw,Design of a multi-media vehicle for social browsing,10.1145/62266.62269,30,0.053,1049.0,274,0.4444444444444444,False,1994
+35,Cross-device & Large Displays,1,1997,uist,Pick-and-drop,10.1145/263407.263505,78,0.167,1918.1,607,0.05,False,2008
+35,Cross-device & Large Displays,2,1999,chi,i-LAND,10.1145/302979.303010,55,0.118,1487.8,572,-0.00819672131147541,False,2008
+35,Cross-device & Large Displays,3,1999,chi,Augmented surfaces,10.1145/302979.303113,51,0.109,1282.1,682,-0.06956521739130435,False,2008
+35,Cross-device & Large Displays,4,2003,uist,Synchronous gestures for multiple persons and computers,10.1145/964696.964713,41,0.088,1136.2,261,-0.016129032258064516,False,2008
+35,Cross-device & Large Displays,5,2001,chi,Partitioning digital worlds,10.1145/365024.365312,39,0.084,976.8,358,0.010810810810810811,True,2008
+36,UI Toolkits & Automatic Generation,1,1988,uist,Building user interfaces by direct manipulation,10.1145/62402.62428,21,0.056,873.4,172,0.7391304347826086,False,1991
+36,UI Toolkits & Automatic Generation,2,1989,uist,Creating graphical interactive application objects by demonstration,10.1145/73660.73672,21,0.056,829.8,124,-0.12903225806451613,False,1991
+36,UI Toolkits & Automatic Generation,3,1990,uist,Druid: a system for demonstrational rapid user interface development,10.1145/97924.97943,16,0.042,444.4,57,-0.08,False,1991
+36,UI Toolkits & Automatic Generation,4,1988,uist,Using active data in a UIMS,10.1145/62402.62429,15,0.04,513.8,40,0.3333333333333333,False,1991
+36,UI Toolkits & Automatic Generation,5,1988,chi,A knowledge-based user interface management system,10.1145/57167.57178,14,0.037,535.3,103,1.0,False,1991
+37,AR Authoring & Assembly,1,2013,uist,YouMove,10.1145/2501988.2502045,49,0.14,1339.8,314,0.004166666666666667,False,2017
+37,AR Authoring & Assembly,2,2014,uist,Kitty,10.1145/2642918.2647375,27,0.077,629.6,112,0.20588235294117646,False,2017
+37,AR Authoring & Assembly,3,2004,uist,DART,10.1145/1029632.1029669,25,0.072,445.0,263,0.1111111111111111,False,2017
+37,AR Authoring & Assembly,4,2012,uist,3D puppetry,10.1145/2380116.2380170,25,0.072,692.2,124,0.00625,False,2017
+37,AR Authoring & Assembly,5,2014,chi,Draco,10.1145/2556288.2556987,25,0.072,714.3,111,-0.05555555555555555,False,2017
+38,Tabletop Collaboration,1,2004,cscw,Territoriality in collaborative tabletop workspaces,10.1145/1031607.1031655,69,0.235,1930.1,616,-0.11403508771929824,False,2009
+38,Tabletop Collaboration,2,1999,chi,Single display groupware,10.1145/302979.303064,40,0.136,1234.4,486,-0.008547008547008548,False,2009
+38,Tabletop Collaboration,3,2006,chi,Collaborative coupling over tabletop displays,10.1145/1124772.1124950,36,0.122,945.9,289,-0.0963855421686747,False,2009
+38,Tabletop Collaboration,4,2009,iss,Actions speak loudly with words,10.1145/1731903.1731939,35,0.119,1141.1,130,-0.045454545454545456,False,2009
+38,Tabletop Collaboration,5,2004,cscw,Exploring the effects of group size and table size on interactions with tabletop shared-di,10.1145/1031607.1031654,31,0.105,895.2,175,-0.05517241379310345,False,2009
+39,Public & Ambient Displays,1,2008,chi,"It's Mine, Don't Touch!",10.1145/1357054.1357255,68,0.236,1850.3,455,0.05319148936170213,False,2010
+39,Public & Ambient Displays,2,2004,uist,Interactive public ambient displays,10.1145/1029632.1029656,63,0.219,1577.6,651,-0.026143790849673203,False,2010
+39,Public & Ambient Displays,3,2001,chi,The notification collage,10.1145/365024.365339,30,0.104,934.8,300,0.08490566037735849,True,2010
+39,Public & Ambient Displays,4,2010,chi,Designing urban media façades,10.1145/1753326.1753670,30,0.104,723.5,243,0.3181818181818182,False,2010
+39,Public & Ambient Displays,5,2010,chi,Worlds of information,10.1145/1753326.1753669,30,0.104,867.6,136,-0.08333333333333333,False,2010
+40,Real-time Groupware,1,1994,cscw,Real time groupware as a distributed system,10.1145/192844.193011,43,0.149,1153.6,391,0.09433962264150944,False,1996
+40,Real-time Groupware,2,1996,tochi,"Building real-time groupware with GroupKit, a groupware toolkit",10.1145/226159.226162,34,0.118,1031.6,511,-0.0963855421686747,False,1996
+40,Real-time Groupware,3,1990,cscw,Rendezvous: an architecture for synchronous multi-user applications,10.1145/99332.99364,30,0.104,888.1,194,0.40625,False,1996
+40,Real-time Groupware,4,1990,cscw,MMConf: an infrastructure for building shared multimedia applications,10.1145/99332.99365,28,0.097,918.9,247,-0.034482758620689655,False,1996
+40,Real-time Groupware,5,1996,cscw,"An integrating, transformation-oriented approach to concurrency control and undo in group ",10.1145/240080.240305,27,0.093,652.5,275,-0.06666666666666667,False,1996
+41,Social VR & Presence,1,2019,chi,Shaping Pro-Social Interaction in VR,10.1145/3290605.3300794,53,0.221,1641.0,213,0.050955414012738856,False,2019
+41,Social VR & Presence,2,2019,pacmhci,Harassment in Social Virtual Reality,10.1145/3359202,44,0.183,1417.9,211,0.07473309608540925,False,2019
+41,Social VR & Presence,3,2018,chi,Communication Behavior in Embodied Virtual Reality,10.1145/3173574.3173863,34,0.142,903.2,252,0.29069767441860467,False,2019
+41,Social VR & Presence,4,2017,vrst,The effect of avatar realism in immersive social virtual realities,10.1145/3139131.3139156,33,0.138,485.5,368,0.40540540540540543,False,2019
+41,Social VR & Presence,5,2018,vrst,A longitudinal study of small group interaction in social virtual reality,10.1145/3281505.3281527,30,0.125,655.2,158,0.0847457627118644,False,2019
+42,Mixed Reality Rooms & Video,1,2014,uist,RoomAlive,10.1145/2642918.2647383,25,0.127,806.3,305,0.02617801047120419,False,2016
+42,Mixed Reality Rooms & Video,2,2016,chi,Augmenting the Field-of-View of Head-Mounted Displays with Sparse Peripheral Displays,10.1145/2858036.2858212,15,0.076,456.2,121,0.5641025641025641,False,2016
+42,Mixed Reality Rooms & Video,3,2016,chi,SwiVRChair,10.1145/2858036.2858040,15,0.076,399.7,72,0.17307692307692307,False,2016
+42,Mixed Reality Rooms & Video,4,2016,vrst,Missing the point,10.1145/2993369.2993405,15,0.076,275.8,151,0.2857142857142857,False,2016
+42,Mixed Reality Rooms & Video,5,2016,vrst,Procedurally generated virtual reality from 3D reconstructed physical space,10.1145/2993369.2993372,10,0.051,299.4,129,0.007874015748031496,False,2016
+43,Live Streaming,1,2014,chi,Streaming on twitch,10.1145/2556288.2557048,77,0.458,2004.3,659,0.14184397163120568,False,2016
+43,Live Streaming,2,2016,chi,Meerkat and Periscope,10.1145/2858036.2858374,44,0.262,1402.9,188,-0.1686046511627907,False,2016
+43,Live Streaming,3,2011,chi,Starcraft from the stands,10.1145/1978942.1979053,21,0.125,546.6,210,0.05,False,2016
+43,Live Streaming,4,2007,chi,Watching together,10.1145/1240624.1240756,17,0.101,484.5,124,0.2,False,2016
+43,Live Streaming,5,2016,imx,Rivulet,10.1145/2932206.2932211,13,0.077,470.6,36,-0.043478260869565216,False,2016
+44,Meeting Capture & Reading,1,1994,chi,FILOCHAT,10.1145/191666.191763,25,0.158,809.0,172,-0.058823529411764705,False,1996
+44,Meeting Capture & Reading,2,1992,cscw,Ubiquitous audio,10.1145/143457.143481,14,0.089,403.1,83,0.0,False,1996
+44,Meeting Capture & Reading,3,1992,chi,Liveboard,10.1145/142750.143052,14,0.089,469.5,431,0.5,False,1996
+44,Meeting Capture & Reading,4,1991,chi,Expressive richness,10.1145/108844.108848,12,0.076,340.1,118,0.2,False,1996
+44,Meeting Capture & Reading,5,1992,chi,Working with audio,10.1145/142750.142877,12,0.076,431.2,64,0.75,False,1996
+45,Distributed Cognition & Emergency Coordination,1,2000,tochi,Distributed cognition,10.1145/353485.353487,14,0.144,160.8,2200,0.08823529411764706,False,2003
+45,Distributed Cognition & Emergency Coordination,2,2003,chi,Mobile computing in the retail arena,10.1145/642611.642670,5,0.052,72.4,85,1.0,False,2003
+45,Distributed Cognition & Emergency Coordination,3,1983,chi,Getting into a system,10.1145/800045.801578,4,0.041,0.7,111,1.0,False,2003
+45,Distributed Cognition & Emergency Coordination,4,2000,dis,<i>Lingua Francas</i> for design,10.1145/347642.347794,4,0.041,75.5,163,0.2631578947368421,False,2003
+45,Distributed Cognition & Emergency Coordination,5,2002,vrst,DEMIS,10.1145/585740.585757,4,0.041,77.2,16,0.45454545454545453,False,2003
+46,Driver Distraction & Take-over,1,2009,chi,Focus on driving,10.1145/1518701.1518950,10,0.061,293.9,78,0.2608695652173913,False,2013
+46,Driver Distraction & Take-over,2,2013,autoui,Evaluating multimodal driver displays of varying urgency,10.1145/2516540.2516543,10,0.061,311.7,76,0.2692307692307692,False,2013
+46,Driver Distraction & Take-over,3,2007,chi,iPod distraction,10.1145/1240624.1240665,8,0.048,210.1,80,0.25,False,2013
+46,Driver Distraction & Take-over,4,2010,chi,"Cars, calls, and cognition",10.1145/1753326.1753518,8,0.048,247.0,62,0.10714285714285714,False,2013
+46,Driver Distraction & Take-over,5,2004,chi,Collision warning design to mitigate driver distraction,10.1145/985692.985701,7,0.042,169.5,214,0.2222222222222222,False,2013
+47,In-Car Interfaces,1,2013,autoui,Free-hand pointing for identification and interaction with distant objects,10.1145/2516540.2516556,18,0.129,365.2,50,0.14705882352941177,False,2013
+47,In-Car Interfaces,2,2011,chi,Gestural interaction on the steering wheel,10.1145/1978942.1979010,16,0.114,452.6,103,-0.007722007722007722,False,2013
+47,In-Car Interfaces,3,2013,autoui,Driver queries using wheel-constrained finger pointing and 3-D head-up display visual feed,10.1145/2516540.2516551,16,0.114,385.4,35,0.15384615384615385,False,2013
+47,In-Car Interfaces,4,2012,autoui,Multimodal interaction in the car,10.1145/2390256.2390282,14,0.1,367.4,118,-0.006666666666666667,False,2013
+47,In-Car Interfaces,5,2008,chi,"You can touch, but you can't look",10.1145/1357054.1357233,13,0.093,286.2,111,0.07936507936507936,False,2013
+48,Automated Driving,1,2016,autoui,Towards Cooperative Driving,10.1145/3003715.3005458,18,0.141,495.8,85,0.15555555555555556,False,2019
+48,Automated Driving,2,2013,autoui,Presenting system uncertainty in automotive UIs for supporting trust calibration in autono,10.1145/2516540.2516554,17,0.133,97.0,283,1.0,False,2019
+48,Automated Driving,3,2017,iui,SupportingTrust in Autonomous Driving,10.1145/3025171.3025198,17,0.133,473.0,168,0.13513513513513514,False,2019
+48,Automated Driving,4,2019,autoui,Cooperative Overtaking,10.1145/3342197.3344531,16,0.125,430.8,65,-0.034482758620689655,False,2019
+48,Automated Driving,5,2015,autoui,Autonomous driving,10.1145/2799250.2799268,15,0.117,409.7,198,0.28125,False,2019
+49,Car Navigation & Driver UIs,1,2010,chi,Where should i turn,10.1145/1753326.1753516,18,0.148,449.7,77,-0.029411764705882353,False,2011
+49,Car Navigation & Driver UIs,2,2008,chi,In-car gps navigation,10.1145/1357054.1357316,17,0.139,452.9,162,0.0457516339869281,False,2011
+49,Car Navigation & Driver UIs,3,2009,autoui,Design space for driver-based automotive user interfaces,10.1145/1620509.1620511,11,0.09,105.6,154,1.0,False,2011
+49,Car Navigation & Driver UIs,4,2011,autoui,Capture the car!,10.1145/2381416.2381434,9,0.074,265.6,38,-0.125,False,2011
+49,Car Navigation & Driver UIs,5,2010,autoui,Journey,10.1145/1969773.1969802,8,0.066,87.5,26,1.0,False,2011
+50,Autonomous Vehicles & Pedestrians,1,2014,autoui,Towards Autonomous Cars,10.1145/2667317.2667330,21,0.044,526.6,334,0.21052631578947367,False,2016
+50,Autonomous Vehicles & Pedestrians,2,2015,iss,Gesture Bike,10.1145/2817721.2817748,15,0.031,356.7,68,0.011494252873563218,False,2016
+50,Autonomous Vehicles & Pedestrians,3,2012,autoui,Predicting information technology usage in the car,10.1145/2390256.2390264,14,0.029,317.1,259,0.21428571428571427,False,2016
+50,Autonomous Vehicles & Pedestrians,4,2004,ubicomp,ActiveBelt: Belt-Type Wearable Tactile Display for Directional Navigation,10.1007/978-3-540-30119-6_23,13,0.027,243.5,311,0.14814814814814814,False,2016
+50,Autonomous Vehicles & Pedestrians,5,2000,chi,Developing a context-aware electronic tourist guide,10.1145/332040.332047,12,0.025,194.7,962,0.9565217391304348,False,2016
+51,Cognitive Modeling & Mixed Small Topics,1,1996,tochi,The GOMS family of user interface analysis techniques,10.1145/235833.236054,20,0.03,428.3,685,0.1111111111111111,False,2003
+51,Cognitive Modeling & Mixed Small Topics,2,1996,tochi,Using GOMS for user interface design and evaluation,10.1145/235833.236050,11,0.016,298.4,392,-0.13333333333333333,False,2003
+51,Cognitive Modeling & Mixed Small Topics,3,1995,uist,GLEAN,10.1145/215585.215700,9,0.013,226.4,94,0.5,False,2003
+51,Cognitive Modeling & Mixed Small Topics,4,1982,chi,Analogy considered harmful,10.1145/800049.801816,7,0.01,117.0,262,1.0,False,2003
+51,Cognitive Modeling & Mixed Small Topics,5,1990,chi,Extensions of GOMS analyses to expert performance requiring perception of dynamic visual a,10.1145/97243.97262,7,0.01,207.6,126,1.0,False,2003
+52,Non-visual Navigation,1,2016,mobilehci,NavCog,10.1145/2935334.2935361,28,0.184,176.1,239,0.20833333333333334,False,2017
+52,Non-visual Navigation,2,2012,chi,The user as a sensor,10.1145/2207676.2207735,22,0.145,190.3,116,1.0,False,2017
+52,Non-visual Navigation,3,2016,ubicomp,"Finding a store, searching for a product",10.1145/2971648.2971723,19,0.125,479.7,87,0.007407407407407408,False,2017
+52,Non-visual Navigation,4,2016,ubicomp,CueSee,10.1145/2971648.2971730,17,0.112,404.7,110,-0.031914893617021274,False,2017
+52,Non-visual Navigation,5,2016,uist,VizLens,10.1145/2984511.2984518,16,0.105,454.2,98,-0.05649717514124294,False,2017
+53,Accessibility Research Practice,1,2015,chi,Collaborative Accessibility,10.1145/2702123.2702511,42,0.276,1157.9,153,-0.04205607476635514,False,2018
+53,Accessibility Research Practice,2,2017,dis,Enabling Collaboration in Learning Computer Programing Inclusive of Children with Vision I,10.1145/3064663.3064689,27,0.178,951.7,148,-0.03257328990228013,False,2018
+53,Accessibility Research Practice,3,2018,pacmhci,Accessibility in Action,10.1145/3274449,26,0.171,819.2,62,-0.03535353535353535,False,2018
+53,Accessibility Research Practice,4,2018,chi,"<i>""I can do everything but see!""</i> -- How People with Vision Impairments Negotiate thei",10.1145/3173574.3173777,17,0.112,580.1,67,-0.09523809523809523,False,2018
+53,Accessibility Research Practice,5,2018,chi,“Bursting the Assistance Bubble”,10.1145/3173574.3173920,17,0.112,589.9,61,-0.06511627906976744,False,2018
+54,Visual Accessibility,1,2010,uist,VizWiz,10.1145/1866029.1866080,44,0.349,1053.3,588,0.3253968253968254,False,2019
+54,Visual Accessibility,2,2017,cscw,Automatic Alt-text,10.1145/2998181.2998364,36,0.286,1117.2,250,-0.10294117647058823,False,2019
+54,Visual Accessibility,3,2016,cscw,How Blind People Interact with Visual Content on Social Networking Services,10.1145/2818048.2820013,27,0.214,844.0,178,-0.024793388429752067,False,2019
+54,Visual Accessibility,4,2017,chi,Understanding Blind People's Experiences with Computer-Generated Captions of Social Media ,10.1145/3025453.3025814,27,0.214,847.8,195,-0.03951367781155015,False,2019
+54,Visual Accessibility,5,2016,chi,"""With most of it being pictures now, I rarely use it""",10.1145/2858036.2858116,25,0.198,797.3,134,-0.04950495049504951,False,2019
+55,Disability Studies in HCI,1,2011,chi,In the shadow of misperception,10.1145/1978942.1979044,45,0.082,969.5,479,0.7391304347826086,False,2017
+55,Disability Studies in HCI,2,2015,chi,Head-Mounted Display Visualizations to Support Sound Awareness for the Deaf and Hard of He,10.1145/2702123.2702393,22,0.04,351.1,119,0.23529411764705882,False,2017
+55,Disability Studies in HCI,3,2016,chi,MapSense,10.1145/2858036.2858375,20,0.036,551.6,115,-0.013043478260869565,False,2017
+55,Disability Studies in HCI,4,2015,chi,StructJumper,10.1145/2702123.2702589,19,0.034,445.0,84,0.38461538461538464,False,2017
+55,Disability Studies in HCI,5,2015,chi,Toward 3D-Printed Movable Tactile Pictures for Children with Visual Impairments,10.1145/2702123.2702144,19,0.034,470.6,64,-0.04,False,2017
+56,Esports & Player Communities,1,2006,cscw,Strangers and friends,10.1145/1180875.1180898,37,0.257,956.3,416,0.15625,False,2014
+56,Esports & Player Communities,2,2006,chi,"""Alone together?""",10.1145/1124772.1124834,33,0.229,865.4,757,-0.06,False,2014
+56,Esports & Player Communities,3,2014,chiplay,Playing with strangers,10.1145/2658537.2658538,23,0.16,609.3,139,-0.09375,False,2014
+56,Esports & Player Communities,4,2014,cscw,The identification of deviance and its impact on retention in a multiplayer game,10.1145/2531602.2531724,23,0.16,582.0,140,0.0,False,2014
+56,Esports & Player Communities,5,2004,cscw,The social side of gaming,10.1145/1031607.1031667,17,0.118,373.9,353,0.046875,False,2014
+57,Player Experience & Immersion,1,2013,chi,Control your game-self,10.1145/2470654.2470752,18,0.136,475.5,108,0.2982456140350877,False,2015
+57,Player Experience & Immersion,2,2015,chiplay,How Self-Esteem Shapes our Interactions with Play Technologies,10.1145/2793107.2793111,11,0.083,314.9,47,-0.02142857142857143,False,2015
+57,Player Experience & Immersion,3,2015,chiplay,Manipulating Leaderboards to Induce Player Experience,10.1145/2793107.2793138,10,0.076,283.0,58,0.0,False,2015
+57,Player Experience & Immersion,4,2006,chi,A continuous and objective evaluation of emotional experience with interactive play enviro,10.1145/1124772.1124926,8,0.061,139.6,265,0.4,False,2015
+57,Player Experience & Immersion,5,2013,chi,Analyzing users' narratives to understand experience with interactive products,10.1145/2470654.2481285,8,0.061,214.3,138,-0.02040816326530612,False,2015
+58,Gamification & Engagement,1,2014,chi,A systematic review of quantitative studies on the enjoyment of digital entertainment game,10.1145/2556288.2557078,32,0.046,841.0,210,0.1095890410958904,False,2015
+58,Gamification & Engagement,2,2015,chiplay,Emotional and Functional Challenge in Core and Avant-garde Games,10.1145/2793107.2793147,29,0.042,171.9,75,1.0,False,2015
+58,Gamification & Engagement,3,2011,chi,Old wine in new bottles or novel challenges,10.1145/1978942.1979336,26,0.038,673.2,647,-0.11904761904761904,False,2015
+58,Gamification & Engagement,4,2014,chi,"Effects of balancing for physical abilities on player performance, experience and self-est",10.1145/2556288.2556963,23,0.033,623.0,127,-0.08108108108108109,False,2015
+58,Gamification & Engagement,5,2011,chi,Target assistance for subtly balancing competitive play,10.1145/1978942.1979287,22,0.032,592.9,82,0.13559322033898305,False,2015
+59,Social Robots in the Field,1,2009,hri,Footing in human-robot conversations,10.1145/1514095.1514109,57,0.033,1296.0,389,0.30952380952380953,False,2013
+59,Social Robots in the Field,2,2008,hri,Robots in organizations,10.1145/1349822.1349860,54,0.031,1209.4,361,0.0625,False,2013
+59,Social Robots in the Field,3,2006,hri,Service robots in the domestic environment,10.1145/1121241.1121286,51,0.029,1111.5,511,0.14606741573033707,False,2013
+59,Social Robots in the Field,4,2011,hri,Expressing thought,10.1145/1957656.1957674,44,0.025,927.7,273,0.2962962962962963,False,2013
+59,Social Robots in the Field,5,2011,hri,Human-robot proxemics,10.1145/1957656.1957786,43,0.025,875.4,450,0.4411764705882353,False,2013
+60,Generative AI & Writing,1,2014,tochi,Quantifying the Creativity Support of Digital Tools through the Creativity Support Index,10.1145/2617588,139,0.12,3364.3,473,0.5,False,2021
+60,Generative AI & Writing,2,2019,chi,Mapping the Landscape of Creativity Support Tools in HCI,10.1145/3290605.3300619,111,0.096,4037.0,389,-0.056043956043956046,False,2021
+60,Generative AI & Writing,3,2019,chi,Guidelines for Human-AI Interaction,10.1145/3290605.3300233,111,0.096,3337.7,2028,0.09681227863046045,False,2021
+60,Generative AI & Writing,4,2018,chi,"I Lead, You Help but Only with Enough Details",10.1145/3173574.3174223,89,0.077,2622.6,297,0.014084507042253521,False,2021
+60,Generative AI & Writing,5,2020,chi,Novice-AI Music Co-Creation via AI-Steering Tools for Deep Generative Models,10.1145/3313831.3376739,88,0.076,3153.8,259,-0.07261724659606657,False,2021
+61,Voice & Conversational Agents,1,2016,chi,"""Like Having a Really Bad PA""",10.1145/2858036.2858288,218,0.199,5899.0,1108,0.6804733727810651,False,2019
+61,Voice & Conversational Agents,2,2018,chi,Voice Interfaces in Everyday Life,10.1145/3173574.3174214,154,0.14,4955.3,700,-0.05952380952380952,False,2019
+61,Voice & Conversational Agents,3,1994,chi,Computers are social actors,10.1145/191666.191703,124,0.113,655.4,1884,1.0,False,2019
+61,Voice & Conversational Agents,4,2019,chi,What Makes a Good Conversation?,10.1145/3290605.3300705,108,0.098,3313.7,450,-0.12299465240641712,False,2019
+61,Voice & Conversational Agents,5,2017,mobilehci,"""What can i help you with?""",10.1145/3098279.3098539,102,0.093,2735.3,352,-0.22857142857142856,False,2019
+62,End-user Programming & UI Design Tools,1,2008,chi,CoScripter,10.1145/1357054.1357323,41,0.066,983.7,312,0.18518518518518517,False,2008
+62,End-user Programming & UI Design Tools,2,2005,uist,Automation and customization of rendered web pages,10.1145/1095034.1095062,40,0.065,1152.0,224,-0.03125,False,2008
+62,End-user Programming & UI Design Tools,3,2007,chi,Koala,10.1145/1240624.1240767,36,0.058,944.4,162,-0.05357142857142857,False,2008
+62,End-user Programming & UI Design Tools,4,2007,uist,Programming by a sample,10.1145/1294211.1294254,31,0.05,911.2,119,-0.05325443786982249,False,2008
+62,End-user Programming & UI Design Tools,5,2007,chi,Making mashups with marmite,10.1145/1240624.1240842,29,0.047,715.6,313,0.02127659574468085,False,2008
+63,Robots & Agents in Education,1,2015,hri,Can Children Catch Curiosity from a Social Robot?,10.1145/2696454.2696469,23,0.048,171.0,180,0.3333333333333333,False,2018
+63,Robots & Agents in Education,2,2015,hri,The Robot Who Tried Too Hard,10.1145/2696454.2696457,21,0.044,459.2,229,0.08450704225352113,False,2018
+63,Robots & Agents in Education,3,2010,chi,Expressive robots in education,10.1145/1753326.1753567,19,0.04,303.6,319,0.21052631578947367,False,2018
+63,Robots & Agents in Education,4,2017,hri,Growing Growth Mindset with a Social Robot Peer,10.1145/2909824.3020213,19,0.04,386.4,137,-0.0967741935483871,False,2018
+63,Robots & Agents in Education,5,2018,idc,Why doesn't it work?,10.1145/3202185.3202749,16,0.034,518.1,70,0.022292993630573247,False,2018
+64,Video Interfaces & Editing,1,2005,chi,Stencils-based tutorials,10.1145/1054972.1055047,35,0.082,806.2,187,0.0,False,2008
+64,Video Interfaces & Editing,2,2008,chi,Video browsing by direct manipulation,10.1145/1357054.1357096,34,0.08,804.5,206,-0.025,False,2008
+64,Video Interfaces & Editing,3,1996,tochi,A field study of exploratory learning strategies,10.1145/234526.234527,23,0.054,342.9,228,0.0,False,2008
+64,Video Interfaces & Editing,4,2005,uist,DocWizards,10.1145/1095034.1095067,23,0.054,449.4,94,0.05555555555555555,False,2008
+64,Video Interfaces & Editing,5,2002,chi,An evaluation of a multiple interface design solution for bloated software,10.1145/503376.503406,22,0.052,284.6,167,-0.027777777777777776,False,2008
+65,Meeting Support & Group Displays,1,2004,cscw,Influencing group participation with a shared display,10.1145/1031607.1031713,16,0.087,394.2,220,0.3125,False,2014
+65,Meeting Support & Group Displays,2,2008,cscw,Meeting mediator,10.1145/1460563.1460636,14,0.077,331.4,222,0.0,False,2014
+65,Meeting Support & Group Displays,3,2009,chi,Visualizing real-time language-based feedback on teamwork behavior in computer-mediated gr,10.1145/1518701.1518784,14,0.077,370.6,86,0.0,False,2014
+65,Meeting Support & Group Displays,4,2009,chi,Conversation clusters,10.1145/1518701.1519060,7,0.038,125.7,44,0.12,False,2014
+65,Meeting Support & Group Displays,5,2013,chi,Improving teamwork using real-time language feedback,10.1145/2470654.2470720,7,0.038,175.6,84,-0.02040816326530612,False,2014
+66,Usability Methods & Personas,1,1990,chi,Heuristic evaluation of user interfaces,10.1145/97243.97281,32,0.203,388.4,3455,1.0,False,2006
+66,Usability Methods & Personas,2,1991,chi,User interface evaluation in the real world,10.1145/108844.108862,20,0.127,414.7,621,-0.5714285714285714,False,2006
+66,Usability Methods & Personas,3,1990,chi,Testing a walkthrough methodology for theory-based design of walk-up-and-use interfaces,10.1145/97243.97279,17,0.108,382.4,561,0.9166666666666666,False,2006
+66,Usability Methods & Personas,4,1992,chi,Comparison of empirical testing and walkthrough methods in user interface evaluation,10.1145/142750.142873,16,0.101,334.4,303,-0.1,False,2006
+66,Usability Methods & Personas,5,1992,chi,Finding usability problems through heuristic evaluation,10.1145/142750.142834,13,0.082,205.7,1062,0.17647058823529413,False,2006
+67,Multimodal Speech Interfaces,1,1999,chi,Mutual disambiguation of recognition errors in a multimodel architecture,10.1145/302979.303163,16,0.131,281.2,315,0.2608695652173913,False,2004
+67,Multimodal Speech Interfaces,2,1997,chi,Integration and synchronization of input modes during multimodal human-computer interactio,10.1145/258549.258821,15,0.123,278.5,365,0.2,False,2004
+67,Multimodal Speech Interfaces,3,1996,chi,Multimodal interfaces for dynamic interactive maps,10.1145/238386.238438,10,0.082,135.5,179,0.3333333333333333,False,2004
+67,Multimodal Speech Interfaces,4,2003,icmi,Toward a theory of organized multimodal integration patterns during human-computer interac,10.1145/958432.958443,9,0.074,128.8,103,0.20833333333333334,False,2004
+67,Multimodal Speech Interfaces,5,2004,icmi,Identifying the addressee in human-human-robot interactions based on head pose and speech,10.1145/1027933.1027959,9,0.074,149.4,123,0.09090909090909091,False,2004
+68,Natural Language Interfaces & Human-AI Teams,1,2015,uist,DataTone,10.1145/2807442.2807478,33,0.104,769.9,246,0.2857142857142857,False,2018
+68,Natural Language Interfaces & Human-AI Teams,2,2016,uist,Eviza,10.1145/2984511.2984588,29,0.092,670.8,228,-0.6,False,2018
+68,Natural Language Interfaces & Human-AI Teams,3,2013,chi,Costs and benefits of structured information foraging,10.1145/2470654.2481415,16,0.051,413.8,40,0.0,False,2018
+68,Natural Language Interfaces & Human-AI Teams,4,2008,chi,CiteSense,10.1145/1357054.1357161,9,0.028,102.4,44,0.0,False,2018
+68,Natural Language Interfaces & Human-AI Teams,5,2008,chi,SearchBar,10.1145/1357054.1357242,9,0.028,234.3,143,-0.04819277108433735,False,2018
+69,Urban Mobility Data,1,2012,ubicomp,Understanding and prediction of mobile application usage for smart phones,10.1145/2370216.2370243,27,0.122,529.3,274,0.5714285714285714,False,2014
+69,Urban Mobility Data,2,2008,ubicomp,Understanding mobility based on GPS data,10.1145/1409635.1409677,16,0.072,365.2,1110,0.10714285714285714,False,2014
+69,Urban Mobility Data,3,2006,ubicomp,Predestination: Inferring Destinations from Partial Trajectories,10.1007/11853565_15,15,0.068,356.4,455,0.7647058823529411,False,2014
+69,Urban Mobility Data,4,2012,ubicomp,Predicting mobile application usage using contextual information,10.1145/2370216.2370442,14,0.063,80.9,132,1.0,False,2014
+69,Urban Mobility Data,5,2013,ubicomp,Practical prediction and prefetch for faster access to applications on mobile phones,10.1145/2493432.2493490,14,0.063,269.0,168,-0.09090909090909091,False,2014
+70,Email & Web Revisitation,1,1996,chi,Email overload,10.1145/238386.238530,67,0.303,1272.3,973,0.35714285714285715,False,2005
+70,Email & Web Revisitation,2,2003,chi,Taking email to task,10.1145/642611.642672,49,0.222,1361.3,367,-0.03636363636363636,False,2005
+70,Email & Web Revisitation,3,2003,chi,UMEA,10.1145/642611.642673,31,0.14,924.6,212,0.03571428571428571,False,2005
+70,Email & Web Revisitation,4,2005,iui,TaskTracer,10.1145/1040830.1040855,31,0.14,777.8,239,-0.15217391304347827,False,2005
+70,Email & Web Revisitation,5,1988,cscw,More than just a communication system: diversity in the use of electronic mail,10.1145/62266.62293,18,0.081,356.3,180,1.0,False,2005
+71,Notifications & Interruptibility,1,2004,chi,"If not now, when?",10.1145/985692.985727,61,0.313,1400.5,522,-0.017543859649122806,False,2011
+71,Notifications & Interruptibility,2,2005,chi,Using context-aware computing to reduce the perceived burden of interruptions from mobile ,10.1145/1054972.1055100,52,0.267,1284.6,363,-0.05660377358490566,False,2011
+71,Notifications & Interruptibility,3,2003,chi,Predicting human interruptibility with sensors,10.1145/642611.642657,46,0.236,1240.5,295,0.07142857142857142,False,2011
+71,Notifications & Interruptibility,4,2003,icmi,Learning and reasoning about interruption,10.1145/958432.958440,37,0.19,1093.3,267,0.027777777777777776,False,2011
+71,Notifications & Interruptibility,5,2008,chi,Effects of intelligent notification management on users and their tasks,10.1145/1357054.1357070,35,0.179,980.2,193,-0.10810810810810811,False,2011
+72,Instant Messaging,1,2000,cscw,Interaction and outeraction,10.1145/358916.358975,65,0.376,1944.6,1076,0.1348314606741573,False,2004
+72,Instant Messaging,2,2002,cscw,"The character, functions, and styles of instant messaging in the workplace",10.1145/587078.587081,33,0.191,1029.5,369,-0.18072289156626506,False,2004
+72,Instant Messaging,3,1999,chi,Socially translucent systems,10.1145/302979.302997,22,0.127,770.9,334,0.1388888888888889,False,2004
+72,Instant Messaging,4,2003,chi,Wan2tlk?,10.1145/642611.642688,22,0.127,624.6,221,-0.02564102564102564,False,2004
+72,Instant Messaging,5,2002,cscw,Instant messaging in teen life,10.1145/587078.587082,21,0.121,642.1,420,-0.01020408163265306,False,2004
+73,Digital Self-control,1,2015,cscw,NUGU,10.1145/2675133.2675244,51,0.418,1514.0,176,-0.06222222222222222,False,2019
+73,Digital Self-control,2,2016,chi,MyTime,10.1145/2858036.2858403,48,0.393,1436.4,141,-0.056818181818181816,False,2019
+73,Digital Self-control,3,2016,chi,Lock n' LoL,10.1145/2858036.2858568,46,0.377,1407.3,109,-0.08712121212121213,False,2019
+73,Digital Self-control,4,2018,imwut,What Makes Smartphone Use Meaningful or Meaningless?,10.1145/3191754,44,0.361,1393.6,207,-0.0913978494623656,False,2019
+73,Digital Self-control,5,2019,chi,Self-Control in Cyberspace,10.1145/3290605.3300361,42,0.344,1386.5,211,-0.0688836104513064,False,2019
+74,Location Sharing & Privacy,1,2005,chi,Location disclosure to social relations,10.1145/1054972.1054985,55,0.458,1687.1,551,-0.027777777777777776,False,2007
+74,Location Sharing & Privacy,2,2005,ubicomp,"Control, Deception, and Communication: Evaluating the Deployment of a Location-Enhanced Me",10.1007/11551201_13,21,0.175,746.9,102,-0.08333333333333333,False,2007
+74,Location Sharing & Privacy,3,2005,chi,Who gets to know what when,10.1145/1054972.1054987,13,0.108,410.7,139,0.03896103896103896,False,2007
+74,Location Sharing & Privacy,4,2006,cscw,Context-aware telephony,10.1145/1180875.1180947,11,0.092,371.0,123,-0.07777777777777778,False,2007
+74,Location Sharing & Privacy,5,2005,ubicomp,Learning and Recognizing the Places We Go,10.1007/11551201_10,9,0.075,296.6,264,0.5,False,2007
+75,Task Switching at Work,1,2004,chi,A diary study of task switching and interruptions,10.1145/985692.985715,54,0.446,1282.0,817,0.06666666666666667,False,2011
+75,Task Switching at Work,2,2004,chi,"""Constant, constant, multi-tasking craziness""",10.1145/985692.985707,45,0.372,1177.7,705,-0.12121212121212122,False,2011
+75,Task Switching at Work,3,2008,chi,The cost of interrupted work,10.1145/1357054.1357072,34,0.281,792.1,650,0.0,False,2011
+75,Task Switching at Work,4,2005,chi,No task left behind?,10.1145/1054972.1055017,29,0.24,784.6,489,-0.23655913978494625,False,2011
+75,Task Switching at Work,5,2007,chi,Disruption and recovery of computing tasks,10.1145/1240624.1240730,29,0.24,861.4,294,-0.16853932584269662,False,2011
+76,Mobile Information Needs & Translation,1,2011,chi,MicroMandarin,10.1145/1978942.1979413,24,0.087,571.7,140,0.6363636363636364,False,2011
+76,Mobile Information Needs & Translation,2,2006,cscw,Effects of machine translation on collaborative work,10.1145/1180875.1180955,23,0.084,400.0,123,-0.08,False,2011
+76,Mobile Information Needs & Translation,3,2009,chi,Difficulties in establishing common ground in multiparty groups using machine translation,10.1145/1518701.1518807,18,0.065,332.7,82,-0.125,False,2011
+76,Mobile Information Needs & Translation,4,2004,cscw,Taking it out of context,10.1145/1031607.1031712,17,0.062,434.0,135,-0.022988505747126436,False,2011
+76,Mobile Information Needs & Translation,5,2009,chi,Cultural difference and adaptation of communication styles in computer-mediated group brai,10.1145/1518701.1518806,12,0.044,330.1,101,-0.125,False,2011
+77,Recommender Explanations & User-centric Evaluation,1,2000,cscw,Explaining collaborative filtering recommendations,10.1145/358916.358995,76,0.239,939.1,1705,-0.047619047619047616,False,2015
+77,Recommender Explanations & User-centric Evaluation,2,2011,recsys,A user-centric evaluation framework for recommender systems,10.1145/2043932.2043962,55,0.173,601.2,860,0.2857142857142857,False,2015
+77,Recommender Explanations & User-centric Evaluation,3,2012,recsys,TasteWeights,10.1145/2365952.2365964,53,0.167,673.5,275,-0.04,False,2015
+77,Recommender Explanations & User-centric Evaluation,4,2008,chi,PeerChooser,10.1145/1357054.1357222,38,0.119,427.1,145,-0.05263157894736842,False,2015
+77,Recommender Explanations & User-centric Evaluation,5,2009,iui,Tagsplanations,10.1145/1502650.1502661,34,0.107,681.2,303,-0.08955223880597014,False,2015
+78,Sequential & Session-based Recommendation,1,2010,recsys,Performance of recommender algorithms on top-n recommendation tasks,10.1145/1864708.1864721,38,0.156,146.0,1443,0.8695652173913043,False,2019
+78,Sequential & Session-based Recommendation,2,2019,recsys,Are we really making much progress? A worrying analysis of recent neural recommendation ap,10.1145/3298689.3347058,32,0.131,741.8,412,0.1875,False,2019
+78,Sequential & Session-based Recommendation,3,2017,recsys,Personalizing Session-based Recommendations with Hierarchical Recurrent Neural Networks,10.1145/3109859.3109896,15,0.061,45.6,585,0.3181818181818182,False,2019
+78,Sequential & Session-based Recommendation,4,2009,recsys,Collaborative prediction and ranking with non-random missing data,10.1145/1639714.1639717,13,0.053,92.8,324,0.19047619047619047,False,2019
+78,Sequential & Session-based Recommendation,5,2011,recsys,Item popularity and recommendation accuracy,10.1145/2043932.2043957,12,0.049,33.9,340,-0.044444444444444446,False,2019
+79,Neural Session Recommendation,1,2012,recsys,Context-aware music recommendation based on latenttopic sequential patterns,10.1145/2365952.2365979,18,0.08,184.0,288,0.45454545454545453,False,2016
+79,Neural Session Recommendation,2,2016,recsys,Meta-Prod2Vec,10.1145/2959100.2959160,15,0.066,67.5,174,0.45714285714285713,False,2016
+79,Neural Session Recommendation,3,2016,recsys,Parallel Recurrent Neural Network Architectures for Feature-rich Session-based Recommendat,10.1145/2959100.2959167,13,0.058,78.3,541,0.6086956521739131,False,2016
+79,Neural Session Recommendation,4,2009,recsys,RecSys'09 workshop 3,10.1145/1639714.1639806,7,0.031,2.1,24,1.0,False,2016
+79,Neural Session Recommendation,5,2010,recsys,Context-awareness in recommender systems,10.1145/1864708.1864801,7,0.031,50.5,52,1.0,False,2016
+80,"Diversity, Novelty & Bias in Recommendation",1,2011,recsys,Rank and relevance in novelty and diversity metrics for recommender systems,10.1145/2043932.2043955,31,0.142,140.3,717,-0.04,False,2016
+80,"Diversity, Novelty & Bias in Recommendation",2,2010,recsys,Beyond accuracy,10.1145/1864708.1864761,24,0.11,55.0,659,1.0,False,2016
+80,"Diversity, Novelty & Bias in Recommendation",3,2008,recsys,Avoiding monotony,10.1145/1454008.1454030,20,0.091,142.9,459,0.75,False,2016
+80,"Diversity, Novelty & Bias in Recommendation",4,2008,recsys,The long tail of recommender systems and how to leverage it,10.1145/1454008.1454012,16,0.073,90.0,446,1.0,False,2016
+80,"Diversity, Novelty & Bias in Recommendation",5,2014,recsys,"Coverage, redundancy and size-awareness in genre diversity for recommender systems",10.1145/2645710.2645743,11,0.05,94.9,142,-0.009708737864077669,False,2016
+81,Collaborative Filtering & Trust,1,2003,chi,Is seeing believing?,10.1145/642611.642713,25,0.118,337.2,465,0.058823529411764705,False,2008
+81,Collaborative Filtering & Trust,2,1995,chi,Social information filtering,10.1145/223904.223931,20,0.095,234.8,2809,1.0,False,2008
+81,Collaborative Filtering & Trust,3,2007,recsys,Trust-aware recommender systems,10.1145/1297231.1297235,19,0.09,119.0,1196,0.2857142857142857,False,2008
+81,Collaborative Filtering & Trust,4,2002,iui,Getting to know you,10.1145/502716.502737,16,0.076,153.6,540,0.8181818181818182,False,2008
+81,Collaborative Filtering & Trust,5,1995,chi,Recommending and evaluating choices in a virtual community of use,10.1145/223904.223929,15,0.071,200.8,1134,0.0,False,2008
+82,Knowledge-aware & LLM Recommendation,1,2011,recsys,Precision-oriented evaluation of recommender systems,10.1145/2043932.2043996,17,0.09,81.3,208,0.0,False,2018
+82,Knowledge-aware & LLM Recommendation,2,2011,recsys,MyMediaLite,10.1145/2043932.2043989,14,0.074,116.1,372,0.3220338983050847,False,2018
+82,Knowledge-aware & LLM Recommendation,3,2011,recsys,Second workshop on information heterogeneity and fusion in recommender systems (HetRec2011,10.1145/2043932.2044016,10,0.053,7.8,354,1.0,False,2018
+82,Knowledge-aware & LLM Recommendation,4,2011,recsys,OrdRec,10.1145/2043932.2043956,8,0.042,25.6,168,1.0,False,2018
+82,Knowledge-aware & LLM Recommendation,5,2012,recsys,CLiMF,10.1145/2365952.2365981,8,0.042,173.0,311,0.03571428571428571,False,2018
+83,Industrial Recommendation & CTR Prediction,1,2016,recsys,Deep Neural Networks for YouTube Recommendations,10.1145/2959100.2959190,54,0.303,107.6,3535,0.5571428571428572,False,2019
+83,Industrial Recommendation & CTR Prediction,2,2010,recsys,The YouTube video recommendation system,10.1145/1864708.1864770,20,0.112,49.9,1217,1.0,False,2019
+83,Industrial Recommendation & CTR Prediction,3,2016,recsys,Field-aware Factorization Machines for CTR Prediction,10.1145/2959100.2959134,13,0.073,30.6,735,1.0,False,2019
+83,Industrial Recommendation & CTR Prediction,4,2019,recsys,Recommending what video to watch next,10.1145/3298689.3346997,13,0.073,236.8,320,-0.03278688524590164,False,2019
+83,Industrial Recommendation & CTR Prediction,5,2019,recsys,Sampling-bias-corrected neural modeling for large corpus item recommendations,10.1145/3298689.3346996,11,0.062,216.0,221,0.02040816326530612,False,2019
+84,Web Search & Navigation,1,1995,chi,Information foraging in information access environments,10.1145/223904.223911,19,0.11,461.9,462,0.4444444444444444,False,2000
+84,Web Search & Navigation,2,1992,chi,Edit wear and read wear,10.1145/142750.142751,18,0.104,387.3,505,1.0,False,2000
+84,Web Search & Navigation,3,2000,chi,The scent of a site,10.1145/332040.332423,14,0.081,344.3,185,-0.1111111111111111,False,2000
+84,Web Search & Navigation,4,1997,chi,Computational models of information scent-following in a very large browsable text collect,10.1145/258549.258558,13,0.075,318.3,167,0.23076923076923078,False,2000
+84,Web Search & Navigation,5,1996,chi,The WebBook and the Web Forager,10.1145/238386.238446,12,0.069,407.4,342,0.23076923076923078,False,2000
+85,Context-aware & Cold-start Recommendation,1,2010,recsys,Multiverse recommendation,10.1145/1864708.1864727,22,0.146,131.8,739,0.2916666666666667,False,2012
+85,Context-aware & Cold-start Recommendation,2,2011,recsys,Matrix factorization techniques for context aware recommendation,10.1145/2043932.2043988,15,0.099,95.6,387,-0.10714285714285714,False,2012
+85,Context-aware & Cold-start Recommendation,3,2010,recsys,Context-Aware Recommender Systems,10.1007/978-0-387-85820-3_7,10,0.066,88.8,1100,0.25925925925925924,False,2012
+85,Context-aware & Cold-start Recommendation,4,2009,recsys,Pairwise preference regression for cold-start recommendation,10.1145/1639714.1639720,9,0.06,28.0,316,0.4,False,2012
+85,Context-aware & Cold-start Recommendation,5,2009,recsys,Context-based splitting of item ratings in collaborative filtering,10.1145/1639714.1639759,8,0.053,96.7,161,1.0,False,2012
+86,News Recommendation & Offline Evaluation,1,2014,recsys,Offline and online evaluation of news recommender systems at swissinfo.ch,10.1145/2645710.2645745,17,0.125,169.8,176,0.010752688172043012,False,2017
+86,News Recommendation & Offline Evaluation,2,2010,iui,Personalized news recommendation based on click behavior,10.1145/1719970.1719976,14,0.103,103.6,766,0.9285714285714286,False,2017
+86,News Recommendation & Offline Evaluation,3,2016,recsys,Contrasting Offline and Online Results when Evaluating Recommendation Algorithms,10.1145/2959100.2959176,10,0.074,143.1,98,-0.05084745762711865,False,2017
+86,News Recommendation & Offline Evaluation,4,2008,recsys,The value of personalised recommender systems to e-business,10.1145/1454008.1454054,7,0.051,32.3,115,1.0,False,2017
+86,News Recommendation & Offline Evaluation,5,2013,recsys,Workshop and challenge on news recommender systems,10.1145/2507157.2508004,6,0.044,25.6,21,-0.07142857142857142,False,2017
+87,Social Tagging & Group Recommendation,1,2010,recsys,Group recommendations with rank aggregation and collaborative filtering,10.1145/1864708.1864733,19,0.046,203.5,496,0.125,False,2012
+87,Social Tagging & Group Recommendation,2,2010,recsys,RECON,10.1145/1864708.1864747,13,0.032,240.1,186,0.018867924528301886,False,2012
+87,Social Tagging & Group Recommendation,3,1998,cscw,MusicFX,10.1145/289444.289511,11,0.027,138.0,378,0.1,False,2012
+87,Social Tagging & Group Recommendation,4,2002,iui,Flytrap,10.1145/502716.502748,10,0.024,121.6,167,0.0,False,2012
+87,Social Tagging & Group Recommendation,5,2010,recsys,Group-based recipe recommendations,10.1145/1864708.1864732,9,0.022,83.8,253,0.2,False,2012
+88,Co-design with Children,1,1999,chi,Cooperative inquiry,10.1145/302979.303166,110,0.329,2125.5,854,0.28,False,2007
+88,Co-design with Children,2,2004,idc,Mixing ideas,10.1145/1017833.1017838,44,0.132,1020.5,240,-0.125,False,2007
+88,Co-design with Children,3,1997,chi,Designing for or designing with? Informant design for interactive learning environments,10.1145/258549.258789,41,0.123,885.3,385,-0.1,False,2007
+88,Co-design with Children,4,2006,idc,Using the fun toolkit and other survey methods to gather opinions in child computer intera,10.1145/1139073.1139096,26,0.078,477.9,426,0.55,False,2007
+88,Co-design with Children,5,2007,chi,Comicboarding,10.1145/1240624.1240832,23,0.069,573.9,135,-0.11627906976744186,False,2007
+89,Tangibles for Learning,1,2007,tei,Do tangible interfaces enhance learning?,10.1145/1226969.1227004,65,0.217,1624.8,530,-0.04918032786885246,False,2011
+89,Tangibles for Learning,2,2005,chi,Extending tangible interfaces for education,10.1145/1054972.1055093,45,0.15,1057.8,462,-0.052083333333333336,False,2011
+89,Tangibles for Learning,3,2009,chi,Comparing the use of tangible and graphical programming languages for informal science edu,10.1145/1518701.1518851,29,0.097,775.2,280,-0.024509803921568627,False,2011
+89,Tangibles for Learning,4,2007,tei,The CTI framework,10.1145/1226969.1227010,25,0.083,687.5,178,-0.033210332103321034,False,2011
+89,Tangibles for Learning,5,2007,tei,Designing tangible programming languages for classroom use,10.1145/1226969.1227003,21,0.07,188.8,219,1.0,False,2011
+90,Autistic Children & Technology,1,2009,iss,Collaborative Puzzle Game,10.1145/1731903.1731940,19,0.078,393.9,124,-0.038461538461538464,False,2016
+90,Autistic Children & Technology,2,2013,chi,Evaluation of tablet apps to encourage social interaction in children with autism spectrum,10.1145/2470654.2466438,18,0.074,492.5,169,0.0,False,2016
+90,Autistic Children & Technology,3,2014,chi,Diversity for design,10.1145/2556288.2557244,17,0.07,337.8,131,0.14705882352941177,False,2016
+90,Autistic Children & Technology,4,2012,chi,MOSOCO,10.1145/2207676.2208649,16,0.066,403.6,205,-0.11666666666666667,False,2016
+90,Autistic Children & Technology,5,2016,idc,Lands of Fog,10.1145/2930674.2930695,16,0.066,415.7,65,-0.014925373134328358,False,2016
+91,Youth Online Safety,1,2017,cscw,Parental Control vs. Teen Self-Regulation,10.1145/2998181.2998352,61,0.271,1827.2,199,-0.13218390804597702,False,2018
+91,Youth Online Safety,2,2017,pacmhci,'No Telling Passcodes Out Because They're Private',10.1145/3134699,43,0.191,1302.1,154,-0.03404255319148936,False,2018
+91,Youth Online Safety,3,2018,chi,Safety vs. Surveillance,10.1145/3173574.3173698,43,0.191,1347.2,159,-0.0880281690140845,False,2018
+91,Youth Online Safety,4,2016,cscw,Managing Expectations,10.1145/2818048.2819928,37,0.164,1163.3,141,-0.023668639053254437,False,2018
+91,Youth Online Safety,5,2016,chi,Dear Diary,10.1145/2858036.2858317,35,0.156,964.7,117,-0.16071428571428573,False,2018
+92,Children's Agency & Research Ethics,1,2011,idc,Examining values,10.1145/1999030.1999046,17,0.08,346.2,132,0.2631578947368421,False,2015
+92,Children's Agency & Research Ethics,2,2008,idc,Designing with and for children with special needs,10.1145/1463689.1463719,11,0.052,275.9,115,0.0,False,2015
+92,Children's Agency & Research Ethics,3,2014,idc,Applying the CHECk tool to participatory design sessions with children,10.1145/2593968.2610465,8,0.038,206.3,34,0.0,False,2015
+92,Children's Agency & Research Ethics,4,2009,chi,Designing with children with severe motor impairments,10.1145/1518701.1519032,6,0.028,75.0,38,0.6363636363636364,False,2015
+92,Children's Agency & Research Ethics,5,2010,idc,Designing technologies with children with special needs,10.1145/1810543.1810575,6,0.028,149.0,28,-0.10526315789473684,False,2015
+93,AI Literacy & K-12,1,2020,chi,What is AI Literacy? Competencies and Design Considerations,10.1145/3313831.3376727,74,0.443,2418.2,2454,0.05188679245283019,False,2021
+93,AI Literacy & K-12,2,2019,idc,Youth Learning Machine Learning through Building Models of Athletic Moves,10.1145/3311927.3323139,34,0.204,855.1,132,0.4090909090909091,False,2021
+93,AI Literacy & K-12,3,2019,chi,Can Children Understand Machine Learning Concepts?,10.1145/3290605.3300645,21,0.126,642.2,136,0.004048582995951417,False,2021
+93,AI Literacy & K-12,4,2019,chi,A is for Artificial Intelligence,10.1145/3290605.3300677,20,0.12,535.1,222,0.06086956521739131,False,2021
+93,AI Literacy & K-12,5,2021,pacmhci,Co-Designing AI Literacy Exhibits for Informal Learning Spaces,10.1145/3476034,18,0.108,592.6,118,-0.012264150943396227,False,2021
+94,Children's Play & Learning Environments,1,2012,iss,Interaction and recognition challenges in interpreting children's touch and gesture input ,10.1145/2396636.2396671,19,0.044,544.5,118,-0.02040816326530612,False,2013
+94,Children's Play & Learning Environments,2,2004,idc,Ambient wood,10.1145/1017833.1017834,18,0.042,437.7,324,0.006134969325153374,False,2013
+94,Children's Play & Learning Environments,3,2008,idc,Playing with the sound maker,10.1145/1463689.1463754,17,0.04,413.2,121,0.0,False,2013
+94,Children's Play & Learning Environments,4,2010,chi,Children's roles using keyword search interfaces at home,10.1145/1753326.1753388,14,0.033,109.0,95,0.42857142857142855,False,2013
+94,Children's Play & Learning Environments,5,2010,idc,Touch-screen technology for children,10.1145/1810543.1810580,14,0.033,343.2,74,0.05172413793103448,False,2013
+95,Usable Security & Phishing,1,2006,chi,Why phishing works,10.1145/1124772.1124861,28,0.199,428.8,1312,-0.1111111111111111,False,2017
+95,Usable Security & Phishing,2,2008,chi,You've been warned,10.1145/1357054.1357219,25,0.177,341.5,611,-0.058823529411764705,False,2017
+95,Usable Security & Phishing,3,2006,chi,Do security toolbars actually prevent phishing attacks?,10.1145/1124772.1124863,22,0.156,328.8,555,0.23076923076923078,False,2017
+95,Usable Security & Phishing,4,2007,chi,Protecting people from phishing,10.1145/1240624.1240760,18,0.128,209.8,280,-0.25,False,2017
+95,Usable Security & Phishing,5,2010,chi,Who falls for phish?,10.1145/1753326.1753383,18,0.128,200.3,609,-0.125,False,2017
+96,Smart-home Privacy,1,2018,pacmhci,"Alexa, Are You Listening?",10.1145/3274371,52,0.388,1598.8,561,-0.03909465020576132,False,2020
+96,Smart-home Privacy,2,2018,pacmhci,User Perceptions of Smart Home IoT Privacy,10.1145/3274469,44,0.328,1203.1,417,-0.03286384976525822,False,2020
+96,Smart-home Privacy,3,2019,pacmhci,Privacy Perceptions and Designs of Bystanders in Smart Homes,10.1145/3359161,42,0.313,1325.3,151,-0.0794979079497908,False,2020
+96,Smart-home Privacy,4,2019,chi,Who's In Control?,10.1145/3290605.3300498,41,0.306,1280.4,189,-0.03881278538812785,False,2020
+96,Smart-home Privacy,5,2019,chi,Defending My Castle,10.1145/3290605.3300428,35,0.261,1090.1,129,-0.06666666666666667,False,2020
+97,Deceptive Advertising Patterns,1,2018,chi,The Dark (Patterns) Side of UX Design,10.1145/3173574.3174108,80,0.645,2360.6,803,0.011904761904761904,False,2021
+97,Deceptive Advertising Patterns,2,2019,pacmhci,Dark Patterns at Scale,10.1145/3359183,65,0.524,1928.3,647,-0.23943661971830985,False,2021
+97,Deceptive Advertising Patterns,3,2020,chi,UI Dark Patterns and Where to Find Them,10.1145/3313831.3376600,46,0.371,1381.8,252,-0.138328530259366,False,2021
+97,Deceptive Advertising Patterns,4,2020,chi,Dark Patterns after the GDPR: Scraping Consent Pop-ups and Demonstrating their Influence,10.1145/3313831.3376321,39,0.315,1170.3,476,-0.03932584269662921,False,2021
+97,Deceptive Advertising Patterns,5,2014,dis,Dark patterns in proxemic interactions,10.1145/2598510.2598541,29,0.234,808.6,168,0.0,False,2021
+98,Ubicomp Privacy & Home Automation,1,2012,ubicomp,Expectation and purpose,10.1145/2370216.2370290,37,0.118,913.6,453,0.06756756756756757,False,2015
+98,Ubicomp Privacy & Home Automation,2,2014,chi,Practical trigger-action programming in the smart home,10.1145/2556288.2557420,29,0.093,673.7,385,0.05970149253731343,False,2015
+98,Ubicomp Privacy & Home Automation,3,2014,chi,In situ with bystanders of augmented reality glasses,10.1145/2556288.2557352,26,0.083,674.7,224,0.05343511450381679,False,2015
+98,Ubicomp Privacy & Home Automation,4,2013,chi,Privacy as part of the app decision-making process,10.1145/2470654.2466466,24,0.077,604.3,310,-0.26666666666666666,False,2015
+98,Ubicomp Privacy & Home Automation,5,2014,ubicomp,Privacy behaviors of lifeloggers using wearable cameras,10.1145/2632048.2632079,24,0.077,625.0,194,0.10434782608695652,False,2015
+99,Movement & Somaesthetics,1,2007,chi,Research through design as a method for interaction design research in HCI,10.1145/1240624.1240704,104,0.161,1325.7,2246,0.2,False,2017
+99,Movement & Somaesthetics,2,2012,chi,What should we expect from research through design?,10.1145/2207676.2208538,81,0.125,1806.9,1094,-0.10424710424710425,False,2017
+99,Movement & Somaesthetics,3,2003,chi,Ambiguity as a resource for design,10.1145/642611.642653,79,0.122,1255.3,1326,0.26666666666666666,False,2017
+99,Movement & Somaesthetics,4,2016,chi,Somaesthetic Appreciation Design,10.1145/2858036.2858583,75,0.116,2277.4,287,-0.07169117647058823,False,2017
+99,Movement & Somaesthetics,5,2017,chi,Embodied Design Ideation Methods,10.1145/3025453.3025873,65,0.1,1983.2,188,-0.047619047619047616,False,2017
+100,Bodily Play & Spectator Experience,1,2005,chi,Designing the spectator experience,10.1145/1054972.1055074,59,0.103,1425.3,434,0.05357142857142857,False,2011
+100,Bodily Play & Spectator Experience,2,2011,chi,Designing sports,10.1145/1978942.1979330,55,0.096,1593.5,280,-0.01818181818181818,False,2011
+100,Bodily Play & Spectator Experience,3,2009,chi,From interaction to trajectories,10.1145/1518701.1518812,50,0.088,1302.4,310,0.007575757575757576,False,2011
+100,Bodily Play & Spectator Experience,4,2003,chi,Exertion interfaces,10.1145/642611.642709,48,0.084,955.8,359,0.3125,False,2011
+100,Bodily Play & Spectator Experience,5,2006,chi,Getting a grip on tangible interaction,10.1145/1124772.1124838,46,0.081,1115.9,1077,0.19696969696969696,False,2011
+101,Speculative & Critical Design,1,2014,chi,Research through design fiction,10.1145/2556288.2557098,67,0.119,2101.2,414,0.06222222222222222,False,2014
+101,Speculative & Critical Design,2,2006,chi,Implications for design,10.1145/1124772.1124855,46,0.082,936.8,835,0.20930232558139536,False,2014
+101,Speculative & Critical Design,3,2013,chi,"What is ""critical"" about critical design?",10.1145/2470654.2466451,38,0.067,1115.6,480,0.03664921465968586,False,2014
+101,Speculative & Critical Design,4,2006,dis,Inspiration card workshops,10.1145/1142405.1142409,30,0.053,675.4,351,0.10909090909090909,False,2014
+101,Speculative & Critical Design,5,2012,chi,The envisioning cards,10.1145/2207676.2208562,30,0.053,755.3,236,0.12,False,2014
+102,Sustainable HCI,1,2010,chi,Mapping the landscape of sustainable HCI,10.1145/1753326.1753625,152,0.298,4422.1,775,-0.12605042016806722,False,2013
+102,Sustainable HCI,2,2007,chi,Sustainable interaction design,10.1145/1240624.1240705,129,0.253,2949.8,755,0.345679012345679,False,2013
+102,Sustainable HCI,3,2010,chi,The design of eco-feedback technology,10.1145/1753326.1753629,121,0.237,3541.9,786,-0.07253886010362694,False,2013
+102,Sustainable HCI,4,2012,chi,Sustainably unpersuaded,10.1145/2207676.2208539,110,0.216,3354.2,474,-0.15294117647058825,False,2013
+102,Sustainable HCI,5,2010,dis,HCI and environmental sustainability,10.1145/1858171.1858173,90,0.176,2677.3,425,-0.10902255639097744,False,2013
+103,Family Video Communication,1,2003,chi,Technology probes,10.1145/642611.642616,72,0.168,1823.7,1425,0.13,False,2009
+103,Family Video Communication,2,2001,chi,Digital family portraits,10.1145/365024.365126,41,0.096,964.1,582,0.030534351145038167,False,2009
+103,Family Video Communication,3,2001,chi,Casablanca,10.1145/365024.383749,34,0.079,937.3,287,0.42857142857142855,False,2009
+103,Family Video Communication,4,2009,idc,Developing a media space for remote synchronous parent-child interaction,10.1145/1551788.1551806,33,0.077,1037.1,99,0.0,False,2009
+103,Family Video Communication,5,2002,chi,Unremarkable computing,10.1145/503376.503448,29,0.068,779.6,369,0.5185185185185185,False,2009
+104,Memory & Reminiscence,1,2010,tochi,On human remains,10.1145/1806923.1806924,54,0.151,1563.8,207,-0.14049586776859505,False,2011
+104,Memory & Reminiscence,2,2002,cscw,Requirements for photoware,10.1145/587078.587102,46,0.128,1187.9,378,-0.15789473684210525,False,2011
+104,Memory & Reminiscence,3,2008,chi,AutoTopography,10.1145/1357054.1357065,41,0.115,1163.0,168,0.06422018348623854,False,2011
+104,Memory & Reminiscence,4,2006,chi,Understanding photowork,10.1145/1124772.1124885,38,0.106,913.8,341,-0.023255813953488372,False,2011
+104,Memory & Reminiscence,5,2011,chi,Teenagers and their virtual possessions,10.1145/1978942.1979161,35,0.098,1097.3,210,-0.024242424242424242,False,2011
+105,Interpretation & Critique in Design Research,1,2006,dis,Staying open to interpretation,10.1145/1142405.1142422,41,0.121,1213.7,585,0.0,False,2015
+105,Interpretation & Critique in Design Research,2,2012,dis,The logic of annotated portfolios,10.1145/2317956.2317968,41,0.121,1211.6,222,-0.03618421052631579,False,2015
+105,Interpretation & Critique in Design Research,3,2005,tochi,Making by making strange,10.1145/1067860.1067862,35,0.103,768.4,481,0.0,False,2015
+105,Interpretation & Critique in Design Research,4,2010,dis,An analysis and critique of<i>Research through Design</i>,10.1145/1858171.1858228,35,0.103,1098.1,485,-0.011111111111111112,False,2015
+105,Interpretation & Critique in Design Research,5,2011,chi,Making spaces,10.1145/1978942.1979169,34,0.1,950.1,179,0.037037037037037035,False,2015
+106,More-than-human Design,1,2017,chi,Designing for Cohabitation,10.1145/3025453.3025948,46,0.15,1399.4,186,0.0,False,2017
+106,More-than-human Design,2,2004,dis,Infotropism,10.1145/1013115.1013145,19,0.062,212.7,114,0.008695652173913044,False,2017
+106,More-than-human Design,3,2017,chi,Kinecting with Orangutans,10.1145/3025453.3025729,19,0.062,528.2,86,-0.023255813953488372,False,2017
+106,More-than-human Design,4,2008,dis,Empathetic living media,10.1145/1394445.1394495,16,0.052,199.1,57,0.0,False,2017
+106,More-than-human Design,5,2012,ubicomp,Exploring interspecies sensemaking,10.1145/2370216.2370239,16,0.052,479.9,82,-0.06451612903225806,False,2017
+107,VR Meditation & Breathing,1,2017,chi,Inner Garden,10.1145/3025453.3025743,33,0.147,1030.3,145,-0.043343653250773995,False,2017
+107,VR Meditation & Breathing,2,2017,chiplay,Life Tree,10.1145/3116595.3116621,27,0.12,810.7,149,-0.0975609756097561,False,2017
+107,VR Meditation & Breathing,3,2016,dis,Biosignals as Social Cues,10.1145/2901790.2901850,25,0.111,878.9,117,-0.049689440993788817,False,2017
+107,VR Meditation & Breathing,4,2012,dis,<i>Sonic Cradle</i>,10.1145/2317956.2318017,24,0.107,625.0,136,0.10101010101010101,False,2017
+107,VR Meditation & Breathing,5,2012,chi,Understanding heart rate sharing,10.1145/2207676.2208526,24,0.107,685.7,112,0.0411522633744856,False,2017
+108,Playful Food Experiences,1,2008,chi,Celebratory technology,10.1145/1357054.1357130,56,0.322,1243.6,285,0.23529411764705882,False,2015
+108,Playful Food Experiences,2,2011,ubicomp,CoDine,10.1145/2030112.2030116,23,0.132,546.7,96,0.12,False,2015
+108,Playful Food Experiences,3,2012,dis,Telematic dinner party,10.1145/2317956.2317964,23,0.132,521.5,97,-0.031746031746031744,False,2015
+108,Playful Food Experiences,4,2013,tei,LOLL <i>io</i>,10.1145/2460625.2460675,17,0.098,152.4,56,0.1875,False,2015
+108,Playful Food Experiences,5,2014,chi,"Temporal, affective, and embodied characteristics of taste experiences",10.1145/2556288.2557007,16,0.092,450.0,129,-0.00684931506849315,False,2015
+109,Calendars & Scheduling,1,1999,chi,"Social, individual and technological issues for groupware calendar systems",10.1145/302979.302982,12,0.3,222.4,221,0.13793103448275862,False,2004
+109,Calendars & Scheduling,2,2001,tochi,Dealing with mobility,10.1145/504704.504707,7,0.175,212.8,534,-0.05084745762711865,False,2004
+109,Calendars & Scheduling,3,1990,cscw,A visual calendar for scheduling group meetings,10.1145/99332.99361,5,0.125,125.0,77,0.08695652173913043,False,2004
+109,Calendars & Scheduling,4,2001,group,Building boundaries and negotiating work at home,10.1145/500286.500311,5,0.125,52.0,49,1.0,False,2004
+109,Calendars & Scheduling,5,1986,chi,Social and psychological factors influencing the design of office communications systems,10.1145/29933.275651,4,0.1,108.0,39,0.5,False,2004
+110,Self-tracking & Reflection,1,2006,ubicomp,Fish’n’Steps: Encouraging Physical Activity with an Interactive Computer Game,10.1007/11853565_16,115,0.222,1540.8,850,1.0,False,2015
+110,Self-tracking & Reflection,2,2006,chi,Design requirements for technologies that encourage physical activity,10.1145/1124772.1124840,95,0.183,2644.2,800,0.3968253968253968,False,2015
+110,Self-tracking & Reflection,3,2008,chi,Activity sensing in the wild,10.1145/1357054.1357335,93,0.179,2442.1,1128,0.03669724770642202,False,2015
+110,Self-tracking & Reflection,4,2015,chi,Reflective Informatics,10.1145/2702123.2702234,72,0.139,2062.0,248,-0.03940886699507389,False,2015
+110,Self-tracking & Reflection,5,2014,dis,Reviewing reflection,10.1145/2598510.2598598,67,0.129,1902.3,264,-0.029411764705882353,False,2015
+111,Chronic Care & Caregiving,1,2013,cscw,Caring for caregivers,10.1145/2441776.2441789,68,0.202,1655.4,172,-0.061855670103092786,False,2015
+111,Chronic Care & Caregiving,2,2011,cscw,Improving communication and social support for caregivers of high-risk infants through mob,10.1145/1958824.1958897,32,0.095,906.5,87,-0.017699115044247787,False,2015
+111,Chronic Care & Caregiving,3,2013,chi,Understanding the conflicting demands of family caregivers caring for depressed family mem,10.1145/2470654.2481365,32,0.095,900.8,66,-0.06666666666666667,False,2015
+111,Chronic Care & Caregiving,4,2010,chi,Catalyzing social support for breast cancer patients,10.1145/1753326.1753353,26,0.077,748.0,165,0.23529411764705882,False,2015
+111,Chronic Care & Caregiving,5,2015,cscw,Transition and Reflection in the Use of Health Information,10.1145/2675133.2675276,26,0.077,753.5,72,-0.06140350877192982,False,2015
+112,Behavior Sensing,1,2014,ubicomp,StudentLife,10.1145/2632048.2632054,86,0.261,1921.0,1130,0.010416666666666666,False,2018
+112,Behavior Sensing,2,2015,ubicomp,Trajectories of depression,10.1145/2750858.2805845,54,0.164,1264.5,505,-0.12149532710280374,False,2018
+112,Behavior Sensing,3,2018,imwut,Tracking Depression Dynamics in College Students Using Mobile Phone and Wearable Sensing,10.1145/3191775,48,0.146,1257.7,353,-0.2711864406779661,False,2018
+112,Behavior Sensing,4,2012,ubicomp,StressSense,10.1145/2370216.2370270,32,0.097,717.8,517,0.32432432432432434,False,2018
+112,Behavior Sensing,5,2016,ubicomp,CrossCheck,10.1145/2971648.2971740,32,0.097,859.0,273,-0.08088235294117647,False,2018
+113,Stress & Mood Technology,1,2012,chi,Engagement with online mental health interventions,10.1145/2207676.2208602,30,0.1,851.5,213,-0.06666666666666667,False,2018
+113,Stress & Mood Technology,2,2018,chi,"“Suddenly, we got to become therapists for each other”",10.1145/3173574.3173905,28,0.094,900.8,133,-0.08133971291866028,False,2018
+113,Stress & Mood Technology,3,2018,chi,Pocket Skills,10.1145/3173574.3173972,24,0.08,754.7,168,0.0,False,2018
+113,Stress & Mood Technology,4,2018,imwut,Just Breathe,10.1145/3191760,23,0.077,630.4,120,0.00819672131147541,False,2018
+113,Stress & Mood Technology,5,2016,ubicomp,EmotionCheck,10.1145/2971648.2971752,22,0.074,622.2,166,0.008547008547008548,False,2018
+114,Aging & Dementia Care,1,2015,tochi,An Age-Old Problem,10.1145/2696867,46,0.16,1362.8,456,-0.01487603305785124,False,2016
+114,Aging & Dementia Care,2,2013,chi,Older adults as digital content producers,10.1145/2470654.2470662,39,0.136,1180.9,185,0.05421686746987952,False,2016
+114,Aging & Dementia Care,3,2014,chi,Never too old,10.1145/2556288.2557184,38,0.132,1169.5,215,-0.0502283105022831,False,2016
+114,Aging & Dementia Care,4,2012,chi,"Empathy, participatory design and people with dementia",10.1145/2207676.2207749,37,0.129,1010.6,260,0.1267605633802817,False,2016
+114,Aging & Dementia Care,5,2012,chi,"Enabling self, intimacy and a sense of home in dementia",10.1145/2207676.2208654,29,0.101,821.0,105,0.3170731707317073,False,2016
+115,Personal Informatics Models,1,2010,chi,A stage-based model of personal informatics systems,10.1145/1753326.1753409,109,0.413,2796.8,1123,-0.005917159763313609,False,2018
+115,Personal Informatics Models,2,2015,ubicomp,A lived informatics model of personal informatics,10.1145/2750858.2804250,84,0.318,2475.7,503,-0.14382022471910114,False,2018
+115,Personal Informatics Models,3,2014,chi,Personal tracking as lived informatics,10.1145/2556288.2557039,78,0.295,2097.7,659,-0.18532818532818532,False,2018
+115,Personal Informatics Models,4,2014,chi,Understanding quantified-selfers' practices in collecting and exploring personal data,10.1145/2556288.2557372,76,0.288,2170.5,774,-0.1485148514851485,False,2018
+115,Personal Informatics Models,5,2016,cscw,Boundary Negotiating Artifacts in Personal Informatics,10.1145/2818048.2819926,55,0.208,1700.2,234,-0.07455012853470437,False,2018
+116,Clinical Information Work,1,2002,cscw,A finger on the pulse,10.1145/587078.587126,31,0.22,690.2,280,0.2619047619047619,False,2008
+116,Clinical Information Work,2,1996,cscw,Documents and professional practice,10.1145/240080.240342,29,0.206,588.5,252,0.06896551724137931,False,2008
+116,Clinical Information Work,3,2002,cscw,The parameters of common information spaces:,10.1145/587078.587104,23,0.163,365.9,164,1.0,False,2008
+116,Clinical Information Work,4,2006,cscw,AwareMedia,10.1145/1180875.1180892,20,0.142,565.3,164,0.0,False,2008
+116,Clinical Information Work,5,2004,cscw,Supporting informality,10.1145/1031607.1031632,16,0.113,282.2,110,-0.07692307692307693,False,2008
+117,"Sleep, ADHD & Lifelogging",1,2012,ubicomp,Lullaby,10.1145/2370216.2370253,25,0.117,701.3,219,-0.14583333333333334,False,2015
+117,"Sleep, ADHD & Lifelogging",2,2011,chi,Opportunities for computing technologies to support healthy sleep behaviors,10.1145/1978942.1979395,22,0.103,590.4,116,0.0136986301369863,False,2015
+117,"Sleep, ADHD & Lifelogging",3,2012,chi,ShutEye,10.1145/2207676.2208600,21,0.099,615.5,125,-0.041884816753926704,False,2015
+117,"Sleep, ADHD & Lifelogging",4,2006,ubicomp,SenseCam: A Retrospective Memory Aid,10.1007/11853565_11,19,0.089,198.8,768,1.0,False,2015
+117,"Sleep, ADHD & Lifelogging",5,2015,ubicomp,SleepTight,10.1145/2750858.2804266,17,0.08,480.1,160,-0.08108108108108109,False,2015
+118,Crowdsourcing & Human Computation,1,2010,uist,Soylent,10.1145/1866029.1866078,92,0.217,2849.3,706,-0.0603448275862069,False,2014
+118,Crowdsourcing & Human Computation,2,2008,chi,Crowdsourcing user studies with Mechanical Turk,10.1145/1357054.1357127,75,0.177,1977.8,1970,0.6222222222222222,False,2014
+118,Crowdsourcing & Human Computation,3,2011,uist,CrowdForge,10.1145/2047196.2047202,72,0.17,2167.1,307,-0.04597701149425287,False,2014
+118,Crowdsourcing & Human Computation,4,2012,cscw,Shepherding the crowd yields better work,10.1145/2145204.2145355,60,0.142,1764.3,337,-0.03663003663003663,False,2014
+118,Crowdsourcing & Human Computation,5,2014,cscw,Being a turker,10.1145/2531602.2531663,50,0.118,1630.4,281,-0.18316831683168316,False,2014
+119,Explainable Machine Learning,1,2021,pacmhci,To Trust or to Think,10.1145/3449287,109,0.263,3876.7,821,0.13005780346820808,False,2021
+119,Explainable Machine Learning,2,2019,chi,Designing Theory-Driven User-Centric Explainable AI,10.1145/3290605.3300831,91,0.219,3134.5,859,-0.05045871559633028,False,2021
+119,Explainable Machine Learning,3,2019,chi,Understanding the Effect of Accuracy on Trust in Machine Learning Models,10.1145/3290605.3300509,76,0.183,2087.7,508,0.27225130890052357,False,2021
+119,Explainable Machine Learning,4,2021,iui,Are Explanations Helpful? A Comparative Study of the Effects of Explanations in AI-Assiste,10.1145/3397481.3450650,76,0.183,2747.2,298,-0.13793103448275862,False,2021
+119,Explainable Machine Learning,5,2009,chi,<i>Why and why not</i> explanations improve the intelligibility of context-aware intellige,10.1145/1518701.1519023,73,0.176,1751.9,547,-0.014925373134328358,False,2021
+120,Data Visualization,1,2010,chi,Useful junk?,10.1145/1753326.1753716,36,0.09,239.3,405,1.0,False,2017
+120,Data Visualization,2,2010,chi,Crowdsourcing graphical perception,10.1145/1753326.1753357,32,0.08,781.4,817,0.02654867256637168,False,2017
+120,Data Visualization,3,2016,chi,When (ish) is My Bus?,10.1145/2858036.2858558,24,0.06,588.3,251,0.2962962962962963,False,2017
+120,Data Visualization,4,2015,chi,Understanding Data Videos,10.1145/2702123.2702431,23,0.058,106.0,151,0.08333333333333333,False,2017
+120,Data Visualization,5,2015,chi,ISOTYPE Visualization,10.1145/2702123.2702275,22,0.055,492.6,164,-0.11475409836065574,False,2017
+121,Fairness & Clinical AI,1,2019,chi,Improving Fairness in Machine Learning Systems,10.1145/3290605.3300830,69,0.231,2335.7,715,-0.052884615384615384,False,2021
+121,Fairness & Clinical AI,2,2019,chi,Unremarkable AI,10.1145/3290605.3300468,64,0.214,1448.7,240,0.20512820512820512,False,2021
+121,Fairness & Clinical AI,3,2020,chi,"Re-examining Whether, Why, and How Human-AI Interaction Is Uniquely Difficult to Design",10.1145/3313831.3376301,62,0.207,2164.7,589,-0.08333333333333333,False,2021
+121,Fairness & Clinical AI,4,2019,pacmhci,"""Hello AI"": Uncovering the Onboarding Needs of Medical Practitioners for Human-AI Collabor",10.1145/3359206,59,0.197,2109.4,583,-0.054570259208731244,False,2021
+121,Fairness & Clinical AI,5,2017,chi,UX Design Innovation,10.1145/3025453.3025739,53,0.177,1548.5,388,0.043209876543209874,False,2021
+122,Data Work & Infrastructure,1,2011,chi,Homebrew databases,10.1145/1978942.1979078,47,0.16,1119.3,130,-0.07692307692307693,False,2015
+122,Data Work & Infrastructure,2,2015,chi,The Politics of Measurement and Action,10.1145/2702123.2702298,41,0.14,1019.5,196,0.1693548387096774,False,2015
+122,Data Work & Infrastructure,3,2006,cscw,The human infrastructure of cyberinfrastructure,10.1145/1180875.1180950,39,0.133,987.1,354,0.48,False,2015
+122,Data Work & Infrastructure,4,2011,chi,Wrangler,10.1145/1978942.1979444,29,0.099,670.3,581,0.1875,False,2015
+122,Data Work & Infrastructure,5,2011,cscw,The value of data,10.1145/1958824.1958906,27,0.092,730.8,106,-0.06451612903225806,False,2015
+123,Interactive Machine Learning,1,2003,iui,Interactive machine learning,10.1145/604045.604056,57,0.329,1213.7,609,0.11764705882352941,False,2015
+123,Interactive Machine Learning,2,2015,chi,ModelTracker,10.1145/2702123.2702509,26,0.15,667.6,272,0.0,False,2015
+123,Interactive Machine Learning,3,2008,chi,CueFlik,10.1145/1357054.1357061,25,0.145,676.4,182,-0.15789473684210525,False,2015
+123,Interactive Machine Learning,4,2009,chi,EnsembleMatrix,10.1145/1518701.1518895,23,0.133,607.0,227,0.0,False,2015
+123,Interactive Machine Learning,5,2011,chi,Human model evaluation in interactive supervised learning,10.1145/1978942.1978965,18,0.104,484.6,202,-0.0967741935483871,False,2015
+124,Peer & Crowd Feedback,1,2006,chi,Getting the right design and the design right,10.1145/1124772.1124960,23,0.183,376.5,208,0.7692307692307693,False,2013
+124,Peer & Crowd Feedback,2,2013,tochi,Peer and self assessment in massive online classes,10.1145/2505057,23,0.183,672.2,393,-0.025380710659898477,False,2013
+124,Peer & Crowd Feedback,3,2012,cscw,What do you think?,10.1145/2145204.2145252,21,0.167,668.9,65,-0.046413502109704644,False,2013
+124,Peer & Crowd Feedback,4,2013,chi,A pilot study of using crowds in the classroom,10.1145/2470654.2470686,21,0.167,652.8,64,-0.01293103448275862,False,2013
+124,Peer & Crowd Feedback,5,2011,chi,Review spotlight,10.1145/1978942.1979167,13,0.103,335.0,83,0.045454545454545456,False,2013
+125,Computational Notebooks,1,2008,cscw,From individual to collaborative,10.1145/1460563.1460653,10,0.063,271.6,68,-0.07518796992481203,False,2016
+125,Computational Notebooks,2,2008,chi,Investigating statistical machine learning as a tool for software development,10.1145/1357054.1357160,7,0.044,183.0,131,0.0,False,2016
+125,Computational Notebooks,3,1997,iui,Evaluating the utility and usability of an adaptive hypermedia system,10.1145/238218.238320,5,0.031,9.5,95,1.0,False,2016
+125,Computational Notebooks,4,1997,iui,"Direct manipulation for comprehensible, predictable and controllable user interfaces",10.1145/238218.238281,5,0.031,59.3,276,0.19444444444444445,False,2016
+125,Computational Notebooks,5,1986,chi,"Visual programming, programming by example, and program visualization: a taxonomy",10.1145/22627.22349,4,0.025,30.4,195,0.75,False,2016
+126,Social Media & Mental Health,1,2003,chi,"Unpacking ""privacy"" for a networked world",10.1145/642611.642635,64,0.093,1478.9,967,0.3684210526315789,False,2015
+126,Social Media & Mental Health,2,2014,cscw,"""You can't block people offline""",10.1145/2531602.2531672,53,0.077,1648.8,157,0.009708737864077669,False,2015
+126,Social Media & Mental Health,3,2011,chi,We're in it together,10.1145/1978942.1979420,52,0.075,1474.6,249,-0.1276595744680851,False,2015
+126,Social Media & Mental Health,4,2009,chi,Predicting tie strength with social media,10.1145/1518701.1518736,49,0.071,1409.4,1383,0.37037037037037035,False,2015
+126,Social Media & Mental Health,5,2008,chi,"Looking at, looking up or keeping up with people?",10.1145/1357054.1357213,43,0.062,1193.3,1396,0.2413793103448276,False,2015
+127,ICTD & Rural Communities,1,2010,chi,Postcolonial computing,10.1145/1753326.1753522,101,0.171,2299.9,763,0.7631578947368421,False,2016
+127,ICTD & Rural Communities,2,2010,chi,Intermediated technology use in developing communities,10.1145/1753326.1753718,81,0.137,2123.1,228,0.25806451612903225,False,2016
+127,ICTD & Rural Communities,3,2010,chi,Avaaj Otalo,10.1145/1753326.1753434,74,0.125,1570.2,386,0.5185185185185185,False,2016
+127,ICTD & Rural Communities,4,2016,chi,The Ins and Outs of HCI for Development,10.1145/2858036.2858081,55,0.093,1636.2,252,-0.07941176470588235,False,2016
+127,ICTD & Rural Communities,5,2015,chi,Residual Mobilities,10.1145/2702123.2702573,46,0.078,1411.5,102,-0.0752212389380531,False,2016
+128,Wikipedia & Open Source,1,2005,group,Becoming Wikipedian,10.1145/1099203.1099205,77,0.136,1865.2,759,0.07547169811320754,False,2012
+128,Wikipedia & Open Source,2,2009,group,"Wikipedians are born, not made",10.1145/1531674.1531682,58,0.102,1548.1,281,-0.07518796992481203,False,2012
+128,Wikipedia & Open Source,3,2007,iui,SuggestBot,10.1145/1216295.1216309,57,0.101,1578.4,246,-0.015503875968992248,False,2012
+128,Wikipedia & Open Source,4,2007,chi,"He says, she says",10.1145/1240624.1240698,54,0.095,1481.5,573,0.057692307692307696,False,2012
+128,Wikipedia & Open Source,5,2008,cscw,Harnessing the wisdom of crowds in wikipedia,10.1145/1460563.1460572,48,0.085,1268.4,680,0.08695652173913043,False,2012
+129,Crisis Informatics,1,2010,chi,Microblogging during two natural hazards events,10.1145/1753326.1753486,65,0.122,1723.0,1419,-0.017543859649122806,False,2016
+129,Crisis Informatics,2,2011,chi,"""Voluntweeters""",10.1145/1978942.1979102,64,0.12,1658.4,537,0.0,False,2016
+129,Crisis Informatics,3,2012,cscw,(How) will the revolution be retweeted?,10.1145/2145204.2145212,50,0.094,1356.4,416,0.058823529411764705,False,2016
+129,Crisis Informatics,4,2007,chi,Citizen communications in crisis,10.1145/1240624.1240736,48,0.09,1192.3,491,0.48,False,2016
+129,Crisis Informatics,5,2010,cscw,Chatter on the red,10.1145/1718918.1718965,35,0.066,1071.9,444,0.17777777777777778,False,2016
+130,Gender & Algorithmic Bias,1,2015,chi,"""I always assumed that I wasn't really that close to [her]""",10.1145/2702123.2702556,60,0.137,1750.9,607,0.46551724137931033,False,2020
+130,Gender & Algorithmic Bias,2,2017,chi,"""Algorithms ruin everything""",10.1145/3025453.3025659,60,0.137,1677.5,273,-0.1554054054054054,False,2020
+130,Gender & Algorithmic Bias,3,2018,pacmhci,Safe Spaces and Safe Places,10.1145/3274424,59,0.135,1949.9,236,-0.081374321880651,False,2020
+130,Gender & Algorithmic Bias,4,2016,chi,"First I ""like"" it, then I hide it",10.1145/2858036.2858494,58,0.133,1599.1,361,-0.10625,False,2020
+130,Gender & Algorithmic Bias,5,2018,pacmhci,The Misgendering Machines,10.1145/3274357,52,0.119,1720.2,501,-0.03761061946902655,False,2020
+131,Civic Participation,1,2016,dis,Social Justice-Oriented Interaction Design,10.1145/2901790.2901861,65,0.159,1995.7,389,-0.07092198581560284,False,2017
+131,Civic Participation,2,2015,cscw,Strangers at the Gate,10.1145/2675133.2675147,61,0.149,1745.8,252,-0.03003003003003003,False,2017
+131,Civic Participation,3,2011,tochi,The relationship of action research to human-computer interaction,10.1145/1993060.1993065,45,0.11,1297.3,454,0.20161290322580644,False,2017
+131,Civic Participation,4,2015,chi,"HCI, Civic Engagement &amp; Trust",10.1145/2702123.2702255,42,0.103,1122.6,112,0.2875,False,2017
+131,Civic Participation,5,2015,cscw,Illegitimate Civic Participation,10.1145/2675133.2675156,42,0.103,1302.0,118,0.0,False,2017
+132,Moderation & Online Harassment,1,2019,tochi,Human-Machine Collaboration for Content Regulation,10.1145/3338243,86,0.253,2922.0,286,-0.1307901907356948,False,2020
+132,Moderation & Online Harassment,2,2017,cscw,Shaping Pro and Anti-Social Behavior on Twitch Through Moderation and Example-Setting,10.1145/2998181.2998277,82,0.241,1919.1,240,0.08888888888888889,False,2020
+132,Moderation & Online Harassment,3,2004,chi,Slash(dot) and burn,10.1145/985692.985761,74,0.218,1018.9,405,0.1956521739130435,False,2020
+132,Moderation & Online Harassment,4,2019,pacmhci,Does Transparency in Moderation Really Matter?,10.1145/3359252,74,0.218,2545.6,202,-0.10317460317460317,False,2020
+132,Moderation & Online Harassment,5,2017,pacmhci,You Can't Stay Here,10.1145/3134666,73,0.215,2170.2,378,-0.04830917874396135,False,2020
+133,Gig Work & Labor,1,2013,chi,Turkopticon,10.1145/2470654.2470742,88,0.262,2531.2,799,0.16382252559726962,False,2018
+133,Gig Work & Labor,2,2015,chi,Working with Machines,10.1145/2702123.2702548,88,0.262,2580.8,757,0.016556291390728478,False,2018
+133,Gig Work & Labor,3,2016,cscw,Standing Out from the Crowd,10.1145/2818048.2820026,70,0.208,2181.3,225,-0.0875,False,2018
+133,Gig Work & Labor,4,2015,chi,The Promise of the Sharing Economy among Disadvantaged Communities,10.1145/2702123.2702189,54,0.161,1757.9,329,0.03614457831325301,False,2018
+133,Gig Work & Labor,5,2015,chi,We Are Dynamo,10.1145/2702123.2702508,46,0.137,1375.1,276,-0.09897610921501707,False,2018
+134,"Gender, Intimacy & Safety",1,2010,chi,Feminist HCI,10.1145/1753326.1753521,101,0.308,2314.5,1098,0.031446540880503145,False,2020
+134,"Gender, Intimacy & Safety",2,2017,chi,Examining Menstrual Tracking to Inform the Design of Personal Informatics Tools,10.1145/3025453.3025635,56,0.171,1816.1,344,-0.07389937106918239,False,2020
+134,"Gender, Intimacy & Safety",3,2016,chi,HCI and Intimate Care as an Agenda for Change in Women's Health,10.1145/2858036.2858187,52,0.159,1632.4,162,-0.08,False,2020
+134,"Gender, Intimacy & Safety",4,2018,chi,“A Stalker's Paradise”,10.1145/3173574.3174241,50,0.152,1452.2,291,-0.08333333333333333,False,2020
+134,"Gender, Intimacy & Safety",5,2016,chi,On Looking at the Vagina through Labella,10.1145/2858036.2858119,49,0.149,1537.9,119,-0.1148936170212766,False,2020
+135,Enterprise Social Media & Crowdfunding,1,2008,cscw,Motivations for social networking at work,10.1145/1460563.1460674,35,0.152,947.5,751,0.0,False,2009
+135,Enterprise Social Media & Crowdfunding,2,2006,chi,Dogear,10.1145/1124772.1124792,23,0.1,653.1,297,0.5625,False,2009
+135,Enterprise Social Media & Crowdfunding,3,2000,cscw,Expertise recommender,10.1145/358916.358994,20,0.087,521.8,428,0.07142857142857142,False,2009
+135,Enterprise Social Media & Crowdfunding,4,2005,tochi,Social matching,10.1145/1096737.1096740,19,0.083,591.6,321,-0.017543859649122806,False,2009
+135,Enterprise Social Media & Crowdfunding,5,2009,chi,"Make new friends, but keep the old",10.1145/1518701.1518735,17,0.074,412.0,453,-0.010526315789473684,False,2009
+136,"Refugees, Hackathons & Crypto",1,2016,chi,Syrian Refugees and Digital Health in Lebanon,10.1145/2858036.2858331,26,0.186,714.3,157,-0.03508771929824561,False,2018
+136,"Refugees, Hackathons & Crypto",2,2016,chi,Designing for Transient Use,10.1145/2858036.2858230,25,0.179,655.0,85,0.029914529914529916,False,2018
+136,"Refugees, Hackathons & Crypto",3,2018,chi,In a New Land,10.1145/3173574.3174158,23,0.164,676.1,52,-0.05263157894736842,False,2018
+136,"Refugees, Hackathons & Crypto",4,2018,tochi,Participatory Design and Participatory Research,10.1145/3145472,21,0.15,580.0,160,-0.05517241379310345,False,2018
+136,"Refugees, Hackathons & Crypto",5,2016,idc,Future's Butterflies,10.1145/2930674.2930701,19,0.136,538.5,86,0.11764705882352941,False,2018

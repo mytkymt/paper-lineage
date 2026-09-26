@@ -1,114 +1,134 @@
 sub,name,band,papers,birth,founding_papers,author_groups,largest_group_share,top_paper_share,flag_paper,top_paper,top_paper_doi,ext_trigger_share,ext_trigger,export_share,founder_share_y6
-0,Speculative & Critical Design,"Work, Community & Society",851,1995,11,11,0.091,0.365,1,Cooperative inquiry,10.1145/302979.303166,0.273,Design at Work,0.667,
-1,"Gender, Intimacy & Safety","Work, Community & Society",513,2009,31,18,0.129,0.238,0,Feminist HCI,10.1145/1753326.1753521,0.161,Technology as Experience,0.566,0.12
-2,Gender & Algorithmic Bias,"Work, Community & Society",470,2012,42,24,0.214,0.108,0,"Disclosure, Stress, and Support During Gender Transition on Facebook",10.1145/2675133.2675152,0.238,The Presentation of Self in Everyday Life.,0.625,0.15
-3,Gig Work & Labor,"Work, Community & Society",371,2013,64,34,0.188,0.115,0,Turkopticon,10.1145/2470654.2470742,0.141,Everyday favors,0.615,0.33
-4,Civic Participation,"Work, Community & Society",322,2010,44,31,0.182,0.095,0,PosterVote,10.1145/2598510.2598523,0.341,,0.574,0.39
-5,Infrastructure & Making,"Work, Community & Society",275,2010,39,21,0.256,0.099,0,Emerging sites of HCI innovation,10.1145/2556288.2557132,0.231,Steps Toward an Ecology of Infrastructure: Design and Access,0.604,0.39
-6,Crisis Informatics,"Work, Community & Society",234,2009,34,15,0.441,0.141,0,"""Voluntweeters""",10.1145/1978942.1979102,0.265,Organized Behavior in Disaster.,0.73,0.73
-7,ICTD & Rural Communities,"Work, Community & Society",225,2007,32,13,0.312,0.194,0,Avaaj Otalo,10.1145/1753326.1753434,0.312,,0.667,0.31
-8,Race & Social Justice in HCI,"Work, Community & Society",172,2017,38,25,0.316,0.13,0,Deconstructing Community-Based Collaborative Design,10.1145/3359318,0.237,Does Technology Have Race?,0.579,0.3
-9,"Religion, Migration & Digital Life","Work, Community & Society",161,2014,26,18,0.115,0.106,0,Designing for Transient Use,10.1145/2858036.2858230,0.154,,0.607,0.33
-10,CSCW Foundations,"Work, Community & Society",139,1988,32,21,0.188,0.212,0,Ethnographically-informed systems design for air traffic control,10.1145/143457.143470,0.281,Computers and Democracy: A Scandinavian Challenge,0.903,0.18
-11,Data Work & Crypto Economies,"Work, Community & Society",156,2015,46,26,0.304,0.078,0,A Design Perspective on Data,10.1145/3025453.3025837,0.196,Using thematic analysis in psychology,0.694,0.4
-12,Crowdsourcing & Human Computation,Online Communities & Crowds,391,2006,20,13,0.2,0.314,0,Soylent,10.1145/1866029.1866078,0.4,Labeling images with a computer game,0.725,0.14
-13,Wikipedia & Open Source,Online Communities & Crowds,365,2004,27,10,0.63,0.126,0,SuggestBot,10.1145/1216295.1216309,0.296,,0.778,0.29
-14,Moderation & Online Harassment,Online Communities & Crowds,258,2015,44,22,0.205,0.08,0,Human-Machine Collaboration for Content Regulation,10.1145/3338243,0.205,Building Successful Online Communities: Evidence-Based Socia,0.595,0.14
-15,Crisis Informatics & Misinformation,Online Communities & Crowds,216,2013,24,15,0.208,0.128,0,Suppressing the Search Engine Manipulation Effect (SEME),10.1145/3134677,0.208,The Filter Bubble: What the Internet Is Hiding from You,0.814,0.0
-16,Live Streaming,Online Communities & Crowds,173,2014,43,28,0.116,0.127,0,Streaming on twitch,10.1145/2556288.2557048,0.163,Mobile broadcasting,0.705,0.22
-17,Crowdfunding & Online Feedback,Online Communities & Crowds,368,2002,16,14,0.125,0.232,0,Effects of machine translation on collaborative work,10.1145/1180875.1180955,0.375,,0.789,0.11
-18,Self-tracking & Reflection,Health & Wellbeing,427,2011,51,34,0.118,0.127,0,A lived informatics model of personal informatics,10.1145/2750858.2804250,0.314,"Understanding my data, myself",0.579,0.17
-19,Chronic Care & Caregiving,Health & Wellbeing,374,2008,38,23,0.158,0.146,0,MAHI,10.1145/1357054.1357131,0.105,Opportunities for Pervasive Computing in Chronic Cancer Care,0.554,0.33
-20,Social Media & Mental Health,Health & Wellbeing,343,2011,47,32,0.149,0.081,0,"It's not that i don't have problems, i'm just not putting them on facebook",10.1145/1958824.1958876,0.277,,0.65,0.3
-21,Behavior Sensing,Health & Wellbeing,277,2011,34,23,0.118,0.242,0,StudentLife,10.1145/2632048.2632054,0.176,,0.824,0.56
-22,Stress & Mood Technology,Health & Wellbeing,201,2013,33,23,0.182,0.1,0,EmotionCheck,10.1145/2971648.2971752,0.182,Design and evaluation guidelines for mental health technolog,0.674,0.43
-23,Persuasive Health & Activity,Health & Wellbeing,158,2006,25,15,0.32,0.195,0,Fish’n’Steps: Encouraging Physical Activity with an Interactive Computer Game,10.1007/11853565_16,0.4,,0.775,0.0
-24,Sleep & Family Routines,Health & Wellbeing,120,2014,30,16,0.267,0.117,0,From Personal Informatics to Family Informatics,10.1145/2998181.2998362,0.233,Unobtrusive Sleep Monitoring using Smartphones,0.59,0.3
-26,Smart Home Automation,"Privacy, Security & Smart Homes",199,2001,30,18,0.167,0.116,0,Unremarkable computing,10.1145/503376.503448,0.3,At Home with Ubiquitous Computing: Seven Challenges,0.811,0.43
-27,Youth Online Safety,"Privacy, Security & Smart Homes",162,2015,39,16,0.308,0.094,0,Parental Control vs. Teen Self-Regulation,10.1145/2998181.2998352,0.385,Parental Mediation of Children's Internet Use,0.667,0.41
-28,Usable Security & Phishing,"Privacy, Security & Smart Homes",152,2014,30,20,0.167,0.093,0,Scaling the Security Wall,10.1145/2702123.2702249,0.233,Crying Wolf: An Empirical Study of SSL Warning Effectiveness,0.861,0.2
-29,Photo Sharing & Privacy,"Privacy, Security & Smart Homes",149,2009,27,16,0.333,0.129,0,Fighting for my space,10.1145/2207676.2207761,0.296,"Imagined Communities: Awareness, Information Sharing, and Pr",0.712,0.11
-30,Authentication & Passwords,"Privacy, Security & Smart Homes",145,2008,24,12,0.333,0.13,0,Touch me once and i know it's you!,10.1145/2207676.2208544,0.292,A PIN-entry method resilient against shoulder surfing,0.857,0.42
-31,Smart-home Privacy,"Privacy, Security & Smart Homes",130,2017,47,37,0.085,0.084,0,"Alexa, Are You Listening?",10.1145/3274371,0.191,,0.658,0.0
-32,App Permissions & Policy,"Privacy, Security & Smart Homes",122,2015,29,17,0.241,0.121,0,Coconut,10.1145/3287056,0.379,Android permissions,0.818,0.18
-33,Deceptive Advertising Patterns,"Privacy, Security & Smart Homes",120,2019,45,23,0.2,0.119,0,Dark Patterns at Scale,10.1145/3359183,0.356,Tales from the Dark Side: Privacy Dark Strategies and Privac,,0.43
-34,Location Sharing & Privacy,"Privacy, Security & Smart Homes",134,2003,16,13,0.25,0.465,1,Location disclosure to social relations,10.1145/1054972.1054985,0.312,Personal privacy through understanding and action: five pitf,0.854,0.2
-35,Task Switching at Work,Mobile Life & Attention,201,2002,20,12,0.25,0.226,0,A diary study of task switching and interruptions,10.1145/985692.985715,0.35,,0.793,0.36
-36,Notifications & Interruptibility,Mobile Life & Attention,183,2001,18,11,0.222,0.196,0,"If not now, when?",10.1145/985692.985727,0.444,"Notification, Disruption, and Memory: Effects of Messaging I",0.737,0.6
-37,Social Network Sites at Work,Mobile Life & Attention,156,2006,37,19,0.351,0.133,0,Motivations for social networking at work,10.1145/1460563.1460674,0.27,,0.857,0.36
-38,Instant Messaging,Mobile Life & Attention,144,1999,21,11,0.238,0.207,0,Interaction and outeraction,10.1145/358916.358975,0.286,Visualizing conversation,0.818,0.0
-39,Digital Self-control,Mobile Life & Attention,130,2013,26,19,0.192,0.132,0,MyTime,10.1145/2858036.2858403,0.346,Habits make smartphone use more pervasive,0.646,0.36
-40,Smartphone Usage Logging,Mobile Life & Attention,120,2007,22,16,0.273,0.176,0,A diary study of mobile information needs,10.1145/1357054.1357125,0.182,Using the experience sampling method to evaluate ubicomp app,0.867,0.0
-41,Email & Peripheral Displays,Mobile Life & Attention,331,1985,16,13,0.125,0.438,1,More than just a communication system: diversity in the use of electronic mail,10.1145/62266.62293,0.25,Structuring computer-mediated communication systems to avoid,0.857,nan
-42,Older Adults & Technology,"Ageing, Care & Automation",208,2007,21,15,0.238,0.304,1,Desiring to be in touch in a changing communications landscape,10.1145/1518701.1518962,0.143,Older adults' use of information and communications technolo,0.722,0.0
-43,Automated Driving,"Ageing, Care & Automation",136,2015,36,17,0.222,0.148,0,SupportingTrust in Autonomous Driving,10.1145/3025171.3025198,0.222,“Take over!” How long does it take to get the driver back in,0.868,0.0
-44,Dementia & Ageing Care,"Ageing, Care & Automation",134,2016,40,13,0.575,0.087,0,A Critical Lens on Dementia and Design in HCI,10.1145/3025453.3025522,0.575,A design-led inquiry into personhood in dementia,0.592,0.44
-45,Autonomous Vehicle Communication,"Ageing, Care & Automation",291,1981,26,21,0.154,0.172,0,A quantitative model of the learning and performance of text editing knowledge,10.1145/317456.317494,0.115,,0.929,nan
-46,Memory & Reminiscence,Sustainability & Everyday Living,319,2000,15,14,0.133,0.228,0,Requirements for photoware,10.1145/587078.587102,0.267,Snapshot Versions of Life,0.667,
-47,Sustainable HCI,Sustainability & Everyday Living,293,2007,50,26,0.36,0.124,0,Mapping the landscape of sustainable HCI,10.1145/1753326.1753625,0.24,Leveraging Social Networks To Motivate Individuals to Reduce,0.733,0.24
-48,Multispecies & Urban Nature,Sustainability & Everyday Living,192,2016,40,25,0.125,0.14,0,Design for Collaborative Survival,10.1145/3173574.3173614,0.15,Design: Cultural probes,0.67,0.27
-49,Bio-materials & Sustainable Making,Sustainability & Everyday Living,167,2019,50,22,0.44,0.059,0,SCOBY BREASTPLATE: SLOWLY GROWING A MICROBIAL INTERFACE,10.1145/3569009.3572805,0.34,Living media interfaces: a multi-perspective analysis of bio,0.632,0.31
-50,Playful Food Experiences,Sustainability & Everyday Living,144,2010,27,16,0.222,0.106,0,Telematic dinner party,10.1145/2317956.2317964,0.259,,0.623,0.43
-51,"Materials, Death & Legacy",Sustainability & Everyday Living,267,2002,12,10,0.167,0.267,0,From use to presence,10.1145/513665.513668,0.25,,0.64,nan
-52,Explainable Machine Learning,"AI, Data & Intelligent Interfaces",1000,2003,15,13,0.2,0.426,1,Interactive machine learning,10.1145/604045.604056,0.267,,0.784,0.0
-53,Generative AI & Writing,"AI, Data & Intelligent Interfaces",994,1998,11,11,0.091,0.274,0,Instrumental interaction,10.1145/332040.332473,0.182,,0.714,
-54,Voice & Conversational Agents,"AI, Data & Intelligent Interfaces",759,1994,15,13,0.2,0.586,1,Computers are social actors,10.1145/191666.191703,0.267,Can computer personalities be human personalities?,0.819,0.0
-55,GUI Toolkits & Web Interfaces,"AI, Data & Intelligent Interfaces",752,1981,19,15,0.158,0.156,0,ADM — a dialog manager,10.1145/1165385.317489,0.316,Formal Grammar and Human Factors Design of an Interactive Gr,0.867,nan
-56,Data Visualization,"AI, Data & Intelligent Interfaces",416,2009,31,19,0.226,0.188,0,Useful junk?,10.1145/1753326.1753716,0.161,,0.842,0.21
-57,Search & Recommendation,"AI, Data & Intelligent Interfaces",395,1993,28,17,0.321,0.124,0,SenseMaker,10.1145/258549.258563,0.214,Using collaborative filtering to weave an information tapest,0.91,0.5
-58,Video Interfaces & Editing,"AI, Data & Intelligent Interfaces",372,1985,11,7,0.364,0.412,0,Dynamic construction of animated help from application context,10.1145/62402.62433,0.273,,0.778,0.0
-59,Programming & Notebooks,"AI, Data & Intelligent Interfaces",360,2001,17,10,0.235,0.456,1,Designing the whyline,10.1145/985692.985712,0.294,,0.779,nan
-60,Prototyping & Authoring Tools,"AI, Data & Intelligent Interfaces",292,1990,14,13,0.143,0.433,1,Wizard of Oz studies,10.1145/169891.169968,0.143,An approach to the formal analysis of user complexity,0.815,
-61,Meeting Capture & Reading,"AI, Data & Intelligent Interfaces",253,1985,10,9,0.2,0.267,0,The effects of device technology on the usability of advanced telephone function,10.1145/67449.67514,0.1,,0.827,
-62,Usability Methods & Personas,"AI, Data & Intelligent Interfaces",195,1986,16,12,0.25,0.51,0,Heuristic evaluation of user interfaces,10.1145/97243.97281,0.125,,0.913,0.38
-63,Clinical Information Work,"AI, Data & Intelligent Interfaces",251,1985,13,9,0.231,0.4,1,Design environments for constructive and argumentative design,10.1145/67449.67501,0.154,Learning to use word processors,0.842,0.2
-64,Gamification & Engagement,Games & Play,457,2011,93,43,0.387,0.059,0,Emotional and Functional Challenge in Core and Avant-garde Games,10.1145/2793107.2793147,0.161,The Motivational Pull of Video Games: A Self-Determination T,0.762,0.55
-65,Movement & Somaesthetics,Games & Play,340,2008,24,19,0.167,0.237,0,Autobiographical design in HCI research,10.1145/2317956.2318034,0.208,Where the Action Is: The Foundations of Embodied Interaction,0.652,0.27
-66,Exergames & Bodily Play,Games & Play,257,2003,11,10,0.182,0.319,0,Exertion interfaces,10.1145/642611.642709,0.182,,0.667,
-67,Esports & Player Communities,Games & Play,245,2006,18,12,0.167,0.252,0,Strangers and friends,10.1145/1180875.1180898,0.333,,0.735,0.18
-68,Location-based Museum Play,Games & Play,158,1998,17,12,0.235,0.243,0,Revisiting the visit:,10.1145/587078.587100,0.294,Exhibiting Interaction: Conduct and Collaboration in Museums,0.848,0.33
-69,VR Meditation & Breathing,Games & Play,155,2014,45,32,0.089,0.088,0,Attending to Breath,10.1145/3196709.3196765,0.178,,0.651,0.29
-70,Brain-Computer Interfaces,Games & Play,123,2009,25,18,0.28,0.175,0,Using fNIRS brain sensing to evaluate information visualization interfaces,10.1145/2470654.2470723,0.16,"A novel method for fast imaging of brain function, non-invas",0.837,0.14
-71,Rehabilitation Games,Games & Play,120,2011,38,16,0.526,0.103,0,"Effects of balancing for physical abilities on player performance, experience an",10.1145/2556288.2556963,0.158,Optimising engagement for stroke rehabilitation using seriou,0.723,0.5
-72,Playful Experience & Drones,Games & Play,335,2004,18,15,0.111,0.127,0,Understanding experience in interactive systems,10.1145/1013115.1013152,0.278,Supporting communication and collaboration practices in safe,0.787,0.0
-73,Visual Accessibility,Accessibility & Assistive Tech,399,2006,28,18,0.214,0.377,1,VizWiz,10.1145/1866029.1866080,0.143,Labeling images with a computer game,0.649,0.67
-74,Neurodivergence & Autism,Accessibility & Assistive Tech,378,2004,14,10,0.357,0.185,0,SIDES,10.1145/1180875.1180877,0.214,,0.714,0.5
-75,Web Accessibility,Accessibility & Assistive Tech,319,1992,19,11,0.211,0.286,1,Improving GUI accessibility for people with low vision,10.1145/223904.223919,0.421,The SonicFinder: An Interface That Uses Auditory Icons,0.828,0.1
-76,Deaf & Sign Language Tech,Accessibility & Assistive Tech,311,2005,20,12,0.2,0.231,0,ClassInFocus,10.1145/1639642.1639656,0.2,,0.667,0.43
-78,Tactile Graphics,Accessibility & Assistive Tech,235,2008,22,14,0.273,0.367,0,VizTouch,10.1145/2148131.2148160,0.136,Automated tactile graphics translation,0.693,0.0
-79,Blind & Low-vision Access,Accessibility & Assistive Tech,232,2004,11,10,0.182,0.286,0,Multimodal collaborative handwriting training for visually-impaired people,10.1145/1357054.1357119,0.364,Audio system for technical readings,0.686,
-80,DIY Assistive Technology,Accessibility & Assistive Tech,153,2013,31,18,0.387,0.133,0,Sharing is Caring,10.1145/2702123.2702525,0.258,Predictors of Assistive Technology Abandonment,0.596,0.4
-81,Accessible Games & VR,Accessibility & Assistive Tech,143,2007,16,11,0.188,0.258,0,Vi-bowling,10.1145/1878803.1878836,0.188,Making the mainstream accessible,0.719,0.0
-82,AAC & Communication Disabilities,Accessibility & Assistive Tech,223,2000,10,6,0.3,0.511,1,The participatory design of a sound and image enhanced daily planner for people ,10.1145/985692.985744,0.2,Inferring Informational Goals from Free-Text Queries: A Baye,0.771,0.0
-83,Real-time Groupware,Remote & Mixed-Reality Collaboration,285,1986,46,37,0.087,0.132,0,Rendezvous: an architecture for synchronous multi-user applications,10.1145/99332.99364,0.304,,0.904,0.0
-84,Gaze in Video Communication,Remote & Mixed-Reality Collaboration,254,1990,12,7,0.333,0.161,0,ClearBoard,10.1145/142750.142977,0.25,Artificial reality II,0.801,0.0
-85,Family Video Communication,Remote & Mixed-Reality Collaboration,253,2004,11,9,0.182,0.236,0,Everyday practices with mobile video telephony,10.1145/1124772.1124900,0.364,Provocative Awareness,0.66,0.0
-86,Augmented Reality Collaboration,Remote & Mixed-Reality Collaboration,231,2013,28,20,0.179,0.204,0,Holoportation,10.1145/2984511.2984517,0.214,,0.757,0.06
-87,Public & Ambient Displays,Remote & Mixed-Reality Collaboration,222,2000,19,16,0.105,0.415,1,Interactive public ambient displays,10.1145/1029632.1029656,0.263,In search of design principles for tools and practices to su,0.778,nan
-88,Distributed Team Awareness,Remote & Mixed-Reality Collaboration,215,1988,18,10,0.333,0.242,0,Portholes,10.1145/142750.142982,0.333,EuroPARC's integrated interactive intermedia facility (IIIF),0.87,0.0
-89,Social VR & Presence,Remote & Mixed-Reality Collaboration,184,2017,43,28,0.116,0.117,0,"Body, Avatar, and Me",10.1145/3432938,0.233,Measuring Presence in Virtual Environments: A Presence Quest,0.78,0.18
-90,Tabletop Collaboration,Remote & Mixed-Reality Collaboration,152,1999,14,10,0.143,0.259,0,Single display groupware,10.1145/302979.303064,0.286,The Effect of Turn-Taking Protocols on Children's Learning i,0.818,nan
-91,Surgical AR & Video Guidance,Remote & Mixed-Reality Collaboration,154,2011,21,16,0.286,0.182,0,Imaging the body,10.1145/2470654.2466197,0.238,,0.833,0.09
-92,RF & Radar Sensing,Activity Sensing & Recognition,235,2016,65,26,0.369,0.09,0,FarSense,10.1145/3351279,0.492,Understanding and Modeling of WiFi Signal Based Human Activi,0.879,0.47
-93,Wearable Activity Recognition,Activity Sensing & Recognition,212,2011,30,20,0.3,0.175,0,USC-HAD,10.1145/2370216.2370438,0.233,Activity Recognition from User-Annotated Acceleration Data,0.894,0.43
-94,Indoor Localization,Activity Sensing & Recognition,170,2002,14,9,0.357,0.208,0,PowerLine Positioning: A Practical Sub-Room-Level Indoor Location System for Dom,10.1007/11853565_26,0.429,Place Lab: Device Positioning Using Radio Beacons in the Wil,0.914,0.2
-95,Urban Mobility Data,Activity Sensing & Recognition,161,2009,31,21,0.161,0.148,0,Urban computing with taxicabs,10.1145/2030112.2030126,0.226,Understanding individual human mobility patterns,0.915,0.17
-96,Acoustic Health Sensing,Activity Sensing & Recognition,244,2015,46,33,0.13,0.124,0,C-FMCW Based Contactless Respiration Detection Using Acoustic Signal,10.1145/3161188,0.217,Contactless Sleep Apnea Detection on Smartphones,0.824,0.21
-97,Tangible Interaction,"Tangible, VR & Fabrication",884,1995,49,30,0.204,0.296,1,Tangible bits,10.1145/258549.258715,0.245,Interacting with paper on the DigitalDesk,0.785,0.2
-99,Deformable & Soft Displays,"Tangible, VR & Fabrication",386,2004,15,13,0.133,0.174,0,Actuation and tangible user interfaces,10.1145/1226969.1227012,0.2,Embodied user interfaces for really direct manipulation,0.581,0.25
-100,Digital Fabrication,"Tangible, VR & Fabrication",378,2011,49,21,0.408,0.064,0,WirePrint,10.1145/2642918.2647359,0.469,FAB: The Coming Revolution on Your Desktop--from Personal Co,0.489,0.17
-101,E-textiles & Weaving,"Tangible, VR & Fabrication",355,2009,25,20,0.2,0.233,0,Handcrafting textile interfaces from a kit-of-no-parts,10.1145/1935701.1935715,0.24,"Fabric PCBs, electronic sequins, and socket buttons: techniq",0.483,0.0
-102,Printed Electronics,"Tangible, VR & Fabrication",318,2007,26,22,0.115,0.26,0,Electronic popables,10.1145/1709886.1709909,0.154,Physical Prototyping with Smart-Its,0.5,0.1
-103,Data Physicalization,"Tangible, VR & Fabrication",123,2013,39,14,0.513,0.227,0,Opportunities and Challenges for Data Physicalization,10.1145/2702123.2702180,0.256,Beyond the Tyranny of the Pixel: Exploring the Physicality o,0.647,0.8
-104,Electrical Muscle Stimulation,"Tangible, VR & Fabrication",258,2008,25,21,0.12,0.328,1,PossessedHand,10.1145/1978942.1979018,0.16,,0.755,0.0
-105,Hand Input & Gesture Sensing,Input & Interaction Techniques,880,2001,12,10,0.167,0.345,1,Toward subtle intimate interfaces for mobile devices using an EMG controller,10.1145/1054972.1055039,0.333,"The gesture pendant: a self-illuminating, wearable, infrared",0.647,0.0
-106,Touch & Multi-touch Input,Input & Interaction Techniques,536,1994,23,15,0.13,0.152,0,"Squeeze me, hold me, tilt me! An exploration of manipulative user interfaces",10.1145/274644.274647,0.391,Two-handed input in a compound task,0.7,0.45
-107,Pointing & Target Selection,Input & Interaction Techniques,421,1990,15,14,0.133,0.331,0,Extending Fitts' law to two-dimensional tasks,10.1145/142750.142794,0.4,The information capacity of the human motor system in contro,0.705,0.0
-108,Gaze & Eye Tracking,Input & Interaction Techniques,415,1988,18,12,0.222,0.699,1,What you look at is what you get: eye movement-based interaction techniques,10.1145/97243.97246,0.333,Virtual environment display system,0.842,0.33
-109,Text Entry,Input & Interaction Techniques,392,1996,17,14,0.118,0.252,1,The design and evaluation of a high-performance soft keyboard,10.1145/302979.302983,0.235,Touch-typing with a stylus,0.704,0.0
-110,Fisheye & Scrolling Techniques,Input & Interaction Techniques,314,1988,25,18,0.32,0.245,0,The perspective wall,10.1145/108844.108870,0.28,Generalized fisheye views,0.908,0.17
-111,Cross-device & Large Displays,Input & Interaction Techniques,280,1998,20,14,0.2,0.173,0,Partitioning digital worlds,10.1145/365024.365312,0.2,Some computer science issues in ubiquitous computing,0.771,0.0
-112,Gesture Elicitation & Recognition,Input & Interaction Techniques,249,2003,16,16,0.062,0.556,1,"Gestures without libraries, toolkits or training: a $1 recognizer for user inter",10.1145/1294211.1294238,0.25,,0.761,
-113,Mixed Reality Systems,Input & Interaction Techniques,229,2014,38,26,0.079,0.107,0,SymbiosisSketch,10.1145/3173574.3173759,0.132,Drawing on Air: Input Techniques for Controlled 3D Line Illu,0.813,0.17
-114,Menus & Command Selection,Input & Interaction Techniques,188,1994,14,11,0.214,0.299,0,Split menus,10.1145/174630.174632,0.286,The psychology of menu selection: Designing cognitive contro,0.766,nan
-115,Multimodal Speech Input,Input & Interaction Techniques,66,1996,14,11,0.286,0.283,0,Mutual disambiguation of recognition errors in a multimodel architecture,10.1145/302979.303163,0.286,Integration themes in multimodal human-computer interaction,0.875,
+0,3D Pointing & VR Interaction,Input & Interaction Techniques,675,1992,22,19,0.136,0.244,0,The go-go interaction technique,10.1145/237091.237102,0.227,3DM: a three dimensional modeler using a head-mounted displa,0.795,0.09
+1,RF & Radar Sensing,Input & Interaction Techniques,656,2013,57,30,0.158,0.079,0,Human respiration detection with commodity wifi devices,10.1145/2971648.2971744,0.193,Whole-home gesture recognition using wireless signals,0.818,0.2
+2,Wearable Activity Recognition,Input & Interaction Techniques,535,2003,27,14,0.259,0.14,0,Fine-Grained Activity Recognition by Aggregating Abstract Object Usage,10.1109/iswc.2005.22,0.333,Activity Recognition from User-Annotated Acceleration Data,0.896,0.59
+3,Pointing & Target Selection,Input & Interaction Techniques,523,1992,11,9,0.182,0.314,0,Extending Fitts' law to two-dimensional tasks,10.1145/142750.142794,0.364,Fitts' Law as a Research and Design Tool in Human-Computer I,0.75,0.0
+4,Hand Input & Gesture Sensing,Input & Interaction Techniques,501,1997,11,9,0.182,0.34,0,“Body coupled FingerRing”,10.1145/258549.258636,0.273,,0.642,nan
+5,Fisheye & Scrolling Techniques,Input & Interaction Techniques,463,1986,20,18,0.15,0.476,1,Generalized fisheye views,10.1145/22627.22342,0.2,Virtual environment display system,0.881,0.0
+6,Gesture Elicitation & Recognition,Input & Interaction Techniques,444,1998,14,10,0.143,0.165,0,Visual similarity of pen gestures,10.1145/332040.332458,0.214,,0.676,0.0
+7,Pen & Sketch Input,Input & Interaction Techniques,414,1990,16,14,0.188,0.18,0,A perceptually-supported sketch editor,10.1145/192426.192494,0.25,,0.727,0.0
+8,Text Entry,Input & Interaction Techniques,399,1997,19,15,0.158,0.208,0,The design and evaluation of a high-performance soft keyboard,10.1145/302979.302983,0.211,Touch-typing with a stylus,0.667,0.29
+9,Touch & Multi-touch Input,Input & Interaction Techniques,308,2001,16,15,0.125,0.343,1,Low-cost multi-touch sensing through frustrated total internal reflection,10.1145/1095034.1095054,0.188,Rock 'n' Scroll is here to stay [user interface],0.579,0.0
+11,VR Haptics,"Tangible, VR & Fabrication",684,2008,30,24,0.133,0.249,0,PossessedHand,10.1145/1978942.1979018,0.1,"Distance Perception in Immersive Virtual Environments, Revis",0.687,0.0
+12,Deformable & Soft Displays,"Tangible, VR & Fabrication",679,2002,13,10,0.231,0.286,0,Gummi,10.1145/985692.985726,0.154,Interacting with paper on the DigitalDesk,0.593,0.15
+13,Tangible Interaction,"Tangible, VR & Fabrication",674,1995,36,22,0.278,0.299,1,Tangible bits,10.1145/258549.258715,0.278,Interacting with paper on the DigitalDesk,0.743,0.5
+14,Printed Electronics,"Tangible, VR & Fabrication",518,2007,34,20,0.265,0.167,0,Electronic popables,10.1145/1709886.1709909,0.176,DiamondTouch,0.545,0.17
+15,Digital Fabrication,"Tangible, VR & Fabrication",513,2010,34,19,0.294,0.106,0,Interactive fabrication,10.1145/1935701.1935716,0.559,FAB: The Coming Revolution on Your Desktop--from Personal Co,0.455,0.17
+16,E-textiles & Weaving,"Tangible, VR & Fabrication",477,2005,32,23,0.125,0.271,1,The LilyPad Arduino,10.1145/1357054.1357123,0.312,E-broidery: Design and fabrication of textile-based computin,0.574,0.25
+17,Tactile & Thermal Feedback,"Tangible, VR & Fabrication",344,2003,19,12,0.316,0.143,0,Tactile feedback for mobile interactions,10.1145/1240624.1240649,0.263,Perceptual Design of Haptic Icons,0.743,0.09
+18,VR Locomotion & Presence,"Tangible, VR & Fabrication",286,2000,15,13,0.2,0.263,0,Walking-pad,10.1145/1027933.1027948,0.133,Musings on Telepresence and Virtual Presence,0.838,
+19,Physical Prototyping Toolkits,"Tangible, VR & Fabrication",198,2001,13,11,0.154,0.383,1,Phidgets,10.1145/502348.502388,0.154,,0.7,0.12
+20,Making & Makerspaces,"Tangible, VR & Fabrication",152,2011,40,26,0.1,0.14,0,Democratizing technology,10.1145/2470654.2481360,0.375,Rise of the expert amateur,0.609,0.33
+21,Data Physicalization & Bio-materials,"Tangible, VR & Fabrication",320,2011,39,30,0.154,0.233,0,Opportunities and Challenges for Data Physicalization,10.1145/2702123.2702180,0.154,Beyond the Tyranny of the Pixel: Exploring the Physicality o,0.688,0.09
+22,Gaze-based Interaction,"Gaze, Eye Tracking & Multimodal Sensing",351,1998,20,14,0.15,0.283,0,Manual and gaze input cascaded (MAGIC) pointing,10.1145/302979.303053,0.35,Eye Tracking in Advanced Interface Design,0.759,0.17
+23,Eye Tracker Quality & Gaze Estimation,"Gaze, Eye Tracking & Multimodal Sensing",260,2006,34,19,0.147,0.127,0,Homography normalization for robust gaze estimation in uncalibrated setups,10.1145/1743666.1743670,0.265,A Novel Approach to 3-D Gaze Tracking Using Stereo Cameras,0.85,0.33
+24,Scanpaths & Visual Search,"Gaze, Eye Tracking & Multimodal Sensing",255,2002,25,19,0.12,0.138,0,eyePatterns,10.1145/1117309.1117360,0.2,Scanpaths in saccadic eye movements while viewing and recogn,0.867,0.33
+25,Pupillometry & Cognitive Load,"Gaze, Eye Tracking & Multimodal Sensing",245,2008,39,26,0.128,0.097,0,Feasibility and pragmatics of classifying working memory load with an electroenc,10.1145/1357054.1357187,0.179,,0.84,0.18
+26,Gaze in Conversation & Groups,"Gaze, Eye Tracking & Multimodal Sensing",218,2002,24,15,0.167,0.169,0,A probabilistic inference of multiparty-conversation structure based on Markov-s,10.1145/1088463.1088497,0.25,,0.872,0.5
+27,Authentication & Passwords,"Gaze, Eye Tracking & Multimodal Sensing",200,2009,32,15,0.25,0.098,0,Touch me once and i know it's you!,10.1145/2207676.2208544,0.281,,0.843,0.6
+28,Affect Recognition,"Gaze, Eye Tracking & Multimodal Sensing",180,2011,48,31,0.104,0.109,0,Video and Image based Emotion Recognition Challenges in the Wild,10.1145/2818346.2829994,0.604,"Collecting Large, Richly Annotated Facial-Expression Databas",0.929,0.11
+29,Multimodal Sentiment & Speaking,"Gaze, Eye Tracking & Multimodal Sensing",163,2011,47,19,0.319,0.135,0,Rhema,10.1145/2678025.2701386,0.17,,0.896,0.38
+30,Fixation & Saccade Analysis,"Gaze, Eye Tracking & Multimodal Sensing",153,2016,38,25,0.158,0.13,0,Predicting Cognitive Load in an Emergency Simulation Based on Behavioral and Phy,10.1145/3340555.3353735,0.184,Eye movements in reading and information processing: 20 year,0.868,0.38
+31,Gaze Calibration & Datasets,"Gaze, Eye Tracking & Multimodal Sensing",140,2002,11,8,0.273,0.205,0,ViewPointer,10.1145/1095034.1095043,0.273,Interacting with groups of computers,0.725,0.0
+32,Reading & Implicit Interest,"Gaze, Eye Tracking & Multimodal Sensing",307,2000,23,21,0.087,0.119,0,Implicit interest indicators,10.1145/359784.359836,0.174,,0.871,0.0
+33,Remote Collaboration & Telepresence,"Collaboration, Displays & Mixed Reality",653,1990,11,8,0.182,0.174,0,ClearBoard,10.1145/142750.142977,0.182,Artificial reality II,0.789,0.0
+34,CSCW Foundations,"Collaboration, Displays & Mixed Reality",564,1985,56,33,0.161,0.183,0,Why CSCW applications fail: problems in the design and evaluationof organization,10.1145/62266.62273,0.107,,0.897,0.33
+35,Cross-device & Large Displays,"Collaboration, Displays & Mixed Reality",467,1995,16,13,0.188,0.272,0,Pick-and-drop,10.1145/263407.263505,0.25,Interacting with paper on the DigitalDesk,0.762,0.11
+36,UI Toolkits & Automatic Generation,"Collaboration, Displays & Mixed Reality",378,1981,22,19,0.136,0.194,0,ADM --- a dialog manager,10.1145/317456.317489,0.273,Formal Grammar and Human Factors Design of an Interactive Gr,0.878,nan
+37,AR Authoring & Assembly,"Collaboration, Displays & Mixed Reality",349,2001,12,11,0.167,0.368,0,DART,10.1145/1029632.1029669,0.167,,0.759,
+38,Tabletop Collaboration,"Collaboration, Displays & Mixed Reality",294,2001,24,14,0.25,0.285,1,Territoriality in collaborative tabletop workspaces,10.1145/1031607.1031655,0.333,DiamondTouch,0.764,0.25
+39,Public & Ambient Displays,"Collaboration, Displays & Mixed Reality",288,2000,27,20,0.148,0.366,1,Interactive public ambient displays,10.1145/1029632.1029656,0.259,In search of design principles for tools and practices to su,0.757,0.0
+40,Real-time Groupware,"Collaboration, Displays & Mixed Reality",289,1986,18,15,0.111,0.174,0,Rendezvous: an architecture for synchronous multi-user applications,10.1145/99332.99364,0.5,,0.885,0.0
+41,Social VR & Presence,"Collaboration, Displays & Mixed Reality",240,2015,40,28,0.15,0.152,0,Shaping Pro-Social Interaction in VR,10.1145/3290605.3300794,0.175,The Effect of Behavioral Realism and Form Realism of Real-Ti,0.795,0.25
+42,Mixed Reality Rooms & Video,"Collaboration, Displays & Mixed Reality",197,2014,65,43,0.108,0.096,0,ShareVR,10.1145/3025453.3025683,0.185,IllumiRoom,0.8,0.57
+43,Live Streaming,"Collaboration, Displays & Mixed Reality",168,2011,34,27,0.088,0.386,1,Streaming on twitch,10.1145/2556288.2557048,0.147,"Less talk, more rock",0.714,0.0
+44,Meeting Capture & Reading,"Collaboration, Displays & Mixed Reality",158,1985,11,11,0.091,0.353,1,Capturing the capture concepts: a case study in the design of computer-supported,10.1145/62266.62287,0.182,,0.833,
+45,Distributed Cognition & Emergency Coordination,"Collaboration, Displays & Mixed Reality",97,2002,15,10,0.267,0.314,0,Making action visible in time-critical work,10.1145/1124772.1124804,0.267,Supporting communication and collaboration practices in safe,0.848,0.0
+46,Driver Distraction & Take-over,Automotive & Automated Driving,165,2009,40,27,0.15,0.11,0,Evaluating multimodal driver displays of varying urgency,10.1145/2516540.2516543,0.125,The effects of a mobile telephone task on driver behaviour i,0.778,0.14
+47,In-Car Interfaces,Automotive & Automated Driving,140,2009,39,21,0.154,0.123,0,Free-hand pointing for identification and interaction with distant objects,10.1145/2516540.2516556,0.154,SUS: A 'Quick and Dirty' Usability Scale,0.728,0.44
+48,Automated Driving,Automotive & Automated Driving,128,2015,39,16,0.231,0.085,0,Cooperative Overtaking,10.1145/3342197.3344531,0.256,Trust in Automation: Designing for Appropriate Reliance,0.791,0.38
+49,Car Navigation & Driver UIs,Automotive & Automated Driving,122,2008,43,29,0.186,0.117,0,Where should i turn,10.1145/1753326.1753516,0.14,,0.8,0.33
+50,Autonomous Vehicles & Pedestrians,Automotive & Automated Driving,482,2002,15,9,0.333,0.448,1,ActiveBelt: Belt-Type Wearable Tactile Display for Directional Navigation,10.1007/978-3-540-30119-6_23,0.333,DEEP MAP: Challenging IT Research In The Framework Of A Tour,0.819,nan
+51,Cognitive Modeling & Mixed Small Topics,Mixed Small Communities,672,1982,37,29,0.108,0.167,0,Predicting the time to recall computer command abbreviations,10.1145/29933.30857,0.108,The Psychology of Human-Computer Interaction,0.933,0.17
+52,Non-visual Navigation,Accessibility & Assistive Tech,152,2014,36,21,0.194,0.118,0,NavCog,10.1145/2935334.2935361,0.306,VizWiz,0.776,0.45
+53,Accessibility Research Practice,Accessibility & Assistive Tech,152,2015,35,22,0.143,0.105,0,Collaborative Accessibility,10.1145/2702123.2702511,0.171,,0.667,0.15
+54,Visual Accessibility,Accessibility & Assistive Tech,126,2017,39,19,0.436,0.088,0,Automatic Alt-text,10.1145/2998181.2998364,0.256,VizWiz,0.727,0.43
+55,Disability Studies in HCI,Accessibility & Assistive Tech,551,2005,28,26,0.071,0.105,0,Participatory design with proxies,10.1145/1124772.1124797,0.179,,0.778,0.0
+56,Esports & Player Communities,Games & Play,144,2010,25,20,0.08,0.172,0,The identification of deviance and its impact on retention in a multiplayer game,10.1145/2531602.2531724,0.24,,0.654,0.1
+57,Player Experience & Immersion,Games & Play,132,2012,45,24,0.311,0.114,0,Fostering Intrinsic Motivation through Avatar Identification in Digital Games,10.1145/2858036.2858062,0.4,The Motivational Pull of Video Games: A Self-Determination T,0.75,0.33
+58,Gamification & Engagement,Games & Play,692,2004,29,24,0.138,0.162,0,Tracking real-time user experience (TRUE),10.1145/1357054.1357126,0.172,The Thing and I: Understanding the Relationship Between User,0.8,0.0
+59,Social Robots in the Field,"Robots, Agents & Human-AI Interaction",1732,2002,63,31,0.27,0.116,0,Service robots in the domestic environment,10.1145/1121241.1121286,0.238,,0.875,0.33
+60,Generative AI & Writing,"Robots, Agents & Human-AI Interaction",1160,1999,15,12,0.2,0.519,1,Principles of mixed-initiative user interfaces,10.1145/302979.303030,0.333,,0.692,0.0
+61,Voice & Conversational Agents,"Robots, Agents & Human-AI Interaction",1098,1998,21,18,0.19,0.224,0,Relational agents,10.1145/365024.365304,0.429,"The media equation: how people treat computers, television, ",0.75,0.0
+62,End-user Programming & UI Design Tools,"Robots, Agents & Human-AI Interaction",619,1989,18,14,0.222,0.364,0,EAGER,10.1145/108844.108850,0.278,Programming by example,0.765,nan
+63,Robots & Agents in Education,"Robots, Agents & Human-AI Interaction",475,2001,12,7,0.333,0.273,0,Off-task behavior in the cognitive tutor classroom,10.1145/985692.985741,0.333,,0.846,nan
+64,Video Interfaces & Editing,"Robots, Agents & Human-AI Interaction",427,1985,18,12,0.333,0.192,0,Dynamic construction of animated help from application context,10.1145/62402.62433,0.167,,0.75,0.33
+65,Meeting Support & Group Displays,"Robots, Agents & Human-AI Interaction",183,2009,29,25,0.138,0.167,0,Visualizing real-time language-based feedback on teamwork behavior in computer-m,10.1145/1518701.1518784,0.138,,0.783,0.0
+66,Usability Methods & Personas,"Robots, Agents & Human-AI Interaction",158,1990,15,7,0.333,0.258,0,Heuristic evaluation of user interfaces,10.1145/97243.97281,0.267,Theory-Based Design for Easily Learned Interfaces,0.919,0.0
+68,Natural Language Interfaces & Human-AI Teams,"Robots, Agents & Human-AI Interaction",316,2007,25,23,0.12,0.188,0,CiteSense,10.1145/1357054.1357161,0.12,Natural language interfaces to databases – an introduction,0.84,0.0
+69,Urban Mobility Data,Mobile Life & Attention,221,2010,53,35,0.151,0.114,0,Understanding and prediction of mobile application usage for smart phones,10.1145/2370216.2370243,0.17,Understanding individual human mobility patterns,0.907,0.3
+70,Email & Web Revisitation,Mobile Life & Attention,221,1985,11,11,0.091,0.6,1,More than just a communication system: diversity in the use of electronic mail,10.1145/62266.62293,0.273,Structuring computer-mediated communication systems to avoid,0.837,
+71,Notifications & Interruptibility,Mobile Life & Attention,195,2002,27,15,0.259,0.153,0,"If not now, when?",10.1145/985692.985727,0.481,"Notification, Disruption, and Memory: Effects of Messaging I",0.731,0.6
+72,Instant Messaging,Mobile Life & Attention,173,1997,15,10,0.2,0.391,1,Interaction and outeraction,10.1145/358916.358975,0.267,Media spaces,0.803,0.0
+73,Digital Self-control,Mobile Life & Attention,122,2016,32,19,0.188,0.079,0,Self-Control in Cyberspace,10.1145/3290605.3300361,0.5,Habits make smartphone use more pervasive,0.629,0.27
+74,Location Sharing & Privacy,Mobile Life & Attention,120,2001,19,13,0.263,0.439,1,Location disclosure to social relations,10.1145/1054972.1054985,0.316,The Cricket location-support system,0.875,nan
+75,Task Switching at Work,Mobile Life & Attention,121,2014,30,15,0.4,0.114,0,Effects of Individual Differences in Blocking Workplace Distractions,10.1145/3173574.3173666,0.2,Cognitive control in media multitaskers,0.75,0.4
+76,Mobile Information Needs & Translation,Mobile Life & Attention,275,2000,19,12,0.316,0.327,0,Taking it out of context,10.1145/1031607.1031712,0.263,,0.8,0.0
+77,Recommender Explanations & User-centric Evaluation,Recommender Systems,318,2005,28,15,0.321,0.252,0,PeerChooser,10.1145/1357054.1357222,0.286,,0.848,0.33
+78,Sequential & Session-based Recommendation,Recommender Systems,244,2011,31,15,0.194,0.159,0,Comparative recommender system evaluation,10.1145/2645710.2645746,0.29,Training and testing of recommender systems on data missing ,0.923,0.0
+79,Neural Session Recommendation,Recommender Systems,226,2009,28,11,0.393,0.247,0,Context-aware music recommendation based on latenttopic sequential patterns,10.1145/2365952.2365979,0.143,Item-based collaborative filtering recommendation algorithms,0.912,0.29
+80,"Diversity, Novelty & Bias in Recommendation",Recommender Systems,219,2007,23,20,0.13,0.29,0,Rank and relevance in novelty and diversity metrics for recommender systems,10.1145/2043932.2043955,0.478,Evaluating collaborative filtering recommender systems,0.911,0.09
+81,Collaborative Filtering & Trust,Recommender Systems,211,2001,16,11,0.188,0.41,0,Is seeing believing?,10.1145/642611.642713,0.25,Fab,0.955,0.0
+82,Knowledge-aware & LLM Recommendation,Recommender Systems,189,2011,34,19,0.324,0.197,0,Precision-oriented evaluation of recommender systems,10.1145/2043932.2043996,0.294,Matrix Factorization Techniques for Recommender Systems,0.947,0.33
+83,Industrial Recommendation & CTR Prediction,Recommender Systems,178,2016,47,37,0.064,0.331,1,Deep Neural Networks for YouTube Recommendations,10.1145/2959100.2959190,0.298,Wide & Deep Learning for Recommender Systems,0.955,0.05
+84,Web Search & Navigation,Recommender Systems,173,1993,21,11,0.429,0.129,0,Information foraging in information access environments,10.1145/223904.223911,0.19,Using collaborative filtering to weave an information tapest,0.905,0.5
+85,Context-aware & Cold-start Recommendation,Recommender Systems,151,2007,30,20,0.167,0.2,0,Multiverse recommendation,10.1145/1864708.1864727,0.367,Item-based collaborative filtering recommendation algorithms,0.937,0.08
+86,News Recommendation & Offline Evaluation,Recommender Systems,136,2013,22,15,0.182,0.233,0,Offline and online evaluation of news recommender systems at swissinfo.ch,10.1145/2645710.2645745,0.318,Google news personalization,0.914,0.15
+87,Social Tagging & Group Recommendation,Recommender Systems,411,1996,14,13,0.143,0.423,1,MusicFX,10.1145/289444.289511,0.286,Agents that reduce work and information overload,0.927,
+88,Co-design with Children,Children & Learning,334,1996,14,11,0.214,0.537,1,Cooperative inquiry,10.1145/302979.303166,0.214,Chapter 3: Children as Our Technology Design Partners+,0.75,nan
+89,Tangibles for Learning,Children & Learning,300,2005,47,34,0.128,0.179,0,Do tangible interfaces enhance learning?,10.1145/1226969.1227004,0.213,"Mindstorms: Children, Computers, And Powerful Ideas",0.75,0.27
+90,Autistic Children & Technology,Children & Learning,243,2007,23,12,0.217,0.172,0,Collaborative Puzzle Game,10.1145/1731903.1731940,0.13,Towards interactive robots in autism therapy,0.813,0.0
+91,Youth Online Safety,Children & Learning,225,2014,48,19,0.333,0.091,0,Parental Control vs. Teen Self-Regulation,10.1145/2998181.2998352,0.271,Parental Mediation of Children's Internet Use,0.623,0.38
+92,Children's Agency & Research Ethics,Children & Learning,213,2006,23,20,0.13,0.25,0,Designing with and for children with special needs,10.1145/1463689.1463719,0.261,,0.714,0.0
+93,AI Literacy & K-12,Children & Learning,167,2017,39,19,0.205,0.192,0,What is AI Literacy? Competencies and Design Considerations,10.1145/3313831.3376727,0.333,Envisioning AI for K-12: What Should Every Child Know about ,0.688,0.38
+95,Usable Security & Phishing,"Privacy, Security & Smart Homes",141,2015,34,21,0.147,0.083,0,"""If It's Important It Will Be A Headline""",10.1145/3290605.3300579,0.265,Crying Wolf: An Empirical Study of SSL Warning Effectiveness,0.84,0.2
+96,Smart-home Privacy,"Privacy, Security & Smart Homes",134,2017,43,33,0.093,0.087,0,"Alexa, Are You Listening?",10.1145/3274371,0.233,,0.65,0.08
+97,Deceptive Advertising Patterns,"Privacy, Security & Smart Homes",124,2019,50,30,0.16,0.121,0,Dark Patterns at Scale,10.1145/3359183,0.32,Tales from the Dark Side: Privacy Dark Strategies and Privac,0.78,0.35
+98,Ubicomp Privacy & Home Automation,"Privacy, Security & Smart Homes",313,2003,15,13,0.133,0.224,0,Privacy policies as decision-making tools,10.1145/985692.985752,0.2,Why Johnny can't encrypt: a usability evaluation of PGP 5.0,0.821,nan
+99,Movement & Somaesthetics,Design Research & Critical HCI,647,2002,17,14,0.176,0.466,1,Ambiguity as a resource for design,10.1145/642611.642653,0.235,"Hertzian Tales: Electronic Products, Aesthetic Experience, a",0.644,0.0
+100,Bodily Play & Spectator Experience,Design Research & Critical HCI,571,1998,22,12,0.318,0.197,0,Orchestrating a mixed reality performance,10.1145/365024.365033,0.182,Exhibiting Interaction: Conduct and Collaboration in Museums,0.713,0.33
+101,Speculative & Critical Design,Design Research & Critical HCI,563,1999,22,17,0.182,0.218,0,Design-oriented human-computer interaction,10.1145/642611.642652,0.227,Design at Work,0.682,nan
+102,Sustainable HCI,Design Research & Critical HCI,510,2005,33,23,0.182,0.223,0,Sustainable interaction design,10.1145/1240624.1240705,0.242,Leveraging Social Networks To Motivate Individuals to Reduce,0.673,0.28
+103,Family Video Communication,Design Research & Critical HCI,429,1998,21,20,0.095,0.236,0,Digital family portraits,10.1145/365024.365126,0.19,Computers and other interactive technologies for the home,0.687,
+104,Memory & Reminiscence,Design Research & Critical HCI,358,2001,17,16,0.118,0.341,0,Requirements for photoware,10.1145/587078.587102,0.235,Direct annotation: a drag-and-drop strategy for labeling pho,0.625,
+105,Interpretation & Critique in Design Research,Design Research & Critical HCI,340,2005,21,11,0.429,0.17,0,Staying open to interpretation,10.1145/1142405.1142422,0.238,Plans and situated actions,0.5,0.2
+106,More-than-human Design,Design Research & Critical HCI,306,2010,37,24,0.189,0.086,0,"Breakdown, obsolescence and reuse",10.1145/2556288.2557332,0.216,Early explorations of CAT,0.684,0.0
+107,VR Meditation & Breathing,Design Research & Critical HCI,225,2014,54,36,0.111,0.081,0,Inner Garden,10.1145/3025453.3025743,0.13,,0.639,0.26
+108,Playful Food Experiences,Design Research & Critical HCI,174,2010,35,24,0.2,0.095,0,Telematic dinner party,10.1145/2317956.2317964,0.229,,0.628,0.3
+110,Self-tracking & Reflection,Health & Wellbeing,519,2007,39,27,0.128,0.193,0,Activity sensing in the wild,10.1145/1357054.1357335,0.256,,0.665,0.19
+111,Chronic Care & Caregiving,Health & Wellbeing,336,2007,33,19,0.182,0.106,0,Improving communication and social support for caregivers of high-risk infants t,10.1145/1958824.1958897,0.121,Opportunities for Pervasive Computing in Chronic Cancer Care,0.569,0.25
+112,Behavior Sensing,Health & Wellbeing,329,2010,40,23,0.2,0.341,1,StudentLife,10.1145/2632048.2632054,0.2,,0.846,0.28
+113,Stress & Mood Technology,Health & Wellbeing,299,2011,39,25,0.256,0.118,0,Engagement with online mental health interventions,10.1145/2207676.2208602,0.205,Design and evaluation guidelines for mental health technolog,0.647,0.11
+114,Aging & Dementia Care,Health & Wellbeing,287,2010,46,29,0.13,0.094,0,Never too old,10.1145/2556288.2557184,0.152,Using thematic analysis in psychology,0.7,0.45
+115,Personal Informatics Models,Health & Wellbeing,264,2013,46,27,0.196,0.094,0,A lived informatics model of personal informatics,10.1145/2750858.2804250,0.196,Using thematic analysis in psychology,0.523,0.2
+116,Clinical Information Work,Health & Wellbeing,141,2001,15,9,0.4,0.273,0,A finger on the pulse,10.1145/587078.587126,0.333,Coordinating Heterogeneous Work: Information and Representat,0.746,0.0
+117,"Sleep, ADHD & Lifelogging",Health & Wellbeing,213,2011,36,23,0.139,0.12,0,Lullaby,10.1145/2370216.2370253,0.139,Unobtrusive Sleep Monitoring using Smartphones,0.8,0.25
+118,Crowdsourcing & Human Computation,"Crowds, Data & Human-AI Decisions",423,2007,40,31,0.125,0.17,0,Soylent,10.1145/1866029.1866078,0.35,Labeling images with a computer game,0.719,0.25
+119,Explainable Machine Learning,"Crowds, Data & Human-AI Decisions",415,2016,64,47,0.062,0.075,0,Designing Theory-Driven User-Centric Explainable AI,10.1145/3290605.3300831,0.438,"""Why Should I Trust You?""",0.777,0.12
+120,Data Visualization,"Crowds, Data & Human-AI Decisions",399,2010,40,21,0.225,0.151,0,Useful junk?,10.1145/1753326.1753716,0.225,The eyes have it: a task by data type taxonomy for informati,0.846,0.23
+121,Fairness & Clinical AI,"Crowds, Data & Human-AI Decisions",299,2016,48,29,0.271,0.087,0,Improving Fairness in Machine Learning Systems,10.1145/3290605.3300830,0.188,Fairness through awareness,0.695,0.17
+122,Data Work & Infrastructure,"Crowds, Data & Human-AI Decisions",293,2010,40,25,0.15,0.171,0,Homebrew databases,10.1145/1978942.1979078,0.2,The Long Now of Technology Infrastructure: Articulating Tens,0.632,0.1
+123,Interactive Machine Learning,"Crowds, Data & Human-AI Decisions",173,2014,35,28,0.114,0.25,0,ModelTracker,10.1145/2702123.2702509,0.229,Power to the People: The Role of Humans in Interactive Machi,0.787,0.1
+124,Peer & Crowd Feedback,"Crowds, Data & Human-AI Decisions",126,2013,45,15,0.578,0.096,0,"Structuring, Aggregating, and Evaluating Crowdsourced Design Critique",10.1145/2675133.2675283,0.289,Critiquing Critiques,0.6,0.36
+125,Computational Notebooks,"Crowds, Data & Human-AI Decisions",159,1997,12,10,0.25,0.182,0,Evaluating the utility and usability of an adaptive hypermedia system,10.1145/238218.238320,0.25,,0.824,
+126,Social Media & Mental Health,"Work, Community & Society",689,2006,36,25,0.111,0.091,0,Predicting tie strength with social media,10.1145/1518701.1518736,0.25,The Benefits of Facebook “Friends:” Social Capital and Colle,0.704,0.11
+127,ICTD & Rural Communities,"Work, Community & Society",591,2006,41,14,0.61,0.154,0,Postcolonial computing,10.1145/1753326.1753522,0.293,,0.593,0.33
+128,Wikipedia & Open Source,"Work, Community & Society",567,2001,14,9,0.214,0.389,0,Becoming Wikipedian,10.1145/1099203.1099205,0.571,,0.778,0.2
+129,Crisis Informatics,"Work, Community & Society",534,2008,52,25,0.346,0.111,0,"""Voluntweeters""",10.1145/1978942.1979102,0.192,Organized Behavior in Disaster.,0.774,0.27
+130,Gender & Algorithmic Bias,"Work, Community & Society",437,2014,68,41,0.235,0.063,0,Safe Spaces and Safe Places,10.1145/3274424,0.206,,0.708,0.2
+131,Civic Participation,"Work, Community & Society",409,2009,34,26,0.118,0.131,0,The relationship of action research to human-computer interaction,10.1145/1993060.1993065,0.294,,0.533,0.35
+132,Moderation & Online Harassment,"Work, Community & Society",340,2014,43,23,0.279,0.107,0,Shaping Pro and Anti-Social Behavior on Twitch Through Moderation and Example-Se,10.1145/2998181.2998277,0.209,,0.591,0.24
+133,Gig Work & Labor,"Work, Community & Society",336,2012,41,24,0.122,0.129,0,Working with Machines,10.1145/2702123.2702548,0.122,The Discovery of Grounded Theory: Strategies for Qualitative,0.629,0.36
+134,"Gender, Intimacy & Safety","Work, Community & Society",328,2014,41,24,0.293,0.081,0,Examining Menstrual Tracking to Inform the Design of Personal Informatics Tools,10.1145/3025453.3025635,0.244,,0.56,0.29
+135,Enterprise Social Media & Crowdfunding,"Work, Community & Society",230,2005,52,24,0.5,0.109,0,Motivations for social networking at work,10.1145/1460563.1460674,0.231,Referral Web,0.842,0.38
+136,"Refugees, Hackathons & Crypto","Work, Community & Society",140,2016,43,24,0.302,0.067,0,Moving into a technology land,10.1145/3314344.3332481,0.209,Implications of Synchronous IVR Radio on Syrian Refugee Heal,0.667,0.33

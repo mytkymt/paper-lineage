@@ -122,7 +122,7 @@ for name, start, pat, trig in WAVES:
     others = [j for j in base if j not in wset]
     other_ref, _ = ref_share_to_wave(others[::max(1, len(others) // 4000)])
     # 創始窓の参照が少ない波(語が後から定着した波など)では凝集を出さない
-    cohesion = round(self_ref / other_ref, 1) if other_ref and n_refs >= 300 else float("nan"); self_ref = round(self_ref, 3) if n_refs >= 300 else float("nan")
+    cohesion = round(self_ref / other_ref, 1) if other_ref and n_refs >= 60 else float("nan"); self_ref = round(self_ref, 3) if n_refs >= 60 else float("nan")
     # 吸収先: 最初の 5 年の波の論文が入ったサブ帯の上位
     top_subs = "; ".join(f"{g.sub_name[s][:28]} {c}" for s, c in subs.most_common(3))
     def newcomer_share(ids):

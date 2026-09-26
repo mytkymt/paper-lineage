@@ -1,112 +1,112 @@
 decade,field,refs,share
-1980,social science,218,0.189
-1980,graphics,157,0.136
-1980,psychology,145,0.126
-1980,other,120,0.104
-1980,cs general,119,0.103
-1980,hci (journals & other venues),109,0.095
-1980,software/systems,108,0.094
-1980,human factors,47,0.041
-1980,ml/ai,39,0.034
-1980,unclassified,36,0.031
-1980,design,20,0.017
-1980,hci,5,0.004
-1980,education,5,0.004
-1980,engineering,5,0.004
-1980,math/stat,4,0.003
-1980,robotics/control,4,0.003
-1980,general science,4,0.003
+1980,social science,227,0.204
+1980,psychology,179,0.161
+1980,hci (journals & other venues),118,0.106
+1980,other,114,0.103
+1980,graphics,107,0.096
+1980,cs general,101,0.091
+1980,software/systems,85,0.077
+1980,human factors,49,0.044
+1980,unclassified,40,0.036
+1980,ml/ai,34,0.031
+1980,design,17,0.015
+1980,engineering,7,0.006
+1980,education,7,0.006
+1980,hci,6,0.005
+1980,math/stat,4,0.004
+1980,robotics/control,4,0.004
+1980,general science,3,0.003
 1980,games,3,0.003
+1980,health/medicine,2,0.002
+1980,arts/humanities,2,0.002
 1980,"hci (corpus venue, not indexed)",2,0.002
-1980,health/medicine,1,0.001
-1980,arts/humanities,1,0.001
-1990,social science,657,0.186
-1990,hci (journals & other venues),504,0.142
-1990,other,451,0.127
-1990,psychology,379,0.107
-1990,graphics,283,0.08
-1990,ml/ai,179,0.051
-1990,unclassified,172,0.049
-1990,cs general,152,0.043
-1990,"hci (corpus venue, not indexed)",145,0.041
-1990,human factors,108,0.03
-1990,design,106,0.03
-1990,software/systems,89,0.025
-1990,hci (companion tracks),77,0.022
-1990,hci,61,0.017
-1990,robotics/control,29,0.008
-1990,vr/ar,29,0.008
-1990,education,28,0.008
-1990,math/stat,26,0.007
-1990,engineering,22,0.006
-1990,health/medicine,21,0.006
-1990,general science,9,0.003
-1990,games,7,0.002
-1990,signal/sensing,6,0.002
-1990,arts/humanities,1,0.0
-2000,social science,1876,0.179
-2000,hci (journals & other venues),1509,0.144
-2000,other,1294,0.124
-2000,psychology,949,0.091
-2000,ml/ai,725,0.069
-2000,unclassified,674,0.064
-2000,hci (companion tracks),508,0.049
-2000,cs general,470,0.045
-2000,design,418,0.04
-2000,graphics,374,0.036
-2000,software/systems,252,0.024
-2000,hci,229,0.022
-2000,"hci (corpus venue, not indexed)",211,0.02
-2000,human factors,156,0.015
-2000,health/medicine,145,0.014
-2000,education,121,0.012
-2000,robotics/control,110,0.011
-2000,signal/sensing,92,0.009
-2000,vr/ar,88,0.008
-2000,math/stat,70,0.007
-2000,games,70,0.007
-2000,general science,59,0.006
-2000,engineering,57,0.005
+1990,social science,809,0.176
+1990,hci (journals & other venues),603,0.131
+1990,other,506,0.11
+1990,psychology,491,0.107
+1990,graphics,400,0.087
+1990,ml/ai,242,0.053
+1990,cs general,225,0.049
+1990,unclassified,193,0.042
+1990,"hci (corpus venue, not indexed)",189,0.041
+1990,software/systems,173,0.038
+1990,design,145,0.032
+1990,hci,140,0.03
+1990,human factors,123,0.027
+1990,hci (companion tracks),82,0.018
+1990,engineering,78,0.017
+1990,education,47,0.01
+1990,math/stat,31,0.007
+1990,robotics/control,30,0.007
+1990,vr/ar,28,0.006
+1990,health/medicine,20,0.004
+1990,general science,12,0.003
+1990,games,10,0.002
+1990,arts/humanities,8,0.002
+1990,signal/sensing,6,0.001
+1990,other science,1,0.0
+2000,social science,3153,0.169
+2000,psychology,2228,0.12
+2000,other,1991,0.107
+2000,ml/ai,1969,0.106
+2000,hci (journals & other venues),1962,0.105
+2000,unclassified,1070,0.057
+2000,graphics,903,0.049
+2000,cs general,702,0.038
+2000,hci,648,0.035
+2000,hci (companion tracks),622,0.033
+2000,design,613,0.033
+2000,software/systems,378,0.02
+2000,engineering,342,0.018
+2000,robotics/control,330,0.018
+2000,human factors,312,0.017
+2000,"hci (corpus venue, not indexed)",293,0.016
+2000,education,231,0.012
+2000,health/medicine,197,0.011
+2000,vr/ar,167,0.009
+2000,math/stat,116,0.006
+2000,signal/sensing,115,0.006
+2000,general science,109,0.006
+2000,games,74,0.004
+2000,arts/humanities,71,0.004
+2000,other science,18,0.001
 2000,philosophy/theory,2,0.0
-2000,arts/humanities,1,0.0
-2010,social science,2357,0.2
-2010,other,1490,0.126
-2010,hci (journals & other venues),1454,0.123
-2010,psychology,1134,0.096
-2010,ml/ai,788,0.067
-2010,cs general,568,0.048
-2010,unclassified,546,0.046
-2010,hci (companion tracks),501,0.042
-2010,graphics,478,0.04
-2010,health/medicine,406,0.034
-2010,software/systems,285,0.024
-2010,design,274,0.023
-2010,"hci (corpus venue, not indexed)",218,0.018
-2010,signal/sensing,180,0.015
-2010,engineering,173,0.015
-2010,games,157,0.013
-2010,general science,138,0.012
-2010,human factors,130,0.011
-2010,hci,129,0.011
-2010,education,126,0.011
-2010,robotics/control,108,0.009
-2010,math/stat,89,0.008
-2010,vr/ar,75,0.006
-2010,arts/humanities,5,0.0
-2010,other science,3,0.0
-2010,philosophy/theory,2,0.0
-2020,social science,33,0.256
-2020,software/systems,25,0.194
-2020,other,21,0.163
-2020,psychology,10,0.078
-2020,design,9,0.07
-2020,hci (journals & other venues),8,0.062
-2020,hci (companion tracks),8,0.062
-2020,cs general,5,0.039
-2020,graphics,2,0.016
-2020,ml/ai,2,0.016
-2020,education,2,0.016
-2020,health/medicine,1,0.008
-2020,human factors,1,0.008
-2020,games,1,0.008
-2020,hci,1,0.008
+2010,social science,2598,0.201
+2010,ml/ai,1642,0.127
+2010,psychology,1523,0.118
+2010,other,1388,0.107
+2010,hci (journals & other venues),1106,0.086
+2010,cs general,575,0.045
+2010,unclassified,544,0.042
+2010,graphics,508,0.039
+2010,hci (companion tracks),445,0.034
+2010,health/medicine,381,0.029
+2010,design,276,0.021
+2010,engineering,271,0.021
+2010,hci,244,0.019
+2010,software/systems,225,0.017
+2010,"hci (corpus venue, not indexed)",197,0.015
+2010,human factors,164,0.013
+2010,general science,145,0.011
+2010,signal/sensing,131,0.01
+2010,education,128,0.01
+2010,games,122,0.009
+2010,robotics/control,111,0.009
+2010,math/stat,103,0.008
+2010,vr/ar,37,0.003
+2010,arts/humanities,36,0.003
+2010,other science,17,0.001
+2010,philosophy/theory,3,0.0
+2020,software/systems,17,0.25
+2020,social science,17,0.25
+2020,other,12,0.176
+2020,psychology,5,0.074
+2020,design,3,0.044
+2020,hci (journals & other venues),3,0.044
+2020,hci (companion tracks),3,0.044
+2020,graphics,2,0.029
+2020,ml/ai,2,0.029
+2020,health/medicine,1,0.015
+2020,cs general,1,0.015
+2020,education,1,0.015
+2020,human factors,1,0.015
