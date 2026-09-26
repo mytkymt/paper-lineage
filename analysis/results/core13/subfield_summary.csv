@@ -1,0 +1,151 @@
+sub,name,band,papers,first_year,birth_year,first_reach_year,peak_year,median_year,q1_year,q3_year,mean_depth,max_depth
+0,Participatory & Community Design,Social Media & Online Communities,752,1983,2007,2005,2025,2022,2018,2024,42.52,61
+1,Social Media & Privacy,Social Media & Online Communities,566,1989,2006,2008,2025,2020,2016,2024,40.29,60
+2,Wikipedia & Open Source,Social Media & Online Communities,472,1986,2002,2002,2012,2015,2012,2020,30.95,58
+3,Misinformation & News,Social Media & Online Communities,422,1994,2009,2010,2025,2021,2017,2024,39.77,59
+4,Content Moderation,Social Media & Online Communities,432,2004,2011,2011,2025,2022,2019,2024,44.61,59
+5,Gig Work & Labour,Social Media & Online Communities,356,1986,2012,2011,2025,2021,2017,2024,42.34,59
+6,Civic Data & Communities,Social Media & Online Communities,341,1982,2004,2004,2018,2019,2015,2023,38.04,59
+7,"Infrastructure, Hackathons & Crypto",Social Media & Online Communities,200,1982,1985,1986,2021,2016,2002,2021,26.73,57
+8,Refugees & Migration,Social Media & Online Communities,126,2002,2017,2008,2024,2022,2019,2024,42.89,60
+9,Political Talk & Team Formation,Social Media & Online Communities,114,1994,2014,2004,2017,2018,2015,2021,34.41,53
+10,Crowdfunding & Social Tagging,Social Media & Online Communities,116,1982,2000,2001,2010,2011,2008,2017,25.47,52
+11,Health & Wellbeing,"Health, Care & Ageing",414,1996,2009,2011,2025,2021,2018,2024,42.67,60
+12,Personal Informatics,"Health, Care & Ageing",425,2005,2011,2010,2025,2021,2017,2024,43.15,60
+13,Older Adults & Dementia Care,"Health, Care & Ageing",334,2001,2003,2005,2025,2021,2016,2024,38.41,60
+14,Persuasive Health & Activity,"Health, Care & Ageing",200,1992,2006,2006,2015,2016,2012,2021,32.3,61
+15,Chronic Care & Caregiving,"Health, Care & Ageing",252,1998,2008,2006,2025,2019,2015,2023,38.63,60
+16,Mindfulness & Biofeedback,"Health, Care & Ageing",204,2002,2013,2010,2026,2022,2017,2025,41.81,60
+17,Family Health Informatics,"Health, Care & Ageing",171,1998,2014,2004,2024,2020,2015,2024,38.11,58
+18,Hospital Work & Records,"Health, Care & Ageing",153,1988,1994,1994,2008,2014,2008,2021,27.61,59
+19,Rehabilitation & Mobility Support,"Health, Care & Ageing",111,2005,2012,2011,2022,2019,2015,2022,32.36,58
+20,Autism & Neurodiversity,Accessibility & Assistive Tech,352,1988,2007,2005,2025,2021,2016,2024,37.18,61
+21,Web Accessibility,Accessibility & Assistive Tech,357,1992,1992,1994,2025,2019,2009,2023,31.24,61
+22,Deaf & Sign Language,Accessibility & Assistive Tech,302,1994,2005,2002,2025,2021,2016,2024,35.86,60
+23,Non-visual Navigation,Accessibility & Assistive Tech,299,1994,2002,1998,2024,2019,2014,2023,34.27,60
+24,"ICTD, Mobile Money & Women",Accessibility & Assistive Tech,227,1997,2005,2007,2019,2018,2013,2021,35.73,58
+25,Visual Accessibility,Accessibility & Assistive Tech,286,2003,2011,2006,2025,2021,2018,2024,43.42,61
+26,Non-visual Touch Interfaces,Accessibility & Assistive Tech,247,1996,2005,2000,2023,2019,2014,2023,35.03,60
+27,Women's Health & Menstrual Tracking,Accessibility & Assistive Tech,211,2007,2017,2010,2024,2023,2020,2025,46.65,60
+28,Blind Access to VR,Accessibility & Assistive Tech,113,1998,2017,2008,2025,2021,2017,2024,38.62,60
+29,AAC & Aphasia,Accessibility & Assistive Tech,118,1994,2009,2003,2025,2019,2013,2023,31.75,60
+30,Low-vision Accessibility,Accessibility & Assistive Tech,107,1981,2017,2007,2025,2021,2015,2023,36.37,60
+31,Assistive Technology & Dyslexia,Accessibility & Assistive Tech,139,1998,2012,2005,2025,2020,2015,2023,34.45,60
+32,Location Sharing & Privacy,Privacy & Security,123,2002,2004,2005,2012,2013,2010,2016,28.02,54
+33,Smart-home Privacy,Privacy & Security,117,2002,2017,2008,2024,2022,2020,2024,42.81,57
+34,Dark Patterns,Privacy & Security,98,2012,2019,2015,2024,2024,2021,2025,46.95,61
+35,Usable Security & Phishing,Privacy & Security,559,1982,1986,1988,2023,2018,2012,2023,30.18,61
+36,Design Research & Art,Design Research & Practice,513,1986,1988,1994,2024,2019,2014,2023,36.44,60
+37,Bodily Play & Spectator Experience,Design Research & Practice,417,1994,2000,2002,2014,2016,2012,2020,32.07,60
+38,"Body, Movement & Soma Design",Design Research & Practice,443,1983,2002,2002,2024,2021,2018,2024,39.1,60
+39,Memory & Reminiscence,Design Research & Practice,407,1996,2000,2002,2025,2016,2010,2022,33.4,60
+40,More-than-human Design,Design Research & Practice,329,1997,2011,2005,2025,2023,2019,2025,42.68,63
+41,Sustainable HCI,Design Research & Practice,332,2004,2006,2008,2013,2016,2013,2021,34.6,58
+42,Human-Food Interaction,Design Research & Practice,137,2002,2010,2010,2020,2020,2016,2023,38.07,59
+43,Materials & Craft in HCI,Design Research & Practice,110,1998,2009,2003,2012,2015,2012,2019,32.32,58
+44,Data Physicalization,Design Research & Practice,90,2010,2014,2014,2026,2022,2017,2025,41.49,59
+45,Smart Home Automation,Design Research & Practice,180,1985,2003,2000,2020,2017,2012,2021,33.65,57
+46,Co-design with Children,"Children, Learning & Youth",102,1989,1995,1995,2014,2014,2003,2020,24.37,58
+47,Youth & Online Media,"Children, Learning & Youth",150,1988,2014,2014,2025,2023,2019,2025,43.05,58
+48,AI Literacy & K-12,"Children, Learning & Youth",51,2017,2022,2019,2026,2024,2022,2026,47.8,58
+49,Family & Intergenerational Communication,"Children, Learning & Youth",98,1998,2010,2010,2018,2018,2013,2023,36.61,58
+50,Children's Reading & Storytelling Agents,"Children, Learning & Youth",46,1992,2022,2010,2025,2024,2020,2025,39.98,59
+51,Personas & Child-centred Design,"Children, Learning & Youth",92,1997,2018,2006,2025,2019,2014,2023,30.32,60
+52,Child-Robot Interaction,Robots & Conversational Agents,130,1992,2018,2006,2025,2022,2017,2025,34.58,57
+53,Voice Assistants for Older Adults,Robots & Conversational Agents,278,1995,2004,2002,2025,2022,2019,2024,41.37,61
+54,Robot Programming,Robots & Conversational Agents,60,2002,2024,2005,2024,2020,2011,2024,29.98,60
+55,Nonverbal & Public-speaking Analysis,Robots & Conversational Agents,80,2001,2013,2009,2018,2018,2014,2021,29.39,56
+56,Robot Programming (robot),Robots & Conversational Agents,57,2004,2023,2009,2025,2022,2018,2025,35.14,57
+57,Chatbot Companions,Robots & Conversational Agents,247,1993,2016,1998,2025,2023,2020,2025,40.71,60
+58,Human-Robot Interaction,Robots & Conversational Agents,85,2002,2016,2012,2021,2021,2018,2024,37.42,60
+59,Child-Robot Interaction (robot),Robots & Conversational Agents,34,1983,2024,2002,2024,2024,2019,2025,30.74,57
+60,Virtual Agents & Social Effects,Robots & Conversational Agents,100,1990,1995,1993,2003,2004,2000,2015,15.23,59
+61,Multilingual & Multimodal Communication,Robots & Conversational Agents,133,1982,2002,1983,2013,2013,2006,2019,25.52,59
+62,"LLMs, Writing & Prompting",Human-AI Interaction & Data,805,1982,2014,2008,2025,2025,2023,2025,47.73,61
+63,Human-AI Trust & Explanation,Human-AI Interaction & Data,657,1983,2007,2007,2025,2023,2021,2025,45.36,61
+64,Crowdsourcing & Peer Feedback,Human-AI Interaction & Data,555,1982,1990,1994,2017,2016,2013,2021,33.01,61
+65,Data Visualization,Human-AI Interaction & Data,493,1985,1988,1989,2025,2020,2014,2024,33.31,61
+66,Algorithmic Fairness & Auditing,Human-AI Interaction & Data,495,1997,2013,2006,2025,2022,2020,2024,43.39,60
+67,Adaptive Help & Software Learnability,Human-AI Interaction & Data,441,1981,1985,1986,2011,2011,2002,2018,23.62,60
+68,Programming & Notebooks,Human-AI Interaction & Data,351,1982,1995,1985,2021,2021,2014,2024,37.25,61
+69,GUI Optimization & Color,Human-AI Interaction & Data,262,1988,1990,1991,2024,2021,2015,2024,35.77,60
+70,Video Interfaces & Editing,Human-AI Interaction & Data,235,1983,1990,1986,2025,2015,2006,2021,28.31,61
+71,Scientific Search & Sensemaking,Human-AI Interaction & Data,148,1995,2006,1998,2022,2021,2012,2024,37.58,60
+72,Mobile Sensing for Mental Health,Human-AI Interaction & Data,106,2010,2016,2014,2024,2021,2019,2024,39.23,58
+73,Language Tools & Deployment,Human-AI Interaction & Data,21,1988,1988,1997,2014,2011,2001,2013,10.52,29
+74,Recommender Evaluation & Music,Recommender Systems,98,1982,2013,2001,2015,2016,2012,2019,25.7,52
+81,Collaborative Filtering & Trust,Recommender Systems,52,1993,1996,1996,1998,2003,1998,2010,9.29,46
+83,Recommender Explanations & Critiquing,Recommender Systems,45,1992,2000,1997,2007,2010,2002,2019,19.07,60
+84,Social Tagging & Group Recommendation,Recommender Systems,40,1998,1998,2002,2022,2014,2006,2021,19.2,60
+85,Visual Aesthetics & UX,Gamification & Engagement,134,1983,2002,1997,2013,2013,2008,2018,21.49,57
+86,Player Experience & Immersion,Gamification & Engagement,140,2004,2013,2013,2015,2019,2016,2022,32.74,59
+87,Multiplayer & Location-based Games,Gamification & Engagement,140,2004,2010,2007,2021,2020,2014,2022,36.96,59
+88,Gamification Elements & User Types,Gamification & Engagement,69,1982,2015,2008,2017,2019,2016,2022,31.36,54
+89,Video Game Players & Communities,Gamification & Engagement,491,1981,1981,1985,2015,2019,2015,2023,32.07,58
+90,Automated Driving,Mobile Life & Sensing,222,2003,2007,2006,2017,2020,2016,2023,30.94,59
+91,Email & Web Revisitation,Mobile Life & Sensing,280,1983,1991,1986,2009,2007,2001,2012,20.18,55
+92,Instant Messaging,Mobile Life & Sensing,268,1986,1986,1986,2004,2009,2002,2017,23.72,58
+93,Notifications & Interruptibility,Mobile Life & Sensing,272,1996,2001,2002,2017,2017,2013,2021,34.77,61
+94,Urban Mobility Prediction,Mobile Life & Sensing,266,2003,2009,2007,2018,2016,2014,2019,29.22,58
+95,Pupillometry & Cognitive Load,Mobile Life & Sensing,135,2004,2011,2008,2020,2019,2015,2022,33.49,55
+96,Enterprise Social Networks,Mobile Life & Sensing,140,1994,1996,1997,2008,2009,2004,2014,20.8,57
+97,Physiological & Brain Sensing,Mobile Life & Sensing,99,1992,2007,2007,2015,2015,2012,2020,27.6,56
+98,Interruptions & Multitasking,Mobile Life & Sensing,143,1990,2004,2001,2024,2018,2014,2023,35.32,60
+99,Vehicle-Pedestrian Communication,Mobile Life & Sensing,89,1990,2018,1992,2022,2022,2020,2024,38.73,59
+100,Smartphone Use & Wellbeing,Mobile Life & Sensing,131,2007,2016,2012,2024,2021,2018,2024,43.08,59
+101,Mobile Language Learning,Mobile Life & Sensing,113,2000,2000,2001,2008,2012,2008,2020,27.22,60
+102,Eye Movements & Cognition,Mobile Life & Sensing,39,1983,1994,1992,1997,1998,1995,2013,10.92,49
+103,Affect Recognition,Affect & Multimodal Recognition,74,1982,2000,1985,2010,2007,2000,2015,2.31,44
+104,RF & Wi-Fi Sensing,Activity Sensing & Wearables,196,2014,2015,2016,2025,2022,2019,2024,42.0,57
+105,Wearable Activity Recognition,Activity Sensing & Wearables,135,2012,2016,2015,2025,2022,2019,2024,42.9,58
+106,Activity & Ambient Sensing,Activity Sensing & Wearables,482,2002,2002,2005,2025,2020,2016,2023,32.79,62
+109,Sketch-based Modelling,"Graphics, Animation & Modelling",52,1989,2024,2001,2025,2019,2011,2024,34.02,58
+111,Near-eye & Foveated Displays,"Graphics, Animation & Modelling",20,1997,1997,2014,2016,2019,2015,2023,19.7,49
+112,Texture & Image Synthesis,"Graphics, Animation & Modelling",24,1993,1993,2006,2019,2015,2009,2019,21.21,50
+116,3D Reconstruction & Motion Capture,"Graphics, Animation & Modelling",25,2009,2023,2021,2025,2024,2022,2025,41.6,58
+117,Gesture Generation & Simulation,"Graphics, Animation & Modelling",22,1985,1985,1996,2010,2010,2000,2021,9.77,42
+118,Public & Ambient Displays,3D Pointing & VR Interaction,581,1982,1995,1996,2014,2013,2008,2017,27.51,58
+119,Telepresence & Remote Collaboration,3D Pointing & VR Interaction,437,1986,1990,1992,2024,2018,2012,2023,34.35,60
+120,Real-time Groupware,3D Pointing & VR Interaction,480,1982,1985,1986,1992,2000,1994,2010,14.7,57
+121,VR Locomotion,3D Pointing & VR Interaction,137,1983,2016,1995,2023,2020,2017,2024,33.78,59
+122,AR Authoring & Prototyping,3D Pointing & VR Interaction,300,1993,1997,1998,2025,2022,2018,2024,39.28,61
+123,VR Presence & Avatars,3D Pointing & VR Interaction,124,2011,2017,2015,2024,2023,2020,2025,39.65,58
+124,Avatars & Social VR,3D Pointing & VR Interaction,201,1995,2017,2007,2025,2023,2021,2025,43.98,59
+125,Immersive Mixed Reality,3D Pointing & VR Interaction,146,1991,2017,2001,2024,2022,2019,2024,41.81,60
+126,Asymmetric Mixed Reality,3D Pointing & VR Interaction,122,1997,2014,2008,2025,2021,2017,2024,41.97,59
+127,AR Depth Perception,3D Pointing & VR Interaction,68,1992,2000,2000,2003,2011,2003,2018,19.57,49
+128,In-car & Video AR,3D Pointing & VR Interaction,62,2000,2022,2009,2017,2020,2017,2024,31.27,57
+130,Haptics & Touch Feedback (haptic),Haptics & Touch Feedback,93,1997,2022,2002,2017,2017,2011,2022,33.12,60
+131,Force Feedback Devices,Haptics & Touch Feedback,135,2009,2016,2014,2024,2021,2019,2024,44.24,59
+132,Vibrotactile Feedback,Haptics & Touch Feedback,149,2001,2009,2004,2018,2017,2013,2020,33.96,57
+133,Affective & Social Touch,Haptics & Touch Feedback,91,1998,2017,2008,2022,2020,2017,2024,38.86,59
+134,Haptic Redirection in VR,Haptics & Touch Feedback,72,2004,2017,2016,2025,2022,2019,2024,44.21,59
+135,Mid-air Ultrasound Haptics,Haptics & Touch Feedback,80,2011,2015,2013,2023,2020,2017,2024,41.91,57
+136,Electrical Muscle Stimulation,Haptics & Touch Feedback,108,2010,2015,2011,2024,2021,2017,2024,40.41,58
+137,Thermal & Olfactory Displays,Haptics & Touch Feedback,73,2010,2015,2015,2024,2023,2017,2024,38.08,58
+138,Tactile Texture Rendering,Haptics & Touch Feedback,55,2008,2008,2012,2023,2021,2016,2023,37.45,58
+139,Haptic Rendering & Olfaction,Haptics & Touch Feedback,74,1994,1994,1996,2020,2018,2005,2022,28.42,59
+140,Tangibles for Learning,Tangible Interaction & Fabrication,737,1982,1994,1997,2010,2013,2008,2018,24.91,60
+141,Shape-changing Interfaces,Tangible Interaction & Fabrication,511,1991,2006,2007,2025,2020,2016,2024,40.45,61
+142,Textiles & Cloth Simulation,Tangible Interaction & Fabrication,448,2003,2008,2010,2024,2020,2018,2023,41.02,63
+143,Tangible & Tabletop Sensing,Tangible Interaction & Fabrication,254,1985,2001,2001,2010,2014,2010,2018,31.39,55
+144,Digital Fabrication,Tangible Interaction & Fabrication,285,2000,2012,2006,2024,2020,2016,2024,41.37,62
+145,"Knitting, Cloth & Printed Objects",Tangible Interaction & Fabrication,182,2002,2013,2010,2025,2021,2018,2024,43.93,62
+146,Computational Fabrication,Tangible Interaction & Fabrication,32,2011,2011,2016,2016,2020,2017,2023,42.38,59
+147,Paper Circuits & Electronics Prototyping,Tangible Interaction & Fabrication,173,1986,2006,2002,2010,2016,2010,2020,32.58,58
+148,Deformable Surfaces & Projection Mapping,Tangible Interaction & Fabrication,80,1992,2011,2005,2017,2015,2012,2018,32.38,62
+149,Battery-free & Wireless Devices,Tangible Interaction & Fabrication,89,2001,2016,2010,2022,2021,2018,2023,40.43,60
+150,Gaze-based Interaction,Sensing & Input Techniques,490,1982,1996,1994,2025,2018,2013,2023,31.46,61
+151,Hand Sensing & Input,Sensing & Input Techniques,804,1986,2001,2003,2024,2020,2016,2023,39.95,59
+152,Task Models & UI Engineering,Sensing & Input Techniques,391,1981,1981,1982,1989,1994,1989,2004,9.42,53
+153,Information Navigation,Sensing & Input Techniques,389,1985,1988,1989,1998,2003,1996,2011,16.48,57
+154,Pointing & Target Selection,Sensing & Input Techniques,409,1983,1995,1992,2011,2015,2009,2021,30.61,57
+155,Gesture Elicitation & Recognition,Sensing & Input Techniques,248,1985,1999,1992,2012,2016,2012,2020,31.79,57
+156,Text Entry,Sensing & Input Techniques,368,1982,1996,1997,2019,2016,2011,2021,31.43,58
+157,Pen & Bimanual Input,Sensing & Input Techniques,275,1986,1990,1990,2012,2008,2000,2014,22.59,56
+158,Touch & Multi-touch Input,Sensing & Input Techniques,260,1982,1997,1998,2014,2014,2011,2018,32.85,58
+159,Scanpaths & Visual Search,Sensing & Input Techniques,24,1991,1991,2015,2023,2023,2020,2024,19.04,53
+160,Menus & Command Selection,Sensing & Input Techniques,144,1982,1986,1983,2013,2012,2004,2018,23.6,54
+161,Authentication & Biometrics,Sensing & Input Techniques,105,2003,2012,2010,2016,2018,2014,2021,33.08,57
+162,Multimodal Fusion Architectures,Sensing & Input Techniques,42,1992,2003,1997,2005,2006,2004,2010,13.64,53
+163,Latency & Input Quality,Sensing & Input Techniques,97,1986,2000,1995,2022,2013,2004,2020,25.46,59

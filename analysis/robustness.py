@@ -42,13 +42,13 @@ def summarize() -> None:
         motor = [f"{r['motor_persisted']}/{r['motor']}" for r in pers]
         wv = {r["wave"]: r for r in csv.DictReader((d / "waves.csv").open())}
         def w(name, col): return wv.get(name, {}).get(col, "")
-        rows.append([tag, len(fs), med("y2"), med("y5"), med("y8"), round(exm[len(exm) // 2], 2) if exm else "",
+        rows.append([tag, len(fs), med("y2"), med("y6"), med("y8"), round(exm[len(exm) // 2], 2) if exm else "",
                      " ".join(cite), " ".join(motor),
                      w("LLMs & generative AI", "peak_share"), w("LLMs & generative AI", "cohesion_lift"), w("LLMs & generative AI", "newcomer_author_share"),
                      w("VR (consumer HMDs)", "peak_share"), w("VR (consumer HMDs)", "cohesion_lift"),
                      w("Crowdsourcing (MTurk)", "peak_share"), w("Crowdsourcing (MTurk)", "cohesion_lift"),
                      w("WWW", "peak_share"), w("WWW", "cohesion_lift")])
-    hdr = ["set", "subfields", "founder_y2", "founder_y5", "founder_y8", "export_median", "cite_persist_by_window", "motor_persist_by_window",
+    hdr = ["set", "subfields", "founder_y2", "founder_y6", "founder_y8", "export_median", "cite_persist_by_window", "motor_persist_by_window",
            "llm_peak", "llm_lift", "llm_newcomers", "vr_peak", "vr_lift", "mturk_peak", "mturk_lift", "www_peak", "www_lift"]
     with (HERE / "results" / "robustness.csv").open("w", newline="") as f:
         csv.writer(f).writerows([hdr] + rows)

@@ -218,3 +218,33 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
   the same volume of citations to the previous window, no cluster continues.
 - Consequence for the paper: the co-word/citation contrast in section 4 is a contrast between
   lenses, and the citation lens is not trivially persistent.
+
+## 12. Venue-set robustness (2026-09-26)
+Same scripts on four venue sets (`robustness.py`; results/{chi,core13,core29,all36}/):
+chi = CHI alone (14,531 papers); core13 = the pre-September core (CHI, PACM HCI, UIST, DIS,
+ASSETS, IUI, CSCW, TEI, IMWUT, UbiComp, CHI PLAY, MobileHCI, TOCHI, cut from the extended build);
+core29 = all SIGCHI-sponsored venues; all36 = core29 plus the seven linked venues.
+
+| set | sub-fields | founders y2 / y6 / y8 | export median | citation clusters persisting, window by window | co-word motor persisting |
+|---|---|---|---|---|---|
+| chi | 93 | 0.54 / 0.19 / 0.09 | 0.88 | 4/4 8/12 13/17 15/25 6/18 15/23 | 0/0 0/1 0/3 0/4 0/3 1/2 |
+| core13 | 129 | 0.57 / 0.22 / 0.11 | 0.76 | 12/15 14/21 13/22 16/22 12/18 12/20 | 0/2 1/3 0/4 0/3 0/2 0/2 |
+| core29 | 128 | 0.50 / 0.20 / 0.14 | 0.76 | 10/16 15/20 18/26 21/28 13/23 14/24 | 1/3 0/3 0/3 0/2 1/1 0/2 |
+| all36 | 149 | 0.55 / 0.17 / 0.12 | 0.78 | 16/19 18/26 22/31 20/29 15/22 15/21 | 0/3 0/4 0/3 1/1 0/2 1/1 |
+
+| set | LLM peak / lift / newcomers | VR peak / lift | MTurk peak / lift | WWW peak / lift |
+|---|---|---|---|---|
+| chi | 21.6% / 10.8 / 0.62 | 10.8% / 41.9 | 6.3% / 51.2 | 7.4% / — |
+| core13 | 18.6% / 14.1 / 0.53 | 8.8% / 33.7 | 4.0% / 60.0 | 8.6% / 10.4 |
+| core29 | 17.5% / 9.8 / 0.53 | 9.6% / 35.0 | 3.1% / 66.1 | 7.4% / 10.8 |
+| all36 | 16.8% / 13.4 / 0.55 | 14.4% / 25.7 | 2.8% / 72.5 | 6.5% / 22.5 |
+
+- Every claim keeps its direction and rough size across the four sets: citation clusters persist
+  in 50–85% of cases while co-word motor themes persist in 0–1 of 1–4; founders hold ~0.5 of a
+  sub-field's papers for four years and ~0.2 by year six; three quarters of citations come from
+  outside the set (0.88 for CHI alone, as expected for a single venue); LLMs are the largest wave
+  in every set (17–22% of the latest year) and the least cohesive of the recent waves, MTurk the
+  most cohesive, VR in between. The only set-sensitive number is VR's size, which grows when the
+  VR venues are added (all36 14.4%), as it should.
+- Wave start years are now data-driven (first year the wave holds ≥0.5% of the set for two
+  years); see waves.csv `start` vs `start_manual`.

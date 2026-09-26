@@ -1,0 +1,151 @@
+sub,name,band,papers,q1_year,early_papers,in_corpus_refs,external_refs,self_share,parent1,p1_share,parent2,p2_share,parent3,p3_share
+0,Participatory & Community Design,Social Media & Online Communities,752,2013,75,360,2065,0.239,"ICTD, Mobile Money & Women",0.075,Sustainable HCI,0.069,Memory & Reminiscence,0.064
+1,Social Media & Privacy,Social Media & Online Communities,566,2012,56,247,1193,0.437,Enterprise Social Networks,0.073,Wikipedia & Open Source,0.065,Location Sharing & Privacy,0.053
+2,Wikipedia & Open Source,Social Media & Online Communities,472,2009,47,190,855,0.453,Real-time Groupware,0.084,Email & Web Revisitation,0.079,Instant Messaging,0.058
+3,Misinformation & News,Social Media & Online Communities,422,2013,42,158,1082,0.519,Social Media & Privacy,0.051,Video Game Players & Communities,0.044,"Infrastructure, Hackathons & Crypto",0.044
+4,Content Moderation,Social Media & Online Communities,432,2016,43,195,995,0.292,Wikipedia & Open Source,0.128,Video Interfaces & Editing,0.072,Bodily Play & Spectator Experience,0.056
+5,Gig Work & Labour,Social Media & Online Communities,356,2015,35,140,853,0.171,Crowdsourcing & Peer Feedback,0.129,Wikipedia & Open Source,0.071,Location Sharing & Privacy,0.057
+6,Civic Data & Communities,Social Media & Online Communities,341,2011,34,152,757,0.25,Bodily Play & Spectator Experience,0.086,Public & Ambient Displays,0.072,Design Research & Art,0.072
+7,"Infrastructure, Hackathons & Crypto",Social Media & Online Communities,200,1990,20,33,286,0.636,Instant Messaging,0.121,Usable Security & Phishing,0.061,Design Research & Art,0.061
+8,Refugees & Migration,Social Media & Online Communities,126,2016,20,101,439,0.139,Memory & Reminiscence,0.178,Participatory & Community Design,0.149,Misinformation & News,0.069
+9,Political Talk & Team Formation,Social Media & Online Communities,114,2013,20,58,524,0.276,Wikipedia & Open Source,0.155,Crowdsourcing & Peer Feedback,0.103,Misinformation & News,0.069
+10,Crowdfunding & Social Tagging,Social Media & Online Communities,116,2006,20,62,212,0.532,Instant Messaging,0.081,Public & Ambient Displays,0.081,Information Navigation,0.065
+11,Health & Wellbeing,"Health, Care & Ageing",414,2014,41,156,1108,0.276,Persuasive Health & Activity,0.09,Chronic Care & Caregiving,0.09,Social Media & Privacy,0.09
+12,Personal Informatics,"Health, Care & Ageing",425,2015,42,215,759,0.321,Persuasive Health & Activity,0.2,Memory & Reminiscence,0.088,Location Sharing & Privacy,0.047
+13,Older Adults & Dementia Care,"Health, Care & Ageing",334,2010,33,128,588,0.172,Instant Messaging,0.117,Tangibles for Learning,0.086,Real-time Groupware,0.07
+14,Persuasive Health & Activity,"Health, Care & Ageing",200,2010,20,67,367,0.418,Bodily Play & Spectator Experience,0.09,Sustainable HCI,0.06,Personal Informatics,0.06
+15,Chronic Care & Caregiving,"Health, Care & Ageing",252,2011,25,99,510,0.242,Older Adults & Dementia Care,0.111,Persuasive Health & Activity,0.071,Memory & Reminiscence,0.071
+16,Mindfulness & Biofeedback,"Health, Care & Ageing",204,2013,20,81,371,0.16,Memory & Reminiscence,0.16,Persuasive Health & Activity,0.074,Older Adults & Dementia Care,0.074
+17,Family Health Informatics,"Health, Care & Ageing",171,2010,20,90,358,0.233,Memory & Reminiscence,0.111,Older Adults & Dementia Care,0.111,Pen & Bimanual Input,0.089
+18,Hospital Work & Records,"Health, Care & Ageing",153,2000,20,64,334,0.391,Real-time Groupware,0.141,Instant Messaging,0.062,Email & Web Revisitation,0.062
+19,Rehabilitation & Mobility Support,"Health, Care & Ageing",111,2014,20,50,440,0.42,Persuasive Health & Activity,0.14,Older Adults & Dementia Care,0.06,Hand Sensing & Input,0.04
+20,Autism & Neurodiversity,Accessibility & Assistive Tech,352,2011,35,87,792,0.264,Family Health Informatics,0.184,Public & Ambient Displays,0.069,Tangibles for Learning,0.046
+21,Web Accessibility,Accessibility & Assistive Tech,357,2002,35,73,248,0.712,Real-time Groupware,0.055,Pen & Bimanual Input,0.041,Text Entry,0.027
+22,Deaf & Sign Language,Accessibility & Assistive Tech,302,2010,30,70,398,0.329,Information Navigation,0.143,Public & Ambient Displays,0.071,Text Entry,0.057
+23,Non-visual Navigation,Accessibility & Assistive Tech,299,2008,29,60,342,0.5,Pointing & Target Selection,0.167,Information Navigation,0.067,Web Accessibility,0.05
+24,"ICTD, Mobile Money & Women",Accessibility & Assistive Tech,227,2010,22,62,394,0.371,Tangibles for Learning,0.081,Interruptions & Multitasking,0.065,Public & Ambient Displays,0.065
+25,Visual Accessibility,Accessibility & Assistive Tech,286,2013,28,78,344,0.346,Web Accessibility,0.141,Social Media & Privacy,0.103,Non-visual Navigation,0.064
+26,Non-visual Touch Interfaces,Accessibility & Assistive Tech,247,2009,24,34,296,0.529,Real-time Groupware,0.118,Web Accessibility,0.118,Tangibles for Learning,0.059
+27,Women's Health & Menstrual Tracking,Accessibility & Assistive Tech,211,2017,21,131,534,0.176,Participatory & Community Design,0.099,Design Research & Art,0.092,Memory & Reminiscence,0.069
+28,Blind Access to VR,Accessibility & Assistive Tech,113,2013,20,40,257,0.55,Visual Accessibility,0.075,Web Accessibility,0.075,GUI Optimization & Color,0.05
+29,AAC & Aphasia,Accessibility & Assistive Tech,118,2011,20,45,302,0.6,Rehabilitation & Mobility Support,0.044,Enterprise Social Networks,0.022,Video Game Players & Communities,0.022
+30,Low-vision Accessibility,Accessibility & Assistive Tech,107,2013,20,32,311,0.625,Web Accessibility,0.094,Design Research & Art,0.062,Visual Accessibility,0.062
+31,Assistive Technology & Dyslexia,Accessibility & Assistive Tech,139,2012,20,26,278,0.654,Web Accessibility,0.192,Digital Fabrication,0.038,Participatory & Community Design,0.038
+32,Location Sharing & Privacy,Privacy & Security,123,2007,20,117,392,0.265,Instant Messaging,0.103,Social Media & Privacy,0.103,Real-time Groupware,0.077
+33,Smart-home Privacy,Privacy & Security,117,2019,20,107,413,0.196,Usable Security & Phishing,0.112,Location Sharing & Privacy,0.084,Social Media & Privacy,0.084
+34,Dark Patterns,Privacy & Security,98,2021,20,128,716,0.32,Participatory & Community Design,0.156,Design Research & Art,0.086,Usable Security & Phishing,0.055
+35,Usable Security & Phishing,Privacy & Security,559,2004,55,90,629,0.711,Task Models & UI Engineering,0.056,Real-time Groupware,0.044,Email & Web Revisitation,0.022
+36,Design Research & Art,Design Research & Practice,513,2007,51,182,988,0.357,Memory & Reminiscence,0.099,"Body, Movement & Soma Design",0.049,Participatory & Community Design,0.038
+37,Bodily Play & Spectator Experience,Design Research & Practice,417,2007,41,174,549,0.356,Tangibles for Learning,0.092,Design Research & Art,0.063,Mobile Language Learning,0.052
+38,"Body, Movement & Soma Design",Design Research & Practice,443,2012,44,119,738,0.303,Design Research & Art,0.185,Memory & Reminiscence,0.084,Visual Aesthetics & UX,0.059
+39,Memory & Reminiscence,Design Research & Practice,407,2006,40,164,754,0.439,Design Research & Art,0.079,"Infrastructure, Hackathons & Crypto",0.055,Email & Web Revisitation,0.049
+40,More-than-human Design,Design Research & Practice,329,2014,32,103,413,0.272,Memory & Reminiscence,0.087,Sustainable HCI,0.087,Bodily Play & Spectator Experience,0.039
+41,Sustainable HCI,Design Research & Practice,332,2010,33,120,820,0.4,Memory & Reminiscence,0.117,Design Research & Art,0.092,Personal Informatics,0.042
+42,Human-Food Interaction,Design Research & Practice,137,2013,20,53,338,0.208,Memory & Reminiscence,0.132,Tangibles for Learning,0.075,Materials & Craft in HCI,0.057
+43,Materials & Craft in HCI,Design Research & Practice,110,2011,20,75,347,0.24,Tangibles for Learning,0.133,Design Research & Art,0.107,"Body, Movement & Soma Design",0.067
+44,Data Physicalization,Design Research & Practice,90,2017,20,125,432,0.192,Tangibles for Learning,0.176,Shape-changing Interfaces,0.112,Information Navigation,0.072
+45,Smart Home Automation,Design Research & Practice,180,2007,20,65,338,0.2,Memory & Reminiscence,0.185,Pen & Bimanual Input,0.077,Design Research & Art,0.062
+46,Co-design with Children,"Children, Learning & Youth",102,2000,20,20,274,0.5,Pen & Bimanual Input,0.1,Video Interfaces & Editing,0.1,GUI Optimization & Color,0.05
+47,Youth & Online Media,"Children, Learning & Youth",150,2016,20,99,647,0.293,Social Media & Privacy,0.182,Instant Messaging,0.081,Smartphone Use & Wellbeing,0.071
+48,AI Literacy & K-12,"Children, Learning & Youth",51,2023,20,161,1109,0.242,Tangibles for Learning,0.112,Public & Ambient Displays,0.068,Participatory & Community Design,0.056
+49,Family & Intergenerational Communication,"Children, Learning & Youth",98,2012,20,131,319,0.252,Memory & Reminiscence,0.176,Real-time Groupware,0.107,Telepresence & Remote Collaboration,0.076
+50,Children's Reading & Storytelling Agents,"Children, Learning & Youth",46,2023,20,125,754,0.176,Voice Assistants for Older Adults,0.2,Family & Intergenerational Communication,0.088,Tangibles for Learning,0.04
+51,Personas & Child-centred Design,"Children, Learning & Youth",92,2013,20,28,358,0.393,Bodily Play & Spectator Experience,0.179,Email & Web Revisitation,0.107,Enterprise Social Networks,0.071
+52,Child-Robot Interaction,Robots & Conversational Agents,130,2013,20,38,424,0.105,Tangibles for Learning,0.184,Virtual Agents & Social Effects,0.105,Telepresence & Remote Collaboration,0.079
+53,Voice Assistants for Older Adults,Robots & Conversational Agents,278,2016,27,53,331,0.189,Eye Movements & Cognition,0.075,Real-time Groupware,0.057,Chatbot Companions,0.057
+54,Robot Programming,Robots & Conversational Agents,60,2015,20,33,391,0.212,Tangibles for Learning,0.303,Real-time Groupware,0.061,Gaze-based Interaction,0.061
+55,Nonverbal & Public-speaking Analysis,Robots & Conversational Agents,80,2014,20,45,400,0.311,Email & Web Revisitation,0.133,Information Navigation,0.133,Tangibles for Learning,0.111
+56,Robot Programming (robot),Robots & Conversational Agents,57,2019,20,67,579,0.209,Telepresence & Remote Collaboration,0.104,Chatbot Companions,0.104,Tangibles for Learning,0.075
+57,Chatbot Companions,Robots & Conversational Agents,247,2016,24,70,505,0.243,Virtual Agents & Social Effects,0.2,Voice Assistants for Older Adults,0.071,Robot Programming (robot),0.057
+58,Human-Robot Interaction,Robots & Conversational Agents,85,2018,20,52,339,0.212,Robot Programming,0.077,Shape-changing Interfaces,0.077,Gesture Elicitation & Recognition,0.077
+59,Child-Robot Interaction (robot),Robots & Conversational Agents,34,2024,20,53,711,0.057,Participatory & Community Design,0.189,Social Media & Privacy,0.094,Child-Robot Interaction,0.075
+60,Virtual Agents & Social Effects,Robots & Conversational Agents,100,1998,20,29,361,0.517,Task Models & UI Engineering,0.069,Instant Messaging,0.069,Adaptive Help & Software Learnability,0.069
+61,Multilingual & Multimodal Communication,Robots & Conversational Agents,133,2000,20,26,319,0.5,Real-time Groupware,0.115,Multimodal Fusion Architectures,0.077,Video Game Players & Communities,0.077
+62,"LLMs, Writing & Prompting",Human-AI Interaction & Data,805,2020,80,327,2057,0.156,Crowdsourcing & Peer Feedback,0.159,Adaptive Help & Software Learnability,0.043,Algorithmic Fairness & Auditing,0.04
+63,Human-AI Trust & Explanation,Human-AI Interaction & Data,657,2018,65,298,1436,0.319,Algorithmic Fairness & Auditing,0.104,Recommender Explanations & Critiquing,0.077,Adaptive Help & Software Learnability,0.04
+64,Crowdsourcing & Peer Feedback,Human-AI Interaction & Data,555,2008,55,122,1157,0.303,Real-time Groupware,0.148,Wikipedia & Open Source,0.066,Public & Ambient Displays,0.057
+65,Data Visualization,Human-AI Interaction & Data,493,2000,49,70,612,0.586,Task Models & UI Engineering,0.143,Adaptive Help & Software Learnability,0.071,Information Navigation,0.071
+66,Algorithmic Fairness & Auditing,Human-AI Interaction & Data,495,2016,49,207,1102,0.362,Email & Web Revisitation,0.043,Paper Circuits & Electronics Prototyping,0.043,Notifications & Interruptibility,0.043
+67,Adaptive Help & Software Learnability,Human-AI Interaction & Data,441,1992,44,56,433,0.661,Task Models & UI Engineering,0.125,Real-time Groupware,0.071,Email & Web Revisitation,0.054
+68,Programming & Notebooks,Human-AI Interaction & Data,351,2002,35,55,405,0.582,Information Navigation,0.091,Email & Web Revisitation,0.091,Task Models & UI Engineering,0.055
+69,GUI Optimization & Color,Human-AI Interaction & Data,262,2008,26,65,311,0.169,Task Models & UI Engineering,0.154,Usable Security & Phishing,0.108,Pen & Bimanual Input,0.077
+70,Video Interfaces & Editing,Human-AI Interaction & Data,235,1994,23,41,253,0.512,Real-time Groupware,0.122,Information Navigation,0.098,Instant Messaging,0.073
+71,Scientific Search & Sensemaking,Human-AI Interaction & Data,148,2009,20,57,323,0.281,Email & Web Revisitation,0.175,Public & Ambient Displays,0.088,Information Navigation,0.088
+72,Mobile Sensing for Mental Health,Human-AI Interaction & Data,106,2018,20,81,925,0.481,Urban Mobility Prediction,0.111,Personal Informatics,0.111,Pupillometry & Cognitive Load,0.074
+73,Language Tools & Deployment,Human-AI Interaction & Data,21,2014,20,44,338,0.568,Multilingual & Multimodal Communication,0.114,Crowdsourcing & Peer Feedback,0.068,Gesture Elicitation & Recognition,0.023
+74,Recommender Evaluation & Music,Recommender Systems,98,2010,20,44,314,0.386,Information Navigation,0.182,Collaborative Filtering & Trust,0.091,Recommender Explanations & Critiquing,0.068
+81,Collaborative Filtering & Trust,Recommender Systems,52,2001,20,41,267,0.585,Email & Web Revisitation,0.195,Adaptive Help & Software Learnability,0.049,Virtual Agents & Social Effects,0.024
+83,Recommender Explanations & Critiquing,Recommender Systems,45,2009,20,35,263,0.629,Collaborative Filtering & Trust,0.171,Social Tagging & Group Recommendation,0.029,Information Navigation,0.029
+84,Social Tagging & Group Recommendation,Recommender Systems,40,2013,20,35,262,0.429,Email & Web Revisitation,0.143,Collaborative Filtering & Trust,0.114,Human-AI Trust & Explanation,0.057
+85,Visual Aesthetics & UX,Gamification & Engagement,134,2005,20,28,329,0.286,Design Research & Art,0.107,Crowdfunding & Social Tagging,0.071,Co-design with Children,0.071
+86,Player Experience & Immersion,Gamification & Engagement,140,2015,20,33,540,0.152,Video Game Players & Communities,0.303,Bodily Play & Spectator Experience,0.121,Tangibles for Learning,0.121
+87,Multiplayer & Location-based Games,Gamification & Engagement,140,2012,20,109,484,0.33,Bodily Play & Spectator Experience,0.128,Wikipedia & Open Source,0.101,Real-time Groupware,0.083
+88,Gamification Elements & User Types,Gamification & Engagement,69,2016,20,46,544,0.283,Adaptive Help & Software Learnability,0.13,Wikipedia & Open Source,0.087,Persuasive Health & Activity,0.087
+89,Video Game Players & Communities,Gamification & Engagement,491,2010,49,92,694,0.576,Hospital Work & Records,0.076,Task Models & UI Engineering,0.043,Instant Messaging,0.033
+90,Automated Driving,Mobile Life & Sensing,222,2011,22,45,450,0.267,Task Models & UI Engineering,0.133,Civic Data & Communities,0.067,Haptics & Touch Feedback (haptic),0.067
+91,Email & Web Revisitation,Mobile Life & Sensing,280,1996,28,45,316,0.422,Real-time Groupware,0.133,Information Navigation,0.111,Collaborative Filtering & Trust,0.067
+92,Instant Messaging,Mobile Life & Sensing,268,1990,26,30,317,0.8,"Infrastructure, Hackathons & Crypto",0.1,Real-time Groupware,0.067,Human-AI Trust & Explanation,0.033
+93,Notifications & Interruptibility,Mobile Life & Sensing,272,2006,27,134,602,0.403,Instant Messaging,0.201,Task Models & UI Engineering,0.045,Email & Web Revisitation,0.03
+94,Urban Mobility Prediction,Mobile Life & Sensing,266,2011,26,51,404,0.373,Notifications & Interruptibility,0.078,Location Sharing & Privacy,0.078,Mobile Language Learning,0.059
+95,Pupillometry & Cognitive Load,Mobile Life & Sensing,135,2013,20,38,594,0.132,Notifications & Interruptibility,0.158,Memory & Reminiscence,0.105,Physiological & Brain Sensing,0.053
+96,Enterprise Social Networks,Mobile Life & Sensing,140,2000,20,38,288,0.395,Email & Web Revisitation,0.105,Collaborative Filtering & Trust,0.105,"Infrastructure, Hackathons & Crypto",0.079
+97,Physiological & Brain Sensing,Mobile Life & Sensing,99,2011,20,45,528,0.4,Email & Web Revisitation,0.111,Data Visualization,0.089,Gaze-based Interaction,0.067
+98,Interruptions & Multitasking,Mobile Life & Sensing,143,2008,20,96,335,0.281,Email & Web Revisitation,0.219,Notifications & Interruptibility,0.135,Instant Messaging,0.104
+99,Vehicle-Pedestrian Communication,Mobile Life & Sensing,89,2019,20,49,293,0.388,Vibrotactile Feedback,0.163,Real-time Groupware,0.061,"Infrastructure, Hackathons & Crypto",0.041
+100,Smartphone Use & Wellbeing,Mobile Life & Sensing,131,2016,20,138,496,0.232,Interruptions & Multitasking,0.152,Social Media & Privacy,0.094,Participatory & Community Design,0.065
+101,Mobile Language Learning,Mobile Life & Sensing,113,2006,20,44,316,0.455,Pen & Bimanual Input,0.114,Instant Messaging,0.068,Touch & Multi-touch Input,0.045
+102,Eye Movements & Cognition,Mobile Life & Sensing,39,1998,20,45,178,0.467,"Infrastructure, Hackathons & Crypto",0.044,Usable Security & Phishing,0.044,Email & Web Revisitation,0.044
+103,Affect Recognition,Affect & Multimodal Recognition,74,2000,20,11,107,0.727,Adaptive Help & Software Learnability,0.182,Information Navigation,0.091,,
+104,RF & Wi-Fi Sensing,Activity Sensing & Wearables,196,2018,20,79,722,0.405,Hand Sensing & Input,0.152,Activity & Ambient Sensing,0.139,Personal Informatics,0.101
+105,Wearable Activity Recognition,Activity Sensing & Wearables,135,2018,20,73,700,0.288,Activity & Ambient Sensing,0.26,Hand Sensing & Input,0.068,Tangibles for Learning,0.055
+106,Activity & Ambient Sensing,Activity Sensing & Wearables,482,2012,48,105,826,0.59,Older Adults & Dementia Care,0.057,Location Sharing & Privacy,0.048,Notifications & Interruptibility,0.029
+109,Sketch-based Modelling,"Graphics, Animation & Modelling",52,2017,20,107,419,0.271,Pen & Bimanual Input,0.299,Information Navigation,0.075,Digital Fabrication,0.047
+111,Near-eye & Foveated Displays,"Graphics, Animation & Modelling",20,2026,20,43,635,0.233,Tangible & Tabletop Sensing,0.093,Sketch-based Modelling,0.093,Immersive Mixed Reality,0.093
+112,Texture & Image Synthesis,"Graphics, Animation & Modelling",24,2022,20,27,430,0.259,Pen & Bimanual Input,0.148,Video Interfaces & Editing,0.148,Data Visualization,0.074
+116,3D Reconstruction & Motion Capture,"Graphics, Animation & Modelling",25,2025,20,127,799,0.15,Hand Sensing & Input,0.307,RF & Wi-Fi Sensing,0.094,Wearable Activity Recognition,0.055
+117,Gesture Generation & Simulation,"Graphics, Animation & Modelling",22,2024,20,22,532,0.318,Information Navigation,0.136,Tangible & Tabletop Sensing,0.091,Telepresence & Remote Collaboration,0.045
+118,Public & Ambient Displays,3D Pointing & VR Interaction,581,2002,58,183,633,0.372,Real-time Groupware,0.18,Tangibles for Learning,0.104,Pen & Bimanual Input,0.071
+119,Telepresence & Remote Collaboration,3D Pointing & VR Interaction,437,2003,43,176,581,0.489,Real-time Groupware,0.324,Information Navigation,0.017,Tangibles for Learning,0.017
+120,Real-time Groupware,3D Pointing & VR Interaction,480,1990,48,79,689,0.709,Instant Messaging,0.076,Task Models & UI Engineering,0.038,"Infrastructure, Hackathons & Crypto",0.038
+121,VR Locomotion,3D Pointing & VR Interaction,137,2009,20,57,382,0.333,Information Navigation,0.263,Gaze-based Interaction,0.07,Avatars & Social VR,0.053
+122,AR Authoring & Prototyping,3D Pointing & VR Interaction,300,2010,30,85,475,0.235,Smart Home Automation,0.071,Multilingual & Multimodal Communication,0.071,Real-time Groupware,0.059
+123,VR Presence & Avatars,3D Pointing & VR Interaction,124,2019,20,74,694,0.135,Gaze-based Interaction,0.108,Bodily Play & Spectator Experience,0.095,Video Game Players & Communities,0.068
+124,Avatars & Social VR,3D Pointing & VR Interaction,201,2017,20,54,535,0.241,Telepresence & Remote Collaboration,0.222,Multiplayer & Location-based Games,0.167,Participatory & Community Design,0.074
+125,Immersive Mixed Reality,3D Pointing & VR Interaction,146,2015,20,54,357,0.278,Information Navigation,0.222,Public & Ambient Displays,0.056,Task Models & UI Engineering,0.037
+126,Asymmetric Mixed Reality,3D Pointing & VR Interaction,122,2016,20,92,381,0.239,Tangible & Tabletop Sensing,0.196,Tangibles for Learning,0.098,Real-time Groupware,0.065
+127,AR Depth Perception,3D Pointing & VR Interaction,68,2004,20,24,284,0.542,Information Navigation,0.125,VR Locomotion,0.083,Mobile Language Learning,0.083
+128,In-car & Video AR,3D Pointing & VR Interaction,62,2017,20,45,391,0.178,Telepresence & Remote Collaboration,0.178,Video Interfaces & Editing,0.133,Information Navigation,0.111
+130,Haptics & Touch Feedback (haptic),Haptics & Touch Feedback,93,2010,20,76,273,0.434,Touch & Multi-touch Input,0.105,Pointing & Target Selection,0.105,Text Entry,0.066
+131,Force Feedback Devices,Haptics & Touch Feedback,135,2018,20,90,360,0.3,Shape-changing Interfaces,0.089,Haptics & Touch Feedback (haptic),0.089,Mid-air Ultrasound Haptics,0.089
+132,Vibrotactile Feedback,Haptics & Touch Feedback,149,2010,20,50,269,0.26,Touch & Multi-touch Input,0.16,Non-visual Navigation,0.12,Haptics & Touch Feedback (haptic),0.12
+133,Affective & Social Touch,Haptics & Touch Feedback,91,2015,20,98,319,0.388,Memory & Reminiscence,0.092,Shape-changing Interfaces,0.071,Tangibles for Learning,0.061
+134,Haptic Redirection in VR,Haptics & Touch Feedback,72,2019,20,163,587,0.27,Force Feedback Devices,0.11,Shape-changing Interfaces,0.098,Tangibles for Learning,0.092
+135,Mid-air Ultrasound Haptics,Haptics & Touch Feedback,80,2017,20,109,399,0.284,Haptics & Touch Feedback (haptic),0.11,Shape-changing Interfaces,0.101,Tangible & Tabletop Sensing,0.092
+136,Electrical Muscle Stimulation,Haptics & Touch Feedback,108,2016,20,96,310,0.323,Vibrotactile Feedback,0.115,Shape-changing Interfaces,0.104,Hand Sensing & Input,0.094
+137,Thermal & Olfactory Displays,Haptics & Touch Feedback,73,2017,20,51,419,0.608,Shape-changing Interfaces,0.059,Mid-air Ultrasound Haptics,0.039,Affective & Social Touch,0.039
+138,Tactile Texture Rendering,Haptics & Touch Feedback,55,2017,20,77,339,0.234,Vibrotactile Feedback,0.078,Haptics & Touch Feedback (haptic),0.078,Paper Circuits & Electronics Prototyping,0.078
+139,Haptic Rendering & Olfaction,Haptics & Touch Feedback,74,2006,20,36,231,0.361,Non-visual Touch Interfaces,0.083,Information Navigation,0.056,Telepresence & Remote Collaboration,0.056
+140,Tangibles for Learning,Tangible Interaction & Fabrication,737,2002,73,296,1085,0.588,Pen & Bimanual Input,0.084,Real-time Groupware,0.041,Public & Ambient Displays,0.041
+141,Shape-changing Interfaces,Tangible Interaction & Fabrication,511,2012,51,207,562,0.357,Tangibles for Learning,0.217,Tangible & Tabletop Sensing,0.097,Haptics & Touch Feedback (haptic),0.048
+142,Textiles & Cloth Simulation,Tangible Interaction & Fabrication,448,2013,44,106,455,0.292,Hand Sensing & Input,0.123,Tangibles for Learning,0.057,Tangible & Tabletop Sensing,0.057
+143,Tangible & Tabletop Sensing,Tangible Interaction & Fabrication,254,2007,25,119,284,0.227,Tangibles for Learning,0.269,Public & Ambient Displays,0.126,Information Navigation,0.092
+144,Digital Fabrication,Tangible Interaction & Fabrication,285,2013,28,123,287,0.276,Tangibles for Learning,0.236,Pen & Bimanual Input,0.122,Sketch-based Modelling,0.081
+145,"Knitting, Cloth & Printed Objects",Tangible Interaction & Fabrication,182,2015,20,179,260,0.168,Tangible & Tabletop Sensing,0.151,Paper Circuits & Electronics Prototyping,0.14,Hand Sensing & Input,0.134
+146,Computational Fabrication,Tangible Interaction & Fabrication,32,2021,20,165,486,0.139,Digital Fabrication,0.345,Paper Circuits & Electronics Prototyping,0.103,"Knitting, Cloth & Printed Objects",0.097
+147,Paper Circuits & Electronics Prototyping,Tangible Interaction & Fabrication,173,2008,20,134,268,0.388,Tangibles for Learning,0.216,Pen & Bimanual Input,0.082,Task Models & UI Engineering,0.06
+148,Deformable Surfaces & Projection Mapping,Tangible Interaction & Fabrication,80,2012,20,130,196,0.315,Tangibles for Learning,0.215,Tangible & Tabletop Sensing,0.085,Pen & Bimanual Input,0.077
+149,Battery-free & Wireless Devices,Tangible Interaction & Fabrication,89,2017,20,62,266,0.145,Tangibles for Learning,0.145,Paper Circuits & Electronics Prototyping,0.145,Sustainable HCI,0.097
+150,Gaze-based Interaction,Sensing & Input Techniques,490,2005,49,177,759,0.503,Information Navigation,0.09,Public & Ambient Displays,0.04,Latency & Input Quality,0.034
+151,Hand Sensing & Input,Sensing & Input Techniques,804,2012,80,321,964,0.296,Touch & Multi-touch Input,0.153,Tangible & Tabletop Sensing,0.062,Pen & Bimanual Input,0.053
+152,Task Models & UI Engineering,Sensing & Input Techniques,391,1986,39,19,297,0.947,Human-AI Trust & Explanation,0.053,,,,
+153,Information Navigation,Sensing & Input Techniques,389,1992,38,51,419,0.647,Task Models & UI Engineering,0.157,Adaptive Help & Software Learnability,0.059,Latency & Input Quality,0.02
+154,Pointing & Target Selection,Sensing & Input Techniques,409,2003,40,105,440,0.505,Information Navigation,0.133,Gaze-based Interaction,0.076,Public & Ambient Displays,0.048
+155,Gesture Elicitation & Recognition,Sensing & Input Techniques,248,2004,24,69,382,0.333,Pen & Bimanual Input,0.13,Information Navigation,0.072,Multimodal Fusion Architectures,0.058
+156,Text Entry,Sensing & Input Techniques,368,2004,36,92,430,0.554,Pointing & Target Selection,0.13,Menus & Command Selection,0.043,Pen & Bimanual Input,0.033
+157,Pen & Bimanual Input,Sensing & Input Techniques,275,1995,27,41,263,0.195,Real-time Groupware,0.195,Task Models & UI Engineering,0.146,Menus & Command Selection,0.098
+158,Touch & Multi-touch Input,Sensing & Input Techniques,260,2003,26,107,292,0.29,Pen & Bimanual Input,0.15,Tangibles for Learning,0.075,Information Navigation,0.065
+159,Scanpaths & Visual Search,Sensing & Input Techniques,24,2024,20,42,729,0.119,Gaze-based Interaction,0.238,Information Navigation,0.119,Data Visualization,0.119
+160,Menus & Command Selection,Sensing & Input Techniques,144,1994,20,24,166,0.833,Usable Security & Phishing,0.083,Email & Web Revisitation,0.042,Telepresence & Remote Collaboration,0.042
+161,Authentication & Biometrics,Sensing & Input Techniques,105,2013,20,54,315,0.537,Usable Security & Phishing,0.148,Gaze-based Interaction,0.074,Pointing & Target Selection,0.056
+162,Multimodal Fusion Architectures,Sensing & Input Techniques,42,2006,20,40,288,0.575,Task Models & UI Engineering,0.075,Gesture Elicitation & Recognition,0.075,Telepresence & Remote Collaboration,0.05
+163,Latency & Input Quality,Sensing & Input Techniques,97,2002,20,42,241,0.381,Non-visual Touch Interfaces,0.119,Text Entry,0.119,Web Accessibility,0.095

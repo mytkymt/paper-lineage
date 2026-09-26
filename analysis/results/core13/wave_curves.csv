@@ -1,0 +1,233 @@
+wave,year,papers,share_of_corpus
+WWW,1994,1,0.0074
+WWW,1995,2,0.0133
+WWW,1996,9,0.0411
+WWW,1997,12,0.0569
+WWW,1998,23,0.0861
+WWW,1999,6,0.05
+WWW,2000,17,0.058
+WWW,2001,4,0.0238
+WWW,2002,7,0.0214
+WWW,2003,5,0.0212
+WWW,2004,1,0.0025
+WWW,2005,6,0.0221
+WWW,2006,6,0.0127
+WWW,2007,6,0.0136
+WWW,2008,4,0.0062
+WWW,2009,8,0.0142
+WWW,2010,8,0.0091
+WWW,2011,7,0.0078
+WWW,2012,12,0.0101
+WWW,2013,6,0.0059
+WWW,2014,11,0.0084
+WWW,2015,13,0.0095
+WWW,2016,8,0.0054
+WWW,2017,13,0.0078
+WWW,2018,29,0.0164
+WWW,2019,40,0.0218
+WWW,2020,40,0.0215
+WWW,2021,56,0.0263
+WWW,2022,49,0.024
+WWW,2023,50,0.0227
+WWW,2024,47,0.0167
+WWW,2025,53,0.0172
+Mobile phones,1999,2,0.0167
+Mobile phones,2000,8,0.0273
+Mobile phones,2001,5,0.0298
+Mobile phones,2002,3,0.0092
+Mobile phones,2003,3,0.0127
+Mobile phones,2004,3,0.0076
+Mobile phones,2005,2,0.0074
+Mobile phones,2006,10,0.0212
+Mobile phones,2007,7,0.0159
+Mobile phones,2008,6,0.0093
+Mobile phones,2009,11,0.0195
+Mobile phones,2010,10,0.0114
+Mobile phones,2011,10,0.0111
+Mobile phones,2012,9,0.0076
+Mobile phones,2013,19,0.0188
+Mobile phones,2014,14,0.0107
+Mobile phones,2015,12,0.0088
+Mobile phones,2016,17,0.0116
+Mobile phones,2017,17,0.0102
+Mobile phones,2018,26,0.0147
+Mobile phones,2019,36,0.0196
+Mobile phones,2020,48,0.0258
+Mobile phones,2021,36,0.0169
+Mobile phones,2022,28,0.0137
+Mobile phones,2023,38,0.0172
+Mobile phones,2024,27,0.0096
+Mobile phones,2025,24,0.0078
+Tabletop & multitouch,2005,2,0.0074
+Tabletop & multitouch,2006,3,0.0064
+Tabletop & multitouch,2007,5,0.0113
+Tabletop & multitouch,2008,8,0.0124
+Tabletop & multitouch,2009,11,0.0195
+Tabletop & multitouch,2010,15,0.0171
+Tabletop & multitouch,2011,21,0.0233
+Tabletop & multitouch,2012,19,0.016
+Tabletop & multitouch,2013,25,0.0247
+Tabletop & multitouch,2014,21,0.016
+Tabletop & multitouch,2015,13,0.0095
+Tabletop & multitouch,2016,27,0.0184
+Tabletop & multitouch,2017,15,0.009
+Tabletop & multitouch,2018,35,0.0198
+Tabletop & multitouch,2019,53,0.0289
+Tabletop & multitouch,2020,43,0.0231
+Tabletop & multitouch,2021,49,0.023
+Tabletop & multitouch,2022,32,0.0157
+Tabletop & multitouch,2023,41,0.0186
+Tabletop & multitouch,2024,38,0.0135
+Tabletop & multitouch,2025,36,0.0117
+Social media,2010,9,0.0102
+Social media,2011,19,0.0211
+Social media,2012,23,0.0193
+Social media,2013,27,0.0267
+Social media,2014,34,0.0259
+Social media,2015,38,0.0279
+Social media,2016,38,0.0259
+Social media,2017,61,0.0366
+Social media,2018,73,0.0413
+Social media,2019,108,0.0588
+Social media,2020,108,0.0581
+Social media,2021,141,0.0663
+Social media,2022,162,0.0795
+Social media,2023,139,0.063
+Social media,2024,175,0.0621
+Social media,2025,209,0.0678
+Smartphones & apps,2011,8,0.0089
+Smartphones & apps,2012,19,0.016
+Smartphones & apps,2013,25,0.0247
+Smartphones & apps,2014,29,0.0221
+Smartphones & apps,2015,29,0.0213
+Smartphones & apps,2016,47,0.032
+Smartphones & apps,2017,47,0.0282
+Smartphones & apps,2018,121,0.0685
+Smartphones & apps,2019,170,0.0926
+Smartphones & apps,2020,152,0.0817
+Smartphones & apps,2021,162,0.0762
+Smartphones & apps,2022,131,0.0643
+Smartphones & apps,2023,151,0.0684
+Smartphones & apps,2024,148,0.0526
+Smartphones & apps,2025,115,0.0373
+Crowdsourcing (MTurk),2008,7,0.0109
+Crowdsourcing (MTurk),2009,11,0.0195
+Crowdsourcing (MTurk),2010,12,0.0137
+Crowdsourcing (MTurk),2011,23,0.0255
+Crowdsourcing (MTurk),2012,27,0.0227
+Crowdsourcing (MTurk),2013,34,0.0336
+Crowdsourcing (MTurk),2014,36,0.0274
+Crowdsourcing (MTurk),2015,42,0.0308
+Crowdsourcing (MTurk),2016,55,0.0375
+Crowdsourcing (MTurk),2017,48,0.0288
+Crowdsourcing (MTurk),2018,56,0.0317
+Crowdsourcing (MTurk),2019,73,0.0398
+Crowdsourcing (MTurk),2020,58,0.0312
+Crowdsourcing (MTurk),2021,86,0.0405
+Crowdsourcing (MTurk),2022,76,0.0373
+Crowdsourcing (MTurk),2023,57,0.0258
+Crowdsourcing (MTurk),2024,51,0.0181
+Crowdsourcing (MTurk),2025,46,0.0149
+Depth cameras (Kinect),2011,5,0.0055
+Depth cameras (Kinect),2012,13,0.0109
+Depth cameras (Kinect),2013,9,0.0089
+Depth cameras (Kinect),2014,8,0.0061
+Depth cameras (Kinect),2015,8,0.0059
+Depth cameras (Kinect),2016,11,0.0075
+Depth cameras (Kinect),2017,12,0.0072
+Depth cameras (Kinect),2018,12,0.0068
+Depth cameras (Kinect),2019,9,0.0049
+Depth cameras (Kinect),2020,10,0.0054
+Depth cameras (Kinect),2021,12,0.0056
+Depth cameras (Kinect),2022,16,0.0079
+Depth cameras (Kinect),2023,14,0.0063
+Depth cameras (Kinect),2024,14,0.005
+Depth cameras (Kinect),2025,19,0.0062
+Personal fabrication,2015,10,0.0073
+Personal fabrication,2016,23,0.0157
+Personal fabrication,2017,14,0.0084
+Personal fabrication,2018,43,0.0243
+Personal fabrication,2019,74,0.0403
+Personal fabrication,2020,68,0.0366
+Personal fabrication,2021,86,0.0405
+Personal fabrication,2022,87,0.0427
+Personal fabrication,2023,99,0.0449
+Personal fabrication,2024,107,0.038
+Personal fabrication,2025,96,0.0311
+Wearables & smartwatches,2015,10,0.0073
+Wearables & smartwatches,2016,19,0.0129
+Wearables & smartwatches,2017,14,0.0084
+Wearables & smartwatches,2018,40,0.0226
+Wearables & smartwatches,2019,48,0.0261
+Wearables & smartwatches,2020,36,0.0194
+Wearables & smartwatches,2021,36,0.0169
+Wearables & smartwatches,2022,40,0.0196
+Wearables & smartwatches,2023,35,0.0159
+Wearables & smartwatches,2024,40,0.0142
+Wearables & smartwatches,2025,37,0.012
+Deep learning,2016,13,0.0089
+Deep learning,2017,14,0.0084
+Deep learning,2018,51,0.0289
+Deep learning,2019,59,0.0321
+Deep learning,2020,86,0.0462
+Deep learning,2021,102,0.048
+Deep learning,2022,97,0.0476
+Deep learning,2023,105,0.0476
+Deep learning,2024,77,0.0273
+Deep learning,2025,74,0.024
+VR (consumer HMDs),2016,17,0.0116
+VR (consumer HMDs),2017,24,0.0144
+VR (consumer HMDs),2018,77,0.0436
+VR (consumer HMDs),2019,145,0.079
+VR (consumer HMDs),2020,141,0.0758
+VR (consumer HMDs),2021,134,0.063
+VR (consumer HMDs),2022,138,0.0677
+VR (consumer HMDs),2023,195,0.0884
+VR (consumer HMDs),2024,237,0.0842
+VR (consumer HMDs),2025,237,0.0769
+Voice assistants,2018,19,0.0108
+Voice assistants,2019,54,0.0294
+Voice assistants,2020,74,0.0398
+Voice assistants,2021,72,0.0339
+Voice assistants,2022,69,0.0339
+Voice assistants,2023,63,0.0285
+Voice assistants,2024,90,0.032
+Voice assistants,2025,124,0.0402
+LLMs & generative AI,2022,11,0.0054
+LLMs & generative AI,2023,55,0.0249
+LLMs & generative AI,2024,326,0.1158
+LLMs & generative AI,2025,574,0.1862
+VR (1990s),1992,3,0.0112
+VR (1990s),1993,3,0.0455
+VR (1990s),1994,0,0.0
+VR (1990s),1995,7,0.0467
+VR (1990s),1996,5,0.0228
+VR (1990s),1997,7,0.0332
+VR (1990s),1998,10,0.0375
+VR (1990s),1999,3,0.025
+VR (1990s),2000,12,0.041
+VR (1990s),2001,3,0.0179
+VR (1990s),2002,9,0.0275
+VR (1990s),2003,3,0.0127
+VR (1990s),2004,0,0.0
+VR (1990s),2005,0,0.0
+VR (1990s),2006,0,0.0
+VR (1990s),2007,0,0.0
+VR (1990s),2008,0,0.0
+VR (1990s),2009,0,0.0
+VR (1990s),2010,0,0.0
+VR (1990s),2011,0,0.0
+VR (1990s),2012,0,0.0
+VR (1990s),2013,0,0.0
+VR (1990s),2014,0,0.0
+VR (1990s),2015,0,0.0
+VR (1990s),2016,0,0.0
+VR (1990s),2017,0,0.0
+VR (1990s),2018,0,0.0
+VR (1990s),2019,0,0.0
+VR (1990s),2020,0,0.0
+VR (1990s),2021,0,0.0
+VR (1990s),2022,0,0.0
+VR (1990s),2023,0,0.0
+VR (1990s),2024,0,0.0
+VR (1990s),2025,0,0.0

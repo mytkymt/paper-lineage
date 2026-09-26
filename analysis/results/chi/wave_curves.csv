@@ -1,0 +1,220 @@
+wave,year,papers,share_of_corpus
+WWW,1994,1,0.0233
+WWW,1995,1,0.0133
+WWW,1996,4,0.0597
+WWW,1997,2,0.0263
+WWW,1998,6,0.0741
+WWW,1999,4,0.0513
+WWW,2000,5,0.0694
+WWW,2001,3,0.0435
+WWW,2002,2,0.0299
+WWW,2003,0,0.0
+WWW,2004,0,0.0
+WWW,2005,2,0.0217
+WWW,2006,2,0.0134
+WWW,2007,4,0.0195
+WWW,2008,0,0.0
+WWW,2009,4,0.0143
+WWW,2010,3,0.01
+WWW,2011,3,0.0073
+WWW,2012,3,0.008
+WWW,2013,2,0.0052
+WWW,2014,3,0.0066
+WWW,2015,4,0.0083
+WWW,2016,4,0.0074
+WWW,2017,5,0.0083
+WWW,2018,6,0.009
+WWW,2019,18,0.0255
+WWW,2020,17,0.0224
+WWW,2021,22,0.0295
+WWW,2022,13,0.0204
+WWW,2023,21,0.0239
+WWW,2024,16,0.0153
+WWW,2025,22,0.0177
+Mobile phones,2003,1,0.0132
+Mobile phones,2004,3,0.0326
+Mobile phones,2005,0,0.0
+Mobile phones,2006,2,0.0134
+Mobile phones,2007,2,0.0098
+Mobile phones,2008,1,0.0045
+Mobile phones,2009,2,0.0072
+Mobile phones,2010,3,0.01
+Mobile phones,2011,4,0.0097
+Mobile phones,2012,2,0.0053
+Mobile phones,2013,9,0.0236
+Mobile phones,2014,6,0.0131
+Mobile phones,2015,2,0.0042
+Mobile phones,2016,6,0.0111
+Mobile phones,2017,5,0.0083
+Mobile phones,2018,5,0.0075
+Mobile phones,2019,11,0.0156
+Mobile phones,2020,17,0.0224
+Mobile phones,2021,13,0.0174
+Mobile phones,2022,10,0.0157
+Mobile phones,2023,15,0.017
+Mobile phones,2024,8,0.0077
+Mobile phones,2025,9,0.0073
+Tabletop & multitouch,2006,3,0.0201
+Tabletop & multitouch,2007,4,0.0195
+Tabletop & multitouch,2008,4,0.0182
+Tabletop & multitouch,2009,7,0.0251
+Tabletop & multitouch,2010,7,0.0233
+Tabletop & multitouch,2011,12,0.0291
+Tabletop & multitouch,2012,6,0.0159
+Tabletop & multitouch,2013,8,0.0209
+Tabletop & multitouch,2014,7,0.0153
+Tabletop & multitouch,2015,8,0.0167
+Tabletop & multitouch,2016,13,0.024
+Tabletop & multitouch,2017,5,0.0083
+Tabletop & multitouch,2018,10,0.015
+Tabletop & multitouch,2019,20,0.0283
+Tabletop & multitouch,2020,17,0.0224
+Tabletop & multitouch,2021,23,0.0308
+Tabletop & multitouch,2022,12,0.0188
+Tabletop & multitouch,2023,19,0.0216
+Tabletop & multitouch,2024,11,0.0105
+Tabletop & multitouch,2025,8,0.0064
+Social media,2010,7,0.0233
+Social media,2011,11,0.0267
+Social media,2012,10,0.0265
+Social media,2013,11,0.0288
+Social media,2014,13,0.0284
+Social media,2015,17,0.0354
+Social media,2016,15,0.0277
+Social media,2017,23,0.0384
+Social media,2018,20,0.03
+Social media,2019,38,0.0538
+Social media,2020,39,0.0515
+Social media,2021,38,0.0509
+Social media,2022,41,0.0644
+Social media,2023,49,0.0557
+Social media,2024,64,0.0612
+Social media,2025,64,0.0516
+Smartphones & apps,2012,3,0.008
+Smartphones & apps,2013,4,0.0105
+Smartphones & apps,2014,8,0.0175
+Smartphones & apps,2015,8,0.0167
+Smartphones & apps,2016,15,0.0277
+Smartphones & apps,2017,16,0.0267
+Smartphones & apps,2018,21,0.0315
+Smartphones & apps,2019,58,0.0822
+Smartphones & apps,2020,40,0.0528
+Smartphones & apps,2021,46,0.0617
+Smartphones & apps,2022,31,0.0487
+Smartphones & apps,2023,53,0.0602
+Smartphones & apps,2024,53,0.0507
+Smartphones & apps,2025,34,0.0274
+Crowdsourcing (MTurk),2008,3,0.0136
+Crowdsourcing (MTurk),2009,8,0.0287
+Crowdsourcing (MTurk),2010,7,0.0233
+Crowdsourcing (MTurk),2011,13,0.0316
+Crowdsourcing (MTurk),2012,15,0.0398
+Crowdsourcing (MTurk),2013,13,0.034
+Crowdsourcing (MTurk),2014,16,0.035
+Crowdsourcing (MTurk),2015,22,0.0458
+Crowdsourcing (MTurk),2016,34,0.0628
+Crowdsourcing (MTurk),2017,20,0.0334
+Crowdsourcing (MTurk),2018,20,0.03
+Crowdsourcing (MTurk),2019,35,0.0496
+Crowdsourcing (MTurk),2020,30,0.0396
+Crowdsourcing (MTurk),2021,35,0.0469
+Crowdsourcing (MTurk),2022,29,0.0455
+Crowdsourcing (MTurk),2023,29,0.033
+Crowdsourcing (MTurk),2024,19,0.0182
+Crowdsourcing (MTurk),2025,15,0.0121
+Depth cameras (Kinect),2016,4,0.0074
+Depth cameras (Kinect),2017,5,0.0083
+Depth cameras (Kinect),2018,2,0.003
+Depth cameras (Kinect),2019,2,0.0028
+Depth cameras (Kinect),2020,1,0.0013
+Depth cameras (Kinect),2021,2,0.0027
+Depth cameras (Kinect),2022,1,0.0016
+Depth cameras (Kinect),2023,7,0.008
+Depth cameras (Kinect),2024,1,0.001
+Depth cameras (Kinect),2025,5,0.004
+Personal fabrication,2014,3,0.0066
+Personal fabrication,2015,6,0.0125
+Personal fabrication,2016,4,0.0074
+Personal fabrication,2017,8,0.0134
+Personal fabrication,2018,8,0.012
+Personal fabrication,2019,27,0.0382
+Personal fabrication,2020,25,0.033
+Personal fabrication,2021,37,0.0496
+Personal fabrication,2022,17,0.0267
+Personal fabrication,2023,36,0.0409
+Personal fabrication,2024,35,0.0335
+Personal fabrication,2025,32,0.0258
+Wearables & smartwatches,2016,6,0.0111
+Wearables & smartwatches,2017,5,0.0083
+Wearables & smartwatches,2018,7,0.0105
+Wearables & smartwatches,2019,7,0.0099
+Wearables & smartwatches,2020,11,0.0145
+Wearables & smartwatches,2021,4,0.0054
+Wearables & smartwatches,2022,6,0.0094
+Wearables & smartwatches,2023,9,0.0102
+Wearables & smartwatches,2024,17,0.0163
+Wearables & smartwatches,2025,10,0.0081
+Deep learning,2016,4,0.0074
+Deep learning,2017,6,0.01
+Deep learning,2018,8,0.012
+Deep learning,2019,11,0.0156
+Deep learning,2020,21,0.0277
+Deep learning,2021,23,0.0308
+Deep learning,2022,16,0.0251
+Deep learning,2023,18,0.0205
+Deep learning,2024,12,0.0115
+Deep learning,2025,12,0.0097
+VR (consumer HMDs),2016,5,0.0092
+VR (consumer HMDs),2017,8,0.0134
+VR (consumer HMDs),2018,20,0.03
+VR (consumer HMDs),2019,74,0.1048
+VR (consumer HMDs),2020,82,0.1082
+VR (consumer HMDs),2021,65,0.0871
+VR (consumer HMDs),2022,61,0.0958
+VR (consumer HMDs),2023,81,0.092
+VR (consumer HMDs),2024,103,0.0986
+VR (consumer HMDs),2025,114,0.0919
+Voice assistants,2017,3,0.005
+Voice assistants,2018,8,0.012
+Voice assistants,2019,23,0.0326
+Voice assistants,2020,38,0.0501
+Voice assistants,2021,26,0.0349
+Voice assistants,2022,28,0.044
+Voice assistants,2023,27,0.0307
+Voice assistants,2024,36,0.0344
+Voice assistants,2025,54,0.0435
+LLMs & generative AI,2022,6,0.0094
+LLMs & generative AI,2023,21,0.0239
+LLMs & generative AI,2024,152,0.1455
+LLMs & generative AI,2025,268,0.216
+VR (1990s),1995,3,0.04
+VR (1990s),1996,1,0.0149
+VR (1990s),1997,2,0.0263
+VR (1990s),1998,3,0.037
+VR (1990s),1999,3,0.0385
+VR (1990s),2000,4,0.0556
+VR (1990s),2001,3,0.0435
+VR (1990s),2002,2,0.0299
+VR (1990s),2003,2,0.0263
+VR (1990s),2004,0,0.0
+VR (1990s),2005,0,0.0
+VR (1990s),2006,0,0.0
+VR (1990s),2007,0,0.0
+VR (1990s),2008,0,0.0
+VR (1990s),2009,0,0.0
+VR (1990s),2010,0,0.0
+VR (1990s),2011,0,0.0
+VR (1990s),2012,0,0.0
+VR (1990s),2013,0,0.0
+VR (1990s),2014,0,0.0
+VR (1990s),2015,0,0.0
+VR (1990s),2016,0,0.0
+VR (1990s),2017,0,0.0
+VR (1990s),2018,0,0.0
+VR (1990s),2019,0,0.0
+VR (1990s),2020,0,0.0
+VR (1990s),2021,0,0.0
+VR (1990s),2022,0,0.0
+VR (1990s),2023,0,0.0
+VR (1990s),2024,0,0.0
+VR (1990s),2025,0,0.0
