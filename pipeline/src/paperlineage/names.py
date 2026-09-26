@@ -28,6 +28,10 @@ def _sig(o: dict, k: int) -> str:
     return "|".join((o.get("keywords") or [])[:k])
 
 
+def _sorted_sig(sig: str) -> str:
+    return "|".join(sorted(sig.split("|")))
+
+
 def _seed_tables() -> tuple[dict, dict, dict, dict, dict]:
     if not NAMES_PATH.exists():
         return {}, {}, {}, {}, {}
@@ -39,6 +43,7 @@ def _seed_tables() -> tuple[dict, dict, dict, dict, dict]:
         for e in entries or []:
             if e.get("sig5"):
                 b5[e["sig5"]] = e["name"]
+                b5[_sorted_sig(e["sig5"])] = e["name"]   # 語の順が入れ替わっても当たるように
             elif e.get("sig"):
                 b3[e["sig"]] = e["name"]
         return b5, b3
@@ -50,10 +55,11 @@ def _seed_tables() -> tuple[dict, dict, dict, dict, dict]:
 
 def _seed_name(o: dict, is_sub: bool, tables: tuple) -> str | None:
     band5, band3, sub5, sub3, _ = tables
+    s5, s5s = _sig(o, 5), _sorted_sig(_sig(o, 5))
     if is_sub:
-        return (sub5.get(_sig(o, 5)) or sub3.get(_sig(o, 3))
-                or band5.get(_sig(o, 5)) or band3.get(_sig(o, 3)))
-    return band5.get(_sig(o, 5)) or band3.get(_sig(o, 3))
+        return (sub5.get(s5) or sub5.get(s5s) or sub3.get(_sig(o, 3))
+                or band5.get(s5) or band5.get(s5s) or band3.get(_sig(o, 3)))
+    return band5.get(s5) or band5.get(s5s) or band3.get(_sig(o, 3))
 
 
 def _auto_name(o: dict) -> str:
@@ -134,6 +140,9 @@ def assign_names(
     """
     tables = _seed_tables()
     rename = tables[4]
+    # band-names.json に書いてある名前(人が付けたもの)。引き継いだ名前が自動生成のもので、
+    # 新しいクラスタに種の名前があるなら種を優先する。自動生成名を引き継ぎ続けないため。
+    manual = set(tables[0].values()) | set(tables[1].values()) | set(tables[2].values()) | set(tables[3].values()) | set(rename.values())
     old_bands, old_subs = _old_clusters(prev_meta, tables) if prev_meta else ([], [])
     carried_b = _carry([(i, set(m)) for i, m in band_members.items()], old_bands)
     carried_s = _carry([(i, set(m)) for i, m in sub_members.items()], old_subs)
@@ -143,14 +152,13 @@ def assign_names(
         for i, o in enumerate(items):
             if not is_sub and o.get("community") is None:
                 continue      # 孤立ノードの疑似バンドは名前を持たない
-            if i in carried:
+            seed = _seed_name(o, is_sub, tables)
+            if i in carried and (carried[i] in manual or not seed):
                 o["name"], src = carried[i], "carried"
+            elif seed:
+                o["name"], src = seed, "seed"
             else:
-                seed = _seed_name(o, is_sub, tables)
-                if seed:
-                    o["name"], src = seed, "seed"
-                else:
-                    o["name"], src = _auto_name(o), "auto"
+                o["name"], src = _auto_name(o), "auto"
             o["name"] = rename.get(o["name"], o["name"])
             stats[src] += 1
 

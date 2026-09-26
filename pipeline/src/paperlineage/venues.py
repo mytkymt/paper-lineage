@@ -56,7 +56,6 @@ VENUES: list[Venue] = [
     Venue("uist", "ACM Symposium on User Interface Software and Technology", "UIST", 3261, month=10.5),
     Venue("dis", "Conference on Designing Interactive Systems", "DIS", 2441, month=7,
           aliases=("Symposium on Designing Interactive Systems",), doi_prefix="10.1145/"),
-    Venue("assets", "International ACM SIGACCESS Conference on Computers and Accessibility", "ASSETS", 2198, month=10),
     Venue("iui", "International Conference on Intelligent User Interfaces", "IUI", 2108, month=3),
     Venue("cscw", "Conference on Computer Supported Cooperative Work", "CSCW", 2019, month=11.2),
     Venue("tei", "International Conference on Tangible, Embedded, and Embodied Interaction", "TEI", 1995, month=2),
@@ -64,7 +63,30 @@ VENUES: list[Venue] = [
     Venue("ubicomp", "Ubiquitous Computing", "UbiComp", 1710, month=9),
     Venue("chiplay", "ACM SIGCHI Annual Symposium on Computer-Human Interaction in Play", "CHI PLAY", 1240, month=11),
     Venue("mobilehci", "International Conference on Human-Computer Interaction with Mobile Devices and Services", "MobileHCI", 937, month=9.5),
-    Venue("tochi", "ACM Trans. Comput. Hum. Interact.", "TOCHI", 760, month=12),
+    Venue("tochi", "ACM Trans. Comput. Hum. Interact.", "TOCHI", 760, month=12,
+          aliases=("TCHI",)),   # 2004〜2013 年ごろの号は S2 では "TCHI" に入っている
+    # --- 2026-09-26 に追加: SIGCHI が主催・共催する会議(sigchi.org/conferences の一覧)を
+    #     すべて入れる。S2 に無いもの(SUI、IH、EduCHI、CritiCo)と、S2 の記録が学術誌に
+    #     なっているもの(CI)は入れられない。件数は同日の bulk search 実測。
+    Venue("idc", "Interaction Design and Children", "IDC", 2685, month=6.5),
+    Venue("cc", "Creativity and Cognition", "C&C", 1434, month=6.3, aliases=("Creativity & Cognition",)),
+    Venue("autoui", "Automotive User Interfaces and Interactive Vehicular Applications", "AutoUI", 1157, month=9.3),
+    Venue("etra", "Eye Tracking Research & Application", "ETRA", 1189, month=6.2),
+    Venue("vrst", "Virtual Reality Software and Technology", "VRST", 1840, month=11.3),
+    # ISS(旧 ITS)は S2 のクラスタが汚れている(IEEE ISS や Springer の本が混ざる)ので ACM の DOI に限る。
+    # 2021 年以降は PACM HCI に入る。
+    Venue("iss", "ISS", "ISS", 701, month=11.4, aliases=("Interactive Tabletops and Surfaces",), doi_prefix="10.1145/"),
+    Venue("eics", "EICS", "EICS", 682, month=6.4),
+    Venue("group", "International Conference on Supporting Group Work", "GROUP", 947, month=10.2),
+    Venue("icmi", "International Conference on Multimodal Interaction", "ICMI", 2721, month=10.3),
+    Venue("umap", "UMAP", "UMAP", 1777, month=7.0, doi_prefix="10.1145/"),   # 2016 年以降の ACM 刊行分(それ以前は Springer)
+    Venue("recsys", "ACM Conference on Recommender Systems", "RecSys", 2240, month=9.4),
+    Venue("imx", "TVX", "IMX", 204, month=6.6),   # 旧 TVX。IMX 名では S2 に無い
+    Venue("iswc", "International Symposium on Wearable Computers", "ISWC", 336, month=9.1),
+    Venue("compass", "COMPASS", "COMPASS", 564, month=7.5, doi_prefix="10.1145/"),
+    Venue("cui", "CUI", "CUI", 437, month=7.2, doi_prefix="10.1145/"),
+    Venue("scf", "Symposium on Computational Fabrication", "SCF", 159, month=10.4),
+    Venue("hri", "Human-Robot Interaction", "HRI", 4500, month=3),   # ACM/IEEE 共催。拡張からコアへ移した
 ]
 
 VENUES_BY_KEY = {v.key: v for v in VENUES}
@@ -75,7 +97,8 @@ VENUES_BY_KEY = {v.key: v for v in VENUES}
 # 名前と件数は 2026-07-30 に bulk search で実測。
 # SIGGRAPH は 2003 年以降 TOG 掲載になるため、会議録と TOG の両方が要る。
 EXTRA_VENUES: list[Venue] = [
-    Venue("hri", "Human-Robot Interaction", "HRI", 4500, month=3),
+    # ASSETS は SIGACCESS 主催なので規則上はコアに入らない。引用結合で拡張に入れる。
+    Venue("assets", "International ACM SIGACCESS Conference on Computers and Accessibility", "ASSETS", 2198, month=10),
     Venue("ieeevr", "IEEE Virtual Reality Conference", "IEEE VR", 2623, month=3.5),
     Venue("ismar", "International Symposium on Mixed and Augmented Reality", "ISMAR", 1213, month=10.1),
     Venue("siggraph", "International Conference on Computer Graphics and Interactive Techniques", "SIGGRAPH", 9307, month=8),

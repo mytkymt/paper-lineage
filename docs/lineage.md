@@ -7,15 +7,16 @@ deterministic — same corpus, same clicks, same result. Code:
 
 ## The citation graph
 
-- **Corpus**: about 36,000 papers from 13 HCI venues (1981–2026), fetched from Semantic
-  Scholar; references resolved via OpenAlex and joined by DOI. The map ships with seven
-  related venues added on top of that core (about 44,000 papers, 1975–2026); the numbers
+- **Corpus**: about 54,000 papers from the 29 venues ACM SIGCHI sponsors (1981–2026),
+  fetched from Semantic Scholar; references resolved via OpenAlex and joined by DOI. The
+  venue rule is stated in the README. The map ships with seven
+  related venues added on top of that core (about 63,500 papers, 1975–2026); the numbers
   below describe the core build, and the extended one is the same pipeline with
   `--extended`.
 - Companion tracks are dropped: ACM DOIs carry the volume they came from
   (`10.1145/<volume>.<paper>`), so `probe_volumes.py` asks Crossref for each volume's
   title once and records the Extended Abstracts / Adjunct / Companion ones in
-  `excluded_volumes.json`. The build reads that list and drops 4,107 papers — posters,
+  `excluded_volumes.json`. The build reads that list and drops about 2,400 papers — posters,
   late-breaking work, demos and workshop papers that are not the reviewed track.
 - Records that are containers rather than papers are dropped before anything else:
   proceedings volumes, companion/adjunct volumes, Extended Abstracts volumes and
@@ -23,8 +24,8 @@ deterministic — same corpus, same clicks, same result. Code:
   ordinary hits, and their citation counts are enormous — the 2017 CHI proceedings
   record alone showed 2,217 — so leaving them in put meaningless bright dots on the
   map. The test is the start of the title only; nothing is inferred from content.
-- Only citations with **both ends inside the corpus** are kept — roughly 380,000 edges.
-  About 75% of references point outside the 13 venues and are excluded; the UI
+- Only citations with **both ends inside the corpus** are kept — roughly 450,000 edges.
+  About 75% of references point outside the corpus venues and are excluded; the UI
   says so wherever this limits what you see.
 - Edges are forced into a **time-monotone DAG**: papers are totally ordered by
   `(year, id)`, and any edge pointing backward or within the same position is
@@ -58,7 +59,7 @@ layout is identical in every year and fully deterministic.
 
 ## Trend breakdown (side panel)
 
-Every paper belongs to one of 116 **sub-fields** (134 in the extended build), precomputed by two-level
+Every paper belongs to one of 137 **sub-fields** (164 in the extended build), precomputed by two-level
 Louvain community detection ([Blondel et al., 2008](https://doi.org/10.1088/1742-5468/2008/10/P10008))
 on the full citation graph (14 top-level bands, nested sub-bands; fixed seed —
 plain Louvain is order-sensitive, so node order and seeds are pinned to keep the

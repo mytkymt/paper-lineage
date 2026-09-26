@@ -11,7 +11,7 @@
 //   そのまま使ってよい。これを揃えないとパン・ズーム・ホバーが全部縦に反転する。
 
 // データセット切り替え: 既定は関連venue入り(引用結合フィルタで部分収録した隣接venue)。
-// ?venues=core でコア13会場だけに戻す。'related' / 'peripheral' / 'linked' は
+// ?venues=core でコア(SIGCHI 主催・共催の 29 会場)だけに戻す。'related' / 'peripheral' / 'linked' は
 // 旧 URL 互換で残す(拡張版を指す。共有済みリンクを壊さない)。
 const _venuesParam = new URLSearchParams(location.search).get('venues');
 const EXT_MODE = _venuesParam !== 'core';
@@ -22,7 +22,6 @@ const VENUE_COLORS = {
   pacmhci:   [0.55, 0.55, 0.98],
   uist:      [1.00, 0.62, 0.29],
   dis:       [0.36, 0.86, 0.68],
-  assets:    [0.98, 0.45, 0.60],
   iui:       [0.85, 0.72, 0.32],
   cscw:      [0.62, 0.78, 0.45],
   tei:       [0.90, 0.52, 0.92],
@@ -31,8 +30,26 @@ const VENUE_COLORS = {
   chiplay:   [0.95, 0.80, 0.45],
   mobilehci: [0.70, 0.60, 0.85],
   tochi:     [0.75, 0.75, 0.80],
-  // 拡張 venue(引用結合フィルタで部分収録 — 凡例に linked と明示する)
   hri:       [0.85, 0.45, 0.40],
+  // 2026-09-26 に加えた SIGCHI 主催・共催の会議
+  idc:       [0.98, 0.70, 0.55],
+  cc:        [0.80, 0.90, 0.40],
+  autoui:    [0.60, 0.85, 0.85],
+  etra:      [0.95, 0.55, 0.55],
+  vrst:      [0.45, 0.55, 0.85],
+  iss:       [0.90, 0.85, 0.60],
+  eics:      [0.70, 0.70, 0.50],
+  group:     [0.55, 0.85, 0.55],
+  icmi:      [0.85, 0.60, 0.75],
+  umap:      [0.65, 0.50, 0.60],
+  recsys:    [0.50, 0.70, 0.60],
+  imx:       [0.95, 0.65, 0.85],
+  iswc:      [0.60, 0.75, 0.95],
+  compass:   [0.75, 0.85, 0.70],
+  cui:       [0.95, 0.85, 0.75],
+  scf:       [0.80, 0.55, 0.45],
+  // 拡張 venue(引用結合フィルタで部分収録 — 凡例に linked と明示する)
+  assets:    [0.98, 0.45, 0.60],
   ieeevr:    [0.30, 0.45, 0.95],
   ismar:     [0.35, 0.90, 0.45],
   siggraph:  [0.95, 0.35, 0.75],
@@ -41,8 +58,14 @@ const VENUE_COLORS = {
   toh:       [0.95, 0.75, 0.70],
 };
 // 部分収録の venue(拡張データセットのみ)。凡例で「(linked)」を付ける。
-const LINKED_VENUES = new Set(['hri', 'ieeevr', 'ismar', 'siggraph', 'tog', 'ijhcs', 'toh']);
+const LINKED_VENUES = new Set(['assets', 'ieeevr', 'ismar', 'siggraph', 'tog', 'ijhcs', 'toh']);
 const DEFAULT_COLOR = [0.55, 0.58, 0.65];
+// 表示名。無いものはキーを大文字にする(CHI、UIST、DIS など)。
+const VENUE_LABELS = {
+  pacmhci: 'PACM HCI', imwut: 'IMWUT', ubicomp: 'UbiComp', chiplay: 'CHI PLAY', mobilehci: 'MobileHCI',
+  tochi: 'TOCHI', cc: 'C&C', autoui: 'AutoUI', recsys: 'RecSys', ieeevr: 'IEEE VR', toh: 'ToH',
+};
+const venueLabel = (v) => VENUE_LABELS[v] || (v || '?').toUpperCase();
 
 // 選択状態。シェーダにも同じ数値を渡す。
 const S_NONE = 0, S_UP = 1, S_DOWN = 2, S_SELF = 3, S_MATCH = 4, S_FIELD = 5;
@@ -1094,7 +1117,7 @@ async function main() {
         if (yr < ymin) ymin = yr;
         if (yr > ymax) ymax = yr;
       }
-      o = { name: (idx || '?').toUpperCase() + (LINKED_VENUES.has(idx) ? ' — related (linked subset)' : ''),
+      o = { name: venueLabel(idx) + (LINKED_VENUES.has(idx) ? ' — related (linked subset)' : ''),
             papers: members.length, years: members.length ? [ymin, ymax] : null, keywords: [] };
     } else {
       o = fieldObj();
@@ -2150,7 +2173,7 @@ async function main() {
     // まれに内数が総数を超えるので、分母は大きい方に揃えて矛盾表示を避ける。
     const citedTotal = Math.max(nd.c || 0, citersIn);
     document.getElementById('selMeta').innerHTML =
-      `${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}${doiLink(nd)}<br>` +
+      `${nd.y} · ${venueLabel(nd.v)} · cited by ${nd.c}${doiLink(nd)}<br>` +
       `<span class="cov"><b>${inCorpus}</b> of ${nd.r} references are inside this corpus` +
       (nd.r && !inCorpus
         ? ' — they point outside this map\u2019s venues, so upstream cannot be traced here'
@@ -2414,7 +2437,7 @@ async function main() {
     ctxNode = i;
     ctxEl.innerHTML =
       `<div class="hd">${escapeHtml(nd.t.slice(0, 90))}` +
-      `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}</div></div>` +
+      `<div class="m">${nd.y} · ${venueLabel(nd.v)} · cited by ${nd.c}</div></div>` +
       (nd.d
         ? `<a class="it" data-act="doi" href="https://doi.org/${encodeURI(nd.d)}" ` +
           `target="_blank" rel="noopener">Open paper (DOI) ↗</a>` +
@@ -2602,7 +2625,7 @@ async function main() {
     const drillIn = selected < 0 && (focused.length > 0 || fieldSel || searchActive);
     tooltip.innerHTML =
       `<div class="t">${escapeHtml(nd.t)}</div>` + authors +
-      `<div class="m">${nd.y} · ${(nd.v || '?').toUpperCase()} · cited by ${nd.c}` +
+      `<div class="m">${nd.y} · ${venueLabel(nd.v)} · cited by ${nd.c}` +
       (drillIn ? ' · <b>click to trace its lineage</b>' : '') +
       ' · right-click for options</div>';
     tooltip.style.display = 'block';
@@ -2775,7 +2798,7 @@ async function main() {
           const rgb = col.map((x) => Math.round(x * 255)).join(',');
           const linked = LINKED_VENUES.has(v) ? ' <b>related</b>' : '';
           const on = fieldSel && fieldSel.kind === 'venue' && fieldSel.idx === v ? ' class="on"' : '';
-          return `<span data-venue="${v}"${on}><i style="background:rgb(${rgb})"></i>${(v || '?').toUpperCase()}${linked} ${c}</span>`;
+          return `<span data-venue="${v}"${on}><i style="background:rgb(${rgb})"></i>${venueLabel(v)}${linked} ${c}</span>`;
         })
         .join('');
       return;
@@ -2973,7 +2996,7 @@ async function main() {
     const site = 'HCI Research Trails';
     if (selected >= 0) {
       const nd = meta.nodes[selected];
-      return `“${nd.t}” (${nd.y}, ${(nd.v || '?').toUpperCase()}) — its citation lineage on ${site}`;
+      return `“${nd.t}” (${nd.y}, ${venueLabel(nd.v)}) — its citation lineage on ${site}`;
     }
     if (focusOn()) {
       const nm = focused.filter((sl) => sl < 15 && pinned[sl]).map((sl) => meta.authors[pinned[sl].ai]);
@@ -2984,7 +3007,7 @@ async function main() {
     }
     if (fieldSel) {
       const nm = fieldSel.kind === 'venue'
-        ? String(fieldSel.idx).toUpperCase() : fieldName(fieldObj());
+        ? venueLabel(String(fieldSel.idx)) : fieldName(fieldObj());
       if (nm) return `${nm} on ${site}`;
     }
     if (searchEl.value.trim()) return `“${searchEl.value.trim()}” on ${site}`;

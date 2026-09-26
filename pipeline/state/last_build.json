@@ -1,11 +1,10 @@
 {
- "date": "2026-09-22",
+ "date": "2026-09-26",
  "counts": {
   "chi": 15438,
   "pacmhci": 3727,
   "uist": 3260,
   "dis": 3184,
-  "assets": 2198,
   "iui": 2110,
   "cscw": 2019,
   "tei": 1996,
@@ -13,8 +12,25 @@
   "ubicomp": 1710,
   "chiplay": 1240,
   "mobilehci": 936,
-  "tochi": 780,
+  "tochi": 1029,
+  "idc": 2685,
+  "cc": 1528,
+  "autoui": 1157,
+  "etra": 1189,
+  "vrst": 1840,
+  "iss": 782,
+  "eics": 682,
+  "group": 947,
+  "icmi": 2721,
+  "umap": 1377,
+  "recsys": 2240,
+  "imx": 204,
+  "iswc": 336,
+  "compass": 435,
+  "cui": 417,
+  "scf": 159,
   "hri": 4501,
+  "assets": 2198,
   "ieeevr": 2620,
   "ismar": 1213,
   "siggraph": 9508,
@@ -22,6 +38,6 @@
   "ijhcs": 2798,
   "toh": 1172
  },
- "core_papers": 36264,
- "all_papers": 44232
+ "core_papers": 53909,
+ "all_papers": 63556
 }

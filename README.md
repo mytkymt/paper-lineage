@@ -2,10 +2,10 @@
 
 **Live: https://hci-research-trails.vercel.app**
 
-An interactive map of HCI research — **about 44,000 papers and 438,000 citations
-(1975–2026)**, laid out along time on a single WebGL canvas. Thirteen HCI venues are
-included whole; seven neighbouring ones join through their citation links to that core,
-and one switch drops back to the 13-venue corpus alone (about 36,000 papers).
+An interactive map of HCI research — **about 63,500 papers and 546,000 citations
+(1975–2026)**, laid out along time on a single WebGL canvas. The 29 venues that ACM
+SIGCHI sponsors are included whole; seven neighbouring ones join through their citation
+links to that core, and one switch drops back to the SIGCHI corpus alone (about 54,000 papers).
 Research areas appear as named horizontal bands; citations flow left to right.
 
 ![Overview](docs/media/overview.png)
@@ -96,17 +96,22 @@ The **Tutorial** link in the panel plays the full 120-second walkthrough
 
 ## Data notes
 
-Core corpus: CHI, PACM HCI, UIST, DIS, ASSETS, IUI, CSCW, TEI, IMWUT, UbiComp, CHI
-PLAY, MobileHCI, TOCHI. Seven more — HRI, IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS and
-IEEE ToH — ship on top of that core but only partially: a paper joins if it has at
-least one citation link to the core, and the UI marks them as such. **Venues** in the
-panel switches between **All 20** and **Core 13** (`?venues=core` does the same from a
-link).
+Core corpus: every conference that ACM SIGCHI sponsors or co-sponsors (the list on
+sigchi.org/conferences) plus SIGCHI's journals — CHI, PACM HCI, UIST, DIS, IUI, CSCW,
+TEI, IMWUT, UbiComp, CHI PLAY, MobileHCI, TOCHI, IDC, C&C, AutomotiveUI, ETRA, VRST,
+ISS, EICS, GROUP, ICMI, UMAP, RecSys, IMX, ISWC, COMPASS, CUI, SCF and HRI. The rule is
+applied as it stands: SUI, Interactive Health, EduCHI and CritiCo have no usable record
+in Semantic Scholar, and Collective Intelligence is indexed there as a journal, so those
+five are missing; UMAP enters from its ACM years (2016 on). Seven more venues — ASSETS
+(sponsored by SIGACCESS), IEEE VR, ISMAR, SIGGRAPH, TOG, IJHCS and IEEE ToH — ship on
+top of that core but only partially: a paper joins if it has at least one citation link
+to the core, and the UI marks them as such. **Venues** in the panel switches between
+**All 36** and **Core 29** (`?venues=core` does the same from a link).
 
 Companion tracks are left out: Extended Abstracts, Adjunct and Companion volumes hold
 posters, late-breaking work, demos and workshop papers, which would fill the map with
 barely-cited dots. The pipeline resolves every ACM volume title through Crossref once
-and drops the 60 volumes that match — 4,107 papers. About 75% of references point outside these venues and are excluded —
+and drops the 161 volumes that match — about 2,400 papers. About 75% of references point outside these venues and are excluded —
 the UI states this wherever it limits what you see (an empty upstream list means the
 paper cites work outside the corpus, not missing data). Band names are LLM-generated
 once and committed; everything else is computed deterministically from citation data.

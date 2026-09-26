@@ -1,5 +1,5 @@
 {
- "_comment": "F3: LLM-generated band/sub-band names (claude-fable-5; core set 2026-07-29, extended set 2026-07-30). Committed so the viewer stays deterministic. Entries are keyed by keyword signature: `sig` = first 3 TF-IDF keywords joined with '|', `sig5` = first 5 (used when 3-word signatures collide). The viewer applies a name only when the signature still matches, so stale entries fall back to raw keywords. One file serves both the core and extended datasets.",
+ "_comment": "F3: LLM-generated band/sub-band names (claude-fable-5; core set 2026-07-29, extended set 2026-07-30). Committed so the viewer stays deterministic. Entries are keyed by keyword signature: `sig` = first 3 TF-IDF keywords joined with '|', `sig5` = first 5 (used when 3-word signatures collide). The viewer applies a name only when the signature still matches, so stale entries fall back to raw keywords. One file serves both the core and extended datasets. 2026-09-26: the corpus grew to all SIGCHI-sponsored venues; entries keyed by `sig5` (first five keywords) name the new communities, and `rename` fixes names carried onto communities whose content shifted.",
  "bands": [
   {
    "community": 0,
@@ -39,7 +39,7 @@
   {
    "community": 1,
    "sig": "data|learning|generative",
-   "name": "AI, Data & Intelligent Interfaces"
+   "name": "Human-AI Interaction & Data"
   },
   {
    "community": 11,
@@ -101,7 +101,7 @@
   },
   {
    "sig": "learning|data|models",
-   "name": "AI, Data & Intelligent Interfaces"
+   "name": "Human-AI Interaction & Data"
   },
   {
    "sig": "privacy|smart|home",
@@ -177,7 +177,7 @@
   },
   {
    "sig": "data|visual|learning",
-   "name": "AI, Data & Intelligent Interfaces"
+   "name": "Human-AI Interaction & Data"
   },
   {
    "sig": "reality|virtual|augmented",
@@ -386,6 +386,66 @@
   {
    "sig": "graphical|applications|collaborative",
    "name": "UI Toolkits & Groupware"
+  },
+  {
+   "sig5": "eye|gaze|tracking|multimodal|recognition",
+   "name": "Gaze, Eye Tracking & Multimodal Sensing"
+  },
+  {
+   "sig5": "reality|virtual|collaborative|collaboration|augmented",
+   "name": "Collaboration, Displays & Mixed Reality"
+  },
+  {
+   "sig5": "driving|vehicles|automated|autonomous|driver",
+   "name": "Automotive & Automated Driving"
+  },
+  {
+   "sig5": "model|models|virtual|learning|engineering",
+   "name": "Mixed Small Communities"
+  },
+  {
+   "sig5": "robot|robots|conversational|human-robot|social",
+   "name": "Robots, Agents & Human-AI Interaction"
+  },
+  {
+   "sig5": "recommender|recommendation|recommendations|filtering|workshop",
+   "name": "Recommender Systems"
+  },
+  {
+   "sig5": "children|learning|tangible|play|autism",
+   "name": "Children & Learning"
+  },
+  {
+   "sig5": "hci|research|technology|digital|experiences",
+   "name": "Design Research & Critical HCI"
+  },
+  {
+   "sig5": "data|crowdsourcing|machine|decision-making|learning",
+   "name": "Crowds, Data & Human-AI Decisions"
+  },
+  {
+   "sig5": "recognition|input|gesture|reality|mobile",
+   "name": "Input & Interaction Techniques"
+  },
+  {
+   "sig5": "emotion|recognition|wild|learning|multimodal",
+   "name": "Affect & Multimodal Recognition"
+  },
+  {
+   "sig5": "activity|recognition|sensing|monitoring|sensors",
+   "name": "Activity Sensing & Wearables"
+  },
+  {
+   "sig5": "rendering|virtual|motion|animation|real-time",
+   "name": "Graphics, Animation & Modelling"
+  },
+  {
+   "sig5": "children|learning|youth|personas|literacy",
+   "name": "Children, Learning & Youth"
+  },
+  {
+   "sig5": "data|learning|human-ai|generative|models",
+   "name": "Human-AI Interaction & Data"
   }
  ],
  "subbands": [
@@ -4025,6 +4085,631 @@
   {
    "sig5": "people|blind|accessibility|impairments|virtual",
    "name": "Blind Access to VR"
+  },
+  {
+   "sig5": "reality|virtual|augmented|pointing|immersive",
+   "name": "3D Pointing & VR Interaction"
+  },
+  {
+   "sig5": "pen|multi-touch|touch|digital|input",
+   "name": "Pen & Sketch Input"
+  },
+  {
+   "sig5": "secure|key",
+   "name": "IoT Security (small)"
+  },
+  {
+   "sig5": "tangible|physical|markers|objects|tabletop",
+   "name": "Tangible Interaction"
+  },
+  {
+   "sig5": "haptic|tactile|thermal|touch|feedback",
+   "name": "Tactile & Thermal Feedback"
+  },
+  {
+   "sig5": "prototyping|physical|electronics|hardware|circuit",
+   "name": "Physical Prototyping Toolkits"
+  },
+  {
+   "sig5": "making|maker|makerspace|makers|technology",
+   "name": "Making & Makerspaces"
+  },
+  {
+   "sig5": "physicalization|data|olfactory|sustainable|physicalizations",
+   "name": "Data Physicalization & Bio-materials"
+  },
+  {
+   "sig5": "gaze|eye|gaze-based|selection|reality",
+   "name": "Gaze-based Interaction"
+  },
+  {
+   "sig5": "eye|tracking|gaze|pupil|estimation",
+   "name": "Eye Tracker Quality & Gaze Estimation"
+  },
+  {
+   "sig5": "eye|gaze|visual|scanpath|tracking",
+   "name": "Scanpaths & Visual Search"
+  },
+  {
+   "sig5": "cognitive|eye|load|pupillary|workload",
+   "name": "Pupillometry & Cognitive Load"
+  },
+  {
+   "sig5": "multimodal|gaze|group|head|nonverbal",
+   "name": "Gaze in Conversation & Groups"
+  },
+  {
+   "sig5": "emotion|recognition|wild|multimodal|facial",
+   "name": "Affect Recognition"
+  },
+  {
+   "sig5": "multimodal|speaking|public|assessment|recognition",
+   "name": "Multimodal Sentiment & Speaking"
+  },
+  {
+   "sig5": "eye|gaze|eye-tracking|detection|attention",
+   "name": "Fixation & Saccade Analysis"
+  },
+  {
+   "sig5": "gaze|eye|tracking|calibration|devices",
+   "name": "Gaze Calibration & Datasets"
+  },
+  {
+   "sig5": "eye|gaze|genea|reading|gesture",
+   "name": "Reading & Implicit Interest"
+  },
+  {
+   "sig5": "work|groupware|development|software|cooperative",
+   "name": "CSCW Foundations"
+  },
+  {
+   "sig5": "graphical|multimodal|applications|generation|constraint",
+   "name": "UI Toolkits & Automatic Generation"
+  },
+  {
+   "sig5": "reality|virtual|augmented|mixed|video",
+   "name": "Mixed Reality Rooms & Video"
+  },
+  {
+   "sig5": "emergency|rescue|coordination|virtual|environments",
+   "name": "Distributed Cognition & Emergency Coordination"
+  },
+  {
+   "sig5": "driving|automated|driver|drivers|vehicles",
+   "name": "Driver Distraction & Take-over"
+  },
+  {
+   "sig5": "in-vehicle|in-car|wheel|automotive|steering",
+   "name": "In-Car Interfaces"
+  },
+  {
+   "sig5": "driving|car|drivers|automotive|in-car",
+   "name": "Car Navigation & Driver UIs"
+  },
+  {
+   "sig5": "vehicles|autonomous|driving|automated|driver",
+   "name": "Autonomous Vehicles & Pedestrians"
+  },
+  {
+   "sig5": "model|models|virtual|learning|engineering",
+   "name": "Cognitive Modeling & Mixed Small Topics"
+  },
+  {
+   "sig5": "accessibility|blind|people|deaf|inclusive",
+   "name": "Accessibility Research Practice"
+  },
+  {
+   "sig5": "blind|people|deaf|accessibility|accessible",
+   "name": "Disability Studies in HCI"
+  },
+  {
+   "sig5": "children|robot|learning|social|robots",
+   "name": "Robots & Agents in Education"
+  },
+  {
+   "sig5": "meetings|group|generative|support|multimodal",
+   "name": "Meeting Support & Group Displays"
+  },
+  {
+   "sig5": "multimodal|multi-party|addressee|speech|speaker",
+   "name": "Multimodal Speech Interfaces"
+  },
+  {
+   "sig5": "language|human-ai|conversational|teams|papers",
+   "name": "Natural Language Interfaces & Human-AI Teams"
+  },
+  {
+   "sig5": "programming|web|mobile|code|visual",
+   "name": "End-user Programming & UI Design Tools"
+  },
+  {
+   "sig5": "translation|mobile|non-native|speakers|language",
+   "name": "Mobile Information Needs & Translation"
+  },
+  {
+   "sig5": "recommender|recommendations|explanations|music|decision",
+   "name": "Recommender Explanations & User-centric Evaluation"
+  },
+  {
+   "sig5": "recommendation|sequential|recommender|recommendations|filtering",
+   "name": "Sequential & Session-based Recommendation"
+  },
+  {
+   "sig5": "recommendation|recommender|music|workshop|recommendations",
+   "name": "Neural Session Recommendation"
+  },
+  {
+   "sig5": "recommender|recommendation|recommendations|diversity|bias",
+   "name": "Diversity, Novelty & Bias in Recommendation"
+  },
+  {
+   "sig5": "recommender|recommendation|filtering|collaborative|rating",
+   "name": "Collaborative Filtering & Trust"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|knowledge-aware|filtering",
+   "name": "Knowledge-aware & LLM Recommendation"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|ctr|prediction",
+   "name": "Industrial Recommendation & CTR Prediction"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|cold-start|context-aware",
+   "name": "Context-aware & Cold-start Recommendation"
+  },
+  {
+   "sig5": "recommender|news|recommendation|evaluation|recommendations",
+   "name": "News Recommendation & Offline Evaluation"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|group|workshop",
+   "name": "Social Tagging & Group Recommendation"
+  },
+  {
+   "sig5": "children|co-design|participatory|technology|child",
+   "name": "Co-design with Children"
+  },
+  {
+   "sig5": "tangible|children|learning|programming|physical",
+   "name": "Tangibles for Learning"
+  },
+  {
+   "sig5": "children|autism|autistic|spectrum|social",
+   "name": "Autistic Children & Technology"
+  },
+  {
+   "sig5": "children|participatory|learning|youth|ethics",
+   "name": "Children's Agency & Research Ethics"
+  },
+  {
+   "sig5": "literacy|children|learning|machine|youth",
+   "name": "AI Literacy & K-12"
+  },
+  {
+   "sig5": "children|play|learning|games|tangible",
+   "name": "Children's Play & Learning Environments"
+  },
+  {
+   "sig5": "privacy|home|security|smart|trigger-action",
+   "name": "Ubicomp Privacy & Home Automation"
+  },
+  {
+   "sig5": "play|bodily|game|games|reality",
+   "name": "Bodily Play & Spectator Experience"
+  },
+  {
+   "sig5": "research|home|making|alternative|living",
+   "name": "Interpretation & Critique in Design Research"
+  },
+  {
+   "sig5": "more-than-human|living|nature|plants|animals",
+   "name": "More-than-human Design"
+  },
+  {
+   "sig5": "calendar|work|scheduling|time|calendars",
+   "name": "Calendars & Scheduling"
+  },
+  {
+   "sig5": "self-tracking|personal|informatics|health|data",
+   "name": "Personal Informatics Models"
+  },
+  {
+   "sig5": "work|medical|information|hospital|patient",
+   "name": "Clinical Information Work"
+  },
+  {
+   "sig5": "sleep|adhd|children|contact|tracing",
+   "name": "Sleep, ADHD & Lifelogging"
+  },
+  {
+   "sig5": "clinical|fairness|medical|responsible|support",
+   "name": "Fairness & Clinical AI"
+  },
+  {
+   "sig5": "data|work|science|practices|public",
+   "name": "Data Work & Infrastructure"
+  },
+  {
+   "sig5": "machine|learning|labeling|teaching|automl",
+   "name": "Interactive Machine Learning"
+  },
+  {
+   "sig5": "feedback|peer|crowdsourced|critique|creative",
+   "name": "Peer & Crowd Feedback"
+  },
+  {
+   "sig5": "notebooks|computational|data|code|qualitative",
+   "name": "Computational Notebooks"
+  },
+  {
+   "sig5": "crowdfunding|social|enterprise|media|online",
+   "name": "Enterprise Social Media & Crowdfunding"
+  },
+  {
+   "sig5": "cryptocurrency|hackathons|refugees|refugee|digital",
+   "name": "Refugees, Hackathons & Crypto"
+  },
+  {
+   "sig5": "remote|telepresence|collaboration|reality|virtual",
+   "name": "Remote Collaboration & Telepresence"
+  },
+  {
+   "sig5": "rural|india|digital|bangladesh|mobile",
+   "name": "ICTD & Rural Communities"
+  },
+  {
+   "sig5": "wikipedia|online|software|communities|open",
+   "name": "Wikipedia & Open Source"
+  },
+  {
+   "sig5": "misinformation|media|social|news|twitter",
+   "name": "Misinformation & News"
+  },
+  {
+   "sig5": "community|data|civic|urban|public",
+   "name": "Civic Data & Communities"
+  },
+  {
+   "sig5": "work|cryptocurrency|infrastructure|hackathons|scientific",
+   "name": "Infrastructure, Hackathons & Crypto"
+  },
+  {
+   "sig5": "digital|refugees|refugee|social|media",
+   "name": "Refugees & Migration"
+  },
+  {
+   "sig5": "political|team|formation|social|news",
+   "name": "Political Talk & Team Formation"
+  },
+  {
+   "sig5": "crowdfunding|tagging|social|photo|digital",
+   "name": "Crowdfunding & Social Tagging"
+  },
+  {
+   "sig5": "persuasive|change|activity|behavior|physical",
+   "name": "Persuasive Health & Activity"
+  },
+  {
+   "sig5": "reflection|mindfulness|biofeedback|virtual|support",
+   "name": "Mindfulness & Biofeedback"
+  },
+  {
+   "sig5": "rehabilitation|parkinson|stroke|contact|tracing",
+   "name": "Rehabilitation & Mobility Support"
+  },
+  {
+   "sig5": "rural|india|mobile|women|money",
+   "name": "ICTD, Mobile Money & Women"
+  },
+  {
+   "sig5": "assistive|disabilities|technology|dyslexia|reading",
+   "name": "Assistive Technology & Dyslexia"
+  },
+  {
+   "sig5": "privacy|location|sharing|disclosure|ubiquitous",
+   "name": "Location Sharing & Privacy"
+  },
+  {
+   "sig5": "privacy|security|usability|password|phishing",
+   "name": "Usable Security & Phishing"
+  },
+  {
+   "sig5": "play|experiences|bodily|reality|game",
+   "name": "Bodily Play & Spectator Experience"
+  },
+  {
+   "sig5": "more-than-human|nature|living|sustainable|multispecies",
+   "name": "More-than-human Design"
+  },
+  {
+   "sig5": "material|materials|tacit|crafting|materiality",
+   "name": "Materials & Craft in HCI"
+  },
+  {
+   "sig5": "physicalization|data|tangible|physical|physicalizations",
+   "name": "Data Physicalization"
+  },
+  {
+   "sig5": "children|co-design|participatory|school|learning",
+   "name": "Co-design with Children"
+  },
+  {
+   "sig5": "children|literacy|learning|youth|machine",
+   "name": "AI Literacy & K-12"
+  },
+  {
+   "sig5": "children|families|family|intergenerational|communication",
+   "name": "Family & Intergenerational Communication"
+  },
+  {
+   "sig5": "children|reading|conversational|storytelling|young",
+   "name": "Children's Reading & Storytelling Agents"
+  },
+  {
+   "sig5": "personas|children|persona|play|storytelling",
+   "name": "Personas & Child-centred Design"
+  },
+  {
+   "sig5": "multimodal|speaking|social|nonverbal|interactions",
+   "name": "Nonverbal & Public-speaking Analysis"
+  },
+  {
+   "sig5": "multimodal|robot|translation|non-native|multilingual",
+   "name": "Multilingual & Multimodal Communication"
+  },
+  {
+   "sig5": "generative|creative|models|writing|language",
+   "name": "Generative AI & Writing"
+  },
+  {
+   "sig5": "machine|algorithmic|learning|fairness|auditing",
+   "name": "Algorithmic Fairness & Auditing"
+  },
+  {
+   "sig5": "software|web|adaptive|help|learning",
+   "name": "Adaptive Help & Software Learnability"
+  },
+  {
+   "sig5": "color|mobile|optimization|gui|colorization",
+   "name": "GUI Optimization & Color"
+  },
+  {
+   "sig5": "video|audio|editing|videos|navigation",
+   "name": "Video Interfaces & Editing"
+  },
+  {
+   "sig5": "search|papers|scientific|information|sensemaking",
+   "name": "Scientific Search & Sensemaking"
+  },
+  {
+   "sig5": "translation|language|deploying|latent|aesthetic",
+   "name": "Language Tools & Deployment"
+  },
+  {
+   "sig5": "recommender|recommendations|workshop|decision|music",
+   "name": "Recommender Evaluation & Music"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|news|session-based",
+   "name": "News & Session-based Recommendation"
+  },
+  {
+   "sig5": "recommender|recommendation|recommendations|bias|diversity",
+   "name": "Diversity, Novelty & Bias in Recommendation"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|learning|deep",
+   "name": "Deep Learning for Recommendation"
+  },
+  {
+   "sig5": "recommendation|recommender|sequential|recommendations|evaluation",
+   "name": "Sequential Recommendation & Evaluation"
+  },
+  {
+   "sig5": "recommendation|recommender|factorization|recommendations|context-aware",
+   "name": "Factorization & Context-aware Recommendation"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|language|knowledge-aware",
+   "name": "Knowledge-aware & LLM Recommendation"
+  },
+  {
+   "sig5": "recommender|filtering|collaborative|rating|recommendation",
+   "name": "Collaborative Filtering & Trust"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|filtering|collaborative",
+   "name": "Collaborative Filtering Methods"
+  },
+  {
+   "sig5": "recommender|explanations|recommendations|critiquing|explanation",
+   "name": "Recommender Explanations & Critiquing"
+  },
+  {
+   "sig5": "recommendation|recommender|recommendations|workshop|group",
+   "name": "Social Tagging & Group Recommendation"
+  },
+  {
+   "sig5": "games|game|player|experience|immersion",
+   "name": "Player Experience & Immersion"
+  },
+  {
+   "sig5": "gamification|gamified|elements|game|types",
+   "name": "Gamification Elements & User Types"
+  },
+  {
+   "sig5": "games|game|player|players|video",
+   "name": "Video Game Players & Communities"
+  },
+  {
+   "sig5": "messaging|chat|communication|instant|work",
+   "name": "Instant Messaging"
+  },
+  {
+   "sig5": "cognitive|pupillary|pupil|eye|during",
+   "name": "Pupillometry & Cognitive Load"
+  },
+  {
+   "sig5": "social|enterprise|recommending|networks|workplace",
+   "name": "Enterprise Social Networks"
+  },
+  {
+   "sig5": "mobile|learning|vocabulary|text|real-world",
+   "name": "Mobile Language Learning"
+  },
+  {
+   "sig5": "eye-movement|response|age|entity|cognitive",
+   "name": "Eye Movements & Cognition"
+  },
+  {
+   "sig5": "emotion|recognition|wild|learning|multimodal",
+   "name": "Affect Recognition"
+  },
+  {
+   "sig5": "sensing|wifi|wi-fi|signals|commodity",
+   "name": "RF & Wi-Fi Sensing"
+  },
+  {
+   "sig5": "activity|recognition|wearable|learning|data",
+   "name": "Wearable Activity Recognition"
+  },
+  {
+   "sig5": "rendering|virtual|meshes|environments|shadow",
+   "name": "Real-time Rendering & Meshes"
+  },
+  {
+   "sig5": "motion|animation|control|character|synthesis",
+   "name": "Character Animation & Motion Control"
+  },
+  {
+   "sig5": "rendering|reality|reflectance|illumination|lighting",
+   "name": "Reflectance & Illumination"
+  },
+  {
+   "sig5": "facial|animation|face|hair|expression",
+   "name": "Facial Animation & Capture"
+  },
+  {
+   "sig5": "rendering|light|image-based|view|video",
+   "name": "Image-based Rendering & Light Fields"
+  },
+  {
+   "sig5": "reconstruction|real-time|motion|capture|pose",
+   "name": "3D Reconstruction & Motion Capture"
+  },
+  {
+   "sig5": "simulation|generation|gesture|animation|genea",
+   "name": "Gesture Generation & Simulation"
+  },
+  {
+   "sig5": "displays|public|display|collaborative|tabletop",
+   "name": "Public & Ambient Displays"
+  },
+  {
+   "sig5": "collaborative|groupware|distributed|virtual|awareness",
+   "name": "Real-time Groupware"
+  },
+  {
+   "sig5": "virtual|reality|presence|effects|avatar",
+   "name": "VR Presence & Avatars"
+  },
+  {
+   "sig5": "reality|augmented|depth|perception|virtual",
+   "name": "AR Depth Perception"
+  },
+  {
+   "sig5": "gaussian|splatting|companion|reconstruction|screen",
+   "name": "Neural Scene Reconstruction"
+  },
+  {
+   "sig5": "touch|haptic|affective|social|emotional",
+   "name": "Affective & Social Touch"
+  },
+  {
+   "sig5": "haptic|olfactory|virtual|grasping|rendering",
+   "name": "Haptic Rendering & Olfaction"
+  },
+  {
+   "sig5": "tangible|touch|multi-touch|tabletop|sensing",
+   "name": "Tangible & Tabletop Sensing"
+  },
+  {
+   "sig5": "knitting|cloth|printed|printing|objects",
+   "name": "Knitting, Cloth & Printed Objects"
+  },
+  {
+   "sig5": "circuit|electronics|circuits|paper|prototyping",
+   "name": "Paper Circuits & Electronics Prototyping"
+  },
+  {
+   "sig5": "deformable|projection|mapping|dynamic|deformation",
+   "name": "Deformable Surfaces & Projection Mapping"
+  },
+  {
+   "sig5": "wireless|photochromic|battery-free|self-powered|light",
+   "name": "Battery-free & Wireless Devices"
+  },
+  {
+   "sig5": "gaze|eye|tracking|selection|gaze-based",
+   "name": "Gaze-based Interaction"
+  },
+  {
+   "sig5": "graphical|task|engineering|model|models",
+   "name": "Task Models & UI Engineering"
+  },
+  {
+   "sig5": "pen|input|bimanual|pen-based|techniques",
+   "name": "Pen & Bimanual Input"
+  },
+  {
+   "sig5": "eye|scanpath|gaze|visual|eye-tracking",
+   "name": "Scanpaths & Visual Search"
+  },
+  {
+   "sig5": "menus|menu|marking|selection|performance",
+   "name": "Menus & Command Selection"
+  },
+  {
+   "sig5": "authentication|eye|biometrics|reality|tracking",
+   "name": "Authentication & Biometrics"
+  },
+  {
+   "sig5": "multimodal|fusion|virtual|environments|architecture",
+   "name": "Multimodal Fusion Architectures"
+  },
+  {
+   "sig5": "latency|input|jitter|voice|effects",
+   "name": "Latency & Input Quality"
+  },
+  {
+   "sig5": "pen|touch|multi-touch|digital|input",
+   "name": "Pen & Sketch Input"
+  },
+  {
+   "sig5": "multimodal|speaking|assessment|public|recognition",
+   "name": "Multimodal Sentiment & Speaking"
+  },
+  {
+   "sig5": "models|model|learning|virtual|engineering",
+   "name": "Cognitive Modeling & Mixed Small Topics"
+  },
+  {
+   "sig5": "recommendation|recommender|sequential|recommendations|filtering",
+   "name": "Sequential & Session-based Recommendation"
   }
- ]
+ ],
+ "rename": {
+  "Remote & Mixed-Reality Collaboration": "Collaboration, Displays & Mixed Reality",
+  "Recommender, Recommendation & Recommendations": "Recommender Systems",
+  "Hci, Research & Technology": "Design Research & Critical HCI",
+  "Data, Crowdsourcing & Machine": "Crowds, Data & Human-AI Decisions",
+  "Children, Learning & Tangible": "Children & Learning",
+  "Eye, Gaze & Tracking": "Gaze, Eye Tracking & Multimodal Sensing",
+  "Driving, Vehicles & Automated": "Automotive & Automated Driving",
+  "Model, Models & Virtual": "Mixed Small Communities",
+  "AR, VR & Immersive Displays": "3D Pointing & VR Interaction",
+  "Rural, India & Digital": "ICTD & Rural Communities",
+  "Remote, Telepresence & Collaboration": "Remote Collaboration & Telepresence"
+ }
 }
