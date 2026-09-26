@@ -16,13 +16,17 @@ ROOT = Path(__file__).resolve().parents[1]
 EXT = os.environ.get("PL_DATASET") == "ext"
 GRAPH = ROOT / "data" / ("graph-ext" if EXT else "graph")
 VIZ = ROOT / "data" / ("viz-ext" if EXT else "viz")
-OUT = ROOT / "analysis" / "results" / ("ext" if EXT else "core")
+OUT = ROOT / "analysis" / "results" / (os.environ.get("PL_TAG") or ("ext" if EXT else "core"))
+# 会場集合の頑健性チェック用: PL_VENUES=chi,uist,... で、その会場の論文だけに絞る(辺・SPC・サブ帯も絞る)。
+VENUES = {v for v in (os.environ.get("PL_VENUES") or "").split(",") if v}
 
 
 class Graph:
     def __init__(self) -> None:
         self.meta = json.loads((VIZ / "meta.json").read_text())
         rows = [json.loads(l) for l in (GRAPH / "nodes.jsonl").open()]
+        if VENUES:
+            rows = [r for r in rows if r.get("venue_key") in VENUES]
         self.idx = {r["id"]: i for i, r in enumerate(rows)}
         self.rows = rows
         self.n = len(rows)
@@ -36,13 +40,16 @@ class Graph:
         src, dst, w = [], [], {}
         for l in (GRAPH / "edges.tsv").open():
             a, b = l.rstrip("\n").split("\t")
+            if a not in self.idx or b not in self.idx:
+                continue          # 会場で絞ったときに外に出た辺
             src.append(self.idx[a]); dst.append(self.idx[b])
         self.cited = np.array(src, dtype=np.int64)    # 古い側
         self.citing = np.array(dst, dtype=np.int64)   # 新しい側
         spc = {}
         for l in (GRAPH / "spc.tsv").open():
             a, b, s = l.rstrip("\n").split("\t")
-            spc[(self.idx[a], self.idx[b])] = float(s)
+            if a in self.idx and b in self.idx:
+                spc[(self.idx[a], self.idx[b])] = float(s)
         self.spc = np.array([spc.get((a, b), 0.0) for a, b in zip(self.cited, self.citing)])
         # 帯・サブ帯(meta.json は DOI 順不同なので DOI で結ぶ)
         by_doi = {nd["d"]: nd for nd in self.meta["nodes"] if nd.get("d")}

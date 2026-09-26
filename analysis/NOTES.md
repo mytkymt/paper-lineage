@@ -195,3 +195,26 @@ All numbers below are from `analysis/results/core/` unless marked *ext*.
 - To do for the paper: venue-set robustness (CHI-only / old core 13 / core 29 / all 36), the
   citation-rewiring null model for cluster persistence, wave definitions that do not depend on
   when a word became common (smartphones), and a decision on the 14% isolated papers.
+
+## 10. Isolated papers (decision, 2026-09-26)
+- 7,612 core papers (14.1%) have no citation link inside the corpus. 37% of them have no
+  reference list at all in OpenAlex (indexing gap, concentrated in 2026: 884 of 3,584 papers of
+  that year are isolated); the rest cite only outside the corpus. By venue: HRI 38%, ICMI 40%,
+  GROUP 38%, VRST 34%, C&C 33%, IDC 25%, ETRA 20%, UbiComp 17%, IUI 16%, RecSys 14%, CHI 6%.
+- Decision: keep them in the corpus (they are peer-reviewed papers of the venues) and in the
+  denominators of paper-count measures (wave shares, venue sizes), but they take no part in any
+  citation-based measure by construction (persistence, founders, parents, cohesion, accumulation).
+  State the 14% and the indexing gap in the paper; do not drop them silently. The weekly refresh
+  re-fetches empty reference lists, so the 2026 share will fall.
+
+## 11. Null model for cluster persistence (2026-09-26)
+- Rewiring: within each cited-paper year, the cited endpoints of all edges are shuffled. This keeps
+  every paper's number of references, every paper's in-corpus citation count and the reference-age
+  distribution; only *which* paper cites *which* is destroyed. Same per-window Louvain and the
+  same 30% rule as section 4, core corpus, 5 replicates (`null_persist.py`).
+- Observed (core, window to next): 10/16, 15/20, 18/26, 21/28, 13/23, 14/24 (0.52–0.75).
+- Rewired: 0/18, 0/26, 0/31, 0/32, 0/20, 0/32 (rep 1); 1/20, 0/24, 0/34, 0/26, 0/20, 0/30 (rep 2);
+  reps 3–5 all 0 of 18–33. The measure is not driven by degree or age structure: on a graph with
+  the same volume of citations to the previous window, no cluster continues.
+- Consequence for the paper: the co-word/citation contrast in section 4 is a contrast between
+  lenses, and the citation lens is not trivially persistent.

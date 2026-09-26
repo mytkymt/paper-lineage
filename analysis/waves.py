@@ -1,6 +1,9 @@
 """技術の波の代謝(TOCHI 案 A の試作): HCI は外から来る技術の波をどう取り込み、何を残すか。
 
-波 = 題名の語(と引き金論文への引用)で定めた論文集合と開始年。波ごとに同じ物差しで測る:
+波 = 題名・抄録の語(と引き金論文への引用)で定めた論文集合。開始年は手で置いた年ではなく、
+その語を含む論文がコーパスの 0.5% 以上を 2 年続けて占めた最初の年(語が定着した年)とする。
+手で置いた年は候補の下限としてだけ使う(それより前の散発的な使用は波に数えない)。
+波ごとに同じ物差しで測る:
   速さ   開始年からコーパスの 1%・2% に達するまでの年数、ピーク年とピークの割合
   広がり 最初の 5 年で波の論文が 5 本以上あるサブ帯の数、サブ帯分布の正規化エントロピー
   分化   凝集(lift) = 波の論文が波の論文を引く割合 / 同じ年の波でない論文が波の論文を引く割合。
@@ -93,9 +96,15 @@ def wave_members(pat: str, start: int, triggers: list[str], end: int | None = No
 
 waves = {}
 rows, curves, memory = [], [], []
-for name, start, pat, trig in WAVES:
+START0 = {}
+for name, start0, pat, trig in WAVES:
     end = 2003 if name == "VR (1990s)" else None
-    m = wave_members(pat, start, trig, end); waves[name] = set(m.tolist())
+    m = wave_members(pat, start0, trig, end)
+    yc = Counter(g.year[m].tolist())
+    # 語の定着年: 0.5% 以上が 2 年続く最初の年。見つからなければ手で置いた年
+    start = next((y for y in range(start0, LAST) if yc.get(y, 0) / corpus_y.get(y, 1) >= 0.005 and yc.get(y + 1, 0) / corpus_y.get(y + 1, 1) >= 0.005), start0)
+    START0[name] = start0
+    m = m[g.year[m] >= start]; waves[name] = set(m.tolist())
     yc = Counter(g.year[m].tolist())
     share = {y: yc.get(y, 0) / corpus_y[y] for y in range(start, LAST + 1) if y in corpus_y}
     for y, v in share.items(): curves.append([name, y, yc.get(y, 0), round(v, 4)])
@@ -152,15 +161,16 @@ for name, start, pat, trig in WAVES:
     # 参照年齢
     ages = [g.year[j] - g.year[i] for j in early for i in g.upstream(int(j))]
     base_ages = [g.year[j] - g.year[i] for j in base[::max(1, len(base) // 3000)] for i in g.upstream(int(j))]
-    rows.append([name, start, len(m), t1, t2, peak_y, round(peak, 3), persist, breadth, round(ent, 2), self_ref, cohesion,
+    rows.append([name, start, START0[name], len(m), t1, t2, peak_y, round(peak, 3), persist, breadth, round(ent, 2), self_ref, cohesion,
                  top_subs, round(nc, 2), round(nc_base, 2),
                  "; ".join(f"{n} {c}" for n, c in inc_subs.most_common(3)), round(float(np.mean(ages)), 1) if ages else "", round(float(np.mean(base_ages)), 1) if base_ages else ""])
-    print(f"{name:26} start {start} n={len(m):5} →1% {t1} →2% {t2} peak {peak_y} {peak:.1%} keep10 {persist or '-':>4} breadth {breadth:3} ent {ent:.2f} self-ref {self_ref:.2f} cohesion x{cohesion} newcomers {nc:.2f} (base {nc_base:.2f}) refage {np.mean(ages) if ages else 0:.1f} (base {np.mean(base_ages) if base_ages else 0:.1f})")
+    print(f"{name:26} start {start} (manual {start0}) n={len(m):5} →1% {t1} →2% {t2} peak {peak_y} {peak:.1%} keep10 {persist or '-':>4} breadth {breadth:3} ent {ent:.2f} self-ref {self_ref:.2f} cohesion x{cohesion} newcomers {nc:.2f} (base {nc_base:.2f}) refage {np.mean(ages) if ages else 0:.1f} (base {np.mean(base_ages) if base_ages else 0:.1f})")
     print(f"    absorbed into: {top_subs} | incumbents from: {'; '.join(f'{n} {c}' for n, c in inc_subs.most_common(3))}", flush=True)
 # 記憶: 波×波
 names = [w[0] for w in WAVES]
 print("\n記憶: 行=引く波(最初の 5 年)、列=引かれる波、値=コーパス内参照に占める割合")
-for name, start, *_ in WAVES:
+for name, start0, *_ in WAVES:
+    start = min((g.year[i] for i in waves[name]), default=start0)
     early = [i for i in waves[name] if g.year[i] < start + 5]
     refs = [i for j in early for i in g.upstream(int(j))]
     tot = len(refs); row = [name]
@@ -169,7 +179,7 @@ for name, start, *_ in WAVES:
     memory.append(row)
     print(f"  {name:26} " + " ".join(f"{v:5.2f}" for v in row[1:]))
 with (load.OUT / "waves.csv").open("w", newline="") as f:
-    w = csv.writer(f); w.writerow(["wave", "start", "papers", "years_to_1pct", "years_to_2pct", "peak_year", "peak_share", "share_at_10y_over_peak", "subs_with_5plus", "sub_entropy",
+    w = csv.writer(f); w.writerow(["wave", "start", "start_manual", "papers", "years_to_1pct", "years_to_2pct", "peak_year", "peak_share", "share_at_10y_over_peak", "subs_with_5plus", "sub_entropy",
                                    "self_reference_share", "cohesion_lift", "absorbed_into", "newcomer_author_share", "baseline_newcomer_share", "incumbents_from", "ref_age", "baseline_ref_age"]); w.writerows(rows)
 with (load.OUT / "wave_curves.csv").open("w", newline="") as f:
     w = csv.writer(f); w.writerow(["wave", "year", "papers", "share_of_corpus"]); w.writerows(curves)
