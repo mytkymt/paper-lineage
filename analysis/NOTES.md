@@ -281,3 +281,11 @@ were re-tested with controls (explore/critique.py; log in results/core/critique_
   1.17 (1990s) → 0.99 (2000s) → 0.77 (2010s): field founding moved from outsiders to insiders.
 - Abstract coverage is 100% for CHI 2019+ but 7–18% before 2016, so keyword-based topic counts
   are only comparable from 2019 on; wave membership for older waves relies on titles.
+- Venue check (2026-09-26, later): the embeddedness effect is not a CHI artefact. Same
+  specification on all 29 core venues with venue FE (n=16,294): HCI-internal citations ×0.62,
+  total ×0.84 for external share 0.6→0.9; on the 28 non-CHI venues ×0.62 / ×0.84; per venue the
+  internal multiplier runs 0.38 (PACM HCI) to 0.86 (RecSys) and is below 1 everywhere; RecSys is
+  the one venue whose outward-citing papers gain total citations (×1.31). The two lineages also
+  survive with CHI papers removed (explore/critique_without_chi.py): tabletop → fabrication
+  4.9×, → VR 2.5×, → LLM 1.0×; crowdsourcing → LLM 3.6×; deep learning → LLM 3.4×; voice → LLM
+  3.3×; VR → LLM 1.0× [0.5–1.6]; fabrication → LLM 1.1×.
