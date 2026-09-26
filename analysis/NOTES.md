@@ -307,3 +307,12 @@ were re-tested with controls (explore/critique.py; log in results/core/critique_
   not "not method". Stable across 2010–16 vs 2017–25.
 - Data-quality note from the labelling: a few Semantic Scholar abstracts belong to a different
   paper than the title (e.g. one MediaEval entry); workshop proposals appear in IDC/C&C.
+- Sensitivity of the lineage table (explore/lineage_sensitivity.py; results/core/
+  lineage_sensitivity.csv): under founders ≥3 papers, windows of 4 or 6 years, and narrow
+  keyword sets, the within-lineage cells stay above 1 (tabletop → fabrication 2.5–6.2×, → VR
+  1.7–2.9×; crowdsourcing → deep learning 2.9–5.5×, → voice 2.9–7.0×, → LLM 3.3–4.2×; voice →
+  LLM 3.1–3.9×; deep learning → LLM 1.0–2.9×) and the cross-lineage cells stay at or below 1
+  (tabletop → deep learning 0–0.9×, → LLM 0–1.1×; crowdsourcing → VR 0–0.5×; VR → LLM 0.8–1.1×;
+  fabrication → LLM 0.7–1.7×). The ≥3-paper setting thins several cells to n≈10–16, where a few
+  within-lineage cells drop to 0; the two large cells (VR → LLM n=125–343, voice → LLM n=59–201)
+  are stable in every setting.

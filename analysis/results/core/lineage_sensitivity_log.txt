@@ -1,0 +1,16 @@
+<frozen site>:101: RuntimeWarning: Unexpected value in sys.prefix, expected /Users/yamato/Repo/paper-lineage/pipeline/.venv, got /Users/yamato/Repo/paper-lineage/analysis/../pipeline/.venv
+<frozen site>:101: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /Users/yamato/Repo/paper-lineage/pipeline/.venv, got /Users/yamato/Repo/paper-lineage/analysis/../pipeline/.venv
+pair                                                   base: >=2 papers, 5y         >=3 papers, 5y                >=2, 4y                >=2, 6y  >=2, 5y, narrow words
+Tabletop & multitouch  → Personal fabrication                5.7x n=43              2.5x n=16              6.2x n=27              4.0x n=56              3.2x n=44  
+Tabletop & multitouch  → VR (consumer HMDs)                  2.9x n=43              2.2x n=16              2.2x n=27              2.4x n=56              1.7x n=46  
+Tabletop & multitouch  → LLMs & generative AI                0.9x n=33              0.0x n=13              0.6x n=19              1.1x n=40              0.7x n=34  
+Tabletop & multitouch  → Deep learning                       0.0x n=47              0.0x n=17              0.0x n=29              0.9x n=61              0.0x n=48  
+Crowdsourcing (MTurk)  → Deep learning                       5.1x n=26              0.0x n=12              5.4x n=16              2.9x n=44              5.5x n=26  
+Crowdsourcing (MTurk)  → Voice assistants                    4.2x n=21              0.0x n=10              7.0x n=12              2.9x n=37              4.3x n=21  
+Crowdsourcing (MTurk)  → LLMs & generative AI                3.6x n=19                      (n)            4.1x n=13              4.2x n=31              3.3x n=19  
+Crowdsourcing (MTurk)  → VR (consumer HMDs)                  0.4x n=25              0.0x n=10              0.0x n=16              0.5x n=42              0.5x n=25  
+Deep learning          → LLMs & generative AI                2.3x n=57              2.9x n=14              1.0x n=19              1.8x n=97              2.9x n=50  
+Voice assistants       → LLMs & generative AI                3.4x n=146             3.6x n=59              3.1x n=92              3.9x n=201             3.5x n=101 
+VR (consumer HMDs)     → LLMs & generative AI                0.8x n=259             1.1x n=125             0.9x n=179             0.9x n=343             0.9x n=209 
+Personal fabrication   → LLMs & generative AI                1.3x n=100             0.7x n=53              1.7x n=66              1.1x n=140             0.9x n=67  
+Wearables & smartwatch → Voice assistants                    4.1x n=43              3.4x n=13              1.6x n=23              3.7x n=69              4.5x n=99  
