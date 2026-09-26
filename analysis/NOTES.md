@@ -316,3 +316,11 @@ were re-tested with controls (explore/critique.py; log in results/core/critique_
   fabrication → LLM 0.7–1.7×). The ≥3-paper setting thins several cells to n≈10–16, where a few
   within-lineage cells drop to 0; the two large cells (VR → LLM n=125–343, voice → LLM n=59–201)
   are stable in every setting.
+- Bridges are not a finding (2026-09-27). The 80 authors who founded both a physical and a
+  computational wave are, almost without exception, physical-wave founders who later wrote two
+  or more LLM or voice papers; since 2023 almost every active author does that, so "bridge"
+  reduces to "productive hardware researcher who now also uses LLMs". VR → LLM 0.8× and
+  fabrication → LLM 1.3× confirm they join at the baseline rate. What remains is (a) the
+  within-lineage succession (2–7×) and (b) the weaker observation that computational-wave
+  founders rarely join physical waves (crowdsourcing/social media → fabrication 0.0×, → VR
+  0.4–0.5×, n≈25–46). Do not name individuals; do not present a "bridge" table.
