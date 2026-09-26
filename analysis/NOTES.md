@@ -289,3 +289,21 @@ were re-tested with controls (explore/critique.py; log in results/core/critique_
   survive with CHI papers removed (explore/critique_without_chi.py): tabletop → fabrication
   4.9×, → VR 2.5×, → LLM 1.0×; crowdsourcing → LLM 3.6×; deep learning → LLM 3.4×; voice → LLM
   3.3×; VR → LLM 1.0× [0.5–1.6]; fabrication → LLM 1.1×.
+
+## 14. Contribution types of the two lineages (LLM-labelled, 2026-09-27)
+- Sample: papers by lineage founders 2010–2025 with abstracts, stratified by year (hardware
+  lineage 776, data lineage 868) plus 493 other core papers; labelled by Claude from title and
+  abstract with the Wobbrock & Kientz (2016) types and two substrate flags (physical device or
+  material; data-driven model, ML, language model, agent, recommender or crowd computation).
+  Rubric and samples in data/contrib (not committed); aggregate in results/core/contrib_types.csv.
+  79% of labels marked high confidence.
+- Method differs, but modestly: artifact 0.57 vs 0.42, empirical 0.33 vs 0.46 (build-type share
+  0.61 vs 0.47; other papers 0.53). Substrate differs strongly: physical 0.68 vs 0.21,
+  computational 0.14 vs 0.51 (others 0.31 / 0.34). Guessing a paper's lineage from "physical=1"
+  is right 74% of the time; from "type=artifact" 57% (chance 50%). Both lineages have a large
+  "neither" share (0.24 / 0.36): studies of people with no device and no model.
+- So the divide is primarily one of substrate, with a secondary tilt in method; the keyword
+  proxy in section 13 understated the method difference. Say "substrate first, method second",
+  not "not method". Stable across 2010–16 vs 2017–25.
+- Data-quality note from the labelling: a few Semantic Scholar abstracts belong to a different
+  paper than the title (e.g. one MediaEval entry); workshop proposals appear in IDC/C&C.
