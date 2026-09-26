@@ -1,0 +1,101 @@
+<frozen site>:101: RuntimeWarning: Unexpected value in sys.prefix, expected /Users/yamato/Repo/paper-lineage/pipeline/.venv, got /Users/yamato/Repo/paper-lineage/analysis/../pipeline/.venv
+<frozen site>:101: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /Users/yamato/Repo/paper-lineage/pipeline/.venv, got /Users/yamato/Repo/paper-lineage/analysis/../pipeline/.venv
+/Users/yamato/Repo/paper-lineage/pipeline/.venv/lib/python3.14/site-packages/numpy/_core/fromnumeric.py:3862: RuntimeWarning: Mean of empty slice
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/Users/yamato/Repo/paper-lineage/pipeline/.venv/lib/python3.14/site-packages/numpy/_core/_methods.py:142: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+==== F1 境界越えの罰: 統制つき ====
+  CHI n=4066, セル 0: 四分位(内向き→外向き) log 被引用の平均 [コーパス内 / CHI から / 総]
+    Q1: nan / nan / nan
+    Q2: nan / nan / nan
+    Q3: nan / nan / nan
+    Q4: nan / nan / nan
+    回帰 コーパス内: 外部参照率の係数 -0.06 (SE 0.29) → 外部率 0.6→0.9 で被引用 x0.98; log参照数 +0.31, logコーパス内参照数 +0.38
+    回帰 CHI から: 外部参照率の係数 +0.01 (SE 0.28) → 外部率 0.6→0.9 で被引用 x1.00; log参照数 +0.29, logコーパス内参照数 +0.32
+    回帰 総(OpenAlex): 外部参照率の係数 +0.17 (SE 0.30) → 外部率 0.6→0.9 で被引用 x1.05; log参照数 +0.47, logコーパス内参照数 +0.19
+  UIST n=684, セル 0: 四分位(内向き→外向き) log 被引用の平均 [コーパス内 / CHI から / 総]
+    Q1: nan / nan / nan
+    Q2: nan / nan / nan
+    Q3: nan / nan / nan
+    Q4: nan / nan / nan
+    回帰 コーパス内: 外部参照率の係数 +1.03 (SE 0.76) → 外部率 0.6→0.9 で被引用 x1.36; log参照数 -0.17, logコーパス内参照数 +0.78
+    回帰 CHI から: 外部参照率の係数 +0.68 (SE 0.76) → 外部率 0.6→0.9 で被引用 x1.23; log参照数 -0.03, logコーパス内参照数 +0.62
+    回帰 総(OpenAlex): 外部参照率の係数 +1.13 (SE 0.80) → 外部率 0.6→0.9 で被引用 x1.40; log参照数 +0.25, logコーパス内参照数 +0.42
+  PACM HCI (CSCW) n=284, セル 0: 四分位(内向き→外向き) log 被引用の平均 [コーパス内 / CHI から / 総]
+    Q1: nan / nan / nan
+    Q2: nan / nan / nan
+    Q3: nan / nan / nan
+    Q4: nan / nan / nan
+    回帰 コーパス内: 外部参照率の係数 -0.42 (SE 1.43) → 外部率 0.6→0.9 で被引用 x0.88; log参照数 +0.24, logコーパス内参照数 +0.65
+    回帰 CHI から: 外部参照率の係数 +0.41 (SE 1.37) → 外部率 0.6→0.9 で被引用 x1.13; log参照数 +0.14, logコーパス内参照数 +0.73
+    回帰 総(OpenAlex): 外部参照率の係数 -1.28 (SE 1.39) → 外部率 0.6→0.9 で被引用 x0.68; log参照数 +0.66, logコーパス内参照数 -0.00
+  DIS n=561, セル 0: 四分位(内向き→外向き) log 被引用の平均 [コーパス内 / CHI から / 総]
+    Q1: nan / nan / nan
+    Q2: nan / nan / nan
+    Q3: nan / nan / nan
+    Q4: nan / nan / nan
+    回帰 コーパス内: 外部参照率の係数 +0.86 (SE 0.99) → 外部率 0.6→0.9 で被引用 x1.29; log参照数 -0.17, logコーパス内参照数 +0.80
+    回帰 CHI から: 外部参照率の係数 +0.90 (SE 0.94) → 外部率 0.6→0.9 で被引用 x1.31; log参照数 -0.08, logコーパス内参照数 +0.76
+    回帰 総(OpenAlex): 外部参照率の係数 +1.01 (SE 1.00) → 外部率 0.6→0.9 で被引用 x1.35; log参照数 +0.05, logコーパス内参照数 +0.60
+  IUI n=384, セル 0: 四分位(内向き→外向き) log 被引用の平均 [コーパス内 / CHI から / 総]
+    Q1: nan / nan / nan
+    Q2: nan / nan / nan
+    Q3: nan / nan / nan
+    Q4: nan / nan / nan
+    回帰 コーパス内: 外部参照率の係数 +1.03 (SE 1.59) → 外部率 0.6→0.9 で被引用 x1.36; log参照数 -0.22, logコーパス内参照数 +0.63
+    回帰 CHI から: 外部参照率の係数 +0.64 (SE 1.25) → 外部率 0.6→0.9 で被引用 x1.21; log参照数 +0.03, logコーパス内参照数 +0.39
+    回帰 総(OpenAlex): 外部参照率の係数 +0.12 (SE 1.67) → 外部率 0.6→0.9 で被引用 x1.04; log参照数 +0.42, logコーパス内参照数 +0.09
+
+==== F2 LLM 期の縮小: 語ベース・先行トレンド・会場移動 ====
+  抄録の付与率 年別(CHI): {2010: '0.07', 2015: '0.18', 2019: '1.00', 2021: '1.00', 2023: '1.00', 2024: '1.00', 2025: '1.00'}
+  抄録の付与率 会場別: {'chi': '0.63', 'uist': '0.58', 'pacmhci': '0.97', 'dis': '0.71', 'iui': '0.41', 'tei': '0.45', 'imwut': '0.90', 'recsys': '0.64', 'hri': '0.46', 'icmi': '0.62', 'vrst': '0.54'}
+  CHI: 語ベースの話題の本数(抄録つき論文のみ、率は抄録つき論文に対する%)。LLM 語を含むものは分けて数える
+                                  2017         2019         2021         2023         2025
+  input/haptics/gesture       6.0%(  0)   14.5%(  0)   11.2%(  0)   13.0%(  0)    9.7%( 12)
+  vr/ar hardware              1.2%(  0)   10.7%(  0)    9.7%(  0)   11.1%(  0)   11.8%(  7)
+  fabrication/tangible        6.0%(  0)    7.8%(  0)    8.6%(  0)    8.9%(  0)    6.0%(  5)
+  gaze/eye                    4.8%(  0)    2.6%(  0)    1.9%(  0)    2.4%(  0)    2.7%(  3)
+  games/play                  6.0%(  0)    8.7%(  0)    8.5%(  0)    5.7%(  1)    5.2%(  7)
+  social computing           21.1%(  0)   11.2%(  1)   11.8%(  1)   13.5%(  5)   11.8%( 24)
+  health/wellbeing           23.5%(  0)   18.6%(  0)   19.8%(  0)   20.7%(  7)   20.6%( 49)
+  accessibility               6.6%(  0)    8.8%(  0)   10.5%(  0)   10.2%(  1)   11.3%( 25)
+  design research             4.8%(  0)    6.5%(  0)    6.2%(  0)    6.8%(  0)    7.9%( 12)
+  CHI 帯の占有率の先行トレンド(2015–17 → 2019–21 → 2023–25)
+    Gaze, Eye Tracking & Multimodal Se   4.3% →   3.4% →   1.7%   前期比 x0.81 → 後期比 x0.51
+    Games & Play                         3.7% →   3.0% →   2.2%   前期比 x0.82 → 後期比 x0.72
+    Input & Interaction Techniques      12.3% →   9.3% →   6.7%   前期比 x0.75 → 後期比 x0.72
+    Collaboration, Displays & Mixed Re   6.6% →   6.4% →   4.9%   前期比 x0.96 → 後期比 x0.77
+    Design Research & Critical HCI      10.9% →  10.0% →   8.4%   前期比 x0.91 → 後期比 x0.84
+    Mobile Life & Attention              4.4% →   2.3% →   2.0%   前期比 x0.53 → 後期比 x0.85
+    Tangible, VR & Fabrication          12.3% →  11.9% →  10.6%   前期比 x0.97 → 後期比 x0.89
+    Health & Wellbeing                   7.7% →   7.6% →   7.4%   前期比 x0.98 → 後期比 x0.98
+    Work, Community & Society           15.0% →  13.7% →  13.5%   前期比 x0.91 → 後期比 x0.98
+    Children & Learning                  2.6% →   2.6% →   2.7%   前期比 x1.01 → 後期比 x1.01
+    Accessibility & Assistive Tech       2.9% →   5.0% →   5.2%   前期比 x1.75 → 後期比 x1.04
+    Privacy, Security & Smart Homes      2.4% →   3.4% →   3.6%   前期比 x1.43 → 後期比 x1.08
+    Crowds, Data & Human-AI Decisions    7.8% →   9.3% →  10.0%   前期比 x1.19 → 後期比 x1.08
+    Automotive & Automated Driving       1.4% →   1.5% →   1.8%   前期比 x1.06 → 後期比 x1.22
+    Robots, Agents & Human-AI Interact   5.1% →  10.4% →  19.0%   前期比 x2.03 → 後期比 x1.82
+  会場移動の確認: 全会場での絶対本数(2019–21 → 2023–25)、ハード系の帯
+    Input & Interaction Techniques     全会場 717 → 845 (x1.18)  CHI 204 → 211 (x1.03)  CHI 以外 513 → 634 (x1.24)
+    Tangible, VR & Fabrication         全会場 865 → 1026 (x1.19)  CHI 262 → 335 (x1.28)  CHI 以外 603 → 691 (x1.15)
+    Gaze, Eye Tracking & Multimodal Se 全会場 386 → 469 (x1.22)  CHI 76 → 55 (x0.72)  CHI 以外 310 → 414 (x1.34)
+    Collaboration, Displays & Mixed Re 全会場 429 → 481 (x1.12)  CHI 140 → 155 (x1.11)  CHI 以外 289 → 326 (x1.13)
+    Games & Play                       全会場 210 → 193 (x0.92)  CHI 66 → 68 (x1.03)  CHI 以外 144 → 125 (x0.87)
+  コーパス全体の伸び:  8265 → 11705
+
+==== F3 系譜: 対照を「先行窓で多作だが創始者でない人」にし、順列で区間を出す ====
+  倍率 = P(後の波の創始者 | 先行波の創始者) / P(後の波の創始者 | 先行窓で多作だが創始者でない)。後の窓でも多作な人に限る。[95% 順列区間]
+  LLM は厳格な語(large language model / LLM / GPT / ChatGPT)だけで定義
+  Tabletop & multitouch  (2007)   0.0x [0.0-4.2] n=47 |   5.7x [0.0-3.0] n=43 |   2.9x [0.2-2.1] n=43 |   0.5x [0.0-2.6] n=41 |   0.9x [0.2-1.8] n=33
+  Crowdsourcing (MTurk)  (2008)   5.1x [0.0-3.3] n=26 |   0.0x [0.0-4.0] n=25 |   0.4x [0.0-2.5] n=25 |   4.2x [0.0-3.1] n=21 |   3.6x [0.0-2.1] n=19
+  Social media           (2010)   1.0x [0.0-3.0] n=46 |   0.0x [0.0-3.0] n=46 |   0.5x [0.2-2.1] n=46 |   0.5x [0.0-2.7] n=39 |   1.1x [0.2-1.8] n=29
+  Smartphones & apps     (2011)  11.8x [0.0-4.4] n=25 |   3.0x [0.0-4.6] n=21 |   1.8x [0.0-3.0] n=21 |   3.1x [0.0-3.1] n=20 |   1.2x [0.0-2.4] n=16
+  Depth cameras (Kinect) (2011)                 (n<15) |                 (n<15) |                 (n<15) |                 (n<15) |                 (n<15)
+  Wearables & smartwatch (2015)                      · |                      · |                      · |   4.1x [0.0-2.7] n=43 |   0.4x [0.2-1.9] n=32
+  Deep learning          (2015)                      · |                      · |                      · |   2.0x [0.0-2.0] n=105 |   2.3x [0.5-1.6] n=57
+  Personal fabrication   (2016)                      · |                      · |                      · |                      · |   1.3x [0.6-1.5] n=100
+  VR (consumer HMDs)     (2016)                      · |                      · |                      · |                      · |   0.8x [0.7-1.3] n=259
+  Voice assistants       (2018)                      · |                      · |                      · |                      · |   3.4x [0.6-1.5] n=146
+  LLMs & generative AI   (2023)                      · |                      · |                      · |                      · |                      ·
+  (順列区間は帰無仮説「創始者と非創始者に差がない」の下での倍率の範囲。観測値がその外なら差がある)

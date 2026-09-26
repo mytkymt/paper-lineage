@@ -248,3 +248,36 @@ core29 = all SIGCHI-sponsored venues; all36 = core29 plus the seven linked venue
   VR venues are added (all36 14.4%), as it should.
 - Wave start years are now data-driven (first year the wave holds ≥0.5% of the set for two
   years); see waves.csv `start` vs `start_manual`.
+
+## 13. Exploratory hypotheses and what survived scrutiny (2026-09-26)
+Seven candidate "surprises" were tested (analysis/explore/hypotheses_*.py), then the survivors
+were re-tested with controls (explore/critique.py; log in results/core/critique_log.txt).
+- Dropped: lasting-impact awards fall evenly inside/after founding windows (16 vs 21); CD5
+  declines monotonically 1990→2020 (+0.11 → −0.02), i.e. the general Park et al. trend.
+- Weakened: "LLMs displaced the hardware side of CHI". Keyword counts confirm input/haptics/
+  gesture fell 14.5% → 9.7% of CHI (2019→2025) and games 8.7% → 5.2% while social computing,
+  health and accessibility held or rose. But the band shares show the decline predates LLMs
+  (Input & Interaction Techniques 12.3% → 9.3% → 6.7% over 2015–17 / 2019–21 / 2023–25; Gaze
+  4.3 → 3.4 → 1.7; the AI band already doubled 5.1% → 10.4% before 2022), and part of it is
+  migration to UIST/ISS/ETRA (input techniques outside CHI ×1.24 vs CHI ×1.03). Honest form:
+  CHI's AI turn began around 2017 and the interaction-technique share has halved since 2015;
+  LLMs continued rather than caused it.
+- Survived with a caveat: "boundary-crossing papers are cited less inside HCI". Within year ×
+  sub-field and controlling for reference-list length (CHI 2005–2018, n=4,811), moving the
+  external-reference share from 0.6 to 0.9 multiplies citations from HCI by 0.63 and total
+  OpenAlex citations by 0.85 (within-cell quartiles: ×0.65 vs ×0.90). The effect disappears
+  when the number of in-corpus references is controlled, so the mechanism is embeddedness
+  (papers with few HCI references are less discoverable through HCI citation chains) rather
+  than an evaluative penalty; report as the former.
+- Survived: two wave-riding lineages. With the control group "prolific in the earlier window
+  but not a founder" and permutation intervals (strict LLM keywords): tabletop founders →
+  fabrication 5.7× and VR 2.9× (both outside the null interval) but → deep learning 0.0×, voice
+  0.5×, LLM 0.9×; crowdsourcing founders → deep learning 5.1×, voice 4.2×, LLM 3.6× but →
+  fabrication 0.0×, VR 0.4×; smartphones → deep learning 11.8×; wearables → voice 4.1×; deep
+  learning → LLM 2.3× [0.5–1.6]; voice → LLM 3.4× [0.6–1.5]; VR → LLM 0.8× [0.7–1.3] (n=259);
+  fabrication → LLM 1.3× [0.6–1.5]. The lineages have always been separate; LLMs are a
+  data-lineage wave, not the first wave one lineage skipped.
+- Moderate: founders' newcomer share relative to all prolific authors of the same window fell
+  1.17 (1990s) → 0.99 (2000s) → 0.77 (2010s): field founding moved from outsiders to insiders.
+- Abstract coverage is 100% for CHI 2019+ but 7–18% before 2016, so keyword-based topic counts
+  are only comparable from 2019 on; wave membership for older waves relies on titles.
