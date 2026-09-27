@@ -324,3 +324,26 @@ were re-tested with controls (explore/critique.py; log in results/core/critique_
   within-lineage succession (2–7×) and (b) the weaker observation that computational-wave
   founders rarely join physical waves (crowdsourcing/social media → fabrication 0.0×, → VR
   0.4–0.5×, n≈25–46). Do not name individuals; do not present a "bridge" table.
+
+## 15. Openness of waves to founders from the other substrate (2026-09-27)
+- For each wave, founders (≥2 papers in the founding window) are classed by their prior work
+  (≥3 earlier papers with a band): physical-origin (Tangible/VR/Fab, Input, Collaboration & MR,
+  Gaze ≥40% and larger than computational), computational-origin (Robots/Agents/AI, Crowds &
+  Human-AI, Recommender), neutral, or newcomer (<3 prior papers). Openness = share of founders
+  with prior history who come from the other substrate, divided by that share among all
+  prolific authors of the same window (explore/wave_openness.py; results/core/wave_openness.csv).
+- Physical waves are closed to computational-origin founders: tabletop 0.38, Kinect 0.00,
+  wearables 0.00, fabrication 0.20, VR 0.12 (smartphones 0.54). Computational waves are open to
+  physical-origin founders at roughly the baseline rate: crowdsourcing 0.90, deep learning 0.98,
+  social media 0.66, voice 0.66, LLMs 0.76.
+- So the prediction "LLMs are the first open wave" is wrong: computational waves have always
+  admitted physical-origin founders, and LLMs are not exceptional (0.76). The asymmetry is a
+  property of the substrate, consistent with an entry-cost account: joining a computational wave
+  needs skills most HCI researchers have; joining a physical wave needs a lab. Consequence: the
+  field's capacity to respond to physical waves rests on the physical lineage alone, whose share
+  of CHI has halved since 2015, while every lineage can respond to computational waves.
+- Newcomers (fewer than 3 prior papers) are 42–76% of every wave's founders; waves are founded
+  largely by people without a corpus history, in both substrates.
+- Caveat: computational bands were small before 2015, so the baseline for physical waves of
+  that era is 0.14–0.17 and the ratios are noisy; the direction is consistent across all five
+  physical waves.

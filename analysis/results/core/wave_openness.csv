@@ -1,0 +1,12 @@
+wave,start,kind,founders,newcomer,physical_origin,computational_origin,neutral,other_side_share,baseline_other_side,openness
+Tabletop & multitouch,2007,physical,70,0.73,0.23,0.01,0.03,0.053,0.137,0.38
+Social media,2010,computational,58,0.6,0.14,0.05,0.21,0.348,0.525,0.66
+Smartphones & apps,2011,physical,46,0.76,0.13,0.02,0.09,0.091,0.169,0.54
+Crowdsourcing (MTurk),2008,computational,33,0.52,0.24,0.15,0.09,0.5,0.554,0.9
+Depth cameras (Kinect),2011,physical,20,0.55,0.4,0.0,0.05,0.0,0.169,0.0
+Personal fabrication,2016,physical,155,0.59,0.33,0.01,0.07,0.031,0.153,0.2
+Wearables & smartwatches,2015,physical,48,0.42,0.42,0.0,0.17,0.0,0.155,0.0
+Deep learning,2015,computational,132,0.71,0.13,0.06,0.1,0.447,0.455,0.98
+VR (consumer HMDs),2016,physical,468,0.64,0.28,0.01,0.07,0.018,0.153,0.12
+Voice assistants,2018,computational,238,0.55,0.13,0.08,0.25,0.278,0.419,0.66
+LLMs & generative AI,2023,computational,1038,0.55,0.13,0.16,0.16,0.286,0.374,0.76
