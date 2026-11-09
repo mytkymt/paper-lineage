@@ -50,6 +50,7 @@ jobs:
         working-directory: pipeline
         env:
           S2_API_KEY: ${{ secrets.S2_API_KEY }}
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
         run: uv run python -m paperlineage.update ${{ inputs.force && '--force' || '' }}
 
       - name: Save fetched data
